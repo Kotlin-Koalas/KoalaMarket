@@ -1,0 +1,32 @@
+services:
+  api:
+    image: api
+    build: "./api_koalamarket"
+    env_file:
+      - .env
+    links:
+      - db
+    environment:
+      - HOST=db
+    expose:
+      - "${PORT}"
+    ports:
+      - "${PORT}:${PORT}"
+
+  db:
+    env_file:
+      - .env
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -d ${POSTGRES_DB} -U ${POSTGRES_USER}"]
+      interval: 1s
+      timeout: 5s
+      retries: 10
+    image: "postgres:${POSTGRES_VERSION}"
+    ports:
+      - "5432:5432"
+    restart: always
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:
