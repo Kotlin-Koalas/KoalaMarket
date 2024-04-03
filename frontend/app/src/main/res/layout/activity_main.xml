@@ -16,38 +16,24 @@
         android:layout_height="match_parent"
         android:layout_marginTop="264dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/basic_rectangle" />
 
-    <EditText
+    <TextView
         android:id="@+id/editTextText3"
-        android:layout_width="158dp"
-        android:layout_height="32dp"
-        android:layout_marginTop="4dp"
-        android:background="#1E735B"
-        android:ems="10"
-        android:fontFamily="@font/karla"
-        android:inputType="text"
-        android:text="Forgot Password?"
-        app:layout_constraintBottom_toTopOf="@+id/button2"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPassword"
-        tools:layout_editor_absoluteX="222dp" />
-
-    <EditText
-        android:id="@+id/editTextText2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:textColor="#BDCBC7"
         android:background="#1E735B"
-        android:ems="10"
         android:fontFamily="@font/karla"
-        android:inputType="text"
-        android:text="Password"
-        app:layout_constraintBottom_toTopOf="@+id/button"
+        android:textSize="14.5sp"
+        android:text="Forgot Password?"
+        android:layout_marginEnd="86dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/frameLayoutPassword" />
 
     <Button
         android:id="@+id/button"
@@ -57,22 +43,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
-
-    <EditText
-        android:id="@+id/editTextTextPassword"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:background="#1E735B"
-        android:ems="10"
-        android:fontFamily="@font/karla"
-        android:hint="Password"
-        android:inputType="textPassword"
-        app:layout_constraintBottom_toTopOf="@+id/button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextText2" />
 
     <EditText
         android:id="@+id/editTextText4"
@@ -97,13 +67,30 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/editTextText4" />
 
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="240dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="72dp"
+        android:background="#1E735B"
+        android:fontFamily="@font/karla"
+        android:layout_marginBottom="6dp"
+        android:inputType="text"
+        android:text="Email"
+        android:textSize="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imageView" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/frameLayout"
-        android:layout_width="240dp"
-        android:layout_height="40dp"
+        android:layout_width="244dp"
+        android:layout_height="50dp"
         android:background="@drawable/basic_grey_shape"
         android:padding="2dp"
+        android:layout_marginTop="4dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2">
@@ -114,7 +101,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="left"
-            android:layout_marginLeft="1dp"
+            android:layout_marginLeft="8dp"
             app:layout_constraintStart_toStartOf="parent"
             app:srcCompat="@drawable/email_icon" />
 
@@ -122,7 +109,7 @@
             android:id="@+id/imageView4"
             android:layout_width="1.5dp"
             android:layout_height="30dp"
-            android:layout_marginLeft="3dp"
+            android:layout_marginLeft="8dp"
             android:background="#bababa"
             app:layout_constraintBottom_toBottomOf="@+id/editTextTextEmailAddress"
             app:layout_constraintEnd_toStartOf="@+id/editTextTextEmailAddress"
@@ -134,7 +121,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_gravity="right"
-            android:layout_marginLeft="2dp"
+            android:layout_marginLeft="8dp"
             android:background="@android:color/transparent"
             android:ems="8"
             android:fontFamily="@font/karla"
@@ -219,22 +206,73 @@
             app:layout_constraintBottom_toBottomOf="parent"
             tools:layout_editor_absoluteX="117dp" />
     </androidx.constraintlayout.widget.ConstraintLayout>
-
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/textView3"
         android:layout_width="240dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
-        android:layout_marginTop="72dp"
+        android:layout_marginTop="165dp"
         android:background="#1E735B"
         android:fontFamily="@font/karla"
+        android:layout_marginBottom="6dp"
         android:inputType="text"
-        android:text="Email"
+        android:text="Password"
         android:textSize="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/imageView" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/frameLayoutPassword"
+        android:layout_width="244dp"
+        android:layout_height="50dp"
+        android:background="@drawable/basic_grey_shape"
+        android:padding="2dp"
+        android:layout_marginTop="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView3">
+
+
+        <ImageView
+            android:id="@+id/imageView5"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="left"
+            android:layout_marginLeft="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:srcCompat="@drawable/password_icon" />
+
+        <ImageView
+            android:id="@+id/imageView6"
+            android:layout_width="1.5dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="8dp"
+            android:background="#bababa"
+            app:layout_constraintBottom_toBottomOf="@+id/editTextPassword"
+            app:layout_constraintEnd_toStartOf="@+id/editTextPassword"
+            app:layout_constraintStart_toEndOf="@+id/imageView5"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/editTextPassword"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="right"
+            android:layout_marginLeft="8dp"
+            android:background="@android:color/transparent"
+            android:ems="8"
+            android:fontFamily="@font/karla"
+            android:gravity="center_vertical"
+            android:hint="Password"
+            android:inputType="textEmailAddress"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imageView6"
+            tools:layout_editor_absoluteY="341dp" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
