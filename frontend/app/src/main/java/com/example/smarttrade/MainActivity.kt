@@ -15,24 +15,20 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
-        //ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-        //    val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-        //    v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-        //    insets
-        //}
+
         val signUpButton = findViewById<Button>(R.id.button2)
         signUpButton.setOnClickListener{
-            //codigo para ir al signup
+            //TODO codigo para ir al signup
             val IntentS = Intent(this,SignUpComprador::class.java)
             startActivity(IntentS)
         }
         val forgotPassword = findViewById<TextView>(R.id.editTextText3)
         forgotPassword.setOnClickListener {
-            //codigo para recuperar contraseña
+            //TODO codigo para recuperar contraseña
         }
         val logInButton = findViewById<Button>(R.id.button)
         logInButton.setOnClickListener{
-            //codigo para logIn
+            //TODO codigo para logIn
         }
     }
 }
