@@ -1,13 +1,12 @@
 package com.kotlinkoalas.koalamarket.model;
 
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import java.lang.annotation.Inherited;
 
 
 @EqualsAndHashCode(callSuper = true)

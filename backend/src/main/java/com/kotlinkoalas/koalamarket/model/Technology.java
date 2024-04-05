@@ -11,8 +11,14 @@ import lombok.EqualsAndHashCode;
 @Entity
 public class Technology extends Product {
     @Column(name = "electric_Consumption", nullable = false)
-    private float electricConsumption;
+    private double electricConsumption;
 
     @Column(name = "brand", nullable = false)
     private String brand;
+
+    public Technology(String productNumber, String name, double price, String description, String ecology, int stock, String image, double electricConsumption, String brand){
+        super(productNumber, name, price, description, ecology, stock, image);
+        this.electricConsumption = electricConsumption;
+        this.brand = brand;
+    }
 }
