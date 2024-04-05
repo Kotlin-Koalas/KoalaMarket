@@ -75,6 +75,7 @@ class SignUpComprador : AppCompatActivity() {
         signUpButton.setOnClickListener{
             //TODO code to sign up
         }
+        
     }
 
     fun addView(SelectedView: Int) {
@@ -83,19 +84,30 @@ class SignUpComprador : AppCompatActivity() {
         var newView = LayoutInflater.from(this).inflate(SelectedView, linearLayout, false)
         // Add the new view in between the existing views
         linearLayout.addView(newView, indexBefore + 1)
+        /*
         if(SelectedView == R.layout.activity_calendar_view){
             setUpDateEdtClickListener()
-        }
+        } */
 
     }
 
     fun deleteView() {
+        /*
         if(currentTypeOfPayment == R.layout.activity_calendar_view){
             dateEdt.setOnClickListener(null)
         }
+        */
         linearLayout.removeViewAt(indexBefore + 1)
     }
 
+
+
+
+
+
+
+    /*
+       //android:focusableInTouchMode="false" EN EL XML
     lateinit var dateEdt: EditText
     private fun setUpDateEdtClickListener() {
         // on below line we are initializing our variables.
@@ -134,5 +146,5 @@ class SignUpComprador : AppCompatActivity() {
             // to display our date picker dialog.
             datePickerDialog.show()
         }
-    }
+    } */
 }
