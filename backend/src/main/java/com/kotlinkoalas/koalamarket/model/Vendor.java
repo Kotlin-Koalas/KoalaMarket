@@ -10,7 +10,6 @@ public class Vendor {
     @Column(name = "bank_data", nullable = false)
     private String bankData;
 
-    @Id
     @Column(name = "cif", length = 30, nullable = false, unique = true)
     private String cif;
 
@@ -20,5 +19,5 @@ public class Vendor {
 
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "dni", referencedColumnName = "dni")
-    private User user;
+    private Client user;
 }

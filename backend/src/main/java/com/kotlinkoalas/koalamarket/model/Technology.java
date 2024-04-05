@@ -9,9 +9,8 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Entity
-@Table(name = "technology")
 public class Technology extends Product {
-    @Column(name = "electricConsumption", nullable = false)
+    @Column(name = "electric_Consumption", nullable = false)
     private float electricConsumption;
 
     @Column(name = "brand", nullable = false)

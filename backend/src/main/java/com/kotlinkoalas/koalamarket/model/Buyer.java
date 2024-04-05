@@ -23,6 +23,6 @@ public class Buyer {
 
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "dni", referencedColumnName = "dni")
-    private User user;
+    private Client user;
 
 }

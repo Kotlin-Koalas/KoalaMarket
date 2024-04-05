@@ -8,10 +8,11 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+
+
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Entity
-@Table(name = "clothes")
 @NoArgsConstructor
 public class Clothes extends Product{
     @Column(name = "color", nullable = false)

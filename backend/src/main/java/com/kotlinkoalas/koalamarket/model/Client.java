@@ -8,8 +8,8 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "user")
-public class User {
+@Table(name = "client")
+public class Client {
     @Id
     @Column(name = "dni", length = 30, nullable = false)
     private String dni;

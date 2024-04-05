@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 @Data
 @Entity
 @Table(name = "product")
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @NoArgsConstructor
 public class Product {
     @Id
