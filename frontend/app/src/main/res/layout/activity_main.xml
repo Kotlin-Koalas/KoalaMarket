@@ -96,8 +96,7 @@
                 android:id="@+id/textView2"
                 android:layout_width="240dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="72dp"
+                android:layout_marginStart="7dp"
                 android:layout_marginBottom="6dp"
                 android:background="#1E735B"
                 android:fontFamily="@font/karla"
@@ -106,7 +105,7 @@
                 android:textSize="20dp"
                 app:layout_constraintHorizontal_bias="0.502"
                 app:layout_constraintStart_toStartOf="@+id/frameLayout"
-                app:layout_constraintTop_toTopOf="@+id/imageView" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/frameLayout"
@@ -165,12 +164,12 @@
                 android:id="@+id/textView3"
                 android:layout_width="240dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
+                android:layout_marginStart="7dp"
                 android:layout_marginTop="10dp"
                 android:background="#1E735B"
                 android:fontFamily="@font/karla"
                 android:inputType="text"
-                android:text="Password"
+                android:text="Contraseña:"
                 android:textSize="20dp"
                 app:layout_constraintStart_toStartOf="@+id/frameLayoutPassword"
                 app:layout_constraintTop_toBottomOf="@+id/frameLayout" />
