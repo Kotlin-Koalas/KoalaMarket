@@ -27,6 +27,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import org.xmlpull.v1.XmlPullParser
+import java.time.LocalDate
 import java.util.Calendar
 import kotlin.math.sign
 import kotlin.properties.Delegates
@@ -82,6 +83,7 @@ class SignUpComprador : AppCompatActivity() {
         signUpButton.setOnClickListener{
             var popUpOrNot = false
             var popUpText = ""
+
             val firstPasswordField = findViewById<EditText>(R.id.editTextPassword)
             val firstPassword = firstPasswordField.text.toString()
             val secondPasswordField = findViewById<EditText>(R.id.editTextRPassword)
@@ -92,7 +94,112 @@ class SignUpComprador : AppCompatActivity() {
                 popUpOrNot = true
                 popUpText += "- Las contraseñas no coinciden, por favor, asegurate de que sean iguales.\n"
             }
-            //TODO code to sign up
+
+            val patternPassword = "^(?=.{4,})(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]+\$".toRegex()
+            if( !patternPassword.containsMatchIn(firstPassword) || !patternPassword.containsMatchIn(secondPassword)){
+                popUpOrNot = true
+                popUpText += "- La contraseña debe contener mínimo un número, una letra mayúscula, y una letra minúscula. Además no debe contener caracteres especiales, solo letras (mayúsculas y minúsculas), números y tener una logitud mínima de 4 caracteres.\n"
+            }
+
+            if(currentTypeOfPayment == R.layout.activity_calendar_view) {
+                val monthField = findViewById<EditText>(R.id.editTextCad)
+                val yearField = findViewById<EditText>(R.id.editTextCad2)
+                var monthValueString = monthField.text.toString()
+                if(monthValueString.isEmpty()) monthValueString = "-1"
+                val monthValue = monthValueString.toInt()
+                var yearValueString = yearField.text.toString()
+                if(yearValueString.isEmpty()) yearValueString = "-1"
+                val yearValue = yearValueString.toInt()
+                if(monthValue > 12 || monthValue < 1){
+                    popUpOrNot = true
+                    popUpText += "- Inserte un valor para el mes válido (1-12).\n"
+                }
+                val currentYearFull = LocalDate.now().year.toString()
+                var currentYearString = currentYearFull.substring(currentYearFull.length - 2)
+                if(currentYearString.isEmpty()) currentYearString = "-1"
+                val currentYear = currentYearString.toInt()
+                val calendar = Calendar.getInstance()
+                val currentMonth = calendar.get(Calendar.MONTH) + 1
+                if(currentYear > yearValue){
+                    popUpOrNot = true
+                    popUpText += "- Inserte una fecha de cacucidad de la tarjeta a futuro.\n"
+                } else  if (currentYear == yearValue && monthValue < currentMonth) {
+                    popUpOrNot = true
+                    popUpText += "- Inserte una fecha de cacucidad de la tarjeta a futuro.\n"
+
+                }
+            }
+
+            val currNameField = findViewById<EditText>(R.id.editTextName).text
+            val currName = currNameField.toString()
+            val currSurnameField = findViewById<EditText>(R.id.editTextSurname).text
+            val currSurname = currSurnameField.toString()
+            val currIdField = findViewById<EditText>(R.id.editTextID).text
+            val currId = currIdField.toString()
+            val patternOnlyLetters = "^[a-zA-Z]*$".toRegex()
+            if(!patternOnlyLetters.containsMatchIn(currName) || !patternOnlyLetters.containsMatchIn(currSurname) || !patternOnlyLetters.containsMatchIn(currId)){
+                popUpOrNot = true
+                popUpText += "- En los campos de ID de Usuario, Nombre y Apellido solo deben haber letras.\n"
+            }
+
+            val patternDNI = "[0-9]{8}[a-zA-Z]".toRegex()
+            var currDNI = findViewById<EditText>(R.id.editTextDNI).text.toString()
+            val numbers = currDNI.substring(0, currDNI.length - 1) // Extract numbers
+            val letter = currDNI.last().uppercaseChar() // Get last character and convert to uppercase
+            currDNI = "$numbers$letter" // Combine numbers and uppercase letter
+            if(!patternDNI.containsMatchIn(currDNI)){
+                popUpOrNot = true
+                popUpText += "- Inserte un DNI válido, con 8 números y una letra al final.\n"
+            }
+
+            val patternCorreo = "^[a-zA-Z0-9.!#\$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?\$".toRegex()
+            val currCorreo = findViewById<EditText>(R.id.editTextEmail).text.toString()
+            if(!patternCorreo.containsMatchIn(currCorreo)){
+                popUpOrNot = true
+                popUpText += "- Proporcione una dirección de correo válida siguiendo el formato standard.\n"
+            }
+
+            if(currentTypeOfPayment == R.layout.paypal_option) {
+                val currPayPalCorreo = findViewById<EditText>(R.id.editTextEmailPayPal).text.toString()
+                if(!patternCorreo.containsMatchIn(currPayPalCorreo)){
+                    popUpOrNot = true
+                    popUpText += "- Proporcione una dirección de correo de la cuenta de PayPal válida siguiendo el formato standard.\n"
+                }
+            }
+
+            val currSA = findViewById<EditText>(R.id.editTextAddress).text.toString()
+            val currFA = findViewById<EditText>(R.id.editTextFAddress).text.toString()
+            if(currId.isEmpty() || currName.isEmpty() || currSurname.isEmpty() || currCorreo.isEmpty() || firstPassword.isEmpty() || secondPassword.isEmpty() || currDNI.isEmpty() || currSA.isEmpty() || currFA.isEmpty()){
+                popUpOrNot = true
+                popUpText += "- Todos los campos deben estar rellenados.\n"
+            } else if(currentTypeOfPayment == R.layout.paypal_option){
+                val currPayPalCorreo = findViewById<EditText>(R.id.editTextEmailPayPal).text.toString()
+                if(currPayPalCorreo.isEmpty()){
+                    popUpOrNot = true
+                    popUpText += "- Todos los campos deben estar rellenados.\n"
+                }
+            } else if(currentTypeOfPayment == R.layout.bizum_option) {
+                val currBizumNum = findViewById<EditText>(R.id.editTextBizumNumber).text.toString()
+                if (currBizumNum.isEmpty()) {
+                    popUpOrNot = true
+                    popUpText += "- Todos los campos deben estar rellenados.\n"
+                }
+            } else if(currentTypeOfPayment == R.layout.activity_calendar_view) {
+                val currNumTarj = findViewById<EditText>(R.id.editTextnumTarj).text.toString()
+                val currExpM = findViewById<EditText>(R.id.editTextCad).text.toString()
+                val currExpY = findViewById<EditText>(R.id.editTextCad2).text.toString()
+                val currCVC = findViewById<EditText>(R.id.editTextCVC).text.toString()
+                if (currNumTarj.isEmpty() || currExpM.isEmpty() || currExpY.isEmpty() || currCVC.isEmpty()) {
+                    popUpOrNot = true
+                    popUpText += "- Todos los campos deben estar rellenados.\n"
+                }
+            }
+
+
+
+
+
+            //TODO code to actually sign up
             if(popUpOrNot){
                 showCustomDialogBox(popUpText)
             }

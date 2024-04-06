@@ -47,12 +47,12 @@
             android:layout_marginLeft="8dp"
             android:background="#bababa"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/editTextEmail"
+            app:layout_constraintEnd_toStartOf="@+id/editTextnumTarj"
             app:layout_constraintStart_toEndOf="@+id/imageViewEmail1"
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
-            android:id="@+id/editTextEmail"
+            android:id="@+id/editTextnumTarj"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_gravity="right"
