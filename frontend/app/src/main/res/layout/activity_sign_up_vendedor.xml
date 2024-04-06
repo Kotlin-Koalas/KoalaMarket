@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SignUpComprador"
+    tools:context=".SignUpVendedor"
     android:background="@drawable/fondo_hojitas">
 
     <androidx.constraintlayout.widget.Guideline
@@ -420,7 +420,7 @@
                         android:background="#ffffff"
                         android:textColor="@color/black"
                         android:fontFamily="@font/karla"
-                        android:text="DNI/NIE:"
+                        android:text="NIF:"
                         android:textSize="17sp" />
 
                     <androidx.constraintlayout.widget.ConstraintLayout
@@ -460,129 +460,13 @@
                             android:ems="8"
                             android:fontFamily="@font/karla"
                             android:gravity="center_vertical"
-                            android:hint="12345678E"
+                            android:hint="A12345678"
                             android:inputType="text"
                             android:maxLength="9"
                             android:textColor="@color/black"
                             android:textColorHint="#808080"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/imageViewDNI2" />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    <TextView
-                        android:id="@+id/textViewAddress"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="7dp"
-                        android:layout_marginBottom="3dp"
-                        android:layout_marginTop="10dp"
-                        android:background="#ffffff"
-                        android:textColor="@color/black"
-                        android:fontFamily="@font/karla"
-                        android:text="Dirección de Entrega:"
-                        android:textSize="17sp" />
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/frameLayoutAddress"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:background="@drawable/basic_grey_shape"
-                        android:padding="2dp">
-
-                        <ImageView
-                            android:id="@+id/imageViewAddress1"
-                            android:layout_width="27dp"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="center"
-                            android:layout_marginLeft="8dp"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:srcCompat="@drawable/location_icon" />
-
-                        <ImageView
-                            android:id="@+id/imageViewAddress2"
-                            android:layout_width="1.5dp"
-                            android:layout_height="30dp"
-                            android:layout_marginLeft="8dp"
-                            android:background="#bababa"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toStartOf="@+id/editTextAddress"
-                            app:layout_constraintStart_toEndOf="@+id/imageViewAddress1"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <EditText
-                            android:id="@+id/editTextAddress"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="right"
-                            android:layout_marginLeft="8dp"
-                            android:background="@android:color/transparent"
-                            android:ems="8"
-                            android:fontFamily="@font/karla"
-                            android:gravity="center_vertical"
-                            android:hint="Ejemplo, 12"
-                            android:inputType="text"
-                            android:textColor="@color/black"
-                            android:textColorHint="#808080"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toEndOf="@+id/imageViewAddress2" />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    <TextView
-                        android:id="@+id/textViewFAddress"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="7dp"
-                        android:layout_marginBottom="3dp"
-                        android:layout_marginTop="10dp"
-                        android:background="#ffffff"
-                        android:textColor="@color/black"
-                        android:fontFamily="@font/karla"
-                        android:text="Dirección de Facturación:"
-                        android:textSize="17sp" />
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/frameLayoutFAddress"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:background="@drawable/basic_grey_shape"
-                        android:padding="2dp">
-
-                        <ImageView
-                            android:id="@+id/imageViewFAddress1"
-                            android:layout_width="27dp"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="center"
-                            android:layout_marginLeft="8dp"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:srcCompat="@drawable/location_icon" />
-
-                        <ImageView
-                            android:id="@+id/imageViewFAddress2"
-                            android:layout_width="1.5dp"
-                            android:layout_height="30dp"
-                            android:layout_marginLeft="8dp"
-                            android:background="#bababa"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toStartOf="@+id/editTextFAddress"
-                            app:layout_constraintStart_toEndOf="@+id/imageViewFAddress1"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <EditText
-                            android:id="@+id/editTextFAddress"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="right"
-                            android:layout_marginLeft="8dp"
-                            android:background="@android:color/transparent"
-                            android:ems="8"
-                            android:fontFamily="@font/karla"
-                            android:gravity="center_vertical"
-                            android:hint="Ejemplo, 12"
-                            android:inputType="text"
-                            android:textColor="@color/black"
-                            android:textColorHint="#808080"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toEndOf="@+id/imageViewFAddress2" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <TextView
@@ -595,7 +479,7 @@
                         android:background="#ffffff"
                         android:textColor="@color/black"
                         android:fontFamily="@font/karla"
-                        android:text="Seleccionar método de pago:"
+                        android:text="IBAN:"
                         android:textSize="17sp" />
 
                     <androidx.constraintlayout.widget.ConstraintLayout
@@ -612,7 +496,7 @@
                             android:layout_gravity="center"
                             android:layout_marginLeft="8dp"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:srcCompat="@drawable/icono_dinero" />
+                            app:srcCompat="@drawable/credit_card_icon" />
 
                         <ImageView
                             android:id="@+id/imageViewSPM2"
@@ -621,22 +505,27 @@
                             android:layout_marginLeft="8dp"
                             android:background="#bababa"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toStartOf="@+id/spinnerSPM"
+                            app:layout_constraintEnd_toStartOf="@+id/editTextIBAN"
                             app:layout_constraintStart_toEndOf="@+id/imageViewSPM1"
                             app:layout_constraintTop_toTopOf="parent" />
 
-                        <Spinner
-                            android:id="@+id/spinnerSPM"
+                        <EditText
+                            android:id="@+id/editTextIBAN"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_gravity="right"
                             android:layout_marginLeft="8dp"
-                            android:background="@drawable/spinner_background"
-                            android:gravity="bottom"
+                            android:background="@android:color/transparent"
+                            android:ems="8"
+                            android:fontFamily="@font/karla"
+                            android:gravity="center_vertical"
+                            android:hint="123456789012345678901234"
+                            android:inputType="number"
+                            android:maxLength="24"
+                            android:textColor="@color/black"
+                            android:textColorHint="#808080"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toEndOf="@+id/imageViewSPM2"
-                            tools:layout_editor_absoluteY="2dp"
-                            />
+                            app:layout_constraintStart_toEndOf="@+id/imageViewSPM2" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <androidx.constraintlayout.widget.ConstraintLayout
@@ -651,6 +540,7 @@
                             android:id="@+id/frameLayoutBInside"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginBottom="50dp"
                             android:padding="5dp"
                             app:layout_constraintTop_toTopOf="parent"
                             app:layout_constraintBottom_toBottomOf="parent"
@@ -692,57 +582,7 @@
                                 app:layout_constraintVertical_bias="0.0" />
                         </androidx.constraintlayout.widget.ConstraintLayout>
                     </androidx.constraintlayout.widget.ConstraintLayout>
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/frameLayoutSSeller"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="30dp"
-                        android:padding="2dp"
-                        android:layout_marginBottom="80dp"
-                        android:layout_gravity="center">
 
-                        <androidx.constraintlayout.widget.ConstraintLayout
-                            android:id="@+id/frameLayoutBInsideSeller"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            android:layout_gravity="center"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            tools:layout_editor_absoluteY="2dp">
-
-                            <Button
-                                android:id="@+id/buttonChangeSeller"
-                                android:layout_width="125dp"
-                                android:layout_height="43dp"
-                                android:background="@drawable/rounded_button_sign_up"
-                                android:fontFamily="@font/karla"
-                                android:text="Ser Vendedor"
-                                android:textColor="@color/black"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintTop_toTopOf="parent"
-                                app:layout_constraintVertical_bias="0.0" />
-
-                            <TextView
-                                android:id="@+id/textViewSeller"
-                                android:layout_width="120dp"
-                                android:layout_height="wrap_content"
-                                android:layout_marginEnd="15dp"
-                                android:background="#ffffff"
-                                android:fontFamily="@font/karla"
-                                android:maxLines="2"
-                                android:gravity="center"
-                                android:text="Quieres vender productos?"
-                                android:textColor="@color/black"
-                                android:textSize="17sp"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toStartOf="@+id/buttonChangeSeller"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent" />
-                        </androidx.constraintlayout.widget.ConstraintLayout>
-                    </androidx.constraintlayout.widget.ConstraintLayout>
 
                 </LinearLayout>
             </ScrollView>
