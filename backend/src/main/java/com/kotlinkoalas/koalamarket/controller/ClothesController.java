@@ -15,7 +15,7 @@ public class ClothesController {
         this.repository = repository;
     }
 
-    @GetMapping("/products/clothes")
+    @GetMapping("/clothes")
     List<Clothes> all() {
         return repository.findAll();
     }
@@ -24,13 +24,13 @@ public class ClothesController {
 //    Clothes one(@PathVariable Long id) {
 //    }
 
-    @PostMapping("/products/clothes")
+    @PostMapping("/clothes")
     public Clothes newClothes(@RequestBody Clothes clothes) {
         return repository.save(clothes);
     }
 
 
-    @PutMapping("/products/clothes/{id}")
+    @PutMapping("/clothes/{id}")
     Clothes replacePerson(@RequestBody Clothes newClothes, @PathVariable Long id) {
 
         return repository.findById(id)
@@ -44,7 +44,7 @@ public class ClothesController {
                 });
     }
 
-    @DeleteMapping("/products/clothes/{id}")
+    @DeleteMapping("/clothes/{id}")
     String deleteClothes(@PathVariable Long id) {
         repository.deleteById(id);
         return "Successfully deleted";
