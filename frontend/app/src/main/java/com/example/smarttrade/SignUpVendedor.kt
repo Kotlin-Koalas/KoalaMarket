@@ -59,7 +59,6 @@ class SignUpVendedor : AppCompatActivity() {
             val secondPassword = secondPasswordField.text.toString()
             var notEqual = !(firstPassword.equals(secondPassword))
             if(notEqual){
-                Toast.makeText(this, "Dentro del IF"+ firstPassword + "," + secondPassword, Toast.LENGTH_LONG).show()
                 popUpOrNot = true
                 popUpText += "- Las contraseñas no coinciden, por favor, asegurate de que sean iguales.\n"
             }
