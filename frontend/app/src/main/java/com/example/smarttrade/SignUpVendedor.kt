@@ -6,6 +6,8 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.text.method.HideReturnsTransformationMethod
+import android.text.method.PasswordTransformationMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +16,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.ScrollView
 import android.widget.Spinner
@@ -49,13 +52,37 @@ class SignUpVendedor : AppCompatActivity() {
             val IntentS = Intent(this,SignUpComprador::class.java)
             startActivity(IntentS)
         }
+
+        val firstPasswordField = findViewById<EditText>(R.id.editTextPassword)
+        val secondPasswordField = findViewById<EditText>(R.id.editTextRPassword)
+
+        val imageP = findViewById<ImageView>(R.id.imageViewOjo1)
+        val imageRP = findViewById<ImageView>(R.id.imageViewOjo2)
+        imageP.setOnClickListener {
+            if (firstPasswordField.transformationMethod == PasswordTransformationMethod.getInstance()) {
+                firstPasswordField.transformationMethod = HideReturnsTransformationMethod.getInstance()
+                imageP.setImageResource(R.drawable.eye_closed_icon)
+            } else {
+                firstPasswordField.transformationMethod = PasswordTransformationMethod.getInstance()
+                imageP.setImageResource(R.drawable.eye_open_icon)
+            }
+        }
+        imageRP.setOnClickListener {
+            if (secondPasswordField.transformationMethod == PasswordTransformationMethod.getInstance()) {
+                secondPasswordField.transformationMethod = HideReturnsTransformationMethod.getInstance()
+                imageRP.setImageResource(R.drawable.eye_closed_icon)
+            } else {
+                secondPasswordField.transformationMethod = PasswordTransformationMethod.getInstance()
+                imageRP.setImageResource(R.drawable.eye_open_icon)
+            }
+        }
+
         signUpButton.setOnClickListener{
             var popUpOrNot = false
             var popUpText = ""
 
-            val firstPasswordField = findViewById<EditText>(R.id.editTextPassword)
+
             val firstPassword = firstPasswordField.text.toString()
-            val secondPasswordField = findViewById<EditText>(R.id.editTextRPassword)
             val secondPassword = secondPasswordField.text.toString()
             var notEqual = !(firstPassword.equals(secondPassword))
             if(notEqual){
