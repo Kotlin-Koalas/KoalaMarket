@@ -1,4 +1,4 @@
-package com.kotlinkoalas.koalamarket;
+package com.kotlinkoalas.koalamarket.controller;
 
 import com.kotlinkoalas.koalamarket.model.Person;
 import com.kotlinkoalas.koalamarket.repo.PersonRepository;
