@@ -74,12 +74,20 @@ class SignUpComprador : AppCompatActivity() {
                 //nothing
             }
         }
+
+        val btnBeSeller = findViewById<Button>(R.id.buttonChangeSeller)
+        btnBeSeller.setOnClickListener{
+            val IntentS = Intent(this,SignUpVendedor::class.java)
+            startActivity(IntentS)
+        }
+
         val cancelButton = findViewById<Button>(R.id.buttonCancel)
         val signUpButton = findViewById<Button>(R.id.buttonSignUp)
         cancelButton.setOnClickListener{
             val IntentS = Intent(this,MainActivity::class.java)
             startActivity(IntentS)
         }
+
         signUpButton.setOnClickListener{
             var popUpOrNot = false
             var popUpText = ""
@@ -144,12 +152,13 @@ class SignUpComprador : AppCompatActivity() {
 
             val patternDNI = "[0-9]{8}[a-zA-Z]".toRegex()
             var currDNI = findViewById<EditText>(R.id.editTextDNI).text.toString()
-            val numbers = currDNI.substring(0, currDNI.length - 1) // Extract numbers
-            val letter = currDNI.last().uppercaseChar() // Get last character and convert to uppercase
-            currDNI = "$numbers$letter" // Combine numbers and uppercase letter
             if(!patternDNI.containsMatchIn(currDNI)){
                 popUpOrNot = true
                 popUpText += "- Inserte un DNI válido, con 8 números y una letra al final.\n"
+            } else{
+                val numbers = currDNI.substring(0, currDNI.length - 1) // Extract numbers
+                val letter = currDNI.last().uppercaseChar() // Get last character and convert to uppercase
+                currDNI = "$numbers$letter" // Combine numbers and uppercase letter
             }
 
             val patternCorreo = "^[a-zA-Z0-9.!#\$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?\$".toRegex()
@@ -195,13 +204,10 @@ class SignUpComprador : AppCompatActivity() {
                 }
             }
 
-
-
-
-
-            //TODO code to actually sign up
             if(popUpOrNot){
                 showCustomDialogBox(popUpText)
+            } else  {
+                //TODO code to actually sign up
             }
         }
 
