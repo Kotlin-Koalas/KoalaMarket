@@ -90,7 +90,7 @@ class SignUpComprador : AppCompatActivity() {
             if(notEqual){
                 Toast.makeText(this, "Dentro del IF"+ firstPassword + "," + secondPassword, Toast.LENGTH_LONG).show()
                 popUpOrNot = true
-                popUpText += "- The Passwords do not match, please make sure both are equal.\n"
+                popUpText += "- Las contraseñas no coinciden, por favor, asegurate de que sean iguales.\n"
             }
             //TODO code to sign up
             if(popUpOrNot){
