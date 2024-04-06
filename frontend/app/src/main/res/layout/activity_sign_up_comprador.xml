@@ -348,8 +348,20 @@
                             android:inputType="textPassword"
                             android:textColor="@color/black"
                             android:textColorHint="#808080"
-                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintEnd_toEndOf="@id/imageViewOjo1"
                             app:layout_constraintStart_toEndOf="@+id/imageViewPassword2" />
+
+                        <ImageView
+                            android:id="@+id/imageViewOjo1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="8dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/editTextPassword"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:srcCompat="@drawable/eye_open_icon"
+                            tools:layout_editor_absoluteX="194dp" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
                     <TextView
                         android:id="@+id/textViewRPassword"
@@ -406,8 +418,22 @@
                         android:inputType="textPassword"
                         android:textColor="@color/black"
                         android:textColorHint="#808080"
-                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintEnd_toEndOf="@id/imageViewOjo2"
                         app:layout_constraintStart_toEndOf="@+id/imageViewRPassword2" />
+
+                        <ImageView
+                            android:id="@+id/imageViewOjo2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="8dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/editTextRPassword"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:srcCompat="@drawable/eye_open_icon"
+                            tools:layout_editor_absoluteX="194dp" />
+
+
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <TextView

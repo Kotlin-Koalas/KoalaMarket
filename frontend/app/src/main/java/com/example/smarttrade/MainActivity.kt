@@ -3,7 +3,11 @@ package com.example.smarttrade
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.os.Bundle
+import android.text.method.HideReturnsTransformationMethod
+import android.text.method.PasswordTransformationMethod
 import android.widget.Button
+import android.widget.EditText
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -22,6 +26,19 @@ class MainActivity : AppCompatActivity() {
             val IntentS = Intent(this,SignUpComprador::class.java)
             startActivity(IntentS)
         }
+        val firstPasswordField = findViewById<EditText>(R.id.editTextPassword)
+
+        val imageP = findViewById<ImageView>(R.id.imageViewOjo1)
+        imageP.setOnClickListener {
+            if (firstPasswordField.transformationMethod == PasswordTransformationMethod.getInstance()) {
+                firstPasswordField.transformationMethod = HideReturnsTransformationMethod.getInstance()
+                imageP.setImageResource(R.drawable.eye_closed_icon)
+            } else {
+                firstPasswordField.transformationMethod = PasswordTransformationMethod.getInstance()
+                imageP.setImageResource(R.drawable.eye_open_icon)
+            }
+        }
+
         val forgotPassword = findViewById<TextView>(R.id.editTextText3)
         forgotPassword.setOnClickListener {
             //TODO codigo para recuperar contraseña
