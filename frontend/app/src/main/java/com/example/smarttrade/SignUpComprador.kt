@@ -1,10 +1,15 @@
 package com.example.smarttrade
 
 import android.app.DatePickerDialog
+import android.app.Dialog
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
+import android.view.Window
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Button
@@ -12,9 +17,11 @@ import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.ScrollView
 import android.widget.Spinner
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.ViewCompat
@@ -73,9 +80,43 @@ class SignUpComprador : AppCompatActivity() {
             startActivity(IntentS)
         }
         signUpButton.setOnClickListener{
+            var popUpOrNot = false
+            var popUpText = ""
+            val firstPasswordField = findViewById<EditText>(R.id.editTextPassword)
+            val firstPassword = firstPasswordField.text.toString()
+            val secondPasswordField = findViewById<EditText>(R.id.editTextRPassword)
+            val secondPassword = secondPasswordField.text.toString()
+            var notEqual = !(firstPassword.equals(secondPassword))
+            if(notEqual){
+                Toast.makeText(this, "Dentro del IF"+ firstPassword + "," + secondPassword, Toast.LENGTH_LONG).show()
+                popUpOrNot = true
+                popUpText += "- The Passwords do not match, please make sure both are equal.\n"
+            }
             //TODO code to sign up
+            if(popUpOrNot){
+                showCustomDialogBox(popUpText)
+            }
         }
-        
+
+    }
+
+    private fun showCustomDialogBox(popUpText: String) {
+        val dialog = Dialog(this)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setCancelable(false)
+        dialog.setContentView(R.layout.pop_up_alert)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        val messageBox = dialog.findViewById<TextView>(R.id.textViewErrorText)
+        val btnOk = dialog.findViewById<Button>(R.id.buttonOkPopUp)
+
+        btnOk.setOnClickListener{
+            dialog.dismiss()
+        }
+        messageBox.text = popUpText
+
+        dialog.show()
+
     }
 
     fun addView(SelectedView: Int) {
