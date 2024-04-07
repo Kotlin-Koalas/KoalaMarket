@@ -15,7 +15,7 @@ public class FoodController {
         this.repository = repository;
     }
 
-    @GetMapping("/foods")
+    @GetMapping("/products/foods")
     List<Food> all() {
         return repository.findAll();
     }
@@ -24,14 +24,14 @@ public class FoodController {
 //    Person one(@PathVariable Long id) {
 //    }
 
-    @PostMapping("/foods")
-    public Food newPerson(@RequestBody Food food) {
+    @PostMapping("/products/foods")
+    public Food newFood(@RequestBody Food food) {
         return repository.save(food);
     }
 
 
-    @PutMapping("/foods/{id}")
-    Food replacePerson(@RequestBody Food newFood, @PathVariable String id) {
+    @PutMapping("/products/foods/{id}")
+    Food replaceFood(@RequestBody Food newFood, @PathVariable String id) {
 
         return repository.findById(id)
                 .map(person -> {
@@ -44,8 +44,8 @@ public class FoodController {
                 });
     }
 
-    @DeleteMapping("/foods/{id}")
-    String deletePerson(@PathVariable String id) {
+    @DeleteMapping("/products/foods/{id}")
+    String deleteFood(@PathVariable String id) {
         repository.deleteById(id);
         return "Successfully deleted";
     }

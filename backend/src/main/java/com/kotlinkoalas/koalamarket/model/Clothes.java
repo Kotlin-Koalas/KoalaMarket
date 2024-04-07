@@ -1,18 +1,23 @@
 package com.kotlinkoalas.koalamarket.model;
 
 
-import jakarta.persistence.*;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import com.kotlinkoalas.koalamarket.model.pk.productPK;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.IdClass;
+import lombok.*;
+import org.hibernate.proxy.HibernateProxy;
 
-import java.lang.annotation.Inherited;
+import java.util.Objects;
 
 
-@EqualsAndHashCode(callSuper = true)
-@Data
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
 @Entity
-@NoArgsConstructor
+@IdClass(productPK.class)
 public class Clothes extends Product{
     @Id
     @Column(name = "cif")
@@ -32,5 +37,25 @@ public class Clothes extends Product{
         super(productNumber, name, price, description, ecology, stock, image);
         this.color = color;
         this.size = size;
+    }
+
+    @Override
+    public final boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null) return false;
+        Class<?> oEffectiveClass = o instanceof HibernateProxy ? ((HibernateProxy) o).getHibernateLazyInitializer().getPersistentClass() : o.getClass();
+        Class<?> thisEffectiveClass = this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass() : this.getClass();
+        if (thisEffectiveClass != oEffectiveClass) return false;
+        Clothes clothes = (Clothes) o;
+        return getCif() != null && Objects.equals(getCif(), clothes.getCif())
+                && getProductNumber() != null && Objects.equals(getProductNumber(), clothes.getProductNumber());
+    }
+
+    @Override
+    public final int hashCode() {
+        return Objects.hash(getCif(),
+                getProductNumber(),
+                getProductNumber(),
+                getCif());
     }
 }

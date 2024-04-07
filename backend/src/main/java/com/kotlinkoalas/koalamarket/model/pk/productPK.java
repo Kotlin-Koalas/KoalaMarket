@@ -26,4 +26,12 @@ public class productPK implements java.io.Serializable{
         }
         return true;
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 59 * hash + Objects.hashCode(this.productNumber);
+        hash = 59 * hash + Objects.hashCode(this.cif);
+        return hash;
+    }
 }
