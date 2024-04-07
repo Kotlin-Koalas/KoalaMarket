@@ -22,7 +22,6 @@ class MainActivity : AppCompatActivity() {
 
         val signUpButton = findViewById<Button>(R.id.button2)
         signUpButton.setOnClickListener{
-            //TODO codigo para ir al signup
             val IntentS = Intent(this,SignUpComprador::class.java)
             startActivity(IntentS)
         }
@@ -46,6 +45,9 @@ class MainActivity : AppCompatActivity() {
         val logInButton = findViewById<Button>(R.id.button)
         logInButton.setOnClickListener{
             //TODO codigo para logIn
+            //temporal para acceder a la ventana de catalogo
+            val IntentS = Intent(this,BrowseProducts::class.java)
+            startActivity(IntentS)
         }
     }
 }
