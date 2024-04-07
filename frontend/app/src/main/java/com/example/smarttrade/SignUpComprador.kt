@@ -239,7 +239,7 @@ class SignUpComprador : AppCompatActivity() {
 
     private fun showCustomDialogBox(popUpText: String) {
         val dialog = Dialog(this)
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setTitle("ERROR")
         dialog.setCancelable(false)
         dialog.setContentView(R.layout.pop_up_alert)
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))

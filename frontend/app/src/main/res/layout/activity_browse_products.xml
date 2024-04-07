@@ -55,7 +55,7 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:orientation="vertical" />
+                    android:orientation="horizontal" />
             </HorizontalScrollView>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -94,23 +94,17 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent">
 
-        <ScrollView
-            android:id="@+id/scrollViewProducts"
+        <GridView
+            android:id="@+id/gridViewProd"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
+            app:layout_constraintEnd_toEndOf="parent"
+            android:numColumns="2">
 
-            <LinearLayout
-                android:id="@+id/linearLayoutVerticalProd"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-            </LinearLayout>
-        </ScrollView>
+        </GridView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
