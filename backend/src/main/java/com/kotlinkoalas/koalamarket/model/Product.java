@@ -4,11 +4,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@Entity
-@Table(name = "product")
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@Inheritance(strategy = InheritanceType.JOINED)
 @NoArgsConstructor
-public class Product {
+public abstract class Product {
     @Id
     @Column(name = "product_number", length = 30, nullable = false)
     private String productNumber;

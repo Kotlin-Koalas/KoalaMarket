@@ -1,9 +1,7 @@
 package com.kotlinkoalas.koalamarket.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Inheritance;
-import jakarta.persistence.Table;
+import com.kotlinkoalas.koalamarket.model.pk.productPK;
+import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -12,7 +10,16 @@ import lombok.NoArgsConstructor;
 @Data
 @Entity
 @NoArgsConstructor
+@IdClass(value = productPK.class)
 public class Food extends Product{
+    @Id
+    @Column(name = "cif")
+    private String cif;
+
+    @Id
+    @Column(name = "product_number")
+    private String productNumber;
+
     @Column(name = "calories", nullable = false)
     private int calories;
 

@@ -14,6 +14,14 @@ import java.lang.annotation.Inherited;
 @Entity
 @NoArgsConstructor
 public class Clothes extends Product{
+    @Id
+    @Column(name = "cif")
+    private String cif;
+
+    @Id
+    @Column(name = "product_number")
+    private String productNumber;
+
     @Column(name = "color", nullable = false)
     private String color;
 
