@@ -31,6 +31,7 @@ class BrowseProducts : AppCompatActivity() {
     private lateinit var adapterS: SearchAdapter
     private lateinit var adapterCat: CategoryAdapter
     private lateinit var recommendationLayout: ConstraintLayout
+    private lateinit var recommendationRV: RecyclerView
     private var productsShown: MutableList<product_representation> = mutableListOf()
     private var categoriesShown: MutableList<category_representation> = mutableListOf()
     private var prevSearchesShown: MutableList<search_representation> = mutableListOf()
@@ -52,9 +53,10 @@ class BrowseProducts : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_browse_products)
 
+        recommendationRV = findViewById<RecyclerView>(R.id.recyclerViewSearches)
+
         searchBar = findViewById<EditText>(R.id.SearchBar)
 
-        val searchLayout = findViewById<RecyclerView>(R.id.recyclerViewSearches)
         adapterS = SearchAdapter(prevSearchesShown)
 
         val catLayout = findViewById<RecyclerView>(R.id.HorizontalScrollViewCat)
@@ -63,8 +65,8 @@ class BrowseProducts : AppCompatActivity() {
         val gridLayout = findViewById<GridView>(R.id.gridViewProd)
         adapterP = ProductAdapter(mutableListOf())
 
-        searchLayout.adapter = adapterS
-        searchLayout.layoutManager = LinearLayoutManager(this)
+        recommendationRV.adapter = adapterS
+        recommendationRV.layoutManager = LinearLayoutManager(this)
         catLayout.adapter = adapterCat
         catLayout.layoutManager = LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false)
         gridLayout.adapter = adapterP
@@ -79,9 +81,8 @@ class BrowseProducts : AppCompatActivity() {
 
         val topLayout = findViewById<ConstraintLayout>(R.id.constraintLayoutTop)
         recommendationLayout = findViewById<ConstraintLayout>(R.id.recomendationsLayout)
-        val recommendationRV = findViewById<RecyclerView>(R.id.recyclerViewSearches)
         topLayout.bringChildToFront(recommendationLayout)
-        recommendationRV.visibility = View.INVISIBLE
+        recommendationLayout.visibility = View.INVISIBLE
 
         val startSearch = findViewById<ImageView>(R.id.imageViewSearchButton)
         startSearch.setOnClickListener{
@@ -100,11 +101,16 @@ class BrowseProducts : AppCompatActivity() {
 
         searchBar.setOnFocusChangeListener { v, hasFocus ->
             if(hasFocus){
-                recommendationRV.visibility = View.VISIBLE
-                searchBar.background = AppCompatResources.getDrawable(this,R.drawable.searchbar_background_desplegado)
+                recommendationLayout.visibility = View.VISIBLE
+                if(prevSearchesShown.size>0) {
+                    searchBar.background = AppCompatResources.getDrawable(
+                        this,
+                        R.drawable.searchbar_background_desplegado
+                    )
+                }
 
             } else {
-                recommendationRV.visibility = View.INVISIBLE
+                recommendationLayout.visibility = View.INVISIBLE
                 searchBar.background = AppCompatResources.getDrawable(this,R.drawable.rounded_button_cancel)
             }
         }
@@ -120,7 +126,7 @@ class BrowseProducts : AppCompatActivity() {
             if (v is EditText) {
                 val outRect = Rect()
                 val rectRecommended = Rect()
-                recommendationLayout.getGlobalVisibleRect(rectRecommended)
+                recommendationRV.getGlobalVisibleRect(rectRecommended)
                 v.getGlobalVisibleRect(outRect)
                 val isWithinCustomArea = rectRecommended.contains(event.rawX.toInt(), event.rawY.toInt())
                 if (!outRect.contains(event.rawX.toInt(), event.rawY.toInt()) && !isWithinCustomArea) {
