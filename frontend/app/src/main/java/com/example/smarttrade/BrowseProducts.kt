@@ -80,7 +80,9 @@ class BrowseProducts : AppCompatActivity() {
         val topLayout = findViewById<ConstraintLayout>(R.id.constraintLayoutTop)
         val recommendationLayout = findViewById<ConstraintLayout>(R.id.recomendationsLayout)
         topLayout.bringChildToFront(recommendationLayout)
-        recommendationLayout.visibility = View.GONE
+        rectRecommended = Rect()
+        recommendationLayout.getGlobalVisibleRect(rectRecommended)
+        recommendationLayout.visibility = View.INVISIBLE
 
         val startSearch = findViewById<ImageView>(R.id.imageViewSearchButton)
         startSearch.setOnClickListener{
@@ -91,13 +93,12 @@ class BrowseProducts : AppCompatActivity() {
             if(hasFocus){
                 recommendationLayout.visibility = View.VISIBLE
                 searchBar.background = AppCompatResources.getDrawable(this,R.drawable.searchbar_background_desplegado)
+
             } else {
-                recommendationLayout.visibility = View.GONE
+                recommendationLayout.visibility = View.INVISIBLE
                 searchBar.background = AppCompatResources.getDrawable(this,R.drawable.rounded_button_cancel)
             }
         }
-        rectRecommended = Rect()
-        recommendationLayout.getGlobalVisibleRect(rectRecommended)
     }
 
     fun updateSearch(text: String){
@@ -110,8 +111,9 @@ class BrowseProducts : AppCompatActivity() {
             if (v is EditText) {
                 val outRect = Rect()
                 v.getGlobalVisibleRect(outRect)
+                val average = !outRect.contains(event.rawX.toInt(), event.rawY.toInt())
                 val isWithinCustomArea = rectRecommended.contains(event.rawX.toInt(), event.rawY.toInt())
-                Toast.makeText(this, isWithinCustomArea.toString(), Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, rectRecommended.toString(), Toast.LENGTH_SHORT).show()
                 if (!outRect.contains(event.rawX.toInt(), event.rawY.toInt()) || !isWithinCustomArea) {
                     v.clearFocus()
                     val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
