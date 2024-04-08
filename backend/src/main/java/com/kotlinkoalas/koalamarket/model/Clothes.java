@@ -17,15 +17,15 @@ import java.util.Objects;
 @ToString
 @RequiredArgsConstructor
 @Entity
-@IdClass(productPK.class)
+//@IdClass(productPK.class)
 public class Clothes extends Product{
-    @Id
-    @Column(name = "cif")
-    private String cif;
-
-    @Id
-    @Column(name = "product_number")
-    private String productNumber;
+//    @Id
+//    @Column(name = "cif")
+//    private String cif;
+//
+//    @Id
+//    @Column(name = "product_number")
+//    private String productNumber;
 
     @Column(name = "color", nullable = false)
     private String color;

@@ -11,9 +11,8 @@ import java.util.Objects;
 @Setter
 @ToString
 @RequiredArgsConstructor
-//@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-//@Entity
-@MappedSuperclass
+@Inheritance(strategy = InheritanceType.JOINED)
+@Entity
 @IdClass(value = productPK.class)
 public class Product {
     @Id

@@ -12,15 +12,15 @@ import lombok.*;
 @ToString
 @RequiredArgsConstructor
 @Entity
-@IdClass(productPK.class)
+//@IdClass(productPK.class)
 public class Technology extends Product {
-    @Id
-    @Column(name = "cif")
-    private String cif;
-
-    @Id
-    @Column(name = "product_number")
-    private String productNumber;
+//    @Id
+//    @Column(name = "cif")
+//    private String cif;
+//
+//    @Id
+//    @Column(name = "product_number")
+//    private String productNumber;
 
     @Column(name = "electric_Consumption", nullable = false)
     private double electricConsumption;
