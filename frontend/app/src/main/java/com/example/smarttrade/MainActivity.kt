@@ -1,5 +1,6 @@
 package com.example.smarttrade
 
+import android.content.Context
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.os.Bundle
@@ -13,6 +14,8 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.example.smarttrade.nonactivityclasses.PersonBuyer
+import kotlin.concurrent.Volatile
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -20,9 +23,10 @@ class MainActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
 
+        actContext = this
+
         val signUpButton = findViewById<Button>(R.id.button2)
         signUpButton.setOnClickListener{
-            //TODO codigo para ir al signup
             val IntentS = Intent(this,SignUpComprador::class.java)
             startActivity(IntentS)
         }
@@ -38,14 +42,23 @@ class MainActivity : AppCompatActivity() {
                 imageP.setImageResource(R.drawable.eye_open_icon)
             }
         }
-
         val forgotPassword = findViewById<TextView>(R.id.editTextText3)
         forgotPassword.setOnClickListener {
             //TODO codigo para recuperar contraseña
         }
         val logInButton = findViewById<Button>(R.id.button)
         logInButton.setOnClickListener{
-            //TODO codigo para logIn
+            //TODO codigo para logIn y guardar las cosas en singleton
+            //temporal para acceder a la ventana de catalogo
+            val IntentS = Intent(this,BrowseProducts::class.java)
+            startActivity(IntentS)
+        }
+    }
+
+    companion object {
+        private lateinit var actContext:MainActivity
+        fun getContext(): Context {
+            return actContext
         }
     }
 }
