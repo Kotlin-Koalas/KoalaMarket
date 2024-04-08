@@ -123,7 +123,6 @@ class BrowseProducts : AppCompatActivity() {
                 recommendationLayout.getGlobalVisibleRect(rectRecommended)
                 v.getGlobalVisibleRect(outRect)
                 val isWithinCustomArea = rectRecommended.contains(event.rawX.toInt(), event.rawY.toInt())
-                Toast.makeText(this, isWithinCustomArea.toString(), Toast.LENGTH_SHORT).show()
                 if (!outRect.contains(event.rawX.toInt(), event.rawY.toInt()) && !isWithinCustomArea) {
                     v.clearFocus()
                     val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager

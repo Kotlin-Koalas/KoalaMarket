@@ -48,7 +48,7 @@ class MainActivity : AppCompatActivity() {
         }
         val logInButton = findViewById<Button>(R.id.button)
         logInButton.setOnClickListener{
-            //TODO codigo para logIn y guardar las cosas en singleton
+            //TODO codigo para logIn y guardar las cosas en singleton y quitar los temporal
             //temporal para acceder a la ventana de catalogo
             val IntentS = Intent(this,BrowseProducts::class.java)
             startActivity(IntentS)
