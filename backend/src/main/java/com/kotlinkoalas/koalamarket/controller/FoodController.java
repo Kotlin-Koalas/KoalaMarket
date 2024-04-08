@@ -26,6 +26,7 @@ public class FoodController {
 
     @PostMapping("/products/foods")
     public Food newFood(@RequestBody Food food) {
+        System.out.println(food);
         return repository.save(food);
     }
 
@@ -34,9 +35,9 @@ public class FoodController {
     Food replaceFood(@RequestBody Food newFood, @PathVariable String id) {
 
         return repository.findById(id)
-                .map(person -> {
-                    person.setName(newFood.getName());
-                    return repository.save(person);
+                .map(food -> {
+                    food.setName(newFood.getName());
+                    return repository.save(food);
                 })
                 .orElseGet(() -> {
                     newFood.setProductNumber(id);

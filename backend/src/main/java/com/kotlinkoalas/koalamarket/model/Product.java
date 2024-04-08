@@ -1,12 +1,21 @@
 package com.kotlinkoalas.koalamarket.model;
-import jakarta.persistence.*;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
-@Data
-@Inheritance(strategy = InheritanceType.JOINED)
-@NoArgsConstructor
-public abstract class Product {
+import com.kotlinkoalas.koalamarket.model.pk.productPK;
+import jakarta.persistence.*;
+import lombok.*;
+import org.hibernate.proxy.HibernateProxy;
+
+import java.util.Objects;
+
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
+//@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+//@Entity
+@MappedSuperclass
+@IdClass(value = productPK.class)
+public class Product {
     @Id
     @Column(name = "product_number", length = 30, nullable = false)
     private String productNumber;
@@ -33,9 +42,9 @@ public abstract class Product {
     @Column(name = "cif", length = 30, nullable = false)
     private String cif;
 
-    @ManyToOne(fetch = FetchType.EAGER) // Adjust fetch type as needed
-    @JoinColumn(name = "cif", referencedColumnName = "cif") // Match foreign key column names
-    private Vendor Vendor;
+//    @ManyToOne(fetch = FetchType.EAGER) // Adjust fetch type as needed
+//    @JoinColumn(name = "cif", referencedColumnName = "cif") // Match foreign key column names
+//    private Vendor Vendor;
 
     public Product(String productNumber, String name, double price, String description, String ecology, int stock, String image){
         this.productNumber = productNumber;
@@ -45,5 +54,22 @@ public abstract class Product {
         this.ecology = ecology;
         this.stock = stock;
         this.image = image;
+    }
+
+    @Override
+    public final boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null) return false;
+        Class<?> oEffectiveClass = o instanceof HibernateProxy ? ((HibernateProxy) o).getHibernateLazyInitializer().getPersistentClass() : o.getClass();
+        Class<?> thisEffectiveClass = this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass() : this.getClass();
+        if (thisEffectiveClass != oEffectiveClass) return false;
+        Product product = (Product) o;
+        return getProductNumber() != null && Objects.equals(getProductNumber(), product.getProductNumber())
+                && getCif() != null && Objects.equals(getCif(), product.getCif());
+    }
+
+    @Override
+    public final int hashCode() {
+        return Objects.hash(productNumber, cif);
     }
 }
