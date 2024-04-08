@@ -10,7 +10,7 @@
                 </shape>
             </item>
             <item
-                android:drawable="@drawable/drop_down_arrow"
+                android:drawable="@drawable/spinner_dropdown_arrow"
                 android:gravity="end"/>
         </layer-list>
     </item>
