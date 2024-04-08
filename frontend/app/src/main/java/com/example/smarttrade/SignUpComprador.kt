@@ -25,10 +25,10 @@ import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
-import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.example.smarttrade.nonactivityclasses.PersonBuyer
 import org.xmlpull.v1.XmlPullParser
 import java.time.LocalDate
 import java.util.Calendar
@@ -231,6 +231,9 @@ class SignUpComprador : AppCompatActivity() {
             if(popUpOrNot){
                 showCustomDialogBox(popUpText)
             } else  {
+                val person = PersonBuyer
+                person.setName(currName)
+                //y los demas...
                 //TODO code to actually sign up
             }
         }

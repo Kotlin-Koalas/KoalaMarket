@@ -7,6 +7,7 @@ import android.widget.BaseAdapter
 import android.widget.GridLayout
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.smarttrade.nonactivityclasses.ImageURLtoBitmapConverter
 import com.example.smarttrade.nonactivityclasses.LeafColor
 import com.example.smarttrade.nonactivityclasses.product_representation
@@ -53,9 +54,7 @@ class ProductAdapter(
         val imageViewLeaf = view.findViewById<ImageView>(R.id.imageViewLeaf)
 
         // Get the data object for this position
-
-        // Set data to UI elements
-
+        //TODO descomentar codigo que emplee valores reales y quitar el temporal
         //Codigo para cuando la lista este en funcionamiento
         /*
         val bitmap = ImageURLtoBitmapConverter.downloadImage(popularProducts[position].image)
@@ -80,6 +79,11 @@ class ProductAdapter(
         textViewName.text = "Prueba"
         textViewStock.text = "2"
         imageViewLeaf.setImageResource(R.drawable.hoja_roja)
+
+        val productRepresentation = view.findViewById<ConstraintLayout>(R.id.layout)
+        productRepresentation.setOnClickListener {
+            //TODO ir a la pagina del propio producto
+        }
 
         return view
     }

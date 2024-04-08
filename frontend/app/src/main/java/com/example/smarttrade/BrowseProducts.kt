@@ -30,7 +30,7 @@ class BrowseProducts : AppCompatActivity() {
     private lateinit var adapterP: ProductAdapter
     private lateinit var adapterS: SearchAdapter
     private lateinit var adapterCat: CategoryAdapter
-    private lateinit var rectRecommended: Rect
+    private lateinit var recommendationLayout: ConstraintLayout
     private var productsShown: MutableList<product_representation> = mutableListOf()
     private var categoriesShown: MutableList<category_representation> = mutableListOf()
     private var prevSearchesShown: MutableList<search_representation> = mutableListOf()
@@ -47,7 +47,7 @@ class BrowseProducts : AppCompatActivity() {
         //Temporal
         prevSearchesShown.add(search_representation("search de prueba"))
 
-        //TODO add all elements to prevSearchShown
+        //TODO conseguir los datos de la BD y meterlos a la lista prevSearchesShown
 
         enableEdgeToEdge()
         setContentView(R.layout.activity_browse_products)
@@ -69,7 +69,7 @@ class BrowseProducts : AppCompatActivity() {
         catLayout.layoutManager = LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false)
         gridLayout.adapter = adapterP
 
-        //TODO conseguir los datos de la BD y meterlos a la lista popularProducts
+        //TODO conseguir los datos de la BD y meterlos a la lista productsShown
         //Temporal solo para probar
         for(i in 1..30){
             productsShown.add(product_representation("","","",1,LeafColor.GREEN,33))
@@ -78,24 +78,33 @@ class BrowseProducts : AppCompatActivity() {
         adapterP.addAllProducts(productsShown)
 
         val topLayout = findViewById<ConstraintLayout>(R.id.constraintLayoutTop)
-        val recommendationLayout = findViewById<ConstraintLayout>(R.id.recomendationsLayout)
+        recommendationLayout = findViewById<ConstraintLayout>(R.id.recomendationsLayout)
+        val recommendationRV = findViewById<RecyclerView>(R.id.recyclerViewSearches)
         topLayout.bringChildToFront(recommendationLayout)
-        rectRecommended = Rect()
-        recommendationLayout.getGlobalVisibleRect(rectRecommended)
-        recommendationLayout.visibility = View.INVISIBLE
+        recommendationRV.visibility = View.INVISIBLE
 
         val startSearch = findViewById<ImageView>(R.id.imageViewSearchButton)
         startSearch.setOnClickListener{
             //TODO search method
         }
 
+        val fav = findViewById<ImageView>(R.id.imageViewHeart)
+        fav.setOnClickListener{
+            //TODO ir a la ventana de los favs
+        }
+
+        val shoppingCart = findViewById<ImageView>(R.id.imageViewCarrito)
+        shoppingCart.setOnClickListener{
+            //TODO ir a la ventana del carrito
+        }
+
         searchBar.setOnFocusChangeListener { v, hasFocus ->
             if(hasFocus){
-                recommendationLayout.visibility = View.VISIBLE
+                recommendationRV.visibility = View.VISIBLE
                 searchBar.background = AppCompatResources.getDrawable(this,R.drawable.searchbar_background_desplegado)
 
             } else {
-                recommendationLayout.visibility = View.INVISIBLE
+                recommendationRV.visibility = View.INVISIBLE
                 searchBar.background = AppCompatResources.getDrawable(this,R.drawable.rounded_button_cancel)
             }
         }
@@ -110,11 +119,12 @@ class BrowseProducts : AppCompatActivity() {
             val v = currentFocus
             if (v is EditText) {
                 val outRect = Rect()
+                val rectRecommended = Rect()
+                recommendationLayout.getGlobalVisibleRect(rectRecommended)
                 v.getGlobalVisibleRect(outRect)
-                val average = !outRect.contains(event.rawX.toInt(), event.rawY.toInt())
                 val isWithinCustomArea = rectRecommended.contains(event.rawX.toInt(), event.rawY.toInt())
-                Toast.makeText(this, rectRecommended.toString(), Toast.LENGTH_SHORT).show()
-                if (!outRect.contains(event.rawX.toInt(), event.rawY.toInt()) || !isWithinCustomArea) {
+                Toast.makeText(this, isWithinCustomArea.toString(), Toast.LENGTH_SHORT).show()
+                if (!outRect.contains(event.rawX.toInt(), event.rawY.toInt()) && !isWithinCustomArea) {
                     v.clearFocus()
                     val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
                     imm.hideSoftInputFromWindow(v.getWindowToken(), 0)

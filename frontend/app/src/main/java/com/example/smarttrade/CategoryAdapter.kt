@@ -8,6 +8,7 @@ import android.widget.BaseAdapter
 import android.widget.GridLayout
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.example.smarttrade.nonactivityclasses.ImageURLtoBitmapConverter
 import com.example.smarttrade.nonactivityclasses.LeafColor
@@ -46,6 +47,10 @@ class CategoryAdapter(
         val curCat = categories[position]
         val image = holder.itemView.findViewById<ImageView>(R.id.imageViewCat)
         image.setImageResource(curCat.image)
+        val catSelector = holder.itemView.findViewById<ConstraintLayout>(R.id.layout)
+        catSelector.setOnClickListener{
+            //TODO ir a pagina de la categoria
+        }
     }
 
 }

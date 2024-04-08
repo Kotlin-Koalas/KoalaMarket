@@ -14,6 +14,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.example.smarttrade.nonactivityclasses.PersonBuyer
 import kotlin.concurrent.Volatile
 
 class MainActivity : AppCompatActivity() {
@@ -47,7 +48,7 @@ class MainActivity : AppCompatActivity() {
         }
         val logInButton = findViewById<Button>(R.id.button)
         logInButton.setOnClickListener{
-            //TODO codigo para logIn
+            //TODO codigo para logIn y guardar las cosas en singleton
             //temporal para acceder a la ventana de catalogo
             val IntentS = Intent(this,BrowseProducts::class.java)
             startActivity(IntentS)
