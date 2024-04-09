@@ -89,6 +89,7 @@
                     android:orientation="vertical">
 
                     <!---android:visibility="invisible"-->
+                  
 
                     <ImageButton
                         android:id="@+id/uploadImageButton"
@@ -98,6 +99,7 @@
                         android:onClick="uploadImageButton"
                         android:saveEnabled="false"
                         android:scaleType="centerCrop"
+
                         android:visibility="invisible"
                         app:srcCompat="@drawable/add_item"
                         tools:visibility="visible" />
