@@ -657,12 +657,11 @@
                             android:layout_height="match_parent"
                             android:layout_gravity="right"
                             android:layout_marginLeft="8dp"
-                            android:background="@drawable/spinner_background"
+                            android:dropDownSelector="@drawable/dropdown_arrow"
                             android:gravity="bottom"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/imageViewSPM2"
-                            tools:layout_editor_absoluteY="2dp"
-                            />
+                            tools:layout_editor_absoluteY="2dp" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <androidx.constraintlayout.widget.ConstraintLayout
