@@ -2,11 +2,11 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mainAddProduct"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/mainAddProduct"
     android:background="@color/green4"
-    >
+    android:visibility="visible">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout3"
@@ -22,6 +22,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:background="@null"
+            android:onClick="backButtonClick"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -33,7 +34,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:fontFamily="@font/karla"
-            android:text="Upload Item"
+            android:text="Añadir Producto"
             android:textColor="@color/white"
             android:textSize="17sp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -63,10 +64,10 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/guideline2"
-            app:layout_constraintBottom_toBottomOf="parent">
+            app:layout_constraintTop_toTopOf="@+id/guideline2">
 
             <ScrollView
                 android:id="@+id/scrollView2"
@@ -83,12 +84,17 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
+                    <!---android:visibility="invisible"-->
                     <ImageButton
                         android:id="@+id/uploadImageButton"
                         android:layout_width="200dp"
                         android:layout_height="200dp"
                         android:layout_gravity="center"
-                        app:srcCompat="@drawable/add_item" />
+                        android:onClick="uploadImageButton"
+                        android:saveEnabled="false"
+                        android:visibility="invisible"
+                        app:srcCompat="@drawable/add_item"
+                        tools:visibility="visible" />
 
                     <TextView
                         android:id="@+id/textView4"
@@ -96,7 +102,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="20dp"
                         android:fontFamily="@font/karla"
-                        android:text="Product number:"
+                        android:text="Número de producto:"
                         android:textColor="@color/black"
                         android:textSize="17sp" />
 
@@ -108,9 +114,10 @@
                         android:background="@drawable/basic_grey_shape"
                         android:baselineAligned="false"
                         android:ems="10"
+                        android:hint="  9S7174541693"
+                        android:textColorHint="@color/greyLetter"
                         android:inputType="text"
-                        android:hint="  9S7-174541-693"
-                        android:textColor="@color/greyLetter" />
+                        android:textColor="@color/black" />
 
                     <TextView
                         android:id="@+id/textView5"
@@ -118,7 +125,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="20dp"
                         android:fontFamily="@font/karla"
-                        android:text="Product name:"
+                        android:text="Nombre de producto:"
                         android:textColor="@color/black"
                         android:textSize="17sp" />
 
@@ -130,9 +137,10 @@
                         android:background="@drawable/basic_grey_shape"
                         android:baselineAligned="false"
                         android:ems="10"
+                        android:hint="  Ejemplo nombre producto"
+                        android:textColorHint="@color/greyLetter"
                         android:inputType="text"
-                        android:hint="  ProductExampleName"
-                        android:textColor="@color/greyLetter" />
+                        android:textColor="@color/black" />
 
                     <TextView
                         android:id="@+id/textView6"
@@ -140,7 +148,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="20dp"
                         android:fontFamily="@font/karla"
-                        android:text="Category:"
+                        android:text="Categoría:"
                         android:textColor="@color/black"
                         android:textSize="17sp" />
 
@@ -160,7 +168,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="20dp"
                         android:fontFamily="@font/karla"
-                        android:text="Price:"
+                        android:text="Precio:"
                         android:textColor="@color/black"
                         android:textSize="17sp" />
 
@@ -172,9 +180,10 @@
                         android:background="@drawable/basic_grey_shape"
                         android:baselineAligned="false"
                         android:ems="10"
-                        android:inputType="numberDecimal"
                         android:hint=" $88.50"
-                        android:textColor="@color/greyLetter" />
+                        android:textColorHint="@color/greyLetter"
+                        android:inputType="numberDecimal"
+                        android:textColor="@color/black" />
 
                     <TextView
                         android:id="@+id/textView8"
@@ -182,7 +191,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="20dp"
                         android:fontFamily="@font/karla"
-                        android:text="Description:"
+                        android:text="Descripción:"
                         android:textColor="@color/black"
                         android:textSize="17sp" />
 
@@ -194,8 +203,9 @@
                         android:background="@drawable/basic_grey_shape"
                         android:baselineAligned="false"
                         android:ems="10"
-                        android:hint=" Gaming laptop with..."
-                        android:textColor="@color/greyLetter" />
+                        android:hint=" Ordenador gaming portátil con..."
+                        android:textColorHint="@color/greyLetter"
+                        android:textColor="@color/black" />
 
                     <TextView
                         android:id="@+id/textView9"
@@ -203,7 +213,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="20dp"
                         android:fontFamily="@font/karla"
-                        android:text="Ecological certificate:"
+                        android:text="Certificado ecológico:"
                         android:textColor="@color/black"
                         android:textSize="17sp" />
 
@@ -230,7 +240,7 @@
 
                             android:layout_marginStart="16dp"
                             android:fontFamily="@font/karla"
-                            android:text="Upload certificate:"
+                            android:text="Subir certificado:"
                             android:textColor="@color/black"
 
                             android:textSize="17sp"
@@ -244,12 +254,25 @@
                             android:layout_height="32dp"
                             android:layout_marginStart="8dp"
                             android:background="@drawable/ciruclar_button"
-                            android:text="Upload"
+                            android:text="Subir"
                             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                             android:textColor="@color/greyLetter"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/textView10"
                             app:layout_constraintTop_toTopOf="parent" />
+
+                        <ImageView
+                            android:id="@+id/imageViewOkcertificate"
+                            android:layout_width="24dp"
+                            android:layout_height="25dp"
+                            android:layout_marginStart="8dp"
+                            android:visibility="invisible"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/buttonUploadCertificate"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:saveEnabled="false"
+                            tools:visibility="visible"
+                            app:srcCompat="@drawable/ok_download" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -259,21 +282,22 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="20dp"
                         android:fontFamily="@font/karla"
-                        android:text=" Quantity:"
+                        android:text=" Cantidad:"
                         android:textColor="@color/black"
                         android:textSize="17sp" />
 
                     <EditText
-                        android:id="@+id/editTextNumber2"
+                        android:id="@+id/editTextQuantity"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:layout_margin="3dp"
                         android:background="@drawable/basic_grey_shape"
                         android:baselineAligned="false"
                         android:ems="10"
+                        android:hint="89"
+                        android:textColorHint="@color/greyLetter"
                         android:inputType="number"
-                        android:textColor="@color/greyLetter"
-                        android:hint="89" />
+                        android:textColor="@color/black" />
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
@@ -281,28 +305,30 @@
                         android:layout_marginTop="20dp">
 
                         <Button
-                            android:id="@+id/button4"
+                            android:id="@+id/cancelAddButton"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="40dp"
+                            android:layout_marginStart="48dp"
                             android:background="@drawable/ciruclar_button"
+                            android:text="Cancelar"
+                            android:textAllCaps="false"
                             android:textColor="@color/greyLetter"
-                            android:text="Cancel"
-                            app:layout_constraintBottom_toBottomOf="parent"
+                            android:textSize="20sp"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintVertical_bias="0.0" />
+                            app:layout_constraintTop_toTopOf="parent" />
 
                         <Button
-                            android:id="@+id/button3"
+                            android:id="@+id/acceptAddButton"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="32dp"
                             android:background="@drawable/circular_button_green"
-                            android:text="Accept"
+                            android:text="Aceptar"
+                            android:textAllCaps="false"
                             android:textColor="@color/white"
+                            android:textSize="20sp"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toEndOf="@+id/button4"
+                            app:layout_constraintStart_toEndOf="@+id/cancelAddButton"
                             app:layout_constraintTop_toTopOf="parent" />
 
 

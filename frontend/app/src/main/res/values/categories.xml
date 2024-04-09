@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="categoriesApp">
-        <item>Technology</item>
-        <item>Toys</item>
-        <item>Clothes</item>
-        <item>Feeding</item>
+        <item>Tecnología</item>
+        <item>Juguete</item>
+        <item>Ropa</item>
+        <item>Alimentación</item>
     </string-array>
 </resources>
