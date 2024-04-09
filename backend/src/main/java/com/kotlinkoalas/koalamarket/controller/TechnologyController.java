@@ -32,23 +32,23 @@ public class TechnologyController {
     }
 
 
-    @PutMapping("/products/technology/{id}")
-    Technology replaceTechnology(@RequestBody Technology newTechnology, @PathVariable String id) {
-
-        return repository.findById(id)
-                .map(technology -> {
-                    technology.setName(technology.getName());
-                    return repository.save(technology);
-                })
-                .orElseGet(() -> {
-                    newTechnology.setProductNumber(id);
-                    return repository.save(newTechnology);
-                });
+    @PutMapping("/products/technology/{productNumber}")
+    Technology replaceTechnology(@RequestBody Technology newTechnology, @PathVariable String productNumber) {
+        Technology oldTechnology = repository.findByProductNumber(productNumber);
+        oldTechnology.setPrice(newTechnology.getPrice());
+        oldTechnology.setDescription(newTechnology.getDescription());
+        oldTechnology.setBrand(newTechnology.getBrand());
+        oldTechnology.setEcology(newTechnology.getEcology());
+        oldTechnology.setElectricConsumption(newTechnology.getElectricConsumption());
+        oldTechnology.setName(newTechnology.getName());
+        oldTechnology.setStock(newTechnology.getStock());
+        oldTechnology.setImage(newTechnology.getImage());
+        return repository.save(oldTechnology);
     }
 
-    @DeleteMapping("/products/technology/{id}")
-    String deleteTechnology(@PathVariable String id) {
-        repository.deleteById(id);
+    @DeleteMapping("/products/technology/{productNumber}")
+    String deleteTechnology(@PathVariable String productNumber) {
+        repository.deleteByProductNumber(productNumber);
         return "Successfully deleted";
     }
 }

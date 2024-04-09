@@ -26,28 +26,27 @@ public class FoodController {
 
     @PostMapping("/products/foods")
     public Food newFood(@RequestBody Food food) {
-        System.out.println(food);
         return repository.save(food);
     }
 
 
-    @PutMapping("/products/foods/{id}")
-    Food replaceFood(@RequestBody Food newFood, @PathVariable String id) {
-
-        return repository.findById(id)
-                .map(food -> {
-                    food.setName(newFood.getName());
-                    return repository.save(food);
-                })
-                .orElseGet(() -> {
-                    newFood.setProductNumber(id);
-                    return repository.save(newFood);
-                });
+    @PutMapping("/products/foods/{productNumber}")
+    Food replaceFood(@RequestBody Food newFood, @PathVariable String productNumber) {
+        Food oldFood = repository.findByProductNumber(productNumber);
+        oldFood.setPrice(newFood.getPrice());
+        oldFood.setDescription(newFood.getDescription());
+        oldFood.setMacros(newFood.getMacros());
+        oldFood.setEcology(newFood.getEcology());
+        oldFood.setCalories(newFood.getCalories());
+        oldFood.setName(newFood.getName());
+        oldFood.setStock(newFood.getStock());
+        oldFood.setImage(newFood.getImage());
+        return repository.save(oldFood);
     }
 
-    @DeleteMapping("/products/foods/{id}")
-    String deleteFood(@PathVariable String id) {
-        repository.deleteById(id);
+    @DeleteMapping("/products/foods/{productNumber}")
+    String deleteFood(@PathVariable String productNumber) {
+        repository.deleteByProductNumber(productNumber);
         return "Successfully deleted";
     }
 }
