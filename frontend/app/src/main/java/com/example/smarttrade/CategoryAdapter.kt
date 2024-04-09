@@ -1,20 +1,14 @@
 package com.example.smarttrade
 
-import android.media.Image
+
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.BaseAdapter
-import android.widget.GridLayout
 import android.widget.ImageView
-import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
-import com.example.smarttrade.nonactivityclasses.ImageURLtoBitmapConverter
-import com.example.smarttrade.nonactivityclasses.LeafColor
 import com.example.smarttrade.nonactivityclasses.category_representation
-import com.example.smarttrade.nonactivityclasses.product_representation
-
 
 class CategoryAdapter(
     private val categories: MutableList<category_representation>
@@ -48,9 +42,20 @@ class CategoryAdapter(
         val image = holder.itemView.findViewById<ImageView>(R.id.imageViewCat)
         image.setImageResource(curCat.image)
         val catSelector = holder.itemView.findViewById<ConstraintLayout>(R.id.layout)
+
         catSelector.setOnClickListener{
             //TODO ir a pagina de la categoria
-        }
-    }
 
+            val catName = curCat.name
+
+            val intentS = Intent(holder.itemView.context, BrowseProductsFiltered::class.java)
+            intentS.putExtra("categoryName", catName)
+
+            holder.itemView.context.startActivity(intentS)
+
+        }
+
+
+    }
 }
+

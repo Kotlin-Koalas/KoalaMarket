@@ -11,7 +11,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout3"
         android:layout_width="0dp"
-        android:layout_height="80dp"
+        android:layout_height="100dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -20,26 +20,30 @@
             android:id="@+id/BackButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="16dp"
             android:background="@null"
             android:onClick="backButtonClick"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.777"
             app:srcCompat="@drawable/back_white_arrow" />
 
         <TextView
             android:id="@+id/textTittle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
             android:fontFamily="@font/karla"
             android:text="Añadir Producto"
             android:textColor="@color/white"
             android:textSize="17sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/BackButton"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.797" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -85,6 +89,8 @@
                     android:orientation="vertical">
 
                     <!---android:visibility="invisible"-->
+                  
+
                     <ImageButton
                         android:id="@+id/uploadImageButton"
                         android:layout_width="200dp"
@@ -92,6 +98,8 @@
                         android:layout_gravity="center"
                         android:onClick="uploadImageButton"
                         android:saveEnabled="false"
+                        android:scaleType="centerCrop"
+
                         android:visibility="invisible"
                         app:srcCompat="@drawable/add_item"
                         tools:visibility="visible" />
