@@ -39,4 +39,4 @@ jobs:
           path: build/libs
 
       - name: Start backend service
-        run: java ./backend/src/main/java/com/kotlinkoalas/koalamarket/KoalamarketApplication.java
+        run: ./backend/gradlew bootRun
