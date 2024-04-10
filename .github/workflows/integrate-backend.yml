@@ -33,4 +33,4 @@ jobs:
         run: ./backend/gradlew build -p ./backend
 
       - name: Start backend service
-        run: ./backend/gradlew bootRun -p ./backend
+        run: ./backend/gradlew bootRun -p ./backend &
