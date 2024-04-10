@@ -33,8 +33,8 @@ public class Clothes extends Product{
     @Column(name = "size", nullable = false)
     private String size;
 
-    public Clothes(String productNumber, String name, double price, String description, String ecology, int stock, String image, String color, String size){
-        super(productNumber, name, price, description, ecology, stock, image);
+    public Clothes(String productNumber, String name, double price, String description, String ecology, int stock, String image, String cif, String color, String size){
+        super(productNumber, name, price, description, ecology, stock, image, cif);
         this.color = color;
         this.size = size;
     }
