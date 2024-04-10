@@ -34,3 +34,19 @@ jobs:
 
       - name: Start backend service
         run: ./backend/gradlew bootRun -p ./backend &
+
+      - name: Create env file
+        run: |
+          touch koalamarket-env.json
+          echo ${{ secrets.POSTMAN_ENVIRONMENT }} > koalamarket-env.json
+
+      - name: Setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "18"
+
+      - name: Install newman
+        run: npm install -g newman
+
+      - name: Run API tests
+        run: newman run ./koalamarket-apitests.json -e ./koalamarket-env.json

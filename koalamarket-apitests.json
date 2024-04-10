@@ -1,0 +1,504 @@
+{
+	"info": {
+		"_postman_id": "db42e796-1bcf-4602-9ea1-a4cd2868311d",
+		"name": "Koala Market Copy",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "21761187"
+	},
+	"item": [
+		{
+			"name": "Clothes",
+			"item": [
+				{
+					"name": "Create a new piece of clothing Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response is ok\", () => {\r",
+									"    pm.response.to.have.status(200);\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Check clothes response values\", function () {\r",
+									"    // Parse the response JSON\r",
+									"    var responseBody = pm.response.json();\r",
+									"\r",
+									"    // Extract values from the request body\r",
+									"    var productNumber = pm.variables.get(\"productNumber\");\r",
+									"    var name = pm.variables.get(\"name\");\r",
+									"    var price = pm.variables.get(\"price\");\r",
+									"    var description = pm.variables.get(\"description\");\r",
+									"    var ecology = pm.variables.get(\"ecology\");\r",
+									"    var stock = pm.variables.get(\"stock\");\r",
+									"    var image = pm.variables.get(\"image\");\r",
+									"    var cif = pm.variables.get(\"cif\");\r",
+									"    var color = pm.variables.get(\"color\");\r",
+									"    var size = pm.variables.get(\"size\");\r",
+									"\r",
+									"    // Check if response values match the request values\r",
+									"    pm.expect(responseBody.productNumber).to.eql(productNumber);\r",
+									"    pm.expect(responseBody.name).to.eql(name);\r",
+									"    pm.expect(responseBody.price).to.eql(price);\r",
+									"    pm.expect(responseBody.description).to.eql(description);\r",
+									"    pm.expect(responseBody.ecology).to.eql(ecology);\r",
+									"    pm.expect(responseBody.stock).to.eql(stock);\r",
+									"    pm.expect(responseBody.image).to.eql(image);\r",
+									"    pm.expect(responseBody.cif).to.eql(cif);\r",
+									"    pm.expect(responseBody.color).to.eql(color);\r",
+									"    pm.expect(responseBody.size).to.eql(size);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.variables.set(\"productNumber\", utils.generateProductNumber())\r",
+									"pm.variables.set(\"name\", utils.generateName())\r",
+									"pm.variables.set(\"price\", utils.generatePrice())\r",
+									"pm.variables.set(\"description\", utils.generateDescription())\r",
+									"pm.variables.set(\"ecology\", utils.generateEcology())\r",
+									"pm.variables.set(\"stock\", utils.generateStock())\r",
+									"pm.variables.set(\"image\", utils.generateImage())\r",
+									"pm.variables.set(\"cif\", utils.generateCIF())\r",
+									"pm.variables.set(\"color\", utils.generateColor())\r",
+									"pm.variables.set(\"size\", utils.generateSize())"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"productNumber\": \"{{productNumber}}\",\r\n    \"name\": \"{{name}}\",\r\n    \"price\": {{price}},\r\n    \"description\": \"{{description}}\",\r\n    \"ecology\": \"{{ecology}}\",\r\n    \"stock\": {{stock}},\r\n    \"image\": \"{{image}}\",\r\n    \"cif\": \"{{cif}}\",\r\n    \"color\": \"{{color}}\",\r\n    \"size\": \"{{size}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/products/clothes",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"products",
+								"clothes"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Food",
+			"item": [
+				{
+					"name": "Create a new food product",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.variables.set(\"productNumber\", utils.generateProductNumber())\r",
+									"pm.variables.set(\"name\", utils.generateName())\r",
+									"pm.variables.set(\"price\", utils.generatePrice())\r",
+									"pm.variables.set(\"description\", utils.generateDescription())\r",
+									"pm.variables.set(\"ecology\", utils.generateEcology())\r",
+									"pm.variables.set(\"stock\", utils.generateStock())\r",
+									"pm.variables.set(\"image\", utils.generateImage())\r",
+									"pm.variables.set(\"cif\", utils.generateCIF())\r",
+									"pm.variables.set(\"calories\", utils.generateCalories())\r",
+									"pm.variables.set(\"macros\", utils.generateMacros())"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response is ok\", () => {\r",
+									"    pm.response.to.have.status(200);\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Check foods response values\", function () {\r",
+									"    // Parse the response JSON\r",
+									"    var responseBody = pm.response.json();\r",
+									"\r",
+									"    // Extract values from the request body\r",
+									"    var productNumber = pm.variables.get(\"productNumber\");\r",
+									"    var name = pm.variables.get(\"name\");\r",
+									"    var price = pm.variables.get(\"price\");\r",
+									"    var description = pm.variables.get(\"description\");\r",
+									"    var ecology = pm.variables.get(\"ecology\");\r",
+									"    var stock = pm.variables.get(\"stock\");\r",
+									"    var image = pm.variables.get(\"image\");\r",
+									"    var cif = pm.variables.get(\"cif\");\r",
+									"    var calories = pm.variables.get(\"calories\");\r",
+									"    var macros = pm.variables.get(\"macros\");\r",
+									"\r",
+									"    // Check if response values match the request values\r",
+									"    pm.expect(responseBody.productNumber).to.eql(productNumber);\r",
+									"    pm.expect(responseBody.name).to.eql(name);\r",
+									"    pm.expect(responseBody.price).to.eql(price);\r",
+									"    pm.expect(responseBody.description).to.eql(description);\r",
+									"    pm.expect(responseBody.ecology).to.eql(ecology);\r",
+									"    pm.expect(responseBody.stock).to.eql(stock);\r",
+									"    pm.expect(responseBody.image).to.eql(image);\r",
+									"    pm.expect(responseBody.cif).to.eql(cif);\r",
+									"    pm.expect(responseBody.calories).to.eql(calories);\r",
+									"    pm.expect(responseBody.macros.replace(/\"/g, '\\\\\"')).to.eql(macros);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"productNumber\": \"{{productNumber}}\",\r\n    \"name\": \"{{name}}\",\r\n    \"price\": {{price}},\r\n    \"description\": \"{{description}}\",\r\n    \"ecology\": \"{{ecology}}\",\r\n    \"stock\": {{stock}},\r\n    \"image\": \"{{image}}\",\r\n    \"cif\": \"{{cif}}\",\r\n    \"calories\": {{calories}},\r\n    \"macros\": \"{{macros}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/products/foods",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"products",
+								"foods"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Technology",
+			"item": [
+				{
+					"name": "Create a new piece of clothing",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response is ok\", () => {\r",
+									"    pm.response.to.have.status(200);\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Check clothes response values\", function () {\r",
+									"    // Parse the response JSON\r",
+									"    var responseBody = pm.response.json();\r",
+									"\r",
+									"    // Extract values from the request body\r",
+									"    var productNumber = pm.variables.get(\"productNumber\");\r",
+									"    var name = pm.variables.get(\"name\");\r",
+									"    var price = pm.variables.get(\"price\");\r",
+									"    var description = pm.variables.get(\"description\");\r",
+									"    var ecology = pm.variables.get(\"ecology\");\r",
+									"    var stock = pm.variables.get(\"stock\");\r",
+									"    var image = pm.variables.get(\"image\");\r",
+									"    var cif = pm.variables.get(\"cif\");\r",
+									"    var electricConsumption = pm.variables.get(\"electricConsumption\");\r",
+									"    var brand = pm.variables.get(\"brand\");\r",
+									"\r",
+									"    // Check if response values match the request values\r",
+									"    pm.expect(responseBody.productNumber).to.eql(productNumber);\r",
+									"    pm.expect(responseBody.name).to.eql(name);\r",
+									"    pm.expect(responseBody.price).to.eql(price);\r",
+									"    pm.expect(responseBody.description).to.eql(description);\r",
+									"    pm.expect(responseBody.ecology).to.eql(ecology);\r",
+									"    pm.expect(responseBody.stock).to.eql(stock);\r",
+									"    pm.expect(responseBody.image).to.eql(image);\r",
+									"    pm.expect(responseBody.cif).to.eql(cif);\r",
+									"    pm.expect(responseBody.electricConsumption).to.eql(electricConsumption);\r",
+									"    pm.expect(responseBody.brand).to.eql(brand);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.variables.set(\"productNumber\", utils.generateProductNumber())\r",
+									"pm.variables.set(\"name\", utils.generateName())\r",
+									"pm.variables.set(\"price\", utils.generatePrice())\r",
+									"pm.variables.set(\"description\", utils.generateDescription())\r",
+									"pm.variables.set(\"ecology\", utils.generateEcology())\r",
+									"pm.variables.set(\"stock\", utils.generateStock())\r",
+									"pm.variables.set(\"image\", utils.generateImage())\r",
+									"pm.variables.set(\"cif\", utils.generateCIF())\r",
+									"pm.variables.set(\"electricConsumption\", utils.generateElectricConsumption())\r",
+									"pm.variables.set(\"brand\", utils.generateBrand())"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"productNumber\": \"{{productNumber}}\",\r\n    \"name\": \"{{name}}\",\r\n    \"price\": {{price}},\r\n    \"description\": \"{{description}}\",\r\n    \"ecology\": \"{{ecology}}\",\r\n    \"stock\": {{stock}},\r\n    \"image\": \"{{image}}\",\r\n    \"cif\": \"{{cif}}\",\r\n    \"electricConsumption\": \"{{electricConsumption}}\",\r\n    \"brand\": \"{{brand}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/products/technology",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"products",
+								"technology"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Status",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"response is 200 - api status ok\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"})"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}",
+					"host": [
+						"{{baseUrl}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					"utils = {\r",
+					"    generateCIF: () => {\r",
+					"        // Generate a random number between 1 and 99999999\r",
+					"        let randomNumber = Math.floor(Math.random() * 99999999) + 1;\r",
+					"\r",
+					"        // Define the letters used in the DNI\r",
+					"        const dniLetters = \"TRWAGMYFPDXBNJZSQVHLCKE\";\r",
+					"\r",
+					"        // Calculate the letter corresponding to the random number\r",
+					"        let letterIndex = randomNumber % 23;\r",
+					"        let letter = dniLetters.charAt(letterIndex);\r",
+					"\r",
+					"        // Format the number with leading zeros and return the DNI number\r",
+					"        let formattedNumber = randomNumber.toString().padStart(8, '0');\r",
+					"        return formattedNumber + letter;\r",
+					"    },\r",
+					"\r",
+					"    generateName: () => {\r",
+					"        const firstNames = [\"John\", \"Emma\", \"Michael\", \"Sophia\", \"James\", \"Olivia\", \"William\", \"Ava\", \"David\", \"Isabella\", \"Joseph\", \"Mia\", \"Daniel\", \"Charlotte\", \"Jacob\", \"Amelia\", \"Matthew\", \"Evelyn\", \"Samuel\", \"Abigail\"];\r",
+					"        const lastNames = [\"Smith\", \"Johnson\", \"Williams\", \"Brown\", \"Jones\", \"Garcia\", \"Miller\", \"Davis\", \"Rodriguez\", \"Martinez\", \"Hernandez\", \"Lopez\", \"Gonzalez\", \"Wilson\", \"Anderson\", \"Thomas\", \"Taylor\", \"Moore\", \"Jackson\", \"Martin\"];\r",
+					"\r",
+					"        const randomFirstNameIndex = Math.floor(Math.random() * firstNames.length);\r",
+					"        const randomLastNameIndex = Math.floor(Math.random() * lastNames.length);\r",
+					"\r",
+					"        const randomFirstName = firstNames[randomFirstNameIndex];\r",
+					"        const randomLastName = lastNames[randomLastNameIndex];\r",
+					"\r",
+					"        return `${randomFirstName} ${randomLastName}`;\r",
+					"    },\r",
+					"\r",
+					"    generateProductNumber: () => {\r",
+					"        // Generate a random alphanumeric part number\r",
+					"        const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';\r",
+					"        let partNumber = '';\r",
+					"\r",
+					"        for (let i = 0; i < 8; i++) {\r",
+					"            // Randomly select a character from the characters string\r",
+					"            const randomIndex = Math.floor(Math.random() * characters.length);\r",
+					"            partNumber += characters.charAt(randomIndex);\r",
+					"        }\r",
+					"\r",
+					"        // Return the generated part number\r",
+					"        return partNumber;\r",
+					"    },\r",
+					"\r",
+					"    generateSize: () => {\r",
+					"        // Array of available shirt sizes with shorter representations\r",
+					"        const sizes = [\"XS\", \"S\", \"M\", \"L\", \"XL\", \"2XL\", \"3XL\"];\r",
+					"\r",
+					"        // Generate a random index to select a size from the array\r",
+					"        const randomIndex = Math.floor(Math.random() * sizes.length);\r",
+					"\r",
+					"        // Return the randomly selected shirt size\r",
+					"        return sizes[randomIndex];\r",
+					"    },\r",
+					"\r",
+					"    generatePrice: () => {\r",
+					"        return Math.random() * (200);\r",
+					"    },\r",
+					"\r",
+					"    generateDescription: () => {\r",
+					"        const adjectives = [\"Premium\", \"High-quality\", \"Eco-friendly\", \"Luxurious\", \"Innovative\", \"Durable\", \"Handcrafted\", \"Sleek\", \"Modern\", \"Vintage\"];\r",
+					"        const materials = [\"wood\", \"metal\", \"glass\", \"plastic\", \"leather\", \"ceramic\", \"fabric\", \"stone\", \"bamboo\", \"paper\"];\r",
+					"        const features = [\"waterproof\", \"foldable\", \"wireless\", \"rechargeable\", \"adjustable\", \"heat-resistant\", \"shockproof\", \"UV-resistant\", \"scratch-resistant\", \"non-toxic\"];\r",
+					"\r",
+					"        // Randomly select adjectives, materials, and features to create a description\r",
+					"        const randomAdjective = adjectives[Math.floor(Math.random() * adjectives.length)];\r",
+					"        const randomMaterial = materials[Math.floor(Math.random() * materials.length)];\r",
+					"        const randomFeature = features[Math.floor(Math.random() * features.length)];\r",
+					"\r",
+					"        // Construct the product description\r",
+					"        const description = `${randomAdjective} ${randomMaterial} ${randomFeature} product`;\r",
+					"\r",
+					"        return description;\r",
+					"    },\r",
+					"\r",
+					"    generateEcology: () => {\r",
+					"        const colors = [\"red\", \"orange\", \"yellow\", \"green\", \"blue\"];\r",
+					"        return colors[Math.floor(Math.random() * colors.length)];\r",
+					"    },\r",
+					"\r",
+					"    generateStock: () => {\r",
+					"        return Math.floor(Math.random() * 500);\r",
+					"    },\r",
+					"\r",
+					"    generateImage: () => {\r",
+					"        const width = Math.floor(Math.random() * 1000) + 1; // Set a fixed width\r",
+					"        const height = Math.floor(Math.random() * 1000) + 1; // Set a fixed height\r",
+					"        // Generate a random number for the image ID\r",
+					"        const imageId = Math.floor(Math.random() * 1000) + 1;\r",
+					"        // Construct the URL using the generated ID and fixed width and height\r",
+					"        return `https://kotlin.koalas/id/${imageId}/${width}/${height}`;\r",
+					"    },\r",
+					"\r",
+					"    generateColor: () => {\r",
+					"        // List of color names\r",
+					"        const colors = [\"red\", \"orange\", \"yellow\", \"green\", \"blue\", \"purple\", \"pink\", \"brown\", \"black\", \"white\", \"gray\"];\r",
+					"\r",
+					"        // Generate a random index to select a color from the list\r",
+					"        const randomIndex = Math.floor(Math.random() * colors.length);\r",
+					"\r",
+					"        // Return the randomly selected color\r",
+					"        return colors[randomIndex]; \r",
+					"    },\r",
+					"\r",
+					"    generateCalories: () => {\r",
+					"        return Math.floor(Math.random() * 1000);\r",
+					"    },\r",
+					"\r",
+					"    generateMacros: () => {\r",
+					"        return JSON.stringify({\r",
+					"            protein: Math.floor(Math.random() * 100),\r",
+					"            carbohydrate: Math.floor(Math.random() * 100),\r",
+					"            fat: Math.floor(Math.random() * 100),\r",
+					"        }).replace(/\"/g, '\\\\\"')\r",
+					"    },\r",
+					"\r",
+					"    generateElectricConsumption: () => {\r",
+					"        return Math.random() * 100;\r",
+					"    },\r",
+					"\r",
+					"    generateBrand: () => {\r",
+					"        const brands = [\r",
+					"            \"Apple\",\r",
+					"            \"Samsung\",\r",
+					"            \"Google\",\r",
+					"            \"Microsoft\",\r",
+					"            \"Sony\",\r",
+					"            \"Lenovo\",\r",
+					"            \"Dell\",\r",
+					"            \"HP\",\r",
+					"            \"Asus\",\r",
+					"            \"Acer\",\r",
+					"            \"Huawei\",\r",
+					"            \"Xiaomi\",\r",
+					"            \"OnePlus\",\r",
+					"            \"LG\",\r",
+					"            \"Toshiba\",\r",
+					"            \"IBM\",\r",
+					"            \"Nokia\",\r",
+					"            \"HTC\",\r",
+					"            \"Motorola\",\r",
+					"            \"Amazon\",\r",
+					"            \"Fitbit\",\r",
+					"            \"Garmin\",\r",
+					"            \"Cisco\",\r",
+					"            \"Intel\",\r",
+					"            \"AMD\",\r",
+					"            \"Nvidia\",\r",
+					"            \"Qualcomm\",\r",
+					"            \"Western Digital\",\r",
+					"            \"Seagate\"\r",
+					"        ];\r",
+					"\r",
+					"        const randomIndex = Math.floor(Math.random() * brands.length);\r",
+					"        return brands[randomIndex];\r",
+					"    }\r",
+					"}\r",
+					"\r",
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
