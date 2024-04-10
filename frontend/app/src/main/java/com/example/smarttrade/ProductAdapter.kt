@@ -4,18 +4,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
-import android.widget.GridLayout
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
-import com.example.smarttrade.nonactivityclasses.ImageURLtoBitmapConverter
-import com.example.smarttrade.nonactivityclasses.LeafColor
 import com.example.smarttrade.nonactivityclasses.product_representation
 
 
 class ProductAdapter(
     private val popularProducts: MutableList<product_representation>
 ) : BaseAdapter() {
+
+
     override fun getCount(): Int {
         return popularProducts.count()
     }
@@ -28,19 +27,28 @@ class ProductAdapter(
         return popularProducts.get(position).PN
     }
 
-    fun addProductToList(product: product_representation){
+    fun addProductToList(product: product_representation) {
         popularProducts.add(product)
     }
-    fun notifyAddedProduct(product: product_representation){
+
+    fun notifyAddedProduct(product: product_representation) {
         notifyDataSetChanged()
     }
 
-    fun addAllProducts(productList: MutableList<product_representation>){
-        for(product in productList) {
+    fun addAllProducts(productList: MutableList<product_representation>) {
+        for (product in productList) {
             popularProducts.add(product)
         }
         notifyDataSetChanged()
     }
+
+    fun updateProducts(updateProductList: MutableList<product_representation>) {
+        popularProducts.clear()
+        popularProducts.addAll(updateProductList)
+        notifyDataSetChanged()
+    }
+
+
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         val view = convertView ?: LayoutInflater.from(parent?.context)
