@@ -1,7 +1,5 @@
 package com.example.smarttrade
 
-import android.app.appsearch.AppSearchManager.SearchContext
-import android.content.Context
 import android.graphics.Rect
 import android.os.Bundle
 import android.view.MotionEvent
@@ -9,20 +7,18 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.GridView
-import android.widget.HorizontalScrollView
 import android.widget.ImageView
-import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.smarttrade.logic.logic
 import com.example.smarttrade.nonactivityclasses.LeafColor
 import com.example.smarttrade.nonactivityclasses.category_representation
 import com.example.smarttrade.nonactivityclasses.product_representation
 import com.example.smarttrade.nonactivityclasses.search_representation
-import kotlin.properties.Delegates
 
 class BrowseProducts : AppCompatActivity() {
 
@@ -35,6 +31,7 @@ class BrowseProducts : AppCompatActivity() {
     private var productsShown: MutableList<product_representation> = mutableListOf()
     private var categoriesShown: MutableList<category_representation> = mutableListOf()
     private var prevSearchesShown: MutableList<search_representation> = mutableListOf()
+    private var productsFiltered : MutableList<product_representation> = mutableListOf()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -73,8 +70,11 @@ class BrowseProducts : AppCompatActivity() {
 
         //TODO conseguir los datos de la BD y meterlos a la lista productsShown
         //Temporal solo para probar
-        for(i in 1..30){
+        for(i in 1..5){
             productsShown.add(product_representation("","","",1,LeafColor.GREEN,33))
+            productsShown.add(product_representation("aab","","",1,LeafColor.GREEN,33))
+            productsShown.add(product_representation("aaaab","","",1,LeafColor.GREEN,33))
+
         }
 
         adapterP.addAllProducts(productsShown)
@@ -86,7 +86,8 @@ class BrowseProducts : AppCompatActivity() {
 
         val startSearch = findViewById<ImageView>(R.id.imageViewSearchButton)
         startSearch.setOnClickListener{
-            //TODO search method
+            val searchItem = searchBar.text.toString().toLowerCase().trim()
+            filterProduct(searchItem)
         }
 
         val fav = findViewById<ImageView>(R.id.imageViewHeart)
@@ -119,6 +120,7 @@ class BrowseProducts : AppCompatActivity() {
         searchBar.setText(text)
     }
 
+
     override fun dispatchTouchEvent(event: MotionEvent): Boolean {
         if (event.action == MotionEvent.ACTION_DOWN) {
             val v = currentFocus
@@ -145,6 +147,13 @@ class BrowseProducts : AppCompatActivity() {
         fun updateSearch(text:String) {
             browseProducts.updateSearch(text)
         }
+    }
+
+    val logic = logic()
+    private fun filterProduct(searchItem :String){
+        productsFiltered.clear()
+        productsFiltered.addAll(logic.filterProduct(productsShown, searchItem))
+        adapterP.updateProducts(productsFiltered)
     }
 
 

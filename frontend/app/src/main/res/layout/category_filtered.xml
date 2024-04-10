@@ -19,7 +19,7 @@
             android:id="@+id/imageButtonBackfilter"
             android:layout_width="33dp"
             android:layout_height="34dp"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="8dp"
 
             android:background="@null"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -32,7 +32,6 @@
             android:id="@+id/textViewNameCategory"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
             android:layout_marginBottom="8dp"
             android:fontFamily="@font/karla"
             android:text="Categoría "
@@ -44,16 +43,36 @@
             app:layout_constraintVertical_bias="0.694" />
 
         <ImageButton
-            android:id="@+id/imageButton2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="18dp"
+            android:id="@+id/imageButtonSearch"
+            android:layout_width="34dp"
+            android:layout_height="35dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
             android:background="@null"
             app:layout_constraintBottom_toBottomOf="parent"
+
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.6"
             app:srcCompat="@drawable/search_icon" />
+
+        <EditText
+            android:id="@+id/SearchBarFiltered"
+            android:layout_width="180dp"
+            android:layout_height="36dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/rounded_button_cancel"
+            android:ems="10"
+            android:hint="Search..."
+            android:inputType="text"
+            android:paddingHorizontal="15dp"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/imageButtonSearch"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.6" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -71,6 +90,7 @@
             android:id="@+id/gridViewCategories"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginBottom="60dp"
             android:background="@color/white"
             android:gravity="center"
             android:numColumns="2"
@@ -79,8 +99,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
