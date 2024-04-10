@@ -32,9 +32,6 @@ jobs:
       - name: Build with Gradle
         run: ./backend/gradlew build -p ./backend
 
-      - name: Start backend service
-        run: ./backend/gradlew bootRun -p ./backend &
-
       - name: Create env file
         run: |
           touch koalamarket-env.json
@@ -48,5 +45,18 @@ jobs:
       - name: Install newman
         run: npm install -g newman
 
+      - name: Start backend service
+        run: |
+          nohup ./backend/gradlew bootRun -p ./backend &
+          PID=$!
+          echo "Spring Boot application PID: $PID" >> application.log
+
       - name: Run API tests
         run: newman run ./koalamarket-apitests.json -e ./koalamarket-env.json
+
+      - name: Stop Spring Boot application
+        run: |
+          if [[ $(ps -p $PID | wc -l) -gt 1 ]]; then
+            kill $PID
+            echo "Spring Boot application stopped." >> application.log
+          fi
