@@ -28,8 +28,8 @@ public class Technology extends Product {
     @Column(name = "brand", nullable = false)
     private String brand;
 
-    public Technology(String productNumber, String name, double price, String description, String ecology, int stock, String image, double electricConsumption, String brand){
-        super(productNumber, name, price, description, ecology, stock, image);
+    public Technology(String productNumber, String name, double price, String description, String ecology, int stock, String image,String cif, double electricConsumption, String brand){
+        super(productNumber, name, price, description, ecology, stock, image, cif);
         this.electricConsumption = electricConsumption;
         this.brand = brand;
     }

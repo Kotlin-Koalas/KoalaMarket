@@ -1,10 +1,13 @@
 package com.kotlinkoalas.koalamarket.controller;
 
+import com.kotlinkoalas.koalamarket.factory.FoodFactory;
+import com.kotlinkoalas.koalamarket.factory.ProductFactory;
 import com.kotlinkoalas.koalamarket.model.Food;
 import com.kotlinkoalas.koalamarket.repo.FoodRepository;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class FoodController {
@@ -20,27 +23,37 @@ public class FoodController {
         return repository.findAll();
     }
 
-//    @GetMapping("/persons/{id}")
-//    Person one(@PathVariable Long id) {
-//    }
-
     @PostMapping("/products/foods")
-    public Food newFood(@RequestBody Food food) {
+    public Food newFood(@RequestBody Map<String, Object> payload) {
+        String productNumber = (String) payload.get("productNumber");
+        String name = (String) payload.get("name");
+        double price = (double) payload.get("price");
+        String description = (String) payload.get("description");
+        String ecology = (String) payload.get("ecology");
+        int stock = (int) payload.get("stock");
+        String image = (String) payload.get("image");
+        String cif = (String) payload.get("cif");
+        String calories = (String) payload.get("calories");
+        String macros = (String) payload.get("macros");
+
+        ProductFactory FoodFactory = new FoodFactory();
+        Food food = (Food) FoodFactory.createProduct(productNumber, name, price, description, ecology, stock, image, cif, calories, macros);
+
         return repository.save(food);
     }
 
 
     @PutMapping("/products/foods/{productNumber}")
-    Food replaceFood(@RequestBody Food newFood, @PathVariable String productNumber) {
+    Food replaceFood(@RequestBody Map<String, Object> payload, @PathVariable String productNumber) {
         Food oldFood = repository.findByProductNumber(productNumber);
-        oldFood.setPrice(newFood.getPrice());
-        oldFood.setDescription(newFood.getDescription());
-        oldFood.setMacros(newFood.getMacros());
-        oldFood.setEcology(newFood.getEcology());
-        oldFood.setCalories(newFood.getCalories());
-        oldFood.setName(newFood.getName());
-        oldFood.setStock(newFood.getStock());
-        oldFood.setImage(newFood.getImage());
+        oldFood.setPrice((double) payload.get("price"));
+        oldFood.setDescription((String) payload.get("description"));
+        oldFood.setMacros((String) payload.get("macros"));
+        oldFood.setEcology((String) payload.get("ecology"));
+        oldFood.setCalories((Integer) payload.get("calories"));
+        oldFood.setName((String) payload.get("name"));
+        oldFood.setStock((int) payload.get("stock"));
+        oldFood.setImage((String) payload.get("image"));
         return repository.save(oldFood);
     }
 

@@ -45,7 +45,7 @@ public class Product {
 //    @JoinColumn(name = "cif", referencedColumnName = "cif") // Match foreign key column names
 //    private Vendor Vendor;
 
-    public Product(String productNumber, String name, double price, String description, String ecology, int stock, String image){
+    public Product(String productNumber, String name, double price, String description, String ecology, int stock, String image,String cif) {
         this.productNumber = productNumber;
         this.name = name;
         this.price = price;
@@ -53,6 +53,7 @@ public class Product {
         this.ecology = ecology;
         this.stock = stock;
         this.image = image;
+        this.cif = cif;
     }
 
     @Override
