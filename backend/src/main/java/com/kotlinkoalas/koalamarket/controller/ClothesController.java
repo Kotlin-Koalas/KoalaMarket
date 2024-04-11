@@ -29,7 +29,7 @@ public class ClothesController {
 //    Person one(@PathVariable Long id) {
 //    }
 
-    @PostMapping("/products/foods")
+    @PostMapping("/products/clothes")
     public Clothes newClothes(@RequestBody Map<String, Object> payload) {
         String productNumber = (String) payload.get("productNumber");
         String name = (String) payload.get("name");

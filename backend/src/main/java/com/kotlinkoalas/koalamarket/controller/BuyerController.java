@@ -47,13 +47,13 @@ public class BuyerController {
     }
 
     @PostMapping("/buyers/login")
-    public ResponseEntity<String> login(@RequestBody Buyer buyer) {
+    public Buyer login(@RequestBody Buyer buyer) {
         Buyer existingBuyer = repository.findByDni(buyer.getDni());
 
         if (existingBuyer != null && Objects.equals(existingBuyer.getDni(), buyer.getDni())) {
-            return ResponseEntity.ok("Login successful");
+            return existingBuyer;
         } else {
-            return ResponseEntity.status(401).body("Invalid username or password");
+            return new Buyer();
         }
     }
 
