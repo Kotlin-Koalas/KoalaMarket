@@ -32,10 +32,10 @@ jobs:
       - name: Build with Gradle
         run: ./backend/gradlew build -p ./backend
 
-      # - name: Create env file
-      #   run: |
-      #     touch koalamarket-env.json
-      #     echo "${{ secrets.POSTMAN_ENVIRONMENT }}" > koalamarket-env.json
+      - name: Create env file
+        run: |
+          touch koalamarket-env.json
+          echo "${{ secrets.POSTMAN_ENVIRONMENT }}" > koalamarket-env.json
 
       # - name: Setup node
       #   uses: actions/setup-node@v4
