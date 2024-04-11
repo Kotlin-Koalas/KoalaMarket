@@ -1,9 +1,6 @@
 package com.kotlinkoalas.koalamarket.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.proxy.HibernateProxy;
 
@@ -14,7 +11,7 @@ import java.util.Objects;
 @ToString
 @RequiredArgsConstructor
 @Entity
-@Table(name = "client")
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Client {
     @Id
     @Column(name = "dni", length = 30, nullable = false)
