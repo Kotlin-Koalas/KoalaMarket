@@ -174,7 +174,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"productNumber\": \"{{productNumber}}\",\r\n    \"name\": \"{{name}}\",\r\n    \"price\": {{price}},\r\n    \"description\": \"{{description}}\",\r\n    \"ecology\": \"{{ecology}}\",\r\n    \"stock\": {{stock}},\r\n    \"image\": \"{{image}}\",\r\n    \"cif\": \"{{cif}}\",\r\n    \"calories\": {{calories}},\r\n    \"macros\": \"{{macros}}\"\r\n}",
+							"raw": "{\r\n    \"productNumber\": \"{{productNumber}}\",\r\n    \"name\": \"{{name}}\",\r\n    \"price\": {{price}},\r\n    \"description\": \"{{description}}\",\r\n    \"ecology\": \"{{ecology}}\",\r\n    \"stock\": {{stock}},\r\n    \"image\": \"{{image}}\",\r\n    \"cif\": \"{{cif}}\",\r\n    \"calories\": \"{{calories}}\",\r\n    \"macros\": \"{{macros}}\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
