@@ -12,13 +12,19 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.smarttrade.logic.logic
+import io.ktor.client.*
+import io.ktor.client.engine.cio.*
+import io.ktor.client.request.*
+import io.ktor.client.statement.*
 import com.example.smarttrade.nonactivityclasses.LeafColor
 import com.example.smarttrade.nonactivityclasses.category_representation
 import com.example.smarttrade.nonactivityclasses.product_representation
 import com.example.smarttrade.nonactivityclasses.search_representation
+import kotlinx.coroutines.launch
 
 class BrowseProducts : AppCompatActivity() {
 
@@ -35,6 +41,10 @@ class BrowseProducts : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        val client = HttpClient(CIO)
+        lifecycleScope.launch {
+            val response: HttpResponse = client.get("https://ktor.io/")
+        }
         browseProducts = this
 
         categoriesShown.add(category_representation("toys",R.drawable.icon_toy))
