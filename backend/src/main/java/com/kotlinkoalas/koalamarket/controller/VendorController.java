@@ -48,13 +48,13 @@ public class VendorController {
     }
 
     @PostMapping("/vendors/login")
-    public ResponseEntity<String> login(@RequestBody Vendor vendor) {
+    public Vendor login(@RequestBody Vendor vendor) {
         Vendor existingVendor = repository.findByDni(vendor.getDni());
 
         if (existingVendor != null && Objects.equals(existingVendor.getDni(), vendor.getDni())) {
-            return ResponseEntity.ok("Login successful");
+            return existingVendor;
         } else {
-            return ResponseEntity.status(401).body("Invalid username or password");
+            return new Vendor();
         }
     }
 
