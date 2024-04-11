@@ -88,7 +88,7 @@ object PersonBuyer {
     fun getPaypal(): String {
         return paypal
     }
-    fun addCreditCard(creditCard: String, string: String) {
+    fun addCreditCard(creditCard: CreditCard) {
         creditCards.add(creditCard)
     }
     fun getCreditCards(): MutableList<CreditCard> {
