@@ -1,33 +1,33 @@
 package com.example.smarttrade
 
-import android.content.Intent
-import android.net.Uri
-import android.graphics.Bitmap
-import android.os.Bundle
 import android.app.Dialog
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.VectorDrawable
+import android.net.Uri
+import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Base64
 import android.util.Log
 import android.view.View
 import android.view.Window
-import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.ScrollView
-import android.widget.Spinner
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.PickVisualMediaRequest
-import androidx.activity.result.contract.ActivityResultContracts.*
+import androidx.activity.result.contract.ActivityResultContracts.PickVisualMedia
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.graphics.drawable.toBitmap
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
+import androidx.core.net.toFile
+import java.io.File
+import java.io.FileInputStream
+import java.io.FileOutputStream
 
 class AddProduct :AppCompatActivity() {
 
@@ -37,6 +37,7 @@ class AddProduct :AppCompatActivity() {
     lateinit var uploadImageButton: ImageButton
     lateinit var uploadCertificateButton : Button
     private lateinit var imageCertificate: ImageView
+    private lateinit var encodedImageString :String
 
     private var existProduct = false
 
@@ -170,23 +171,84 @@ class AddProduct :AppCompatActivity() {
         dialog.show()
     }
 
-    fun backButtonClick(view: View) { //TODO cambiar de pagina
-        val backPage = Intent(this, MainActivity::class.java)
-        startActivity(backPage)
+
+    fun convertImageToByteArray(imageFile: File): ByteArray {
+        val fis = FileInputStream(imageFile)
+        val byteArray = ByteArray(imageFile.length().toInt())
+        fis.read(byteArray)
+        fis.close()
+        return byteArray
     }
+
 
     private val pickmedia = registerForActivityResult(PickVisualMedia()) { uri ->
         if (uri != null) {
+            when (uri.scheme) {
+                "file" -> {
+                    val archivoImagen = uri.toFile()
+                    if (archivoImagen.exists()) {
+                        val arregloBytesImagen = convertImageToByteArray(archivoImagen)
+                        encodedImageString = Base64.encodeToString(arregloBytesImagen, Base64.DEFAULT)
+                        uploadImageButton.setImageURI(uri)
+                        isUploadImage = 1
+                    } else {
+                        Log.e("AddProduct", "Archivo no encontrado: $archivoImagen")
+                    }
+                }
+                "content" -> {
+                    try {
+                        val flujoEntrada = contentResolver.openInputStream(uri)
+                        if (flujoEntrada != null) {
+                            val archivoTemporal = crearArchivoTemporalImagen()
+                            val flujoSalida = FileOutputStream(archivoTemporal)
+                            flujoSalida.write(flujoEntrada.readBytes())
+                            flujoSalida.close()
+                            flujoEntrada.close()
+
+                            val arregloBytesImagen = convertImageToByteArray(archivoTemporal)
+                            encodedImageString = Base64.encodeToString(arregloBytesImagen, Base64.DEFAULT)
+                            Log.i("LLEGO",encodedImageString )
+                            uploadImageButton.setImageURI(uri)
+                            isUploadImage = 1
+                        }
+                    } catch (e: Exception) {
+                        Log.e("AddProduct", "Error al obtener los datos de la imagen: $e")
+                    }
+                }
+                else -> { // URL remota o esquema no compatible
+                    Log.w("AddProduct", "Esquema URI no compatible: ${uri.scheme}")
+                }
+            }
+        } else {
+            Log.i("aris", "No seleccionado")
+        }
+
+
+            /*
             uploadImageButton.setImageURI(uri)
+            val imageByteArray = convertImageToByteArray(filePath)
+            encodedImageString = Base64.encodeToString(imageByteArray, Base64.DEFAULT)
+            Log.i("LLEGUE",encodedImageString)
+
              //TODO TAKE URI y guardarla
             isUploadImage = 1
 
 
         } else {
             Log.i("aris", "No seleccionado")
-        }
+        }*/
     }
 
+    fun backButtonClick(view: View) { //TODO cambiar de pagina
+        val backPage = Intent(this, MainActivity::class.java)
+        startActivity(backPage)
+    }
+
+    private fun crearArchivoTemporalImagen(): File {
+        val nombreTemporal = "imagen_temporal_${System.currentTimeMillis()}.jpg"
+        val directorioCache = applicationContext.cacheDir
+        return File(directorioCache, nombreTemporal)
+    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)

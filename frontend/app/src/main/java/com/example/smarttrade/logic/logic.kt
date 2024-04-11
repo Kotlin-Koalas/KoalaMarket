@@ -7,8 +7,8 @@ import com.android.volley.toolbox.Volley
 import com.example.smarttrade.MainActivity
 import com.example.smarttrade.nonactivityclasses.CreditCard
 import com.example.smarttrade.nonactivityclasses.PersonBuyer
+import com.example.smarttrade.nonactivityclasses.PersonSeller
 import com.example.smarttrade.nonactivityclasses.product_representation
-import kotlinx.coroutines.launch
 import org.json.JSONObject
 
 object logic {
@@ -75,5 +75,47 @@ object logic {
                     .show()
             })
         
+    }
+
+    suspend fun loginSeller(email: String, password: String){
+
+        val json = JSONObject()
+        json.put("email", email)
+        json.put("password",password)
+
+        val jsonString = json.toString()
+
+        val queue = Volley.newRequestQueue(MainActivity.getContext())
+
+        val StringRequest = StringRequest(
+            Request.Method.POST, "http://192.168.18.141:8080/buyer/login",
+            {response ->
+                val jsonRes = JSONObject(response)
+                val name = json.getString("name")
+                val surname = json.getString("surname")
+                val emailRes = json.getString("email")
+                val userID = json.getString("userID")
+                val passwordRes = json.getString("password")
+                val cif = json.getString("cif")
+                val iban = json.getString("iban")
+
+                if(name != "null"){
+                    val seller = PersonSeller
+                    seller.setName(name)
+                    seller.setSurname(surname)
+                    seller.setEmail(email)
+                    seller.setUserId(userID)
+                    seller.setPassword(password)
+                    seller.setCIF(cif)
+                    seller.setIBAN(iban)
+                }
+
+            },
+            {error ->
+                Toast.makeText(MainActivity.getContext(), "Error: $error", Toast.LENGTH_SHORT)
+                    .show()
+
+
+            })
     }
 }
