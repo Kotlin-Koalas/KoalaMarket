@@ -1,8 +1,11 @@
 package com.example.smarttrade
 
+import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.content.pm.ActivityInfo
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
@@ -71,10 +74,32 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    fun showCustomDialogBox(popUpText: String) {
+        val dialog = Dialog(this)
+        dialog.setTitle("ERROR")
+        dialog.setCancelable(false)
+        dialog.setContentView(R.layout.pop_up_alert)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        val messageBox = dialog.findViewById<TextView>(R.id.textViewErrorText)
+        val btnOk = dialog.findViewById<Button>(R.id.buttonOkPopUp)
+
+        btnOk.setOnClickListener{
+            dialog.dismiss()
+        }
+        messageBox.text = popUpText
+
+        dialog.show()
+
+    }
+
     companion object {
         private lateinit var actContext:MainActivity
         fun getContext(): Context {
             return actContext
+        }
+        fun popUpError(){
+            actContext.showCustomDialogBox("Error, usuario no registrado, pruebe a crear una cuenta.")
         }
     }
 }
