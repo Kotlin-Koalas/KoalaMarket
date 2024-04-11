@@ -10,7 +10,7 @@ import com.example.smarttrade.nonactivityclasses.product_representation
 import kotlinx.coroutines.launch
 import org.json.JSONObject
 
-class logic {
+object logic {
 //TODO clase para comunicarse mediante el uso de api y conseguir cosas como el LogIn o el SignUp
 
 
