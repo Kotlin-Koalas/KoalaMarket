@@ -37,13 +37,14 @@ public class Product {
     @Column(name = "image", nullable = false)
     private String image;
 
-    @Id // Use a separate ID field if CIF is not unique
+    @Id
     @Column(name = "cif", length = 30, nullable = false)
     private String cif;
 
-//    @ManyToOne(fetch = FetchType.EAGER) // Adjust fetch type as needed
-//    @JoinColumn(name = "cif", referencedColumnName = "cif") // Match foreign key column names
-//    private Vendor Vendor;
+    @OneToOne
+    @JoinColumn(name = "vendor_cif",referencedColumnName = "dni")
+    private Vendor vendor;
+
 
     public Product(String productNumber, String name, double price, String description, String ecology, int stock, String image,String cif) {
         this.productNumber = productNumber;

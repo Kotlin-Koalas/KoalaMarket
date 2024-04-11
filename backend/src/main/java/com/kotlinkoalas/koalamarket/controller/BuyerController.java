@@ -1,11 +1,14 @@
 package com.kotlinkoalas.koalamarket.controller;
 
+import com.kotlinkoalas.koalamarket.model.Address;
 import com.kotlinkoalas.koalamarket.model.Buyer;
+import com.kotlinkoalas.koalamarket.model.CreditCard;
 import com.kotlinkoalas.koalamarket.repo.BuyerRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 @RestController
@@ -20,11 +23,6 @@ public class BuyerController {
     @GetMapping("/buyers")
     List<Buyer> all() {
         return repository.findAll();
-    }
-
-    @PostMapping("/buyers")
-    public Buyer newBuyer(@RequestBody Buyer buyer) {
-        return repository.save(buyer);
     }
 
     @PutMapping("/buyers/{id}")
@@ -47,10 +45,13 @@ public class BuyerController {
     }
 
     @PostMapping("/buyers/login")
-    public Buyer login(@RequestBody Buyer buyer) {
-        Buyer existingBuyer = repository.findByDni(buyer.getDni());
+    public Buyer login(@RequestBody Map<String, Object> payload) {
+        String email = (String) payload.get("email");
+        String password = (String) payload.get("password");
 
-        if (existingBuyer != null && Objects.equals(existingBuyer.getDni(), buyer.getDni())) {
+        Buyer existingBuyer = repository.findByEmail(email);
+
+        if (existingBuyer != null && Objects.equals(existingBuyer.getPassword(), password)) {
             return existingBuyer;
         } else {
             return new Buyer();
@@ -58,14 +59,55 @@ public class BuyerController {
     }
 
     @PostMapping("/buyers/register")
-    public ResponseEntity<String> register(@RequestBody Buyer newBuyer) {
-        Buyer existingBuyer = repository.findByDni(newBuyer.getDni());
+    public ResponseEntity<String> register(@RequestBody Map<String, Object> payload) {
+        String dni = (String) payload.get("dni");
+        String name = (String) payload.get("name");
+        String surname = (String) payload.get("surname");
+        String userID = (String) payload.get("userID");
+        String email = (String) payload.get("email");
+        String password = (String) payload.get("password");
 
-        if (existingBuyer != null) {
-            return ResponseEntity.status(400).body("A buyer with the same DNI already exists");
+        String CVC = (String) payload.get("cvc");
+        String cardNumber = (String) payload.get("cardNumber");
+        String expirationDate = (String) payload.get("expirationDate");
+
+        String shippingAddress = (String) payload.get("shippingAddress");
+        String billingAddress = (String) payload.get("billingAddress");
+
+        String bizum = (String) payload.get("bizum");
+        String paypal = (String) payload.get("paypal");
+
+        Buyer buyer = new Buyer();
+
+        buyer.setDni(dni);
+        buyer.setName(name);
+        buyer.setSurname(surname);
+        buyer.setUserID(userID);
+        buyer.setEmail(email);
+        buyer.setPassword(password);
+        buyer.getBillingAddresses().add(new Address(billingAddress));
+        buyer.getShippingAddresses().add(new Address(shippingAddress));
+
+        if (!cardNumber.isEmpty() || !CVC.isEmpty() || !expirationDate.isEmpty()) {
+            CreditCard creditCard = new CreditCard(CVC, cardNumber, expirationDate);
+            buyer.getCreditCards().add(creditCard);
+        }
+
+        if (!bizum.isEmpty()) {
+            buyer.setBizum(bizum);
+        }
+
+        if (!paypal.isEmpty()) {
+            buyer.setPaypal(paypal);
+        }
+
+        Buyer existingBuyer = repository.findByDni(buyer.getDni());
+
+        if (existingBuyer == null) {
+            repository.save(buyer);
+            return ResponseEntity.ok("Successfully registered");
         } else {
-            repository.save(newBuyer);
-            return ResponseEntity.ok("Registration successful");
+            return ResponseEntity.badRequest().body("Buyer already exists");
         }
     }
 }

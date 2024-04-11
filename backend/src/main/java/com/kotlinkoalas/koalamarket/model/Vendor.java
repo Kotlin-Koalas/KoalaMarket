@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.proxy.HibernateProxy;
 
+import java.util.List;
 import java.util.Objects;
 
 @Getter
@@ -12,10 +13,10 @@ import java.util.Objects;
 @RequiredArgsConstructor
 @Entity
 public class Vendor extends Client {
-    @Column(name = "bank_data", nullable = false)
-    private String bankData;
 
-    @Column(name = "cif", length = 30, nullable = false, unique = true)
-    private String cif;
+    @Column(name = "iban", nullable = false)
+    private String iban;
 
+    @OneToOne(mappedBy = "vendor")
+    private Product product;
 }

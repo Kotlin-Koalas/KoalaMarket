@@ -20,6 +20,12 @@ public class Client {
     @Column(name = "name", nullable = false, unique = true)
     private String name;
 
+    @Column(name = "surname", nullable = false)
+    private String surname;
+
+    @Column(name = "userID", nullable = false, unique = true)
+    private String userID;
+
     @Column(name = "email", nullable = false, unique = true)
     private String email;
 

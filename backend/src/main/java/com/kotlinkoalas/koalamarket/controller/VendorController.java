@@ -1,11 +1,13 @@
 package com.kotlinkoalas.koalamarket.controller;
 
+import com.kotlinkoalas.koalamarket.model.Buyer;
 import com.kotlinkoalas.koalamarket.model.Vendor;
 import com.kotlinkoalas.koalamarket.repo.VendorRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 @RestController
@@ -48,10 +50,13 @@ public class VendorController {
     }
 
     @PostMapping("/vendors/login")
-    public Vendor login(@RequestBody Vendor vendor) {
-        Vendor existingVendor = repository.findByEmail(vendor.getEmail());
+    public Vendor login(@RequestBody Map<String, Object> payload) {
+        String email = (String) payload.get("email");
+        String password = (String) payload.get("password");
 
-        if (existingVendor != null && Objects.equals(existingVendor.getPassword(), vendor.getPassword())) {
+        Vendor existingVendor = repository.findByEmail(email);
+
+        if (existingVendor != null && Objects.equals(existingVendor.getPassword(), password)) {
             return existingVendor;
         } else {
             return new Vendor();
@@ -59,7 +64,27 @@ public class VendorController {
     }
 
     @PostMapping("/vendors/register")
-    public ResponseEntity<String> register(@RequestBody Vendor newVendor) {
+    public ResponseEntity<String> register(@RequestBody Map<String, Object> payload) {
+        String cif = (String) payload.get("cif");
+        String name = (String) payload.get("name");
+        String surname = (String) payload.get("surname");
+        String userID = (String) payload.get("userID");
+        String email = (String) payload.get("email");
+        String password = (String) payload.get("password");
+
+        String iban = (String) payload.get("iban");
+
+        Vendor newVendor = new Vendor();
+
+        newVendor.setDni(cif);
+        newVendor.setName(name);
+        newVendor.setSurname(surname);
+        newVendor.setUserID(userID);
+        newVendor.setEmail(email);
+        newVendor.setPassword(password);
+
+        newVendor.setIban(iban);
+
         Vendor existingVendor = repository.findByDni(newVendor.getDni());
 
         if (existingVendor != null) {

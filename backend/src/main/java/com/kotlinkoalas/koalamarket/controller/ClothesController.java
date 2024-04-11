@@ -25,10 +25,6 @@ public class ClothesController {
         return repository.findAll();
     }
 
-//    @GetMapping("/persons/{id}")
-//    Person one(@PathVariable Long id) {
-//    }
-
     @PostMapping("/products/clothes")
     public Clothes newClothes(@RequestBody Map<String, Object> payload) {
         String productNumber = (String) payload.get("productNumber");

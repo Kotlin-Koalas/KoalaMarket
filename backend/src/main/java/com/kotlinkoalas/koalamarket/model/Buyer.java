@@ -3,7 +3,7 @@ package com.kotlinkoalas.koalamarket.model;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.proxy.HibernateProxy;
-import com.kotlinkoalas.koalamarket.model.CreditCard;
+import com.kotlinkoalas.koalamarket.model.Address;
 import java.util.List;
 import java.util.Objects;
 
@@ -20,8 +20,19 @@ public class Buyer extends Client{
     @Column(name = "points")
     private int points;
 
-    @Column(name = "billing_address", nullable = false)
-    private String billingAddress;
+    @Column(name = "bizum")
+    private String bizum;
+
+    @Column(name = "paypal")
+    private String paypal;
+
+    @OneToMany(mappedBy = "buyer", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ToString.Exclude
+    private List<Address> shippingAddresses;
+
+    @OneToMany(mappedBy = "buyer", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ToString.Exclude
+    private List<Address> billingAddresses;
 
     @OneToMany(mappedBy = "buyer", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @ToString.Exclude
