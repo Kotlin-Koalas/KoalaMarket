@@ -49,9 +49,9 @@ public class VendorController {
 
     @PostMapping("/vendors/login")
     public Vendor login(@RequestBody Vendor vendor) {
-        Vendor existingVendor = repository.findByDni(vendor.getDni());
+        Vendor existingVendor = repository.findByEmail(vendor.getEmail());
 
-        if (existingVendor != null && Objects.equals(existingVendor.getDni(), vendor.getDni())) {
+        if (existingVendor != null && Objects.equals(existingVendor.getPassword(), vendor.getPassword())) {
             return existingVendor;
         } else {
             return new Vendor();

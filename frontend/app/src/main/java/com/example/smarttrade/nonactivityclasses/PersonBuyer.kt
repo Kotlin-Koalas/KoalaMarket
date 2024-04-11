@@ -6,12 +6,12 @@ object PersonBuyer {
     lateinit private var email:String
     lateinit private var userID:String
     lateinit private var password:String
-    lateinit private var shippingAddresses:MutableList<String>
+    private var shippingAddresses:MutableList<String> = mutableListOf()
     lateinit private var DNI:String
-    lateinit private var factAddresses:MutableList<String>
+    private var factAddresses:MutableList<String> = mutableListOf()
     lateinit private var bizum:String
     lateinit private var paypal:String
-    lateinit private var creditCards:MutableList<CreditCard>
+    private var creditCards:MutableList<CreditCard> = mutableListOf()
 
 
 
@@ -88,7 +88,7 @@ object PersonBuyer {
     fun getPaypal(): String {
         return paypal
     }
-    fun addCreditCard(creditCard: CreditCard) {
+    fun addCreditCard(creditCard: String, string: String) {
         creditCards.add(creditCard)
     }
     fun getCreditCards(): MutableList<CreditCard> {
