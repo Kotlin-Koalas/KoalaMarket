@@ -51,12 +51,12 @@ jobs:
           PID=$!
           echo "Spring Boot application PID: $PID" >> application.log
 
-      # - name: Run API tests
-      #   run: newman run ./koalamarket-apitests.json -e ./koalamarket-env.json
+      - name: Run API tests
+        run: newman run ./koalamarket-apitests.json -e ./koalamarket-env.json
 
-      # - name: Stop Spring Boot application
-      #   run: |
-      #     if [[ $(ps -p $PID | wc -l) -gt 1 ]]; then
-      #       kill $PID
-      #       echo "Spring Boot application stopped." >> application.log
-      #     fi
+      - name: Stop Spring Boot application
+        run: |
+          if [[ $(ps -p $PID | wc -l) -gt 1 ]]; then
+            kill $PID
+            echo "Spring Boot application stopped." >> application.log
+          fi
