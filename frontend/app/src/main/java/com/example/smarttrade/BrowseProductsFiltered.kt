@@ -12,6 +12,8 @@ import com.example.smarttrade.logic.logic
 import com.example.smarttrade.nonactivityclasses.LeafColor
 import com.example.smarttrade.nonactivityclasses.product_representation
 
+
+
 class BrowseProductsFiltered : AppCompatActivity() {
 
 
@@ -22,6 +24,7 @@ class BrowseProductsFiltered : AppCompatActivity() {
     private lateinit var categoryName : TextView
     private var productsShown: MutableList<product_representation> = mutableListOf()
     private var productsFiltered : MutableList<product_representation> = mutableListOf()
+
 
     override fun onCreate(savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)
@@ -80,7 +83,6 @@ class BrowseProductsFiltered : AppCompatActivity() {
 
 
 
-    val logic = logic()
     private fun filterProduct(searchItem :String){
         productsFiltered.clear()
         productsFiltered.addAll(logic.filterProduct(productsShown, searchItem))

@@ -16,14 +16,14 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.smarttrade.logic.logic
-import io.ktor.client.*
-import io.ktor.client.engine.cio.*
-import io.ktor.client.request.*
-import io.ktor.client.statement.*
 import com.example.smarttrade.nonactivityclasses.LeafColor
 import com.example.smarttrade.nonactivityclasses.category_representation
 import com.example.smarttrade.nonactivityclasses.product_representation
 import com.example.smarttrade.nonactivityclasses.search_representation
+import io.ktor.client.HttpClient
+import io.ktor.client.engine.cio.CIO
+import io.ktor.client.request.get
+import io.ktor.client.statement.HttpResponse
 import kotlinx.coroutines.launch
 
 class BrowseProducts : AppCompatActivity() {
@@ -34,6 +34,7 @@ class BrowseProducts : AppCompatActivity() {
     private lateinit var adapterCat: CategoryAdapter
     private lateinit var recommendationLayout: ConstraintLayout
     private lateinit var recommendationRV: RecyclerView
+
     private var productsShown: MutableList<product_representation> = mutableListOf()
     private var categoriesShown: MutableList<category_representation> = mutableListOf()
     private var prevSearchesShown: MutableList<search_representation> = mutableListOf()
@@ -159,7 +160,8 @@ class BrowseProducts : AppCompatActivity() {
         }
     }
 
-    val logic = logic()
+
+    //val logic = logic()
     private fun filterProduct(searchItem :String){
         productsFiltered.clear()
         productsFiltered.addAll(logic.filterProduct(productsShown, searchItem))
