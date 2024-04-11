@@ -20,10 +20,6 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
 import com.example.smarttrade.nonactivityclasses.PersonBuyer
-import io.ktor.client.HttpClient
-import io.ktor.client.engine.cio.CIO
-import io.ktor.client.request.get
-import io.ktor.client.statement.HttpResponse
 import kotlinx.coroutines.launch
 import kotlin.concurrent.Volatile
 
@@ -34,13 +30,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         val context = this
-
-        val client = HttpClient(CIO)
-
-        lifecycleScope.launch {
-            val response: HttpResponse = client.get("https://google.com")
-            //Toast.makeText(context, response.toString(), Toast.LENGTH_SHORT).show()
-        }
 
         actContext = this
 
