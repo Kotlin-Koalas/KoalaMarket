@@ -5,6 +5,7 @@ import com.android.volley.Request
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.example.smarttrade.MainActivity
+import com.example.smarttrade.nonactivityclasses.CreditCard
 import com.example.smarttrade.nonactivityclasses.PersonBuyer
 import com.example.smarttrade.nonactivityclasses.product_representation
 import kotlinx.coroutines.launch
@@ -65,7 +66,7 @@ object logic {
                     buyer.setPaypal(paypal)
                     for (i in 0 until creditCards.length()) {
                         val card = creditCards.getJSONObject(i)
-                        buyer.addCreditCard(card.getString("cardNumber"), card.getString("expirationDate"))
+                        buyer.addCreditCard(CreditCard(card.getString("cardNumber"), card.getString("expirationDate"),card.getString("cvc")))
                     }
                 }
             },
