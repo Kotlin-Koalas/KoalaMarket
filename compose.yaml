@@ -1,17 +1,16 @@
 services:
   api:
-    image: api
-    build: "./api_koalamarket"
+    build: "./backend"
     env_file:
       - .env
     links:
       - db
     environment:
-      - HOST=db
-    expose:
-      - "${PORT}"
+      - DATABASE_URL=${DATABASE_URL}
+      - DATABASE_USERNAME=${DATABASE_USERNAME}
+      - DATABASE_PASSWORD=${DATABASE_PASSWORD}
     ports:
-      - "${PORT}:${PORT}"
+      - "${PUBLIC_PORT}:${PORT}"
 
   db:
     env_file:
