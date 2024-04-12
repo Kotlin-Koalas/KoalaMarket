@@ -1,9 +1,12 @@
 package com.example.smarttrade.logic
 
+
+import android.content.Intent
 import android.widget.Toast
 import com.android.volley.Request
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
+import com.example.smarttrade.BrowseProducts
 import com.example.smarttrade.MainActivity
 import com.example.smarttrade.nonactivityclasses.CreditCard
 import com.example.smarttrade.nonactivityclasses.PersonBuyer
@@ -13,7 +16,7 @@ import org.json.JSONObject
 
 object logic {
 //TODO clase para comunicarse mediante el uso de api y conseguir cosas como el LogIn o el SignUp
-
+    var isBuyer = false
 
     fun filterProduct(producList: MutableList<product_representation>, searchItem:String) : MutableList<product_representation>{
         val filteredProducts : MutableList<product_representation> = mutableListOf()
@@ -54,6 +57,7 @@ object logic {
                 val creditCards = json.getJSONArray("creditCards")
 
                 if(name != "") {
+                    isBuyer =true
                     val buyer = PersonBuyer
                     buyer.setName(name)
                     buyer.setSurname(surname)
@@ -74,50 +78,59 @@ object logic {
                 Toast.makeText(MainActivity.getContext(), "Error: $error", Toast.LENGTH_SHORT)
                     .show()
             })
+
+            if(PersonBuyer.getShippingAddresses().isEmpty()){
+                val StringRequest = StringRequest(
+                    Request.Method.POST, "http://192.168.18.141:8080/vendors/login",
+                    {response ->
+                        val jsonRes = JSONObject(response)
+                        val name = json.getString("name")
+                        val surname = json.getString("surname")
+                        val emailRes = json.getString("email")
+                        val userID = json.getString("userID")
+                        val passwordRes = json.getString("password")
+                        val cif = json.getString("cif")
+                        val iban = json.getString("iban")
+
+                        if(name != "null"){
+                            val seller = PersonSeller
+                            seller.setName(name)
+                            seller.setSurname(surname)
+                            seller.setEmail(email)
+                            seller.setUserId(userID)
+                            seller.setPassword(password)
+                            seller.setCIF(cif)
+                            seller.setIBAN(iban)
+                        }
+
+                    },
+                    {error ->
+                        Toast.makeText(MainActivity.getContext(), "Error: $error", Toast.LENGTH_SHORT)
+                            .show()
+
+
+                    })
+
+
+
+            }
+
+        if(PersonSeller.getEmail().isEmpty()) {
+            MainActivity.popUpError()
+        }else{
+            if(isBuyer){
+                val IntentS = Intent(MainActivity.getContext(), BrowseProducts::class.java)
+                //startActivity(IntentS)
+            }
+            else{
+
+            }
+
+
+
+        }
+
+
         
     }
-
-    suspend fun loginSeller(email: String, password: String){
-
-        val json = JSONObject()
-        json.put("email", email)
-        json.put("password",password)
-
-        val jsonString = json.toString()
-
-        val queue = Volley.newRequestQueue(MainActivity.getContext())
-
-        val StringRequest = StringRequest(
-            Request.Method.POST, "http://192.168.18.141:8080/buyer/login",
-            {response ->
-                val jsonRes = JSONObject(response)
-                val name = json.getString("name")
-                val surname = json.getString("surname")
-                val emailRes = json.getString("email")
-                val userID = json.getString("userID")
-                val passwordRes = json.getString("password")
-                val cif = json.getString("cif")
-                val iban = json.getString("iban")
-
-                if(name != "null"){
-                    val seller = PersonSeller
-                    seller.setName(name)
-                    seller.setSurname(surname)
-                    seller.setEmail(email)
-                    seller.setUserId(userID)
-                    seller.setPassword(password)
-                    seller.setCIF(cif)
-                    seller.setIBAN(iban)
-                }
-
-            },
-            {error ->
-                Toast.makeText(MainActivity.getContext(), "Error: $error", Toast.LENGTH_SHORT)
-                    .show()
-
-
-            })
-    }
-
-
 }

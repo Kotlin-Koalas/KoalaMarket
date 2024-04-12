@@ -1,6 +1,7 @@
 package com.example.smarttrade
 
 import android.app.Dialog
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -56,6 +57,8 @@ class AddProduct :AppCompatActivity() {
         setContentView(R.layout.activity_add_product)
         val scrollViewAddP = findViewById<ScrollView>(R.id.scrollView2)
         scrollViewAddP.overScrollMode = View.OVER_SCROLL_ALWAYS
+
+        actContext = this
 
 
         imageCertificate = findViewById<ImageView>(R.id.imageViewOkcertificate)
@@ -408,7 +411,15 @@ class AddProduct :AppCompatActivity() {
 
       }
 
+    companion object {
+        private lateinit var actContext:AddProduct
+        fun getContext(): Context {
+            return actContext
+        }
 
+
+    }
 }
+
 
 
