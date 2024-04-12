@@ -1,8 +1,5 @@
 package com.example.smarttrade.nonactivityclasses
 
-import android.graphics.Bitmap
-import android.media.Image
-
 data class product_representation (
     val name: String,
     val price: String,

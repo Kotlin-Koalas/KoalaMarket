@@ -3,7 +3,6 @@ package com.example.smarttrade
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
-import android.content.pm.ActivityInfo
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -13,15 +12,8 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.lifecycle.lifecycleScope
-import com.example.smarttrade.nonactivityclasses.PersonBuyer
-import kotlinx.coroutines.launch
-import kotlin.concurrent.Volatile
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -58,7 +50,7 @@ class MainActivity : AppCompatActivity() {
         logInButton.setOnClickListener{
             //TODO codigo para logIn y guardar las cosas en singleton y quitar los temporal
             //temporal para acceder a la ventana de catalogo
-            val IntentS = Intent(this,BrowseProducts::class.java)
+            val IntentS = Intent(this,AddProduct::class.java)
             startActivity(IntentS)
         }
     }

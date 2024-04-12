@@ -11,13 +11,17 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Base64
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
 import android.view.Window
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.ScrollView
+import android.widget.Spinner
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.PickVisualMediaRequest
@@ -38,6 +42,11 @@ class AddProduct :AppCompatActivity() {
     lateinit var uploadCertificateButton : Button
     private lateinit var imageCertificate: ImageView
     private lateinit var encodedImageString :String
+    private lateinit var editTextCat1 :EditText
+    private lateinit var textCat1 :TextView
+    private lateinit var editTextCat2 :EditText
+    private lateinit var textCat2 :TextView
+    private lateinit var categorSelected : String
 
     private var existProduct = false
 
@@ -75,7 +84,31 @@ class AddProduct :AppCompatActivity() {
         val prod = (findViewById<EditText>(R.id.editTextProductNumber))
         prod.addTextChangedListener(MyTextWatcher(uploadImageButton))
 
+
+
+        editTextCat1 = (findViewById<EditText>(R.id.editTextCategoria1))
+        editTextCat2 = (findViewById<EditText>(R.id.editTextCategoria2))
+        textCat1 = (findViewById<TextView>(R.id.textViewCategoria1))
+        textCat2 = (findViewById<TextView>(R.id.textViewCategoria2))
+        val categoriesArray = resources.getStringArray(R.array.categoriesApp)
+        val categories = categoriesArray.toMutableList()
+        val spinnerCategory =(findViewById<Spinner>(R.id.spinnerCategory))
+        val spinnerAdapter = ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, categories)
+        spinnerCategory.adapter = spinnerAdapter
+
+        spinnerCategory.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                val selectedCategory = spinnerAdapter.getItem(position) ?: ""
+                updateCategoryText(selectedCategory)
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                // Handle nothing selected case (optional)
+            }
+        }
+
         acceptButton.setOnClickListener {
+
             val patterOnlyLettNum = "^[a-zA-Z0-9]{12}".toRegex()
 
             var error = false
@@ -87,17 +120,7 @@ class AddProduct :AppCompatActivity() {
                 error = true
                 msgErrror += "- El número del producto tiene 12 caracteres  solamente números y letras\n"
 
-            } else {
-
-                if(existProduct){//TODO Poner automáticamente foto por defecto y guardarla
-
-                }
-                else {//TODO Producto no registrado en BD habilitar opcion foto
-
-                }
-
             }
-
 
             val currName = (findViewById<EditText>(R.id.editTextNameProduct).text).toString()
             val patterName = "^[a-zA-Z0-9\\s\\.,:;\\-\\(\\)\\/áéíóúñ\\$%&#@]{1,30}$".toRegex()
@@ -127,6 +150,52 @@ class AddProduct :AppCompatActivity() {
                 msgErrror += "-Cantidad mínima 1 y máxima son 999\n"
             }
 
+
+
+            val cat1 = (editTextCat1.text).toString()
+            val cat2 = (editTextCat2.text).toString()
+            when(categorSelected){
+                "Tecnología" -> {
+                    val patternTech = "^[a-zA-Z0-9 ]+$".toRegex()
+                    if (!patternTech.containsMatchIn(cat1) || !patternTech.containsMatchIn(cat2)) {
+                        error = true
+                        msgErrror += "-Tecnología: Consumo y marca solo pueden tener letras y números \n"
+                    }
+
+                }
+                "Juguete" -> {
+                    val patternEdadRec = "^[0-9]{1,2}$".toRegex() // Números de 0 a 18
+                    val patternMaterial = "^[a-zA-Z]+$".toRegex() // Letras
+                    if (!patternEdadRec.containsMatchIn(cat1) || !patternMaterial.containsMatchIn(cat2)) {
+                        error = true
+                        msgErrror += "-Juguete: Edad Recomendada solo pueden ser números de 0 a 99, Material puede tener solo letras\n"
+                    }
+                }
+                "Ropa" -> {
+                    val patternTalla = "^[SMLX]{1,3}$|^([2][0-9]|[3][0-9]|[4][0-5])$".toRegex() //TODO habría que arreglarlo
+                    val patternColor = "^[a-zA-Z]+$".toRegex() // Letras
+
+                    if (!patternTalla.containsMatchIn(cat1) || !patternColor.containsMatchIn(cat2)) {
+                        error = true
+                        msgErrror += "-Ropa: Talla solo puede ser XS, S, M, L, XL, XXL o números de 30 a 50, Color solo puede tener letras\n"
+                    }
+                }
+                "Alimentación" -> {
+                    val patternMac = "^[a-zA-Z0-9 ]+$".toRegex()
+                    val patternCalorias = "^[0-9]{1,5}$".toRegex() // Número de 1 a 5 cifras
+
+                    if (!patternMac.containsMatchIn(cat1) || !patternCalorias.containsMatchIn(cat2)) {
+                        error = true
+                        msgErrror += "-Alimentación:Macros solo puede tener letras y números, Calorias solo puede ser un número de 1 a 5 cifras\n"
+                    }
+                }
+                else ->{
+
+                }
+            }
+
+
+
             if( isUploadImage == -1  ){
                 error = true
                 msgErrror +="-Debes añadir una foto\n"
@@ -138,10 +207,10 @@ class AddProduct :AppCompatActivity() {
             }
 
 
-            if(prodNum.isEmpty() || currName.isEmpty() || currPrice.isEmpty() || currDescription.isEmpty() || currQuantity.isEmpty()){
+            if(prodNum.isEmpty() || currName.isEmpty() || currPrice.isEmpty() || currDescription.isEmpty() || currQuantity.isEmpty() ||cat1.isEmpty() || cat2.isEmpty()){
+                error = true
                 msgErrror = "-Todos los campos deben estar rellenados\n" + msgErrror
             }
-
 
 
             if(error){
@@ -171,6 +240,56 @@ class AddProduct :AppCompatActivity() {
         dialog.show()
     }
 
+    private fun updateCategoryText(selectedCategory: String) {
+        val layoutInflater = LayoutInflater.from(this)
+
+        when (selectedCategory) {
+            "Ropa" -> {
+                textCat1.setText("Talla")
+                textCat2.setText("Color")
+                editTextCat1.setHint("42")
+                editTextCat2.setHint("Verde")
+                editTextCat1.setText(null)
+                editTextCat2.setText(null)
+                categorSelected = selectedCategory
+
+            }
+            "Tecnología" -> {
+                textCat1.setText("Consumo electrónico")
+                textCat2.setText("Marca")
+                editTextCat1.setHint("270 kWh")
+                editTextCat2.setHint("Samsung")
+                editTextCat1.setText(null)
+                editTextCat2.setText(null)
+                categorSelected = selectedCategory
+
+
+            }
+            "Juguete" -> {
+                textCat1.setText("Edad Recomendada ")
+                textCat2.setText("Material")
+                editTextCat1.setHint("3 años")
+                editTextCat2.setHint("Plástico")
+                categorSelected = selectedCategory
+                editTextCat1.setText(null)
+                editTextCat2.setText(null)
+            }
+            "Alimentación" -> {
+                textCat1.setText("Macros")
+                textCat2.setText("Calorias")
+                editTextCat1.setHint("15g proteina, 10g grasas, 15g carb")
+                editTextCat2.setHint("155")
+                categorSelected = selectedCategory
+                editTextCat1.setText(null)
+                editTextCat2.setText(null)
+            }
+            else ->{
+                textCat1.setText("")
+                textCat2.setText("")
+            }
+
+        }
+    }
 
     fun convertImageToByteArray(imageFile: File): ByteArray {
         val fis = FileInputStream(imageFile)
@@ -207,7 +326,7 @@ class AddProduct :AppCompatActivity() {
 
                             val arregloBytesImagen = convertImageToByteArray(archivoTemporal)
                             encodedImageString = Base64.encodeToString(arregloBytesImagen, Base64.DEFAULT)
-                            Log.i("LLEGO",encodedImageString )
+
                             uploadImageButton.setImageURI(uri)
                             isUploadImage = 1
                         }
@@ -223,20 +342,6 @@ class AddProduct :AppCompatActivity() {
             Log.i("aris", "No seleccionado")
         }
 
-
-            /*
-            uploadImageButton.setImageURI(uri)
-            val imageByteArray = convertImageToByteArray(filePath)
-            encodedImageString = Base64.encodeToString(imageByteArray, Base64.DEFAULT)
-            Log.i("LLEGUE",encodedImageString)
-
-             //TODO TAKE URI y guardarla
-            isUploadImage = 1
-
-
-        } else {
-            Log.i("aris", "No seleccionado")
-        }*/
     }
 
     fun backButtonClick(view: View) { //TODO cambiar de pagina
@@ -275,7 +380,7 @@ class AddProduct :AppCompatActivity() {
               override fun afterTextChanged(s: Editable?) {
                   if(s?.length == 12){
 
-                      Log.i("HOLA", "HOLA")
+
                       uploadImageButton.visibility = View.VISIBLE
 
                       //TODO poner o no la foto en función de si existe o no el producto
