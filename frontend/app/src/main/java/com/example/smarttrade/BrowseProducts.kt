@@ -8,6 +8,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.GridView
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
@@ -20,11 +21,8 @@ import com.example.smarttrade.nonactivityclasses.LeafColor
 import com.example.smarttrade.nonactivityclasses.category_representation
 import com.example.smarttrade.nonactivityclasses.product_representation
 import com.example.smarttrade.nonactivityclasses.search_representation
-import io.ktor.client.HttpClient
-import io.ktor.client.engine.cio.CIO
-import io.ktor.client.request.get
-import io.ktor.client.statement.HttpResponse
 import kotlinx.coroutines.launch
+import org.w3c.dom.Text
 
 class BrowseProducts : AppCompatActivity() {
 
@@ -34,6 +32,7 @@ class BrowseProducts : AppCompatActivity() {
     private lateinit var adapterCat: CategoryAdapter
     private lateinit var recommendationLayout: ConstraintLayout
     private lateinit var recommendationRV: RecyclerView
+    private lateinit var textDescription: TextView
 
     private var productsShown: MutableList<product_representation> = mutableListOf()
     private var categoriesShown: MutableList<category_representation> = mutableListOf()
@@ -42,10 +41,6 @@ class BrowseProducts : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val client = HttpClient(CIO)
-        lifecycleScope.launch {
-            val response: HttpResponse = client.get("https://ktor.io/")
-        }
         browseProducts = this
 
         categoriesShown.add(category_representation("toys",R.drawable.icon_toy))
@@ -60,6 +55,8 @@ class BrowseProducts : AppCompatActivity() {
 
         enableEdgeToEdge()
         setContentView(R.layout.activity_browse_products)
+
+        textDescription = findViewById<TextView>(R.id.textView)
 
         recommendationRV = findViewById<RecyclerView>(R.id.recyclerViewSearches)
 
@@ -97,6 +94,7 @@ class BrowseProducts : AppCompatActivity() {
 
         val startSearch = findViewById<ImageView>(R.id.imageViewSearchButton)
         startSearch.setOnClickListener{
+            textDescription.text = "Resultados de la búsqueda:"
             val searchItem = searchBar.text.toString().toLowerCase().trim()
             filterProduct(searchItem)
         }

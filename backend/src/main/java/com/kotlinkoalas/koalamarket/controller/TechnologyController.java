@@ -26,10 +26,6 @@ public class TechnologyController {
         return repository.findAll();
     }
 
-//    @GetMapping("/persons/{id}")
-//    Person one(@PathVariable Long id) {
-//    }
-
     @PostMapping("/products/technology")
     public Technology newTechnology(@RequestBody Map<String, Object> payload) {
         String productNumber = (String) payload.get("productNumber");
