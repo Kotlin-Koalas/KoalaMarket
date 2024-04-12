@@ -194,6 +194,7 @@ class AddProduct :AppCompatActivity() {
                 }
                 else ->{
 
+
                 }
             }
 
@@ -220,7 +221,7 @@ class AddProduct :AppCompatActivity() {
                 showCustomDialogBoxSeller(msgErrror)
 
             } else {
-                //TODO codigo para añadir producto
+
             }
         }
     }

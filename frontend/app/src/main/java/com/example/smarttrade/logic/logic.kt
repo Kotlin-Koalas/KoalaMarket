@@ -1,17 +1,16 @@
 package com.example.smarttrade.logic
 
 
-import android.content.Intent
 import android.widget.Toast
 import com.android.volley.Request
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
-import com.example.smarttrade.BrowseProducts
 import com.example.smarttrade.MainActivity
 import com.example.smarttrade.nonactivityclasses.CreditCard
 import com.example.smarttrade.nonactivityclasses.PersonBuyer
 import com.example.smarttrade.nonactivityclasses.PersonSeller
 import com.example.smarttrade.nonactivityclasses.product_representation
+import com.example.smarttrade.nonactivityclasses.technology_representation
 import org.json.JSONObject
 
 object logic {
@@ -92,7 +91,7 @@ object logic {
                         val cif = json.getString("cif")
                         val iban = json.getString("iban")
 
-                        if(name != "null"){
+                        if(name != ""){
                             val seller = PersonSeller
                             seller.setName(name)
                             seller.setSurname(surname)
@@ -107,30 +106,55 @@ object logic {
                     {error ->
                         Toast.makeText(MainActivity.getContext(), "Error: $error", Toast.LENGTH_SHORT)
                             .show()
-
-
                     })
-
-
-
             }
-
-        if(PersonSeller.getEmail().isEmpty()) {
+        if(PersonSeller.getEmail().isEmpty() && PersonBuyer.getEmail().isEmpty()) {
             MainActivity.popUpError()
         }else{
             if(isBuyer){
-                val IntentS = Intent(MainActivity.getContext(), BrowseProducts::class.java)
-                //startActivity(IntentS)
+                MainActivity.loadBuyer()
             }
             else{
-
+                MainActivity.loadSeller()
             }
-
-
-
         }
 
+    }
 
-        
+    suspend fun AddTechnology(PN:String){
+        val json = JSONObject()
+        json.put("PN", PN)
+
+        val jsonString = json.toString()
+
+        val queue = Volley.newRequestQueue(MainActivity.getContext())
+
+
+        val StringRequest = StringRequest(
+        Request.Method.POST,"http://192.168.18.141:8080/products/technology",
+        {response ->
+            val jsonRes = JSONObject(response)
+            val name = json.getString("name")
+            val price = json.getDouble("price")
+            val image = json.getString("image")
+            val description = json.getString("description")
+            val leafColor = json.getString("ecology")
+            val stock = json.getInt("stock")
+            val PNres = json.getString("PN")
+            val brand = json.getString("brand")
+            val electricConsumption = json.getDouble("electricConsumption")
+
+            if(PN != ""){
+                val technology= technology_representation(name,price,image,stock,description,leafColor,PNres,brand,electricConsumption)
+            }
+
+        },
+            {error ->
+                Toast.makeText(MainActivity.getContext(), "Error: $error", Toast.LENGTH_SHORT)
+                    .show()
+            })
+
+
+
     }
 }

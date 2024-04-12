@@ -5,29 +5,31 @@ data class product_representation (
     val price: String,
     val image: String,
     val stock: Int,
-    val leafColor: LeafColor,
-    val PN: Long
+    val description: String,
+    val leafColor: String,
+    val PN: String
 )
 
 data class technology_representation (
     val name: String,
-    val price: String,
+    val price: Double,
     val image: String,
     val stock: Int,
-    val leafColor: LeafColor,
-    val PN: Long,
+    val description: String,
+    val leafColor: String,
+    val PN: String,
     val brand: String,
-    val electricConsumption: String,
-
+    val electricConsumption: Double,
     )
 
 data class clothes_representation(
     val name: String,
     val price: String,
     val image: String,
+    val description: String,
     val stock: Int,
-    val leafColor: LeafColor,
-    val PN: Long,
+    val leafColor: String,
+    val PN: String,
     val size: String,
     val color : String
 )
@@ -36,9 +38,10 @@ data class food_representation(
     val name: String,
     val price: String,
     val image: String,
+    val description: String,
     val stock: Int,
-    val leafColor: LeafColor,
-    val PN: Long,
+    val leafColor: String,
+    val PN: String,
     val calories: String,
     val macros: String
 
@@ -48,9 +51,10 @@ data class toy_representation(
     val name: String,
     val price: String,
     val image: String,
+    val description: String,
     val stock: Int,
-    val leafColor: LeafColor,
-    val PN: Long,
+    val leafColor: String,
+    val PN: String,
     val material :String,
     val recomendAge : String
 )
@@ -58,10 +62,11 @@ data class toy_representation(
 
 
 
-
-
-
-
+/*
 enum class LeafColor{
-    RED, YELLOW, GREEN
+    RED ="1",
+    YELLOW="0",
+    GREEN = "-1"
 }
+* */
+

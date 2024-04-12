@@ -56,10 +56,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun loadBuyer(){
-        val IntentS = Intent(actContext,BrowseProducts::class.java)
-        startActivity(IntentS)
-    }
+
 
     fun showCustomDialogBox(popUpText: String) {
         val dialog = Dialog(this)
@@ -87,6 +84,15 @@ class MainActivity : AppCompatActivity() {
         }
         fun popUpError(){
             actContext.showCustomDialogBox("Error, usuario no registrado, pruebe a crear una cuenta.")
+        }
+
+        fun loadBuyer(){
+            val IntentS = Intent(actContext,BrowseProducts::class.java)
+            actContext.startActivity(IntentS)
+        }
+        fun loadSeller(){//TODO cambiar en un futuro Addproduct
+            val IntentS = Intent(actContext,AddProduct::class.java)
+            actContext.startActivity(IntentS)
         }
     }
 }
