@@ -17,7 +17,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.smarttrade.logic.logic
-import com.example.smarttrade.nonactivityclasses.LeafColor
 import com.example.smarttrade.nonactivityclasses.category_representation
 import com.example.smarttrade.nonactivityclasses.product_representation
 import com.example.smarttrade.nonactivityclasses.search_representation
@@ -79,9 +78,9 @@ class BrowseProducts : AppCompatActivity() {
         //TODO conseguir los datos de la BD y meterlos a la lista productsShown
         //Temporal solo para probar
         for(i in 1..5){
-            productsShown.add(product_representation("","","",1,LeafColor.GREEN,33))
-            productsShown.add(product_representation("aab","","",1,LeafColor.GREEN,33))
-            productsShown.add(product_representation("aaaab","","",1,LeafColor.GREEN,33))
+            productsShown.add(product_representation("","","",1,"yellow","yellow", "33"))
+            productsShown.add(product_representation("aab","","",1,"red","red","34" ))
+            productsShown.add(product_representation("aaaab","","",1,"green","green","33"))
 
         }
 

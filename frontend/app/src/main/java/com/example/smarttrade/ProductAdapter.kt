@@ -24,7 +24,7 @@ class ProductAdapter(
     }
 
     override fun getItemId(position: Int): Long {
-        return popularProducts.get(position).PN
+        return popularProducts.get(position).PN.toLong()
     }
 
     fun addProductToList(product: product_representation) {
@@ -75,9 +75,9 @@ class ProductAdapter(
         textViewName.text = popularProducts[position].name
         textViewStock.text = popularProducts[position].stock.toString()
         when(popularProducts[position].leafColor){
-            LeafColor.RED -> imageView.setImageResource(R.drawable.hoja_roja)
-            LeafColor.YELLOW -> imageView.setImageResource(R.drawable.hoja_amarilla)
-            LeafColor.GREEN -> imageView.setImageResource(R.drawable.hoja_verde)
+            "red" -> imageView.setImageResource(R.drawable.hoja_roja)
+            "yellow" -> imageView.setImageResource(R.drawable.hoja_amarilla)
+            "green" -> imageView.setImageResource(R.drawable.hoja_verde)
         }
         */
 

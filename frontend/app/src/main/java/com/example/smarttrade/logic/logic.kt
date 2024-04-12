@@ -6,6 +6,8 @@ import com.android.volley.Request
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.example.smarttrade.MainActivity
+import com.example.smarttrade.SignUpComprador
+import com.example.smarttrade.SignUpVendedor
 import com.example.smarttrade.nonactivityclasses.CreditCard
 import com.example.smarttrade.nonactivityclasses.PersonBuyer
 import com.example.smarttrade.nonactivityclasses.PersonSeller
@@ -29,7 +31,7 @@ object logic {
         return filteredProducts
     }
 
-    suspend fun logInBuyer(email:String, password:String){
+    fun logIn(email:String, password:String){
 
         val json = JSONObject()
         json.put("email", email)
@@ -40,7 +42,7 @@ object logic {
         val queue = Volley.newRequestQueue(MainActivity.getContext())
 
         val StringRequest = StringRequest(
-            Request.Method.POST, "http://192.168.18.141:8080/buyer/login",
+            Request.Method.POST, "https://ec2-52-47-150-236.eu-west-3.compute.amazonaws.com:443/buyers/register",
             {response ->
                 val jsonRes = JSONObject(response)
                 val name = json.getString("name")
@@ -60,9 +62,10 @@ object logic {
                     val buyer = PersonBuyer
                     buyer.setName(name)
                     buyer.setSurname(surname)
-                    buyer.setEmail(email)
+                    buyer.setEmail(emailRes)
                     buyer.setUserId(userID)
-                    buyer.setPassword(password)
+                    buyer.setDNI(DNI)
+                    buyer.setPassword(passwordRes)
                     buyer.addShippingAddress(shippingAddresses.toString())
                     buyer.addFacturacionAddress(factAddresses.toString())
                     buyer.setBizum(bizum)
@@ -78,35 +81,35 @@ object logic {
                     .show()
             })
 
-            if(PersonBuyer.getShippingAddresses().isEmpty()){
-                val StringRequest = StringRequest(
-                    Request.Method.POST, "http://192.168.18.141:8080/vendors/login",
-                    {response ->
-                        val jsonRes = JSONObject(response)
-                        val name = json.getString("name")
-                        val surname = json.getString("surname")
-                        val emailRes = json.getString("email")
-                        val userID = json.getString("userID")
-                        val passwordRes = json.getString("password")
-                        val cif = json.getString("cif")
-                        val iban = json.getString("iban")
+        if(PersonBuyer.getShippingAddresses().isEmpty()){
+            val StringRequest = StringRequest(
+                Request.Method.POST, "http://192.168.18.141:8080/vendors/login",
+                {response ->
+                    val jsonRes = JSONObject(response)
+                    val name = json.getString("name")
+                    val surname = json.getString("surname")
+                    val emailRes = json.getString("email")
+                    val userID = json.getString("userID")
+                    val passwordRes = json.getString("password")
+                    val cif = json.getString("cif")
+                    val iban = json.getString("iban")
 
-                        if(name != ""){
-                            val seller = PersonSeller
-                            seller.setName(name)
-                            seller.setSurname(surname)
-                            seller.setEmail(email)
-                            seller.setUserId(userID)
-                            seller.setPassword(password)
-                            seller.setCIF(cif)
-                            seller.setIBAN(iban)
-                        }
+                    if(name != ""){
+                        val seller = PersonSeller
+                        seller.setName(name)
+                        seller.setSurname(surname)
+                        seller.setEmail(emailRes)
+                        seller.setUserId(userID)
+                        seller.setPassword(passwordRes)
+                        seller.setCIF(cif)
+                        seller.setIBAN(iban)
+                    }
 
-                    },
-                    {error ->
-                        Toast.makeText(MainActivity.getContext(), "Error: $error", Toast.LENGTH_SHORT)
-                            .show()
-                    })
+                },
+                {error ->
+                    Toast.makeText(MainActivity.getContext(), "Error: $error", Toast.LENGTH_SHORT)
+                        .show()
+                })
             }
         if(PersonSeller.getEmail().isEmpty() && PersonBuyer.getEmail().isEmpty()) {
             MainActivity.popUpError()
@@ -119,6 +122,88 @@ object logic {
             }
         }
 
+    }
+
+    fun signInBuyer(name:String, surname: String, password:String, email:String, userID: String, DNI: String, shippingAddress: String, factAddress: String, bizum: String, paypal: String, card: CreditCard){
+
+        val json = JSONObject()
+
+        json.put("name", name)
+        json.put("dni", DNI)
+        json.put("surname", surname )
+        json.put("userID", userID)
+        json.put("email", email)
+        json.put("password", password)
+        json.put("cvc", card.cvc)
+        json.put("cardNumber", card.number)
+        json.put("expirationDate", card.expirationDate)
+        json.put("shippingAddress", shippingAddress)
+        json.put("billingAddress", factAddress)
+        json.put("bizum", bizum)
+        json.put("paypal", paypal )
+
+        val jsonString = json.toString()
+
+        val queue = Volley.newRequestQueue(MainActivity.getContext())
+
+        val StringRequest = StringRequest(
+            Request.Method.POST, "https://ec2-52-47-150-236.eu-west-3.compute.amazonaws.com:443/buyers/register",
+            {response ->
+                val jsonRes = JSONObject(response)
+                val buyer = PersonBuyer
+                buyer.setName(name)
+                buyer.setSurname(surname)
+                buyer.setEmail(email)
+                buyer.setDNI(DNI)
+                buyer.setUserId(userID)
+                buyer.setPassword(password)
+                buyer.addShippingAddress(shippingAddress)
+                buyer.addFacturacionAddress(factAddress)
+                buyer.setBizum(bizum)
+                buyer.setPaypal(paypal)
+                buyer.addCreditCard(CreditCard(card.number, card.expirationDate,card.cvc))
+            },
+            { error ->
+                Toast.makeText(MainActivity.getContext(), "Error: $error", Toast.LENGTH_SHORT)
+                    .show()
+            })
+            SignUpComprador.loadBuyer()
+        }
+
+    fun signInSeller(name:String, surname: String, password:String, email:String, userID: String, cif: String, iban: String){
+
+        val json = JSONObject()
+
+        json.put("name", name)
+        json.put("cif", cif)
+        json.put("surname", surname )
+        json.put("userID", userID)
+        json.put("email", email)
+        json.put("password", password)
+        json.put("iban", iban)
+
+        val jsonString = json.toString()
+
+        val queue = Volley.newRequestQueue(MainActivity.getContext())
+
+        val StringRequest = StringRequest(
+            Request.Method.POST, "https://ec2-52-47-150-236.eu-west-3.compute.amazonaws.com:443/buyers/register",
+            {response ->
+                val jsonRes = JSONObject(response)
+                val buyer = PersonSeller
+                buyer.setName(name)
+                buyer.setSurname(surname)
+                buyer.setEmail(email)
+                buyer.setCIF(cif)
+                buyer.setUserId(userID)
+                buyer.setPassword(password)
+
+            },
+            { error ->
+                Toast.makeText(MainActivity.getContext(), "Error: $error", Toast.LENGTH_SHORT)
+                    .show()
+            })
+        SignUpVendedor.loadSeller()
     }
 
     suspend fun AddTechnology(PN:String){

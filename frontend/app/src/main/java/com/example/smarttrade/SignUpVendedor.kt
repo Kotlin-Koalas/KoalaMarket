@@ -2,6 +2,7 @@ package com.example.smarttrade
 
 import android.app.DatePickerDialog
 import android.app.Dialog
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -29,6 +30,7 @@ import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.example.smarttrade.logic.logic
 import org.xmlpull.v1.XmlPullParser
 import java.time.LocalDate
 import java.util.Calendar
@@ -52,7 +54,7 @@ class SignUpVendedor : AppCompatActivity() {
             val IntentS = Intent(this,SignUpComprador::class.java)
             startActivity(IntentS)
         }
-
+        actContext = this
         val firstPasswordField = findViewById<EditText>(R.id.editTextPassword)
         val secondPasswordField = findViewById<EditText>(R.id.editTextRPassword)
 
@@ -142,7 +144,7 @@ class SignUpVendedor : AppCompatActivity() {
             if(popUpOrNot){
                 showCustomDialogBoxSeller(popUpText)
             } else {
-                //TODO code to actually sign up del vendedor
+                logic.signInSeller(currName,currSurname,firstPassword,currCorreo,currId,currDNI,currIBAN)
             }
 
         }
@@ -168,6 +170,16 @@ class SignUpVendedor : AppCompatActivity() {
 
     }
 
+    companion object {
+        private lateinit var actContext:SignUpVendedor
+        fun getContext(): Context {
+            return actContext
+        }
+        fun loadSeller(){//TODO cambiar en un futuro Addproduct
+            val IntentS = Intent(actContext,AddProduct::class.java)
+            actContext.startActivity(IntentS)
+        }
+    }
 
 
 
@@ -216,3 +228,5 @@ class SignUpVendedor : AppCompatActivity() {
         }
     } */
 }
+
+

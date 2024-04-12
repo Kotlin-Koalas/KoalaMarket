@@ -14,6 +14,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import com.example.smarttrade.logic.logic
 
 
 class MainActivity : AppCompatActivity() {
@@ -50,9 +51,13 @@ class MainActivity : AppCompatActivity() {
         val logInButton = findViewById<Button>(R.id.button)
         logInButton.setOnClickListener{
             //TODO codigo para logIn y guardar las cosas en singleton y quitar los temporal
+
+            logic.logIn(findViewById<EditText>(R.id.editTextTextEmailAddress).text.toString(),firstPasswordField.text.toString())
+            /*
             //temporal para acceder a la ventana de catalogo
             val IntentS = Intent(this,AddProduct::class.java)
             startActivity(IntentS)
+             */
         }
     }
 
