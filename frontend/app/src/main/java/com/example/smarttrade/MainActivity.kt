@@ -15,6 +15,7 @@ import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 
+
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,6 +54,11 @@ class MainActivity : AppCompatActivity() {
             val IntentS = Intent(this,AddProduct::class.java)
             startActivity(IntentS)
         }
+    }
+
+    fun loadBuyer(){
+        val IntentS = Intent(actContext,BrowseProducts::class.java)
+        startActivity(IntentS)
     }
 
     fun showCustomDialogBox(popUpText: String) {
