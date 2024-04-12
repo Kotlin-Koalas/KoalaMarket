@@ -171,6 +171,52 @@
                         android:textColor="@color/greyLetter" />
 
                     <TextView
+                        android:id="@+id/textViewCategoria1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:fontFamily="@font/karla"
+                        android:textColor="@color/black"
+                        android:textSize="17sp"
+                        android:text="Característica categoria 1:" />
+
+                    <EditText
+                        android:id="@+id/editTextCategoria1"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_margin="3dp"
+                        android:background="@drawable/basic_grey_shape"
+                        android:baselineAligned="false"
+                        android:ems="10"
+                        android:hint="  Ejemplo característca 1"
+                        android:textColorHint="@color/greyLetter"
+                        android:inputType="text"
+                        android:textColor="@color/black" />
+
+                    <TextView
+                        android:id="@+id/textViewCategoria2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:fontFamily="@font/karla"
+                        android:textColor="@color/black"
+                        android:textSize="17sp"
+                        android:text="Característica categoria 2" />
+
+                    <EditText
+                        android:id="@+id/editTextCategoria2"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_margin="3dp"
+                        android:background="@drawable/basic_grey_shape"
+                        android:baselineAligned="false"
+                        android:ems="10"
+                        android:hint="  Ejemplo característca 2"
+                        android:textColorHint="@color/greyLetter"
+                        android:inputType="text"
+                        android:textColor="@color/black" />
+
+                    <TextView
                         android:id="@+id/textView7"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

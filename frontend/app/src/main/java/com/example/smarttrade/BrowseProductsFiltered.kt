@@ -63,8 +63,6 @@ class BrowseProductsFiltered : AppCompatActivity() {
 
         searchBar = findViewById(R.id.SearchBarFiltered)
 
-
-
         searchButton = findViewById<ImageButton>(R.id.imageButtonSearch)
         searchButton.setOnClickListener{
             val searchItem = searchBar.text.toString().toLowerCase().trim()
@@ -73,7 +71,7 @@ class BrowseProductsFiltered : AppCompatActivity() {
 
         }
 
-        //TODO falta hacer entero el método búsqueda
+
     }
 
     private fun getCategoryName(intent: Intent): String?{
