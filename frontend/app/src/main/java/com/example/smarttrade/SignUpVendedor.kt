@@ -179,6 +179,9 @@ class SignUpVendedor : AppCompatActivity() {
             val IntentS = Intent(actContext,AddProduct::class.java)
             actContext.startActivity(IntentS)
         }
+        fun popUpError(){
+            actContext.showCustomDialogBoxSeller("Error, ya registrado, pruebe a iniciar sesión.")
+        }
     }
 
 

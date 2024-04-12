@@ -107,8 +107,7 @@ object logic {
 
                 },
                 {error ->
-                    Toast.makeText(MainActivity.getContext(), "Error: $error", Toast.LENGTH_SHORT)
-                        .show()
+                    SignUpComprador.popUpError()
                 })
             }
         if(PersonSeller.getEmail().isEmpty() && PersonBuyer.getEmail().isEmpty()) {
@@ -164,8 +163,7 @@ object logic {
                 buyer.addCreditCard(CreditCard(card.number, card.expirationDate,card.cvc))
             },
             { error ->
-                Toast.makeText(MainActivity.getContext(), "Error: $error", Toast.LENGTH_SHORT)
-                    .show()
+                SignUpVendedor.popUpError()
             })
             SignUpComprador.loadBuyer()
         }

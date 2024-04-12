@@ -236,8 +236,6 @@ class SignUpComprador : AppCompatActivity() {
             if(popUpOrNot){
                 showCustomDialogBox(popUpText)
             } else  {
-                //y los demas...
-                //TODO code to actually sign up
                 if(currentTypeOfPayment == R.layout.activity_calendar_view) {
                     val currNumTarj = findViewById<EditText>(R.id.editTextnumTarj).text.toString()
                     val currExpM = findViewById<EditText>(R.id.editTextCad).text.toString()
@@ -343,6 +341,9 @@ class SignUpComprador : AppCompatActivity() {
         fun loadBuyer(){
             val IntentS = Intent(actContext,BrowseProducts::class.java)
             actContext.startActivity(IntentS)
+        }
+        fun popUpError(){
+            actContext.showCustomDialogBox("Error, ya registrado, pruebe a iniciar sesión.")
         }
     }
 
