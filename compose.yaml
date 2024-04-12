@@ -28,5 +28,22 @@ services:
     volumes:
       - pgdata:/var/lib/postgresql/data
 
+  image:
+    ports:
+      - "${IMAGE_PORT}:${IMAGE_PORT}"
+    image: hauxir/imgpush
+    volumes:
+      - ./app:/app
+      - ./images:/images
+      - ./cache:/cache
+    healthcheck:
+      start_period: 0s
+      test:
+        [
+          "CMD-SHELL",
+          "curl localhost:${IMAGE_PORT}/liveness -s -f -o /dev/null || exit 1",
+        ]
+      interval: 30s
+
 volumes:
   pgdata:
