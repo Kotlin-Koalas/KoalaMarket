@@ -21,8 +21,10 @@ import org.json.JSONObject
 object logic {
 //TODO clase para comunicarse mediante el uso de api y conseguir cosas como el LogIn o el SignUp
     var isBuyer = false
-    var buyerVolleyQueue:RequestQueue = Volley.newRequestQueue(SignUpVendedor.getContext())
-    var sellerVolleyQueue:RequestQueue = Volley.newRequestQueue(SignUpComprador.getContext())
+    var isBQueue = false
+    var isSQueue = false
+    lateinit var buyerVolleyQueue:RequestQueue
+    lateinit var sellerVolleyQueue:RequestQueue
 
     fun filterProduct(producList: MutableList<product_representation>, searchItem:String) : MutableList<product_representation>{
         val filteredProducts : MutableList<product_representation> = mutableListOf()
@@ -88,7 +90,7 @@ object logic {
 
         if(PersonBuyer.getShippingAddresses().isEmpty()){
             val jsonRequest2 = JsonObjectRequest(
-                Request.Method.POST, "http://192.168.18.141:8080/vendors/login", json,
+                Request.Method.POST, "https://ec2-52-47-150-236.eu-west-3.compute.amazonaws.com:443/buyers/register", json,
                 {response ->
                     val jsonRes = response
                     val name = json.getString("name")
@@ -112,10 +114,12 @@ object logic {
 
                 },
                 {error ->
-                    SignUpComprador.popUpError()
+                    Toast.makeText(MainActivity.getContext(), "Error: $error", Toast.LENGTH_SHORT)
+                        .show()
                 })
             queue.add(jsonRequest2)
         }
+
         if(PersonSeller.getEmail().isEmpty() && PersonBuyer.getEmail().isEmpty()) {
             MainActivity.popUpError()
         }else{
@@ -131,6 +135,10 @@ object logic {
 
     fun signInBuyer(name:String, surname: String, password:String, email:String, userID: String, DNI: String, shippingAddress: String, factAddress: String, bizum: String, paypal: String, card: CreditCard){
 
+        if(!isBQueue) {
+            buyerVolleyQueue = Volley.newRequestQueue(SignUpVendedor.getContext())
+            isBQueue = true
+        }
         val json = JSONObject()
 
         json.put("name", name)
@@ -173,6 +181,10 @@ object logic {
 
     fun signInSeller(name:String, surname: String, password:String, email:String, userID: String, cif: String, iban: String){
 
+        if(!isSQueue) {
+            sellerVolleyQueue = Volley.newRequestQueue(SignUpComprador.getContext())
+            isSQueue = true
+        }
         val json = JSONObject()
 
         json.put("name", name)

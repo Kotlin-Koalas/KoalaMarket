@@ -1,16 +1,16 @@
 package com.example.smarttrade.nonactivityclasses
 
 object PersonBuyer {
-    lateinit private var name:String
-    lateinit private var surnames:String
-    lateinit private var email:String
-    lateinit private var userID:String
-    lateinit private var password:String
+    private var name:String = ""
+    private var surnames:String = ""
+    private var email:String = ""
+    private var userID:String = ""
+    private var password:String = ""
     private var shippingAddresses:MutableList<String> = mutableListOf()
-    lateinit private var DNI:String
+    private var DNI:String = ""
     private var factAddresses:MutableList<String> = mutableListOf()
-    lateinit private var bizum:String
-    lateinit private var paypal:String
+    private var bizum:String = ""
+    private var paypal:String = ""
     private var creditCards:MutableList<CreditCard> = mutableListOf()
 
 

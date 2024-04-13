@@ -46,6 +46,7 @@ class SignUpVendedor : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_sign_up_vendedor)
+        actContextVendor = this
         val scrollView = findViewById<ScrollView>(R.id.scrollView)
         scrollView.overScrollMode = View.OVER_SCROLL_ALWAYS
         val cancelButton = findViewById<Button>(R.id.buttonCancel)
@@ -54,7 +55,7 @@ class SignUpVendedor : AppCompatActivity() {
             val IntentS = Intent(this,SignUpComprador::class.java)
             startActivity(IntentS)
         }
-        actContext = this
+
         val firstPasswordField = findViewById<EditText>(R.id.editTextPassword)
         val secondPasswordField = findViewById<EditText>(R.id.editTextRPassword)
 
@@ -171,16 +172,16 @@ class SignUpVendedor : AppCompatActivity() {
     }
 
     companion object {
-        private lateinit var actContext:SignUpVendedor
+        private lateinit var actContextVendor:SignUpVendedor
         fun getContext(): Context {
-            return actContext
+            return actContextVendor
         }
         fun loadSeller(){//TODO cambiar en un futuro Addproduct
-            val IntentS = Intent(actContext,AddProduct::class.java)
-            actContext.startActivity(IntentS)
+            val IntentS = Intent(actContextVendor,AddProduct::class.java)
+            actContextVendor.startActivity(IntentS)
         }
         fun popUpError(){
-            actContext.showCustomDialogBoxSeller("Error, ya registrado, pruebe a iniciar sesión.")
+            actContextVendor.showCustomDialogBoxSeller("Error, ya registrado, pruebe a iniciar sesión.")
         }
     }
 

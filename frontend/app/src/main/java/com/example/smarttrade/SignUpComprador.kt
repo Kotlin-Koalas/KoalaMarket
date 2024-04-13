@@ -56,7 +56,7 @@ class SignUpComprador : AppCompatActivity() {
             "Tarjeta de Crédito",
             "Bizum"
         )
-        actContext = this
+        actContextBuyer = this
         val adapter = ArrayAdapter<String>(this, R.layout.spinner_item_pago, items)
         spinner.adapter = adapter
         linearLayout = scrollView.getChildAt(0) as LinearLayout
@@ -334,16 +334,16 @@ class SignUpComprador : AppCompatActivity() {
     }
 
     companion object {
-        private lateinit var actContext: SignUpComprador
+        private lateinit var actContextBuyer: SignUpComprador
         fun getContext(): Context {
-            return actContext
+            return actContextBuyer
         }
         fun loadBuyer(){
-            val IntentS = Intent(actContext,BrowseProducts::class.java)
-            actContext.startActivity(IntentS)
+            val IntentS = Intent(actContextBuyer,BrowseProducts::class.java)
+            actContextBuyer.startActivity(IntentS)
         }
         fun popUpError(){
-            actContext.showCustomDialogBox("Error, ya registrado, pruebe a iniciar sesión.")
+            actContextBuyer.showCustomDialogBox("Error, ya registrado, pruebe a iniciar sesión.")
         }
     }
 
