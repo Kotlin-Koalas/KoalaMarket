@@ -3,6 +3,9 @@ package com.example.smarttrade.logic
 
 import android.widget.Toast
 import com.android.volley.Request
+import com.android.volley.RequestQueue
+import com.android.volley.toolbox.JsonObjectRequest
+import com.android.volley.toolbox.JsonRequest
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.example.smarttrade.MainActivity
@@ -18,6 +21,8 @@ import org.json.JSONObject
 object logic {
 //TODO clase para comunicarse mediante el uso de api y conseguir cosas como el LogIn o el SignUp
     var isBuyer = false
+    var buyerVolleyQueue:RequestQueue = Volley.newRequestQueue(SignUpVendedor.getContext())
+    var sellerVolleyQueue:RequestQueue = Volley.newRequestQueue(SignUpComprador.getContext())
 
     fun filterProduct(producList: MutableList<product_representation>, searchItem:String) : MutableList<product_representation>{
         val filteredProducts : MutableList<product_representation> = mutableListOf()
@@ -37,25 +42,23 @@ object logic {
         json.put("email", email)
         json.put("password", password)
 
-        val jsonString = json.toString()
-
         val queue = Volley.newRequestQueue(MainActivity.getContext())
 
-        val StringRequest = StringRequest(
-            Request.Method.POST, "https://ec2-52-47-150-236.eu-west-3.compute.amazonaws.com:443/buyers/register",
+        val jsonRequest = JsonObjectRequest(
+            Request.Method.POST, "https://ec2-52-47-150-236.eu-west-3.compute.amazonaws.com:443/buyers/register", json,
             {response ->
-                val jsonRes = JSONObject(response)
-                val name = json.getString("name")
-                val surname = json.getString("surname")
-                val emailRes = json.getString("email")
-                val userID = json.getString("userID")
-                val passwordRes = json.getString("password")
-                val shippingAddresses = json.getJSONArray("shippingAddresses")
-                val DNI = json.getString("DNI")
-                val factAddresses = json.getJSONArray("factAddresses")
-                val bizum = json.getString("bizum")
-                val paypal = json.getString("paypal")
-                val creditCards = json.getJSONArray("creditCards")
+                val jsonRes = response
+                val name = jsonRes.getString("name")
+                val surname = jsonRes.getString("surname")
+                val emailRes = jsonRes.getString("email")
+                val userID = jsonRes.getString("userID")
+                val passwordRes = jsonRes.getString("password")
+                val shippingAddresses = jsonRes.getJSONArray("shippingAddresses")
+                val DNI = jsonRes.getString("DNI")
+                val factAddresses = jsonRes.getJSONArray("factAddresses")
+                val bizum = jsonRes.getString("bizum")
+                val paypal = jsonRes.getString("paypal")
+                val creditCards = jsonRes.getJSONArray("creditCards")
 
                 if(name != "") {
                     isBuyer =true
@@ -81,11 +84,13 @@ object logic {
                     .show()
             })
 
+        queue.add(jsonRequest)
+
         if(PersonBuyer.getShippingAddresses().isEmpty()){
-            val StringRequest = StringRequest(
-                Request.Method.POST, "http://192.168.18.141:8080/vendors/login",
+            val jsonRequest2 = JsonObjectRequest(
+                Request.Method.POST, "http://192.168.18.141:8080/vendors/login", json,
                 {response ->
-                    val jsonRes = JSONObject(response)
+                    val jsonRes = response
                     val name = json.getString("name")
                     val surname = json.getString("surname")
                     val emailRes = json.getString("email")
@@ -109,7 +114,8 @@ object logic {
                 {error ->
                     SignUpComprador.popUpError()
                 })
-            }
+            queue.add(jsonRequest2)
+        }
         if(PersonSeller.getEmail().isEmpty() && PersonBuyer.getEmail().isEmpty()) {
             MainActivity.popUpError()
         }else{
@@ -141,14 +147,10 @@ object logic {
         json.put("bizum", bizum)
         json.put("paypal", paypal )
 
-        val jsonString = json.toString()
-
-        val queue = Volley.newRequestQueue(MainActivity.getContext())
-
-        val StringRequest = StringRequest(
-            Request.Method.POST, "https://ec2-52-47-150-236.eu-west-3.compute.amazonaws.com:443/buyers/register",
+        val jsonRequest = JsonObjectRequest(
+            Request.Method.POST,"https://ec2-52-47-150-236.eu-west-3.compute.amazonaws.com:443/buyers/register",json,
             {response ->
-                val jsonRes = JSONObject(response)
+                val jsonRes:JSONObject = response
                 val buyer = PersonBuyer
                 buyer.setName(name)
                 buyer.setSurname(surname)
@@ -161,11 +163,12 @@ object logic {
                 buyer.setBizum(bizum)
                 buyer.setPaypal(paypal)
                 buyer.addCreditCard(CreditCard(card.number, card.expirationDate,card.cvc))
+                SignUpComprador.loadBuyer()
             },
             { error ->
-                SignUpVendedor.popUpError()
+                SignUpComprador.popUpError()
             })
-            SignUpComprador.loadBuyer()
+        buyerVolleyQueue.add(jsonRequest)
         }
 
     fun signInSeller(name:String, surname: String, password:String, email:String, userID: String, cif: String, iban: String){
@@ -182,8 +185,6 @@ object logic {
 
         val jsonString = json.toString()
 
-        val queue = Volley.newRequestQueue(MainActivity.getContext())
-
         val StringRequest = StringRequest(
             Request.Method.POST, "https://ec2-52-47-150-236.eu-west-3.compute.amazonaws.com:443/buyers/register",
             {response ->
@@ -195,13 +196,12 @@ object logic {
                 buyer.setCIF(cif)
                 buyer.setUserId(userID)
                 buyer.setPassword(password)
-
+                SignUpVendedor.loadSeller()
             },
             { error ->
-                Toast.makeText(MainActivity.getContext(), "Error: $error", Toast.LENGTH_SHORT)
-                    .show()
+                SignUpVendedor.popUpError()
             })
-        SignUpVendedor.loadSeller()
+        sellerVolleyQueue.add(StringRequest)
     }
 
     suspend fun AddTechnology(PN:String){
