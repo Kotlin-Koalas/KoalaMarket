@@ -76,6 +76,8 @@ class BrowseProducts : AppCompatActivity() {
         gridLayout.adapter = adapterP
 
         //TODO conseguir los datos de la BD y meterlos a la lista productsShown
+        productsShown = logic.getAllProducts()
+        /*
         //Temporal solo para probar
         for(i in 1..5){
             productsShown.add(product_representation("","","",1,"yellow","yellow", "33"))
@@ -83,6 +85,7 @@ class BrowseProducts : AppCompatActivity() {
             productsShown.add(product_representation("aaaab","","",1,"green","green","33"))
 
         }
+        */
 
         adapterP.addAllProducts(productsShown)
 

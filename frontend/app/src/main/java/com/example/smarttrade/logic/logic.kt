@@ -27,10 +27,12 @@ object logic {
 
     var isBQueue = false
     var isSQueue = false
+    var isPQueue = false
     lateinit var buyerVolleyQueue:RequestQueue
     lateinit var sellerVolleyQueue:RequestQueue
-
     lateinit var productVolleyQueue:RequestQueue
+
+
 
 
     fun filterProduct(producList: MutableList<product_representation>, searchItem:String) : MutableList<product_representation>{
@@ -317,6 +319,7 @@ object logic {
         productVolleyQueue.add(jsonRequest)
     }
 
+
     fun addFood(name:String,price:Double,image:String,stock:Int,description:String,leafColor:String,PN:String,calories:String,macros:String){
 
 
@@ -352,5 +355,30 @@ object logic {
 
 
 
+
+
+    fun getAllProducts(): MutableList<product_representation> {
+        if(!isPQueue) {
+            productVolleyQueue = Volley.newRequestQueue(SignUpVendedor.getContext())
+            isPQueue = true
+        }
+        val res = mutableListOf<product_representation>()
+        val stringRequest = StringRequest(
+            Request.Method.GET,"https://ec2-52-47-150-236.eu-west-3.compute.amazonaws.com:443/products",
+            {response ->
+                val jsonRes = JSONObject(response)
+                val products = jsonRes.getJSONArray("products")
+                for (i in 0 until products.length()) {
+                    val p = products.getJSONObject(i)
+                    res.add(product_representation(p.getString("name"),p.getString("price"),p.getString("image"),p.getString("stock").toInt(),p.getString("description"),p.getString("ecology"),p.getString("product_number")))
+                }
+            },
+            {error ->
+                Toast.makeText(MainActivity.getContext(), "Error: $error", Toast.LENGTH_SHORT)
+                    .show()
+            })
+        buyerVolleyQueue.add(stringRequest)
+        return res
+    }
 
 }
