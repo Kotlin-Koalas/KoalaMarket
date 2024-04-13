@@ -1,5 +1,6 @@
 package com.example.smarttrade
 
+import android.content.Context
 import android.graphics.Rect
 import android.os.Bundle
 import android.view.MotionEvent
@@ -41,6 +42,7 @@ class BrowseProducts : AppCompatActivity() {
 
         browseProducts = this
         productsShown = mutableListOf()
+        actContextBP = this
 
         categoriesShown.add(category_representation("toys",R.drawable.icon_toy))
         categoriesShown.add(category_representation("food",R.drawable.icon_food))
@@ -161,6 +163,10 @@ class BrowseProducts : AppCompatActivity() {
         }
         fun setProductsShown(list:MutableList<product_representation>){
             productsShown = list
+        }
+        private lateinit var actContextBP:BrowseProducts
+        fun getContext(): Context {
+            return actContextBP
         }
     }
 

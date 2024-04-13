@@ -10,6 +10,7 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -254,6 +255,7 @@ class SignUpComprador : AppCompatActivity() {
                         "",
                         CreditCard(currNumTarj,currExpM+"/"+currExpY,currCVC)
                     )
+
                 }
                 if(currentTypeOfPayment == R.layout.bizum_option) {
                     val currBizumNum = findViewById<EditText>(R.id.editTextBizumNumber).text.toString()
@@ -270,6 +272,7 @@ class SignUpComprador : AppCompatActivity() {
                         "",
                         CreditCard("","","")
                     )
+
                 }
                 if(currentTypeOfPayment == R.layout.paypal_option) {
                     val currPayPalCorreo = findViewById<EditText>(R.id.editTextEmailPayPal).text.toString()

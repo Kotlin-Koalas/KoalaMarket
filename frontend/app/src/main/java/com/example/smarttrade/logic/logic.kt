@@ -105,7 +105,7 @@ object logic {
                 } else {
                     val json2 = JSONObject()
                     json2.put("email", email)
-                    json2.put("passoword", password)
+                    json2.put("password", password)
                     val jsonRequest2 = JsonObjectRequest(
                         Request.Method.POST, "$url/vendors/login", json2,
                         {response ->
@@ -199,12 +199,14 @@ object logic {
                 //SignUpComprador.popUpError()
             })
         buyerVolleyQueue.add(jsonRequest)
+
+
     }
 
     fun signInSeller(name:String, surname: String, password:String, email:String, userID: String, cif: String, iban: String){
 
         if(!isSQueue) {
-            sellerVolleyQueue = Volley.newRequestQueue(SignUpComprador.getContext())
+            sellerVolleyQueue = Volley.newRequestQueue(SignUpVendedor.getContext())
             isSQueue = true
         }
         val json = JSONObject()
@@ -372,7 +374,7 @@ object logic {
 
     fun getAllProducts(): MutableList<product_representation> {
         if(!isPQueue) {
-            productVolleyQueue = Volley.newRequestQueue(SignUpVendedor.getContext())
+            productVolleyQueue = Volley.newRequestQueue(BrowseProducts.getContext())
             isPQueue = true
         }
         val res = mutableListOf<product_representation>()
@@ -391,7 +393,7 @@ object logic {
                 Toast.makeText(MainActivity.getContext(), "Error: $error", Toast.LENGTH_SHORT)
                     .show()
             })
-        buyerVolleyQueue.add(stringRequest)
+        productVolleyQueue.add(stringRequest)
         return res
     }
 
