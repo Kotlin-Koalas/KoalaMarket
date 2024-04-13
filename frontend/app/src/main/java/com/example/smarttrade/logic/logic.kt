@@ -1,6 +1,7 @@
 package com.example.smarttrade.logic
 
 
+import android.util.Log
 import android.widget.Toast
 import com.android.volley.Request
 import com.android.volley.RequestQueue
@@ -19,7 +20,16 @@ import com.example.smarttrade.nonactivityclasses.food_representation
 import com.example.smarttrade.nonactivityclasses.product_representation
 import com.example.smarttrade.nonactivityclasses.technology_representation
 import com.example.smarttrade.nonactivityclasses.toy_representation
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 import org.json.JSONObject
+import java.io.BufferedReader
+import java.io.File
+import java.io.InputStreamReader
+
+private const val host = "https://ec2-52-47-150-236.eu-west-3.compute.amazonaws.com:443"
+
 
 object logic {
 //TODO clase para comunicarse mediante el uso de api y conseguir cosas como el LogIn o el SignUp
@@ -32,6 +42,7 @@ object logic {
     lateinit var sellerVolleyQueue:RequestQueue
     lateinit var productVolleyQueue:RequestQueue
 
+    val url = "http://192.168.0.103:8080"
 
 
 
@@ -50,26 +61,27 @@ object logic {
     fun logIn(email:String, password:String){
 
         val json = JSONObject()
-        json.put("email", email)
-        json.put("password", password)
+        json.put("name", email)
+        json.put("surname", password)
 
         val queue = Volley.newRequestQueue(MainActivity.getContext())
 
         val jsonRequest = JsonObjectRequest(
-            Request.Method.POST, "https://ec2-52-47-150-236.eu-west-3.compute.amazonaws.com:443/buyers/register", json,
+            Request.Method.POST, "$url/buyers/login", json,
             {response ->
                 val jsonRes = response
+                Log.i("JsonTest", response.toString())
                 val name = jsonRes.getString("name")
                 val surname = jsonRes.getString("surname")
                 val emailRes = jsonRes.getString("email")
                 val userID = jsonRes.getString("userID")
                 val passwordRes = jsonRes.getString("password")
-                val shippingAddresses = jsonRes.getJSONArray("shippingAddresses")
-                val DNI = jsonRes.getString("DNI")
-                val factAddresses = jsonRes.getJSONArray("factAddresses")
+                val DNI = jsonRes.getString("dni")
                 val bizum = jsonRes.getString("bizum")
                 val paypal = jsonRes.getString("paypal")
                 val creditCards = jsonRes.getJSONArray("creditCards")
+                val shippingAddresses = jsonRes.getJSONArray("shippingAddresses")
+                val factAddresses = jsonRes.getJSONArray("billingAddresses")
 
                 if(name != "") {
                     isBuyer =true
@@ -91,15 +103,16 @@ object logic {
                 }
             },
             { error ->
-                Toast.makeText(MainActivity.getContext(), "Error: $error", Toast.LENGTH_SHORT)
-                    .show()
+                //Toast.makeText(MainActivity.getContext(), "Error: $error", Toast.LENGTH_SHORT)
+                   // .show()
+                Log.i("CACA",error.toString())
             })
 
         queue.add(jsonRequest)
 
         if(PersonBuyer.getShippingAddresses().isEmpty()){
             val jsonRequest2 = JsonObjectRequest(
-                Request.Method.POST, "https://ec2-52-47-150-236.eu-west-3.compute.amazonaws.com:443/buyers/register", json,
+                Request.Method.POST, "$url/vendors/login", json,
                 {response ->
                     val jsonRes = response
                     val name = json.getString("name")
@@ -123,8 +136,9 @@ object logic {
 
                 },
                 {error ->
-                    Toast.makeText(MainActivity.getContext(), "Error: $error", Toast.LENGTH_SHORT)
-                        .show()
+                    //Toast.makeText(MainActivity.getContext(), "Error: $error", Toast.LENGTH_SHORT)
+                        //.show()
+                    Log.i("CACA",error.toString())
                 })
             queue.add(jsonRequest2)
         }
@@ -145,7 +159,7 @@ object logic {
     fun signInBuyer(name:String, surname: String, password:String, email:String, userID: String, DNI: String, shippingAddress: String, factAddress: String, bizum: String, paypal: String, card: CreditCard){
 
         if(!isBQueue) {
-            buyerVolleyQueue = Volley.newRequestQueue(SignUpVendedor.getContext())
+            buyerVolleyQueue = Volley.newRequestQueue(SignUpComprador.getContext())
             isBQueue = true
         }
         val json = JSONObject()
@@ -159,13 +173,14 @@ object logic {
         json.put("cvc", card.cvc)
         json.put("cardNumber", card.number)
         json.put("expirationDate", card.expirationDate)
+        Log.i("shippingTest", shippingAddress)
         json.put("shippingAddress", shippingAddress)
         json.put("billingAddress", factAddress)
         json.put("bizum", bizum)
         json.put("paypal", paypal )
 
         val jsonRequest = JsonObjectRequest(
-            Request.Method.POST,"https://ec2-52-47-150-236.eu-west-3.compute.amazonaws.com:443/buyers/register",json,
+            Request.Method.POST,"$url/buyers/register",json,
             {response ->
                 val jsonRes:JSONObject = response
                 val buyer = PersonBuyer
@@ -183,7 +198,8 @@ object logic {
                 SignUpComprador.loadBuyer()
             },
             { error ->
-                SignUpComprador.popUpError()
+                Log.i("CACA", error.toString())
+                //SignUpComprador.popUpError()
             })
         buyerVolleyQueue.add(jsonRequest)
     }
@@ -207,7 +223,7 @@ object logic {
         val jsonString = json.toString()
 
         val StringRequest = StringRequest(
-            Request.Method.POST, "https://ec2-52-47-150-236.eu-west-3.compute.amazonaws.com:443/buyers/register",
+            Request.Method.POST, "$url/buyers/register",
             {response ->
                 val jsonRes = JSONObject(response)
                 val buyer = PersonSeller
@@ -221,6 +237,7 @@ object logic {
             },
             { error ->
                 SignUpVendedor.popUpError()
+
             })
         sellerVolleyQueue.add(StringRequest)
     }
@@ -380,5 +397,60 @@ object logic {
         buyerVolleyQueue.add(stringRequest)
         return res
     }
+
+
+ suspend fun getImage(imageFIle : File) :Any{
+
+     val filePath = "/path/to/your/file.jpg"
+
+     var stringPath = imageFIle.toString()
+
+
+     var x  = "file=@$stringPath"
+
+     // Curl command
+     val curlCommand = "curl"
+     //val curlArgs = listOf("-F", "@$stringPath.", "http://ec2-52-47-150-236.eu-west-3.compute.amazonaws.com:5000")
+     val curlArgs = listOf("http://ec2-52-47-150-236.eu-west-3.compute.amazonaws.com:5000", "-F", x)
+
+     val coroutineScope = CoroutineScope(Dispatchers.IO)
+
+     // Create ProcessBuilder
+     val processBuilder = ProcessBuilder(curlCommand, *curlArgs.toTypedArray())
+     processBuilder.redirectErrorStream(true)
+     val deferredResult   = coroutineScope.async  {
+         // Start process
+         val process = processBuilder.start()
+
+         val response = StringBuilder()
+         // Read output
+         val reader = BufferedReader(InputStreamReader(process.inputStream))
+         var line: String?
+         while (reader.readLine().also { line = it } != null) {
+             response.append(line).append('\n')
+             // Wait for process to finish
+             val exitCode = process.waitFor()
+             println("Process exited with code $exitCode")
+
+
+             val res = response.toString()
+             val x = res.split("\n")
+             val y = x[x.size - 2]
+             val resultado :String =  y.substring(13, y.length - 2)
+
+
+             Log.i("response", resultado)
+
+             return@async resultado
+         }
+     }
+
+        Log.i("resultado",deferredResult.await().toString())
+        return deferredResult.await()
+ }
+
+
+
+
 
 }

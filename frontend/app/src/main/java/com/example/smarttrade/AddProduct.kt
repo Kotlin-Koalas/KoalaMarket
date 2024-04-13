@@ -31,6 +31,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.graphics.drawable.toBitmap
 import androidx.core.net.toFile
 import com.example.smarttrade.logic.logic
+import kotlinx.coroutines.Deferred
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
+import kotlinx.coroutines.runBlocking
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
@@ -374,9 +378,13 @@ class AddProduct :AppCompatActivity() {
             when (uri.scheme) {
                 "file" -> {
                     val archivoImagen = uri.toFile()
+                    val ImagenUri = uri
+
                     if (archivoImagen.exists()) {
                         val arregloBytesImagen = convertImageToByteArray(archivoImagen)
                         encodedImageString = Base64.encodeToString(arregloBytesImagen, Base64.DEFAULT)
+
+
                         uploadImageButton.setImageURI(uri)
                         isUploadImage = 1
                     } else {
@@ -387,7 +395,14 @@ class AddProduct :AppCompatActivity() {
                     try {
                         val flujoEntrada = contentResolver.openInputStream(uri)
                         if (flujoEntrada != null) {
-                            val archivoTemporal = crearArchivoTemporalImagen()
+
+                            runBlocking { val archivoTemporal = crearArchivoTemporalImagen().await()
+
+
+                             val x = logic.getImage(archivoTemporal)
+
+
+
                             val flujoSalida = FileOutputStream(archivoTemporal)
                             flujoSalida.write(flujoEntrada.readBytes())
                             flujoSalida.close()
@@ -398,6 +413,7 @@ class AddProduct :AppCompatActivity() {
 
                             uploadImageButton.setImageURI(uri)
                             isUploadImage = 1
+                            }
                         }
                     } catch (e: Exception) {
                         Log.e("AddProduct", "Error al obtener los datos de la imagen: $e")
@@ -418,10 +434,13 @@ class AddProduct :AppCompatActivity() {
         startActivity(backPage)
     }
 
-    private fun crearArchivoTemporalImagen(): File {
-        val nombreTemporal = "imagen_temporal_${System.currentTimeMillis()}.jpg"
-        val directorioCache = applicationContext.cacheDir
-        return File(directorioCache, nombreTemporal)
+    private suspend fun crearArchivoTemporalImagen():Deferred< File>{
+        return GlobalScope.async {
+            val nombreTemporal = "imagen_temporal_${System.currentTimeMillis()}.jpg"
+            val directorioCache = applicationContext.cacheDir
+            return@async File(directorioCache, nombreTemporal)
+        }
+
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
