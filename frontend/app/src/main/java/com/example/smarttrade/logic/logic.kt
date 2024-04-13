@@ -42,6 +42,7 @@ object logic {
     lateinit var sellerVolleyQueue:RequestQueue
     lateinit var productVolleyQueue:RequestQueue
 
+    val url = "http://192.168.0.103:8080"
 
 
 
@@ -60,26 +61,27 @@ object logic {
     fun logIn(email:String, password:String){
 
         val json = JSONObject()
-        json.put("email", email)
-        json.put("password", password)
+        json.put("name", email)
+        json.put("surname", password)
 
         val queue = Volley.newRequestQueue(MainActivity.getContext())
 
         val jsonRequest = JsonObjectRequest(
-            Request.Method.POST, "http://localhost:8080/buyers/register", json,
+            Request.Method.POST, "$url/buyers/login", json,
             {response ->
                 val jsonRes = response
+                Log.i("JsonTest", response.toString())
                 val name = jsonRes.getString("name")
                 val surname = jsonRes.getString("surname")
                 val emailRes = jsonRes.getString("email")
                 val userID = jsonRes.getString("userID")
                 val passwordRes = jsonRes.getString("password")
-                val shippingAddresses = jsonRes.getJSONArray("shippingAddresses")
-                val DNI = jsonRes.getString("DNI")
-                val factAddresses = jsonRes.getJSONArray("factAddresses")
+                val DNI = jsonRes.getString("dni")
                 val bizum = jsonRes.getString("bizum")
                 val paypal = jsonRes.getString("paypal")
                 val creditCards = jsonRes.getJSONArray("creditCards")
+                val shippingAddresses = jsonRes.getJSONArray("shippingAddresses")
+                val factAddresses = jsonRes.getJSONArray("billingAddresses")
 
                 if(name != "") {
                     isBuyer =true
@@ -110,7 +112,7 @@ object logic {
 
         if(PersonBuyer.getShippingAddresses().isEmpty()){
             val jsonRequest2 = JsonObjectRequest(
-                Request.Method.POST, "http://localhost:8080/buyers/register", json,
+                Request.Method.POST, "$url/vendors/login", json,
                 {response ->
                     val jsonRes = response
                     val name = json.getString("name")
@@ -157,7 +159,7 @@ object logic {
     fun signInBuyer(name:String, surname: String, password:String, email:String, userID: String, DNI: String, shippingAddress: String, factAddress: String, bizum: String, paypal: String, card: CreditCard){
 
         if(!isBQueue) {
-            buyerVolleyQueue = Volley.newRequestQueue(SignUpVendedor.getContext())
+            buyerVolleyQueue = Volley.newRequestQueue(SignUpComprador.getContext())
             isBQueue = true
         }
         val json = JSONObject()
@@ -171,13 +173,14 @@ object logic {
         json.put("cvc", card.cvc)
         json.put("cardNumber", card.number)
         json.put("expirationDate", card.expirationDate)
+        Log.i("shippingTest", shippingAddress)
         json.put("shippingAddress", shippingAddress)
         json.put("billingAddress", factAddress)
         json.put("bizum", bizum)
         json.put("paypal", paypal )
 
         val jsonRequest = JsonObjectRequest(
-            Request.Method.POST,"http://localhost:8080/buyers/register",json,
+            Request.Method.POST,"$url/buyers/register",json,
             {response ->
                 val jsonRes:JSONObject = response
                 val buyer = PersonBuyer
@@ -220,7 +223,7 @@ object logic {
         val jsonString = json.toString()
 
         val StringRequest = StringRequest(
-            Request.Method.POST, "https://ec2-52-47-150-236.eu-west-3.compute.amazonaws.com:443/buyers/register",
+            Request.Method.POST, "$url/buyers/register",
             {response ->
                 val jsonRes = JSONObject(response)
                 val buyer = PersonSeller
