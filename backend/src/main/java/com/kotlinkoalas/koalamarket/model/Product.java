@@ -41,11 +41,6 @@ public class Product {
     @Column(name = "cif", length = 30, nullable = false)
     private String cif;
 
-    @OneToOne
-    @JoinColumn(name = "vendor_cif",referencedColumnName = "dni")
-    private Vendor vendor;
-
-
     public Product(String productNumber, String name, double price, String description, String ecology, int stock, String image,String cif) {
         this.productNumber = productNumber;
         this.name = name;

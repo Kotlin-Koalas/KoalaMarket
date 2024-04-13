@@ -43,7 +43,6 @@ public class FoodController {
         ProductFactory FoodFactory = new FoodFactory();
         Food food = (Food) FoodFactory.createProduct(productNumber, name, price, description, ecology, stock, image, cif, calories, macros);
 
-
         return repository.save(food);
     }
 
