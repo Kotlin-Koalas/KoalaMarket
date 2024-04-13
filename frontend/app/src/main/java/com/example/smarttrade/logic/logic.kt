@@ -9,6 +9,7 @@ import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.example.smarttrade.AddProduct
+import com.example.smarttrade.BrowseProducts
 import com.example.smarttrade.MainActivity
 import com.example.smarttrade.SignUpComprador
 import com.example.smarttrade.SignUpVendedor
@@ -102,7 +103,43 @@ object logic {
                     }
                     MainActivity.loadBuyer()
                 } else {
-                    //second
+                    val json2 = JSONObject()
+                    json2.put("email", email)
+                    json2.put("passoword", password)
+                    val jsonRequest2 = JsonObjectRequest(
+                        Request.Method.POST, "$url/vendors/login", json2,
+                        {response ->
+                            val jsonRes = response
+                            Log.i("JsonTest2", response.toString())
+
+                            val nameRes = jsonRes.getString("name")
+                            val surname = jsonRes.getString("surname")
+                            val emailRes = jsonRes.getString("email")
+                            val userID = jsonRes.getString("userID")
+                            val passwordRes = jsonRes.getString("password")
+                            val cif = jsonRes.getString("dni")
+                            val iban = jsonRes.getString("iban")
+
+                            if(nameRes != ""){
+                                val seller = PersonSeller
+                                seller.setName(nameRes)
+                                seller.setSurname(surname)
+                                seller.setEmail(emailRes)
+                                seller.setUserId(userID)
+                                seller.setPassword(passwordRes)
+                                seller.setCIF(cif)
+                                seller.setIBAN(iban)
+                                MainActivity.loadSeller()
+                            } else {
+                                MainActivity.popUpError()
+                            }
+                        },
+                        {error ->
+                            //Toast.makeText(MainActivity.getContext(), "Error: $error", Toast.LENGTH_SHORT)
+                            //.show()
+                            Log.i("CACA",error.toString())
+                        })
+                    queue.add(jsonRequest2)
                 }
             },
             { error ->
@@ -110,45 +147,8 @@ object logic {
                 // .show()
                 Log.i("CACA",error.toString())
             })
-        val json2 = JSONObject()
-        json2.put("email", email)
-        json2.put("passoword", password)
-        val jsonRequest2 = JsonObjectRequest(
-            Request.Method.POST, "$url/vendors/login", json2,
-            {response ->
-                val jsonRes = response
-                Log.i("JsonTest2", response.toString())
 
-                val nameRes = jsonRes.getString("name")
-                val surname = jsonRes.getString("surname")
-                val emailRes = jsonRes.getString("email")
-                val userID = jsonRes.getString("userID")
-                val passwordRes = jsonRes.getString("password")
-                val cif = jsonRes.getString("cif")
-                val iban = jsonRes.getString("iban")
-
-                if(nameRes != ""){
-                    val seller = PersonSeller
-                    seller.setName(nameRes)
-                    seller.setSurname(surname)
-                    seller.setEmail(emailRes)
-                    seller.setUserId(userID)
-                    seller.setPassword(passwordRes)
-                    seller.setCIF(cif)
-                    seller.setIBAN(iban)
-                    MainActivity.loadSeller()
-                } else {
-                    MainActivity.popUpError()
-                }
-
-
-            },
-            {error ->
-                //Toast.makeText(MainActivity.getContext(), "Error: $error", Toast.LENGTH_SHORT)
-                //.show()
-                Log.i("CACA",error.toString())
-            })
-        queue.add(jsonRequest2)
+        queue.add(jsonRequest)
 
     }
 
@@ -169,11 +169,12 @@ object logic {
         json.put("cvc", card.cvc)
         json.put("cardNumber", card.number)
         json.put("expirationDate", card.expirationDate)
-        Log.i("shippingTest", shippingAddress)
         json.put("shippingAddress", shippingAddress)
         json.put("billingAddress", factAddress)
         json.put("bizum", bizum)
         json.put("paypal", paypal )
+
+        Log.i("jsonBuyer",json.toString())
 
         val jsonRequest = JsonObjectRequest(
             Request.Method.POST,"$url/buyers/register",json,
@@ -216,12 +217,11 @@ object logic {
         json.put("password", password)
         json.put("iban", iban)
 
-        val jsonString = json.toString()
 
-        val StringRequest = StringRequest(
-            Request.Method.POST, "$url/buyers/register",
+        val jsonRequest = JsonObjectRequest(
+            Request.Method.POST, "$url/vendors/register",json,
             {response ->
-                val jsonRes = JSONObject(response)
+                val jsonRes = response
                 val buyer = PersonSeller
                 buyer.setName(name)
                 buyer.setSurname(surname)
@@ -235,7 +235,7 @@ object logic {
                 SignUpVendedor.popUpError()
 
             })
-        sellerVolleyQueue.add(StringRequest)
+        sellerVolleyQueue.add(jsonRequest)
     }
 
      fun addTechnology(name:String,price:Double,image:String,stock:Int,description:String,leafColor:String,PN:String,brand:String,electricConsumption:Double){
@@ -385,6 +385,7 @@ object logic {
                     val p = products.getJSONObject(i)
                     res.add(product_representation(p.getString("name"),p.getString("price"),p.getString("image"),p.getString("stock").toInt(),p.getString("description"),p.getString("ecology"),p.getString("product_number")))
                 }
+                BrowseProducts.setProductsShown(res)
             },
             {error ->
                 Toast.makeText(MainActivity.getContext(), "Error: $error", Toast.LENGTH_SHORT)

@@ -33,7 +33,6 @@ class BrowseProducts : AppCompatActivity() {
     private lateinit var recommendationRV: RecyclerView
     private lateinit var textDescription: TextView
 
-    private var productsShown: MutableList<product_representation> = mutableListOf()
     private var categoriesShown: MutableList<category_representation> = mutableListOf()
     private var prevSearchesShown: MutableList<search_representation> = mutableListOf()
     private var productsFiltered : MutableList<product_representation> = mutableListOf()
@@ -41,6 +40,7 @@ class BrowseProducts : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         browseProducts = this
+        productsShown = mutableListOf()
 
         categoriesShown.add(category_representation("toys",R.drawable.icon_toy))
         categoriesShown.add(category_representation("food",R.drawable.icon_food))
@@ -76,7 +76,7 @@ class BrowseProducts : AppCompatActivity() {
         gridLayout.adapter = adapterP
 
         //TODO conseguir los datos de la BD y meterlos a la lista productsShown
-        productsShown = logic.getAllProducts()
+        logic.getAllProducts()
         /*
         //Temporal solo para probar
         for(i in 1..5){
@@ -155,8 +155,12 @@ class BrowseProducts : AppCompatActivity() {
 
     companion object{
         private lateinit var browseProducts: BrowseProducts
+        private lateinit var productsShown: MutableList<product_representation>
         fun updateSearch(text:String) {
             browseProducts.updateSearch(text)
+        }
+        fun setProductsShown(list:MutableList<product_representation>){
+            productsShown = list
         }
     }
 
