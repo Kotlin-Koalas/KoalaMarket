@@ -23,6 +23,7 @@ import com.example.smarttrade.nonactivityclasses.toy_representation
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
+import kotlinx.coroutines.runBlocking
 import org.json.JSONObject
 import java.io.BufferedReader
 import java.io.File
@@ -59,10 +60,9 @@ object logic {
     }
 
     fun logIn(email:String, password:String){
-
         val json = JSONObject()
-        json.put("name", email)
-        json.put("surname", password)
+        json.put("email", email)
+        json.put("password", password)
 
         val queue = Volley.newRequestQueue(MainActivity.getContext())
 
@@ -71,8 +71,8 @@ object logic {
             {response ->
                 val jsonRes = response
                 Log.i("JsonTest", response.toString())
-                val name = jsonRes.getString("name")
-                val surname = jsonRes.getString("surname")
+                val nameRes = jsonRes.getString("name")
+                val surnameRes = jsonRes.getString("surname")
                 val emailRes = jsonRes.getString("email")
                 val userID = jsonRes.getString("userID")
                 val passwordRes = jsonRes.getString("password")
@@ -83,11 +83,11 @@ object logic {
                 val shippingAddresses = jsonRes.getJSONArray("shippingAddresses")
                 val factAddresses = jsonRes.getJSONArray("billingAddresses")
 
-                if(name != "") {
+                if(nameRes != "") {
                     isBuyer =true
                     val buyer = PersonBuyer
-                    buyer.setName(name)
-                    buyer.setSurname(surname)
+                    buyer.setName(nameRes)
+                    buyer.setSurname(surnameRes)
                     buyer.setEmail(emailRes)
                     buyer.setUserId(userID)
                     buyer.setDNI(DNI)
@@ -100,59 +100,55 @@ object logic {
                         val card = creditCards.getJSONObject(i)
                         buyer.addCreditCard(CreditCard(card.getString("cardNumber"), card.getString("expirationDate"),card.getString("cvc")))
                     }
+                    MainActivity.loadBuyer()
+                } else {
+                    //second
                 }
             },
             { error ->
                 //Toast.makeText(MainActivity.getContext(), "Error: $error", Toast.LENGTH_SHORT)
-                   // .show()
+                // .show()
                 Log.i("CACA",error.toString())
             })
+        val json2 = JSONObject()
+        json2.put("email", email)
+        json2.put("passoword", password)
+        val jsonRequest2 = JsonObjectRequest(
+            Request.Method.POST, "$url/vendors/login", json2,
+            {response ->
+                val jsonRes = response
+                Log.i("JsonTest2", response.toString())
 
-        queue.add(jsonRequest)
+                val nameRes = jsonRes.getString("name")
+                val surname = jsonRes.getString("surname")
+                val emailRes = jsonRes.getString("email")
+                val userID = jsonRes.getString("userID")
+                val passwordRes = jsonRes.getString("password")
+                val cif = jsonRes.getString("cif")
+                val iban = jsonRes.getString("iban")
 
-        if(PersonBuyer.getShippingAddresses().isEmpty()){
-            val jsonRequest2 = JsonObjectRequest(
-                Request.Method.POST, "$url/vendors/login", json,
-                {response ->
-                    val jsonRes = response
-                    val name = json.getString("name")
-                    val surname = json.getString("surname")
-                    val emailRes = json.getString("email")
-                    val userID = json.getString("userID")
-                    val passwordRes = json.getString("password")
-                    val cif = json.getString("cif")
-                    val iban = json.getString("iban")
+                if(nameRes != ""){
+                    val seller = PersonSeller
+                    seller.setName(nameRes)
+                    seller.setSurname(surname)
+                    seller.setEmail(emailRes)
+                    seller.setUserId(userID)
+                    seller.setPassword(passwordRes)
+                    seller.setCIF(cif)
+                    seller.setIBAN(iban)
+                    MainActivity.loadSeller()
+                } else {
+                    MainActivity.popUpError()
+                }
 
-                    if(name != ""){
-                        val seller = PersonSeller
-                        seller.setName(name)
-                        seller.setSurname(surname)
-                        seller.setEmail(emailRes)
-                        seller.setUserId(userID)
-                        seller.setPassword(passwordRes)
-                        seller.setCIF(cif)
-                        seller.setIBAN(iban)
-                    }
 
-                },
-                {error ->
-                    //Toast.makeText(MainActivity.getContext(), "Error: $error", Toast.LENGTH_SHORT)
-                        //.show()
-                    Log.i("CACA",error.toString())
-                })
-            queue.add(jsonRequest2)
-        }
-
-        if(PersonSeller.getEmail().isEmpty() && PersonBuyer.getEmail().isEmpty()) {
-            MainActivity.popUpError()
-        }else{
-            if(isBuyer){
-                MainActivity.loadBuyer()
-            }
-            else{
-                MainActivity.loadSeller()
-            }
-        }
+            },
+            {error ->
+                //Toast.makeText(MainActivity.getContext(), "Error: $error", Toast.LENGTH_SHORT)
+                //.show()
+                Log.i("CACA",error.toString())
+            })
+        queue.add(jsonRequest2)
 
     }
 
