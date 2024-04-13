@@ -8,4 +8,5 @@ import org.springframework.data.rest.webmvc.RepositoryRestController;
 public interface VendorRepository extends JpaRepository<Vendor, String> {
     Vendor findByDni(String dni);
     Vendor findByEmail(String email);
+    boolean existsByDni(String email);
 }

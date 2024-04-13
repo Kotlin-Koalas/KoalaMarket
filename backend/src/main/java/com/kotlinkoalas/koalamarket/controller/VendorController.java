@@ -1,6 +1,5 @@
 package com.kotlinkoalas.koalamarket.controller;
 
-import com.kotlinkoalas.koalamarket.model.Buyer;
 import com.kotlinkoalas.koalamarket.model.Vendor;
 import com.kotlinkoalas.koalamarket.repo.VendorRepository;
 import org.springframework.http.ResponseEntity;
@@ -94,4 +93,5 @@ public class VendorController {
             return ResponseEntity.ok("Registration successful");
         }
     }
+
 }
