@@ -156,7 +156,7 @@ class SignUpVendedor : AppCompatActivity() {
         val dialog = Dialog(this)
         dialog.setTitle("ERROR")
         dialog.setCancelable(false)
-        dialog.setContentView(R.layout.pop_up_alert_login)
+        dialog.setContentView(R.layout.pop_up_alert)
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
         val messageBox = dialog.findViewById<TextView>(R.id.textViewErrorText)

@@ -196,11 +196,9 @@ object logic {
             },
             { error ->
                 Log.i("CACA", error.toString())
-                //SignUpComprador.popUpError()
+                SignUpComprador.popUpError()
             })
         buyerVolleyQueue.add(jsonRequest)
-
-
     }
 
     fun signInSeller(name:String, surname: String, password:String, email:String, userID: String, cif: String, iban: String){
@@ -379,7 +377,7 @@ object logic {
         }
         val res = mutableListOf<product_representation>()
         val stringRequest = StringRequest(
-            Request.Method.GET,"https://ec2-52-47-150-236.eu-west-3.compute.amazonaws.com:443/products",
+            Request.Method.GET,"$url/products",
             {response ->
                 val jsonRes = JSONObject(response)
                 val products = jsonRes.getJSONArray("products")
