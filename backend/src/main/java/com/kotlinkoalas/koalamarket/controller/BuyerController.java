@@ -7,6 +7,7 @@ import com.kotlinkoalas.koalamarket.repo.BuyerRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -85,12 +86,21 @@ public class BuyerController {
         buyer.setUserID(userID);
         buyer.setEmail(email);
         buyer.setPassword(password);
-        buyer.getBillingAddresses().add(new Address(billingAddress));
-        buyer.getShippingAddresses().add(new Address(shippingAddress));
+
+        List<Address> shippingAddresses = new ArrayList<>();
+        shippingAddresses.add(new Address(shippingAddress));
+        buyer.setShippingAddresses(shippingAddresses);
+
+        List<Address> billingAddresses = new ArrayList<>();
+        billingAddresses.add(new Address(billingAddress));
+        buyer.setBillingAddresses(billingAddresses);
+
 
         if (!cardNumber.isEmpty() || !CVC.isEmpty() || !expirationDate.isEmpty()) {
             CreditCard creditCard = new CreditCard(CVC, cardNumber, expirationDate);
-            buyer.getCreditCards().add(creditCard);
+            List<CreditCard> creditCards = new ArrayList<>();
+            creditCards.add(creditCard);
+            buyer.setCreditCards(creditCards);
         }
 
         if (!bizum.isEmpty()) {

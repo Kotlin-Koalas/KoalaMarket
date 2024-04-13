@@ -2,15 +2,13 @@ package com.kotlinkoalas.koalamarket.model;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.proxy.HibernateProxy;
-import com.kotlinkoalas.koalamarket.model.Address;
+
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 @Getter
 @Setter
 @ToString
-@RequiredArgsConstructor
 @Entity
 public class Buyer extends Client{
 
@@ -37,4 +35,15 @@ public class Buyer extends Client{
     @OneToMany(mappedBy = "buyer", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @ToString.Exclude
     private List<CreditCard> creditCards;
+
+    public Buyer(){
+        super();
+        this.shippingAddresses = new ArrayList<>();
+        this.billingAddresses = new ArrayList<>();
+        this.creditCards = new ArrayList<>();
+        this.buyingLimit = "";
+        this.points = 0;
+        this.bizum = "";
+        this.paypal = "";
+    }
 }

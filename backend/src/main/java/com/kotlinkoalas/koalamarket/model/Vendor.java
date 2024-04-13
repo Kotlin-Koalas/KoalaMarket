@@ -10,7 +10,6 @@ import java.util.Objects;
 @Getter
 @Setter
 @ToString
-@RequiredArgsConstructor
 @Entity
 public class Vendor extends Client {
 
@@ -19,4 +18,9 @@ public class Vendor extends Client {
 
     @OneToOne(mappedBy = "vendor")
     private Product product;
+
+    public Vendor(){
+        super();
+        this.iban = "";
+    }
 }

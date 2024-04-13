@@ -9,7 +9,6 @@ import java.util.Objects;
 @Getter
 @Setter
 @ToString
-@RequiredArgsConstructor
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Client {
@@ -46,5 +45,14 @@ public class Client {
     @Override
     public final int hashCode() {
         return this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass().hashCode() : getClass().hashCode();
+    }
+
+    public Client() {
+        this.dni = "";
+        this.name = "";
+        this.surname = "";
+        this.userID = "";
+        this.email = "";
+        this.password = "";
     }
 }
