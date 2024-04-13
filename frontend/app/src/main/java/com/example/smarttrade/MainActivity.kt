@@ -52,8 +52,6 @@ class MainActivity : AppCompatActivity() {
         }
         val logInButton = findViewById<Button>(R.id.button)
         logInButton.setOnClickListener{
-            //TODO codigo para logIn y guardar las cosas en singleton y quitar los temporal
-
             logic.logIn(findViewById<EditText>(R.id.editTextTextEmailAddress).text.toString(),firstPasswordField.text.toString())
             /*
             //temporal para acceder a la ventana de catalogo
@@ -69,7 +67,7 @@ class MainActivity : AppCompatActivity() {
         val dialog = Dialog(this)
         dialog.setTitle("ERROR")
         dialog.setCancelable(false)
-        dialog.setContentView(R.layout.pop_up_alert)
+        dialog.setContentView(R.layout.pop_up_alert_login)
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
         val messageBox = dialog.findViewById<TextView>(R.id.textViewErrorText)
