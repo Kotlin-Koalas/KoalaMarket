@@ -24,10 +24,10 @@ data class technology_representation (
 
 data class clothes_representation(
     val name: String,
-    val price: String,
+    val price: Double,
     val image: String,
-    val description: String,
     val stock: Int,
+    val description: String,
     val leafColor: String,
     val PN: String,
     val size: String,
@@ -36,10 +36,10 @@ data class clothes_representation(
 
 data class food_representation(
     val name: String,
-    val price: String,
+    val price: Double,
     val image: String,
-    val description: String,
     val stock: Int,
+    val description: String,
     val leafColor: String,
     val PN: String,
     val calories: String,
@@ -49,14 +49,14 @@ data class food_representation(
 
 data class toy_representation(
     val name: String,
-    val price: String,
+    val price: Double,
     val image: String,
-    val description: String,
     val stock: Int,
+    val description: String,
     val leafColor: String,
     val PN: String,
     val material :String,
-    val recomendAge : String
+    val age : String
 )
 
 

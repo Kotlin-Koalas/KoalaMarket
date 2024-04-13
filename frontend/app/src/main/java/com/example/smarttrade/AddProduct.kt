@@ -30,6 +30,7 @@ import androidx.activity.result.contract.ActivityResultContracts.PickVisualMedia
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.graphics.drawable.toBitmap
 import androidx.core.net.toFile
+import com.example.smarttrade.logic.logic
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
@@ -48,6 +49,7 @@ class AddProduct :AppCompatActivity() {
     private lateinit var editTextCat2 :EditText
     private lateinit var textCat2 :TextView
     private lateinit var categorSelected : String
+    private lateinit var leafColor: String
 
     private var existProduct = false
 
@@ -95,6 +97,8 @@ class AddProduct :AppCompatActivity() {
         textCat2 = (findViewById<TextView>(R.id.textViewCategoria2))
         val categoriesArray = resources.getStringArray(R.array.categoriesApp)
         val categories = categoriesArray.toMutableList()
+
+        val spinnerEcology = (findViewById<Spinner>(R.id.spinnerEcology))
         val spinnerCategory =(findViewById<Spinner>(R.id.spinnerCategory))
         val spinnerAdapter = ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, categories)
         spinnerCategory.adapter = spinnerAdapter
@@ -103,6 +107,33 @@ class AddProduct :AppCompatActivity() {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 val selectedCategory = spinnerAdapter.getItem(position) ?: ""
                 updateCategoryText(selectedCategory)
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                // Handle nothing selected case (optional)
+            }
+        }
+
+        spinnerEcology.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                val selectedItem = spinnerEcology.selectedItem
+                val selectedEcologyText = selectedItem.toString()
+                when(selectedEcologyText){
+                    "Verde" ->{
+                        leafColor =selectedEcologyText
+                    }
+                    "Naranja"->{
+                        leafColor =selectedEcologyText
+
+                    }
+                    "Rojo" ->{
+                        leafColor =selectedEcologyText
+                    }
+                    else ->{
+                        leafColor = ""
+                        Log.e("Error", "Ecologia desconocida")
+                    }
+                }
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -159,10 +190,11 @@ class AddProduct :AppCompatActivity() {
             val cat2 = (editTextCat2.text).toString()
             when(categorSelected){
                 "Tecnología" -> {
+                    val patternCon =  "^[-+]?[0-9]+([.][0-9]{1,2})?$".toRegex()
                     val patternTech = "^[a-zA-Z0-9 ]+$".toRegex()
-                    if (!patternTech.containsMatchIn(cat1) || !patternTech.containsMatchIn(cat2)) {
+                    if (!patternCon.containsMatchIn(cat1) || !patternTech.containsMatchIn(cat2)) {
                         error = true
-                        msgErrror += "-Tecnología: Consumo y marca solo pueden tener letras y números \n"
+                        msgErrror += "-Tecnología: Consumo solo números como máximo 2 decimales (12.50) y marca solo pueden tener letras y números \n"
                     }
 
                 }
@@ -218,15 +250,48 @@ class AddProduct :AppCompatActivity() {
 
 
             if(error){
-                showCustomDialogBoxSeller(msgErrror)
+                showCustomDialogBox(msgErrror)
 
-            } else {
+            } else {//TODO LOGIC
+                val doublePrice = currPrice.toDouble()
+                val intStock = currQuantity.toInt()
+                when(categorSelected){
 
+                    "Tecnología" -> {
+
+                        val consumption = cat1.toDouble()
+                        Log.i("LLEGUE", currName+doublePrice+encodedImageString+intStock+currDescription+leafColor+prodNum+cat2+consumption)
+                        try{
+                            logic.addTechnology(currName,doublePrice,encodedImageString,intStock,currDescription,leafColor,prodNum,cat2,consumption)
+                        }catch (exception: Exception ){
+                                Log.e("ERROR", "Error adding technology: ${exception.message}")
+                        }
+
+
+                    }
+                    "Juguete" -> {
+
+                        logic.addToy(currName,doublePrice,encodedImageString,intStock,currDescription,leafColor,prodNum,cat2,cat1)
+
+                    }
+                    "Ropa" -> {
+                        logic.addClothes(currName,doublePrice,encodedImageString,intStock,currDescription,leafColor,prodNum,cat2,cat1)
+
+                    }
+                    "Alimentación" -> {
+                        logic.addFood(currName,doublePrice,encodedImageString,intStock,currDescription,leafColor,prodNum,cat2,cat1)
+
+                    }
+                    else ->{
+                        Log.e("ERROR", "ERROR")
+
+                    }
+                }
             }
         }
     }
 
-    fun showCustomDialogBoxSeller(msgErrror: String) {
+    fun showCustomDialogBox(msgErrror: String) {
         val dialog = Dialog(this)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setCancelable(false)
@@ -416,6 +481,15 @@ class AddProduct :AppCompatActivity() {
         private lateinit var actContext:AddProduct
         fun getContext(): Context {
             return actContext
+        }
+
+        fun popUpError(){
+            actContext.showCustomDialogBox("Error al intentar añadir producto")
+        }
+
+        fun productAded(){
+            val IntentS = Intent(actContext,BrowseProducts::class.java)
+            actContext.startActivity(IntentS)
         }
 
 

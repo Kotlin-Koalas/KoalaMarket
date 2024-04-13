@@ -5,26 +5,33 @@ import android.widget.Toast
 import com.android.volley.Request
 import com.android.volley.RequestQueue
 import com.android.volley.toolbox.JsonObjectRequest
-import com.android.volley.toolbox.JsonRequest
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
+import com.example.smarttrade.AddProduct
 import com.example.smarttrade.MainActivity
 import com.example.smarttrade.SignUpComprador
 import com.example.smarttrade.SignUpVendedor
 import com.example.smarttrade.nonactivityclasses.CreditCard
 import com.example.smarttrade.nonactivityclasses.PersonBuyer
 import com.example.smarttrade.nonactivityclasses.PersonSeller
+import com.example.smarttrade.nonactivityclasses.clothes_representation
+import com.example.smarttrade.nonactivityclasses.food_representation
 import com.example.smarttrade.nonactivityclasses.product_representation
 import com.example.smarttrade.nonactivityclasses.technology_representation
+import com.example.smarttrade.nonactivityclasses.toy_representation
 import org.json.JSONObject
 
 object logic {
 //TODO clase para comunicarse mediante el uso de api y conseguir cosas como el LogIn o el SignUp
     var isBuyer = false
+
     var isBQueue = false
     var isSQueue = false
     lateinit var buyerVolleyQueue:RequestQueue
     lateinit var sellerVolleyQueue:RequestQueue
+
+    lateinit var productVolleyQueue:RequestQueue
+
 
     fun filterProduct(producList: MutableList<product_representation>, searchItem:String) : MutableList<product_representation>{
         val filteredProducts : MutableList<product_representation> = mutableListOf()
@@ -177,7 +184,7 @@ object logic {
                 SignUpComprador.popUpError()
             })
         buyerVolleyQueue.add(jsonRequest)
-        }
+    }
 
     fun signInSeller(name:String, surname: String, password:String, email:String, userID: String, cif: String, iban: String){
 
@@ -216,40 +223,134 @@ object logic {
         sellerVolleyQueue.add(StringRequest)
     }
 
-    suspend fun AddTechnology(PN:String){
+     fun addTechnology(name:String,price:Double,image:String,stock:Int,description:String,leafColor:String,PN:String,brand:String,electricConsumption:Double){
+
+         productVolleyQueue =Volley.newRequestQueue(AddProduct.getContext())
+
+
         val json = JSONObject()
-        json.put("PN", PN)
+        json.put("productNumber", PN)
+        json.put("name",name)
+        json.put("price",price)
+        json.put("description", description)
+        json.put("ecology",leafColor)
+        json.put("stock",stock)
+        json.put("image",image)
+        json.put("cif",PersonSeller.getCIF())
+        json.put("electricalConsumption",electricConsumption)
+        json.put("brand",brand)
+
+         val queue = Volley.newRequestQueue(AddProduct.getContext())
+
+        val jsonRequest = JsonObjectRequest(
+            Request.Method.POST,"https://ec2-52-47-150-236.eu-west-3.compute.amazonaws.com:443/products/technology",json,
+            {response ->
+                val jsonRes:JSONObject = response
+                val technology = technology_representation(name,price,image,stock,description,leafColor,PN,brand,electricConsumption)
+
+            },
+            {error ->
+                AddProduct.popUpError()
+            })
+         productVolleyQueue.add(jsonRequest)
+    }
+
+    fun addToy(name:String,price:Double,image:String,stock:Int,description:String,leafColor:String,PN:String,material: String,age:String ){
+
+        productVolleyQueue =Volley.newRequestQueue(AddProduct.getContext())
+
+        val json = JSONObject()
+        json.put("productNumber", PN)
+        json.put("name",name)
+        json.put("price",price)
+        json.put("description", description)
+        json.put("ecology",leafColor)
+        json.put("stock",stock)
+        json.put("image",image)
+        json.put("cif",PersonSeller.getCIF())
+        json.put("material",material)
+        json.put("age",age)
+
+
+
+        val jsonRequest = JsonObjectRequest(
+            Request.Method.POST,"https://ec2-52-47-150-236.eu-west-3.compute.amazonaws.com:443/products/toys",json,
+            {response ->
+                val jsonRes:JSONObject = response
+                val toy = toy_representation(name,price,image,stock,description,leafColor,PN,material,age)
+
+            },
+            {error ->
+                AddProduct.popUpError()
+            })
+        productVolleyQueue.add(jsonRequest)
+    }
+
+    fun addClothes(name:String,price:Double,image:String,stock:Int,description:String,leafColor:String,PN:String,size:String,color:String){
+
+
+        productVolleyQueue =Volley.newRequestQueue(AddProduct.getContext())
+        val json = JSONObject()
+        json.put("productNumber", PN)
+        json.put("name",name)
+        json.put("price",price)
+        json.put("description", description)
+        json.put("ecology",leafColor)
+        json.put("stock",stock)
+        json.put("image",image)
+        json.put("cif",PersonSeller.getCIF())
+        json.put("color",color)
+        json.put("size",size)
 
         val jsonString = json.toString()
 
-        val queue = Volley.newRequestQueue(MainActivity.getContext())
+        val jsonRequest = JsonObjectRequest(
+            Request.Method.POST,"https://ec2-52-47-150-236.eu-west-3.compute.amazonaws.com:443/products/clothes",json,
+            {response ->
+                val jsonRes:JSONObject = response
+                val clothes = clothes_representation(name,price,image,stock,description,leafColor,PN,size,color)
 
-
-        val StringRequest = StringRequest(
-        Request.Method.POST,"http://192.168.18.141:8080/products/technology",
-        {response ->
-            val jsonRes = JSONObject(response)
-            val name = json.getString("name")
-            val price = json.getDouble("price")
-            val image = json.getString("image")
-            val description = json.getString("description")
-            val leafColor = json.getString("ecology")
-            val stock = json.getInt("stock")
-            val PNres = json.getString("PN")
-            val brand = json.getString("brand")
-            val electricConsumption = json.getDouble("electricConsumption")
-
-            if(PN != ""){
-                val technology= technology_representation(name,price,image,stock,description,leafColor,PNres,brand,electricConsumption)
-            }
-
-        },
+            },
             {error ->
-                Toast.makeText(MainActivity.getContext(), "Error: $error", Toast.LENGTH_SHORT)
-                    .show()
+                AddProduct.popUpError()
             })
-
-
-
+        productVolleyQueue.add(jsonRequest)
     }
+
+    fun addFood(name:String,price:Double,image:String,stock:Int,description:String,leafColor:String,PN:String,calories:String,macros:String){
+
+
+        productVolleyQueue =Volley.newRequestQueue(AddProduct.getContext())
+
+        val json = JSONObject()
+        json.put("productNumber", PN)
+        json.put("name",name)
+        json.put("price",price)
+        json.put("description", description)
+        json.put("ecology",leafColor)
+        json.put("stock",stock)
+        json.put("image",image)
+        json.put("cif",PersonSeller.getCIF())
+        json.put("calories",calories)
+        json.put("macros",macros)
+
+        val jsonString = json.toString()
+
+        val jsonRequest = JsonObjectRequest(
+            Request.Method.POST,"https://ec2-52-47-150-236.eu-west-3.compute.amazonaws.com:443/products/foods",json,
+            {response ->
+                val jsonRes:JSONObject = response
+                val foods = food_representation(name,price,image,stock,description,leafColor,PN,calories,macros)
+
+            },
+            {error ->
+                AddProduct.popUpError()
+            })
+        productVolleyQueue.add(jsonRequest)
+    }
+
+
+
+
+
 }

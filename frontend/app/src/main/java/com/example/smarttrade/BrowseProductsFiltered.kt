@@ -9,6 +9,9 @@ import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import com.example.smarttrade.logic.logic
+
+//import com.example.smarttrade.nonactivityclasses.LeafColor
+
 import com.example.smarttrade.nonactivityclasses.product_representation
 
 

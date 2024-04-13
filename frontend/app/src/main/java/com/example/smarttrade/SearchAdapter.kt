@@ -11,6 +11,9 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.example.smarttrade.nonactivityclasses.ImageURLtoBitmapConverter
+
+//import com.example.smarttrade.nonactivityclasses.LeafColor
+
 import com.example.smarttrade.nonactivityclasses.category_representation
 import com.example.smarttrade.nonactivityclasses.product_representation
 import com.example.smarttrade.nonactivityclasses.search_representation
