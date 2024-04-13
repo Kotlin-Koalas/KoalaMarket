@@ -28,6 +28,9 @@ import java.io.BufferedReader
 import java.io.File
 import java.io.InputStreamReader
 
+private const val host = "https://ec2-52-47-150-236.eu-west-3.compute.amazonaws.com:443"
+
+
 object logic {
 //TODO clase para comunicarse mediante el uso de api y conseguir cosas como el LogIn o el SignUp
     var isBuyer = false
@@ -63,7 +66,7 @@ object logic {
         val queue = Volley.newRequestQueue(MainActivity.getContext())
 
         val jsonRequest = JsonObjectRequest(
-            Request.Method.POST, "https://ec2-52-47-150-236.eu-west-3.compute.amazonaws.com:443/buyers/register", json,
+            Request.Method.POST, "http://localhost:8080/buyers/register", json,
             {response ->
                 val jsonRes = response
                 val name = jsonRes.getString("name")
@@ -98,15 +101,16 @@ object logic {
                 }
             },
             { error ->
-                Toast.makeText(MainActivity.getContext(), "Error: $error", Toast.LENGTH_SHORT)
-                    .show()
+                //Toast.makeText(MainActivity.getContext(), "Error: $error", Toast.LENGTH_SHORT)
+                   // .show()
+                Log.i("CACA",error.toString())
             })
 
         queue.add(jsonRequest)
 
         if(PersonBuyer.getShippingAddresses().isEmpty()){
             val jsonRequest2 = JsonObjectRequest(
-                Request.Method.POST, "https://ec2-52-47-150-236.eu-west-3.compute.amazonaws.com:443/buyers/register", json,
+                Request.Method.POST, "http://localhost:8080/buyers/register", json,
                 {response ->
                     val jsonRes = response
                     val name = json.getString("name")
@@ -130,8 +134,9 @@ object logic {
 
                 },
                 {error ->
-                    Toast.makeText(MainActivity.getContext(), "Error: $error", Toast.LENGTH_SHORT)
-                        .show()
+                    //Toast.makeText(MainActivity.getContext(), "Error: $error", Toast.LENGTH_SHORT)
+                        //.show()
+                    Log.i("CACA",error.toString())
                 })
             queue.add(jsonRequest2)
         }
@@ -172,7 +177,7 @@ object logic {
         json.put("paypal", paypal )
 
         val jsonRequest = JsonObjectRequest(
-            Request.Method.POST,"https://ec2-52-47-150-236.eu-west-3.compute.amazonaws.com:443/buyers/register",json,
+            Request.Method.POST,"http://localhost:8080/buyers/register",json,
             {response ->
                 val jsonRes:JSONObject = response
                 val buyer = PersonBuyer
@@ -190,7 +195,8 @@ object logic {
                 SignUpComprador.loadBuyer()
             },
             { error ->
-                SignUpComprador.popUpError()
+                Log.i("CACA", error.toString())
+                //SignUpComprador.popUpError()
             })
         buyerVolleyQueue.add(jsonRequest)
     }
@@ -228,6 +234,7 @@ object logic {
             },
             { error ->
                 SignUpVendedor.popUpError()
+
             })
         sellerVolleyQueue.add(StringRequest)
     }
