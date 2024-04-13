@@ -96,18 +96,18 @@ public class BuyerController {
         buyer.setBillingAddresses(billingAddresses);
 
 
-        if (!cardNumber.isEmpty() || !CVC.isEmpty() || !expirationDate.isEmpty()) {
+        if (cardNumber != null && !cardNumber.isEmpty() && expirationDate != null && !expirationDate.isEmpty() && CVC != null && !CVC.isEmpty()){
             CreditCard creditCard = new CreditCard(CVC, cardNumber, expirationDate);
             List<CreditCard> creditCards = new ArrayList<>();
             creditCards.add(creditCard);
             buyer.setCreditCards(creditCards);
         }
 
-        if (!bizum.isEmpty()) {
+        if (bizum != null && !bizum.isEmpty()) {
             buyer.setBizum(bizum);
         }
 
-        if (!paypal.isEmpty()) {
+        if (paypal != null && !paypal.isEmpty()) {
             buyer.setPaypal(paypal);
         }
 

@@ -24,15 +24,15 @@ public class Buyer extends Client{
     @Column(name = "paypal")
     private String paypal;
 
-    @OneToMany(mappedBy = "buyer", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "buyer")
     @ToString.Exclude
     private List<Address> shippingAddresses;
 
-    @OneToMany(mappedBy = "buyer", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "buyer")
     @ToString.Exclude
     private List<Address> billingAddresses;
 
-    @OneToMany(mappedBy = "buyer", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "buyer")
     @ToString.Exclude
     private List<CreditCard> creditCards;
 
