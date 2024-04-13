@@ -75,9 +75,9 @@ class ProductAdapter(
         textViewName.text = popularProducts[position].name
         textViewStock.text = popularProducts[position].stock.toString()
         when(popularProducts[position].leafColor){
-            "red" -> imageView.setImageResource(R.drawable.hoja_roja)
-            "yellow" -> imageView.setImageResource(R.drawable.hoja_amarilla)
-            "green" -> imageView.setImageResource(R.drawable.hoja_verde)
+            "Rojo" -> imageView.setImageResource(R.drawable.hoja_roja)
+            "Naranja" -> imageView.setImageResource(R.drawable.hoja_amarilla)
+            "Verde" -> imageView.setImageResource(R.drawable.hoja_verde)
         }
         */
 
