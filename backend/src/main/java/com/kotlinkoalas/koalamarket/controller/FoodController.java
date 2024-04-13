@@ -36,9 +36,13 @@ public class FoodController {
         String calories = (String) payload.get("calories");
         String macros = (String) payload.get("macros");
 
+        if (repository.existsByProductNumberAndCif(productNumber, cif)) {
+            throw new RuntimeException("Product number and cif already exists");
+        }
 
         ProductFactory FoodFactory = new FoodFactory();
         Food food = (Food) FoodFactory.createProduct(productNumber, name, price, description, ecology, stock, image, cif, calories, macros);
+
 
         return repository.save(food);
     }

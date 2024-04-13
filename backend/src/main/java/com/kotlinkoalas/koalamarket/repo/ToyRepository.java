@@ -11,4 +11,6 @@ public interface ToyRepository extends JpaRepository<Toy, productPK> {
     Toy findByProductNumber(String productNumber);
     @Transactional
     void deleteByProductNumber(String productNumber);
+
+    boolean existsByProductNumberAndCif(String productNumber, String cif);
 }

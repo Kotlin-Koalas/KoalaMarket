@@ -37,6 +37,10 @@ public class ToyController {
         String electricConsumption = (String) payload.get("electricConsumption");
         String brand = (String) payload.get("brand");
 
+        if (repository.existsByProductNumberAndCif(productNumber, cif)) {
+            throw new RuntimeException("Product number and cif already exists");
+        }
+
         ProductFactory ToyFactory = new ToyFactory();
         Toy technology = (Toy) ToyFactory.createProduct(productNumber, name, price, description, ecology, stock, image, cif, electricConsumption, brand);
 

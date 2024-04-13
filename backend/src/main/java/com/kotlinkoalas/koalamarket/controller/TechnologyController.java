@@ -39,6 +39,10 @@ public class TechnologyController {
         String electricConsumption = (String) payload.get("electricConsumption");
         String brand = (String) payload.get("brand");
 
+        if (repository.existsByProductNumberAndCif(productNumber, cif)) {
+            throw new RuntimeException("Product number and cif already exists");
+        }
+
         ProductFactory TechnologyFactory = new TechnologyFactory();
         Technology technology = (Technology) TechnologyFactory.createProduct(productNumber, name, price, description, ecology, stock, image, cif, electricConsumption, brand);
 
