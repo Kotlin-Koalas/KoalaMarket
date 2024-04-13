@@ -9,7 +9,6 @@ import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import com.example.smarttrade.logic.logic
-import com.example.smarttrade.nonactivityclasses.LeafColor
 import com.example.smarttrade.nonactivityclasses.product_representation
 
 
@@ -55,8 +54,8 @@ class BrowseProductsFiltered : AppCompatActivity() {
         //TODO conseguir los datos que pertenezcan a la categoría que se haya clickado (productShown tmb)
         //Temporal
         for(i in 1..10){
-            productsShown.add(product_representation("","","",1, LeafColor.GREEN,33))
-            productsShown.add(product_representation("abc","","",1, LeafColor.GREEN,33))
+            productsShown.add(product_representation("","","",1,"yellow","yellow", "33"))
+            productsShown.add(product_representation("aab","","",1,"red","red","34" ))
         }
         adapterP.addAllProducts(productsShown)
 
