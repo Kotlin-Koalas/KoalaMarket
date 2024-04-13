@@ -1,6 +1,7 @@
 package com.example.smarttrade.logic
 
 
+import android.util.Log
 import android.widget.Toast
 import com.android.volley.Request
 import com.android.volley.RequestQueue
@@ -19,7 +20,13 @@ import com.example.smarttrade.nonactivityclasses.food_representation
 import com.example.smarttrade.nonactivityclasses.product_representation
 import com.example.smarttrade.nonactivityclasses.technology_representation
 import com.example.smarttrade.nonactivityclasses.toy_representation
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 import org.json.JSONObject
+import java.io.BufferedReader
+import java.io.File
+import java.io.InputStreamReader
 
 object logic {
 //TODO clase para comunicarse mediante el uso de api y conseguir cosas como el LogIn o el SignUp
@@ -380,5 +387,60 @@ object logic {
         buyerVolleyQueue.add(stringRequest)
         return res
     }
+
+
+ suspend fun getImage(imageFIle : File) :Any{
+
+     val filePath = "/path/to/your/file.jpg"
+
+     var stringPath = imageFIle.toString()
+
+
+     var x  = "file=@$stringPath"
+
+     // Curl command
+     val curlCommand = "curl"
+     //val curlArgs = listOf("-F", "@$stringPath.", "http://ec2-52-47-150-236.eu-west-3.compute.amazonaws.com:5000")
+     val curlArgs = listOf("http://ec2-52-47-150-236.eu-west-3.compute.amazonaws.com:5000", "-F", x)
+
+     val coroutineScope = CoroutineScope(Dispatchers.IO)
+
+     // Create ProcessBuilder
+     val processBuilder = ProcessBuilder(curlCommand, *curlArgs.toTypedArray())
+     processBuilder.redirectErrorStream(true)
+     val deferredResult   = coroutineScope.async  {
+         // Start process
+         val process = processBuilder.start()
+
+         val response = StringBuilder()
+         // Read output
+         val reader = BufferedReader(InputStreamReader(process.inputStream))
+         var line: String?
+         while (reader.readLine().also { line = it } != null) {
+             response.append(line).append('\n')
+             // Wait for process to finish
+             val exitCode = process.waitFor()
+             println("Process exited with code $exitCode")
+
+
+             val res = response.toString()
+             val x = res.split("\n")
+             val y = x[x.size - 2]
+             val resultado :String =  y.substring(13, y.length - 2)
+
+
+             Log.i("response", resultado)
+
+             return@async resultado
+         }
+     }
+
+        Log.i("resultado",deferredResult.await().toString())
+        return deferredResult.await()
+ }
+
+
+
+
 
 }
