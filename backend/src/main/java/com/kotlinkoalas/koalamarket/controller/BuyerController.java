@@ -1,5 +1,6 @@
 package com.kotlinkoalas.koalamarket.controller;
 
+import com.google.gson.Gson;
 import com.kotlinkoalas.koalamarket.model.Address;
 import com.kotlinkoalas.koalamarket.model.Buyer;
 import com.kotlinkoalas.koalamarket.model.CreditCard;
@@ -115,9 +116,15 @@ public class BuyerController {
 
         if (existingBuyer == null) {
             repository.save(buyer);
-            return ResponseEntity.ok("Successfully registered");
+            Gson gson = new Gson();
+            String response = gson.toJson(buyer);
+            return ResponseEntity.ok()
+                    .contentType(org.springframework.http.MediaType.APPLICATION_JSON)
+                    .body(response);
         } else {
-            return ResponseEntity.badRequest().body("Buyer already exists");
+            return ResponseEntity.status(400)
+                    .contentType(org.springframework.http.MediaType.APPLICATION_JSON)
+                    .body("{\"message\": \"A buyer with the same DNI already exists\"}");
         }
     }
 }
