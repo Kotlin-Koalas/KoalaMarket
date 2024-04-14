@@ -93,7 +93,8 @@ public class VendorController {
         } else {
             repository.save(newVendor);
             Gson gson = new Gson();
-            return ResponseEntity.ok(gson.toJson(newVendor));
+            String response = gson.toJson(newVendor);
+            return ResponseEntity.ok(response);
         }
     }
 
