@@ -7,6 +7,7 @@ import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
+import com.example.smarttrade.nonactivityclasses.ImageURLtoBitmapConverter
 import com.example.smarttrade.nonactivityclasses.product_representation
 
 
@@ -64,7 +65,7 @@ class ProductAdapter(
         // Get the data object for this position
         //TODO descomentar codigo que emplee valores reales y quitar el temporal
         //Codigo para cuando la lista este en funcionamiento
-        /*
+
         val bitmap = ImageURLtoBitmapConverter.downloadImage(popularProducts[position].image)
         if (bitmap != null) {
             imageView.setImageBitmap(bitmap)
@@ -79,14 +80,15 @@ class ProductAdapter(
             "Naranja" -> imageView.setImageResource(R.drawable.hoja_amarilla)
             "Verde" -> imageView.setImageResource(R.drawable.hoja_verde)
         }
-        */
 
+        /*
         //Temporal para probar
         imageView.setImageResource(R.drawable.no_photo)
         textViewPrice.text = "10"
         textViewName.text = "Prueba"
         textViewStock.text = "2"
         imageViewLeaf.setImageResource(R.drawable.hoja_roja)
+        */
 
         val productRepresentation = view.findViewById<ConstraintLayout>(R.id.layout)
         productRepresentation.setOnClickListener {

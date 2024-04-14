@@ -27,7 +27,6 @@ import org.w3c.dom.Text
 class BrowseProducts : AppCompatActivity() {
 
     private lateinit var searchBar:EditText
-    private lateinit var adapterP: ProductAdapter
     private lateinit var adapterS: SearchAdapter
     private lateinit var adapterCat: CategoryAdapter
     private lateinit var recommendationLayout: ConstraintLayout
@@ -40,9 +39,9 @@ class BrowseProducts : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        browseProducts = this
-        productsShown = mutableListOf()
         actContextBP = this
+        productsShown = mutableListOf()
+
 
         categoriesShown.add(category_representation("toys",R.drawable.icon_toy))
         categoriesShown.add(category_representation("food",R.drawable.icon_food))
@@ -89,7 +88,6 @@ class BrowseProducts : AppCompatActivity() {
         }
         */
 
-        adapterP.addAllProducts(productsShown)
 
         val topLayout = findViewById<ConstraintLayout>(R.id.constraintLayoutTop)
         recommendationLayout = findViewById<ConstraintLayout>(R.id.recomendationsLayout)
@@ -156,15 +154,16 @@ class BrowseProducts : AppCompatActivity() {
 
 
     companion object{
-        private lateinit var browseProducts: BrowseProducts
+        private lateinit var actContextBP:BrowseProducts
         private lateinit var productsShown: MutableList<product_representation>
+        private lateinit var adapterP: ProductAdapter
         fun updateSearch(text:String) {
-            browseProducts.updateSearch(text)
+            actContextBP.updateSearch(text)
         }
         fun setProductsShown(list:MutableList<product_representation>){
             productsShown = list
+            adapterP.addAllProducts(productsShown)
         }
-        private lateinit var actContextBP:BrowseProducts
         fun getContext(): Context {
             return actContextBP
         }

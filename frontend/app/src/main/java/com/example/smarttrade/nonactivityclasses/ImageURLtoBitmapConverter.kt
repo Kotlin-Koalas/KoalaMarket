@@ -8,13 +8,13 @@ import android.widget.ImageView
 import com.android.volley.Response
 import com.android.volley.toolbox.ImageRequest
 import com.android.volley.toolbox.Volley
+import com.example.smarttrade.BrowseProducts
 import com.example.smarttrade.MainActivity
 
 object  ImageURLtoBitmapConverter {
 
-    val requestQueue = Volley.newRequestQueue(MainActivity.getContext())
     fun downloadImage(url: String): Bitmap? {
-        val requestQueue = Volley.newRequestQueue(MainActivity.getContext())
+        val requestQueue = Volley.newRequestQueue(BrowseProducts.getContext())
         var bitmap: Bitmap? = null
 
         val imageRequest = ImageRequest(

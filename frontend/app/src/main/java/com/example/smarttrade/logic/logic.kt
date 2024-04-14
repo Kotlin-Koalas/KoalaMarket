@@ -25,6 +25,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
+import org.json.JSONArray
 import org.json.JSONObject
 import java.io.BufferedReader
 import java.io.File
@@ -371,7 +372,7 @@ object logic {
 
 
 
-    fun getAllProducts(): MutableList<product_representation> {
+    fun getAllProducts() {
         if(!isPQueue) {
             productVolleyQueue = Volley.newRequestQueue(BrowseProducts.getContext())
             isPQueue = true
@@ -380,11 +381,10 @@ object logic {
         val stringRequest = StringRequest(
             Request.Method.GET,"$url/products",
             {response ->
-                val jsonRes = JSONObject(response)
-                val products = jsonRes.getJSONArray("products")
+                val products = JSONArray(response)
                 for (i in 0 until products.length()) {
                     val p = products.getJSONObject(i)
-                    res.add(product_representation(p.getString("name"),p.getString("price"),p.getString("image"),p.getString("stock").toInt(),p.getString("description"),p.getString("ecology"),p.getString("product_number")))
+                    res.add(product_representation(p.getString("name"),p.getString("price"),p.getString("image"),p.getString("stock").toInt(),p.getString("description"),p.getString("ecology"),p.getString("productNumber")))
                 }
                 BrowseProducts.setProductsShown(res)
             },
@@ -393,7 +393,6 @@ object logic {
                     .show()
             })
         productVolleyQueue.add(stringRequest)
-        return res
     }
 
 
