@@ -399,7 +399,7 @@ class AddProduct :AppCompatActivity() {
                             runBlocking { val archivoTemporal = crearArchivoTemporalImagen().await()
 
 
-                             val x = logic.getImage(archivoTemporal)
+                            // val x = logic.getImage(archivoTemporal)
 
 
 

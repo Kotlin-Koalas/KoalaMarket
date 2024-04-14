@@ -44,7 +44,6 @@ class CategoryAdapter(
         val catSelector = holder.itemView.findViewById<ConstraintLayout>(R.id.layout)
 
         catSelector.setOnClickListener{
-            //TODO ir a pagina de la categoria
 
             val catName = curCat.name
 

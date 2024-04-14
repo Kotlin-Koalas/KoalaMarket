@@ -10,6 +10,7 @@ import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.example.smarttrade.AddProduct
 import com.example.smarttrade.BrowseProducts
+import com.example.smarttrade.BrowseProductsFiltered
 import com.example.smarttrade.MainActivity
 import com.example.smarttrade.SignUpComprador
 import com.example.smarttrade.SignUpVendedor
@@ -24,7 +25,6 @@ import com.example.smarttrade.nonactivityclasses.toy_representation
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
-import kotlinx.coroutines.runBlocking
 import org.json.JSONArray
 import org.json.JSONObject
 import java.io.BufferedReader
@@ -260,10 +260,11 @@ object logic {
          val queue = Volley.newRequestQueue(AddProduct.getContext())
 
         val jsonRequest = JsonObjectRequest(
-            Request.Method.POST,"https://ec2-52-47-150-236.eu-west-3.compute.amazonaws.com:443/products/technology",json,
+            Request.Method.POST,"$url/products/technology",json,
             {response ->
                 val jsonRes:JSONObject = response
                 val technology = technology_representation(name,price,image,stock,description,leafColor,PN,brand,electricConsumption)
+
 
             },
             {error ->
@@ -291,7 +292,7 @@ object logic {
 
 
         val jsonRequest = JsonObjectRequest(
-            Request.Method.POST,"https://ec2-52-47-150-236.eu-west-3.compute.amazonaws.com:443/products/toys",json,
+            Request.Method.POST,"$url/products/toys",json,
             {response ->
                 val jsonRes:JSONObject = response
                 val toy = toy_representation(name,price,image,stock,description,leafColor,PN,material,age)
@@ -322,7 +323,7 @@ object logic {
         val jsonString = json.toString()
 
         val jsonRequest = JsonObjectRequest(
-            Request.Method.POST,"https://ec2-52-47-150-236.eu-west-3.compute.amazonaws.com:443/products/clothes",json,
+            Request.Method.POST,"$url/products/clothes",json,
             {response ->
                 val jsonRes:JSONObject = response
                 val clothes = clothes_representation(name,price,image,stock,description,leafColor,PN,size,color)
@@ -355,7 +356,7 @@ object logic {
         val jsonString = json.toString()
 
         val jsonRequest = JsonObjectRequest(
-            Request.Method.POST,"https://ec2-52-47-150-236.eu-west-3.compute.amazonaws.com:443/products/foods",json,
+            Request.Method.POST,"$url/products/foods",json,
             {response ->
                 val jsonRes:JSONObject = response
                 val foods = food_representation(name,price,image,stock,description,leafColor,PN,calories,macros)
@@ -394,6 +395,103 @@ object logic {
             })
         productVolleyQueue.add(stringRequest)
     }
+
+
+    fun getAllProductsTechnology() {
+        if(!isPQueue) {
+            productVolleyQueue = Volley.newRequestQueue(BrowseProductsFiltered.getContext())
+            isPQueue = true
+        }
+        val res = mutableListOf<technology_representation>()
+        val stringRequest = StringRequest(
+            Request.Method.GET,"$url/products/technology",
+            {response ->
+                val products = JSONArray(response)
+                for (i in 0 until products.length()) {
+                    val p = products.getJSONObject(i)
+                    res.add(technology_representation(p.getString("name"),p.getString("price").toDouble(),p.getString("image"),p.getString("stock").toInt(),p.getString("description"),p.getString("ecology"),p.getString("productNumber"),p.getString("brand"),p.getString("electricConsumption").toDouble()))
+                }
+                BrowseProductsFiltered.setProductsShown(res)
+            },
+            {error ->
+                Toast.makeText(MainActivity.getContext(), "Error: $error", Toast.LENGTH_SHORT)
+                    .show()
+            })
+        productVolleyQueue.add(stringRequest)
+    }
+
+    fun getAllProductsFood() {
+        if(!isPQueue) {
+            productVolleyQueue = Volley.newRequestQueue(BrowseProductsFiltered.getContext())
+            isPQueue = true
+        }
+        val res = mutableListOf<food_representation>()
+        val stringRequest = StringRequest(
+            Request.Method.GET,"$url/products/foods",
+            {response ->
+                val products = JSONArray(response)
+                for (i in 0 until products.length()) {
+                    val p = products.getJSONObject(i)
+                    res.add(food_representation(p.getString("name"),p.getString("price").toDouble(),p.getString("image"),p.getString("stock").toInt(),p.getString("description"),p.getString("ecology"),p.getString("productNumber"),p.getString("calories"),p.getString("macros")))
+                }
+                BrowseProductsFiltered.setProductsShown(res)
+            },
+            {error ->
+                Toast.makeText(MainActivity.getContext(), "Error: $error", Toast.LENGTH_SHORT)
+                    .show()
+            })
+        productVolleyQueue.add(stringRequest)
+    }
+
+    fun getAllProductsToys() {
+        if(!isPQueue) {
+            productVolleyQueue = Volley.newRequestQueue(BrowseProductsFiltered.getContext())
+            isPQueue = true
+        }
+        val res = mutableListOf<toy_representation>()
+        val stringRequest = StringRequest(
+            Request.Method.GET,"$url/products/toys",
+            {response ->
+                val products = JSONArray(response)
+                for (i in 0 until products.length()) {
+                    val p = products.getJSONObject(i)
+                    res.add(toy_representation(p.getString("name"),p.getString("price").toDouble(),p.getString("image"),p.getString("stock").toInt(),p.getString("description"),p.getString("ecology"),p.getString("productNumber"),p.getString("materia"),p.getString("age")))
+                }
+                BrowseProductsFiltered.setProductsShown(res)
+            },
+            {error ->
+                Toast.makeText(MainActivity.getContext(), "Error: $error", Toast.LENGTH_SHORT)
+                    .show()
+            })
+        productVolleyQueue.add(stringRequest)
+    }
+
+
+    fun getAllProductsClothes() {
+        if(!isPQueue) {
+            productVolleyQueue = Volley.newRequestQueue(BrowseProductsFiltered.getContext())
+            isPQueue = true
+        }
+        val res = mutableListOf<clothes_representation>()
+        val stringRequest = StringRequest(
+            Request.Method.GET,"$url/products/clothes",
+            {response ->
+                val products = JSONArray(response)
+                for (i in 0 until products.length()) {
+                    val p = products.getJSONObject(i)
+                    res.add(clothes_representation(p.getString("name"),p.getString("price").toDouble(),p.getString("image"),p.getString("stock").toInt(),p.getString("description"),p.getString("ecology"),p.getString("productNumber"),p.getString("color"),p.getString("size")))
+                }
+                BrowseProductsFiltered.setProductsShown(res)
+            },
+            {error ->
+                Toast.makeText(MainActivity.getContext(), "Error: $error", Toast.LENGTH_SHORT)
+                    .show()
+            })
+        productVolleyQueue.add(stringRequest)
+    }
+
+
+
 
 
  suspend fun getImage(imageFIle : File) :Any{
