@@ -124,14 +124,14 @@ class AddProduct :AppCompatActivity() {
                 val selectedEcologyText = selectedItem.toString()
                 when(selectedEcologyText){
                     "Verde" ->{
-                        leafColor =selectedEcologyText
+                        leafColor = "green"
                     }
                     "Naranja"->{
-                        leafColor =selectedEcologyText
+                        leafColor = "yellow"
 
                     }
                     "Rojo" ->{
-                        leafColor =selectedEcologyText
+                        leafColor = "red"
                     }
                     else ->{
                         leafColor = ""

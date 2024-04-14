@@ -1,5 +1,6 @@
 package com.example.smarttrade
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -25,7 +26,7 @@ class ProductAdapter(
     }
 
     override fun getItemId(position: Int): Long {
-        return popularProducts.get(position).PN.toLong()
+        return position.toLong()
     }
 
     fun addProductToList(product: product_representation) {
@@ -45,7 +46,9 @@ class ProductAdapter(
 
     fun updateProducts(updateProductList: MutableList<product_representation>) {
         popularProducts.clear()
+        Log.i("popular after clear",popularProducts.toString())
         popularProducts.addAll(updateProductList)
+        Log.i("popular before noti",popularProducts.toString())
         notifyDataSetChanged()
     }
 
@@ -76,9 +79,9 @@ class ProductAdapter(
         textViewName.text = popularProducts[position].name
         textViewStock.text = popularProducts[position].stock.toString()
         when(popularProducts[position].leafColor){
-            "Rojo" -> imageView.setImageResource(R.drawable.hoja_roja)
-            "Naranja" -> imageView.setImageResource(R.drawable.hoja_amarilla)
-            "Verde" -> imageView.setImageResource(R.drawable.hoja_verde)
+            "red" -> imageViewLeaf.setImageResource(R.drawable.hoja_roja)
+            "yellow" -> imageViewLeaf.setImageResource(R.drawable.hoja_amarilla)
+            "green" -> imageViewLeaf.setImageResource(R.drawable.hoja_verde)
         }
 
         /*

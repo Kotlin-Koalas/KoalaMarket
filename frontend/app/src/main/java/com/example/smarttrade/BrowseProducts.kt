@@ -3,6 +3,7 @@ package com.example.smarttrade
 import android.content.Context
 import android.graphics.Rect
 import android.os.Bundle
+import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -97,7 +98,7 @@ class BrowseProducts : AppCompatActivity() {
         val startSearch = findViewById<ImageView>(R.id.imageViewSearchButton)
         startSearch.setOnClickListener{
             textDescription.text = "Resultados de la búsqueda:"
-            val searchItem = searchBar.text.toString().toLowerCase().trim()
+            val searchItem = searchBar.text.toString().lowercase().trim()
             filterProduct(searchItem)
         }
 
@@ -174,6 +175,7 @@ class BrowseProducts : AppCompatActivity() {
     private fun filterProduct(searchItem :String){
         productsFiltered.clear()
         productsFiltered.addAll(logic.filterProduct(productsShown, searchItem))
+        Log.i("productsFiletered", productsFiltered.toString())
         adapterP.updateProducts(productsFiltered)
     }
 

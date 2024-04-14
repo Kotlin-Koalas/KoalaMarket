@@ -93,7 +93,7 @@ class BrowseProductsFiltered : AppCompatActivity() {
 
         searchButton = findViewById<ImageButton>(R.id.imageButtonSearch)
         searchButton.setOnClickListener{
-            val searchItem = searchBar.text.toString().toLowerCase().trim()
+            val searchItem = searchBar.text.toString().lowercase().trim()
             filterProduct(searchItem)
 
 

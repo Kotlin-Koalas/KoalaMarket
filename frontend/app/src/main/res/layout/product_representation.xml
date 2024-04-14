@@ -28,8 +28,8 @@
 
         <TextView
             android:id="@+id/textViewTitulo"
-            android:layout_width="143dp"
-            android:layout_height="wrap_content"
+            android:layout_width="163dp"
+            android:layout_height="18dp"
             android:layout_marginTop="15dp"
             android:fontFamily="@font/karla"
             android:text="Item example display"
@@ -37,7 +37,6 @@
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.333"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.763" />
@@ -50,12 +49,13 @@
             android:maxWidth="150dp"
             android:text="10"
             android:layout_marginStart="19dp"
+            android:fontFamily="@font/karla"
             android:textColor="@color/black"
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.886" />
+            app:layout_constraintVertical_bias="0.86" />
 
         <TextView
             android:id="@+id/textViewCantStock"
@@ -100,7 +100,7 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/textViewPrice"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.888" />
+            app:layout_constraintVertical_bias="0.866" />
 
         <TextView
             android:id="@+id/textViewTextStock"
