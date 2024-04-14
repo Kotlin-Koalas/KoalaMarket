@@ -243,7 +243,7 @@ class AddProduct :AppCompatActivity() {
 
             if(isUploadCertificate ==-1){
                 error = true
-                msgErrror += "Debes añadir un certificado ecológico\n"
+                msgErrror += "-Debes añadir un certificado ecológico\n"
             }
 
 

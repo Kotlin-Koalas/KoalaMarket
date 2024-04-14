@@ -47,8 +47,6 @@ class MainActivity : AppCompatActivity() {
         val forgotPassword = findViewById<TextView>(R.id.editTextText3)
         forgotPassword.setOnClickListener {
             //TODO codigo para recuperar contraseña
-            val IntentS = Intent(actContext,AddProduct::class.java)
-            actContext.startActivity(IntentS)
         }
         val logInButton = findViewById<Button>(R.id.button)
         logInButton.setOnClickListener{
