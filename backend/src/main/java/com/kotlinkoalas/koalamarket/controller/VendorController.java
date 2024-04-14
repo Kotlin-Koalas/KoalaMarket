@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import com.google.gson.Gson;
+
 @RestController
 public class VendorController {
 
@@ -87,10 +89,11 @@ public class VendorController {
         Vendor existingVendor = repository.findByDni(newVendor.getDni());
 
         if (existingVendor != null) {
-            return ResponseEntity.status(400).body("A buyer with the same DNI already exists");
+            return ResponseEntity.status(400).body("{\"message\": \"A buyer with the same DNI already exists\"}");
         } else {
             repository.save(newVendor);
-            return ResponseEntity.ok("Registration successful");
+            Gson gson = new Gson();
+            return ResponseEntity.ok(gson.toJson(newVendor));
         }
     }
 
