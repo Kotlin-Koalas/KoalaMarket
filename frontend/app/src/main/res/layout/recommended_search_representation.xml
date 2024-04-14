@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/layoutSearch"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="32dp">
 
 
@@ -12,9 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
-        android:layout_marginEnd="1dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/textViewPreviousSearch"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/history" />
@@ -23,13 +21,14 @@
         android:id="@+id/textViewPreviousSearch"
         android:layout_width="0dp"
         android:layout_height="22dp"
-        android:textSize="18sp"
         android:layout_marginEnd="4dp"
-        android:text="Search de prueba"
-        android:gravity="center"
         android:fontFamily="@font/karla"
+        android:gravity="left"
+        android:text="Search de prueba"
         android:textColor="@color/black"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageViewHistory"
         app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
