@@ -179,7 +179,6 @@ object logic {
         val jsonRequest = JsonObjectRequest(
             Request.Method.POST,"$url/buyers/register",json,
             {response ->
-                val jsonRes:JSONObject = response
                 val buyer = PersonBuyer
                 buyer.setName(name)
                 buyer.setSurname(surname)
@@ -217,11 +216,12 @@ object logic {
         json.put("password", password)
         json.put("iban", iban)
 
+        Log.i("JsonSignUp",json.toString())
+
 
         val jsonRequest = JsonObjectRequest(
             Request.Method.POST, "$url/vendors/register",json,
             {response ->
-                val jsonRes = response
                 val buyer = PersonSeller
                 buyer.setName(name)
                 buyer.setSurname(surname)
@@ -232,6 +232,7 @@ object logic {
                 SignUpVendedor.loadSeller()
             },
             { error ->
+                Log.i("error de SignUp",error.message.toString())
                 SignUpVendedor.popUpError()
 
             })
