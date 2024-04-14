@@ -90,7 +90,7 @@
                     android:orientation="vertical">
 
                     <!---android:visibility="invisible"-->
-                  
+
 
                     <ImageButton
                         android:id="@+id/uploadImageButton"
@@ -100,8 +100,10 @@
                         android:onClick="uploadImageButton"
                         android:saveEnabled="false"
                         android:scaleType="centerCrop"
-
+                        android:padding="10dp"
+                        android:defaultFocusHighlightEnabled="false"
                         android:visibility="invisible"
+                        android:clickable="false"
                         app:srcCompat="@drawable/add_item"
                         tools:visibility="visible" />
 
@@ -123,6 +125,7 @@
                         android:background="@drawable/basic_grey_shape"
                         android:baselineAligned="false"
                         android:ems="10"
+                        android:maxLength="12"
                         android:hint="  9S7174541693"
                         android:textColorHint="@color/greyLetter"
                         android:inputType="text"

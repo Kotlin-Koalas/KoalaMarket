@@ -338,7 +338,6 @@ object logic {
 
     fun addFood(name:String,price:Double,image:String,stock:Int,description:String,leafColor:String,PN:String,calories:String,macros:String){
 
-
         productVolleyQueue =Volley.newRequestQueue(AddProduct.getContext())
 
         val json = JSONObject()
@@ -489,6 +488,37 @@ object logic {
             })
         productVolleyQueue.add(stringRequest)
     }
+
+
+
+    /*
+    *
+    * fun  existProduct(productNumber : String) :  Boolean{
+        productVolleyQueue =Volley.newRequestQueue(AddProduct.getContext())
+
+        val stringRequest = StringRequest(
+            Request.Method.GET,"$url/products/$productNumber/exist",
+            {response ->
+                    try{
+                        val isProdcutExist = JSONObject(response).getBoolean("exist")
+
+                }catch (e:Exception){
+                    Log.e("AddProductError","Error parsing response: ${e.message}"  )
+                }
+
+            },
+            {error ->
+                Log.e("AddProduct", "Error in network request: ${error.message}")
+                completion(false) // Handle network error gracefully
+            })
+
+            productVolleyQueue.add(stringRequest)
+    }
+    *
+    *
+    * */
+
+
 
 
 
