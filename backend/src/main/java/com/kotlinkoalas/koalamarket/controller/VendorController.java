@@ -89,12 +89,16 @@ public class VendorController {
         Vendor existingVendor = repository.findByDni(newVendor.getDni());
 
         if (existingVendor != null) {
-            return ResponseEntity.status(400).body("{\"message\": \"A buyer with the same DNI already exists\"}");
+            return ResponseEntity.status(400)
+                    .contentType(org.springframework.http.MediaType.APPLICATION_JSON)
+                    .body("{\"message\": \"A buyer with the same DNI already exists\"}");
         } else {
             repository.save(newVendor);
             Gson gson = new Gson();
             String response = gson.toJson(newVendor);
-            return ResponseEntity.ok(response);
+            return ResponseEntity.ok()
+                    .contentType(org.springframework.http.MediaType.APPLICATION_JSON)
+                    .body(response);
         }
     }
 
