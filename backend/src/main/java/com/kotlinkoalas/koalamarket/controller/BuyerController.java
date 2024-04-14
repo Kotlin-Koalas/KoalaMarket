@@ -124,7 +124,7 @@ public class BuyerController {
         } else {
             return ResponseEntity.status(400)
                     .contentType(org.springframework.http.MediaType.APPLICATION_JSON)
-                    .body("{\"message\": \"A buyer with the same DNI already exists\"}");
+                    .body("{\"message\": \"A buyer already exists\"}");
         }
     }
 }
