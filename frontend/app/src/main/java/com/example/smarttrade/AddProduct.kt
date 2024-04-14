@@ -30,7 +30,9 @@ import androidx.activity.result.contract.ActivityResultContracts.PickVisualMedia
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.graphics.drawable.toBitmap
 import androidx.core.net.toFile
+import androidx.core.widget.addTextChangedListener
 import com.example.smarttrade.logic.logic
+import com.example.smarttrade.nonactivityclasses.product_representation
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
@@ -54,6 +56,7 @@ class AddProduct :AppCompatActivity() {
     private lateinit var textCat2 :TextView
     private lateinit var categorSelected : String
     private lateinit var leafColor: String
+
 
     private var existProduct = false
 
@@ -91,7 +94,34 @@ class AddProduct :AppCompatActivity() {
         }
 
         val prod = (findViewById<EditText>(R.id.editTextProductNumber))
-        prod.addTextChangedListener(MyTextWatcher(uploadImageButton))
+        //prod.addTextChangedListener(MyTextWatcher(uploadImageButton))
+        prod.addTextChangedListener {
+
+            if(prod.length() == 12){
+                uploadImageButton.visibility = View.VISIBLE
+                uploadImageButton.setBackgroundColor(Color.TRANSPARENT)
+                uploadImageButton.background = null
+            }
+            else{
+
+                //if(logic.existProduct(prod.text.toString())){
+                    //val defaultImage = getProdcut(prod.text.toString()).getImage
+                    //val defaultBitmap = (defaultImage as VectorDrawable).toBitmap()
+                    //uploadImageButton.setImageBitmap(defaultBitmap)
+                   // uploadImageButton.isEnabled(false)
+
+                //}
+
+
+                val defaultImage = resources.getDrawable(R.drawable.add_item)
+                val defaultBitmap = (defaultImage as VectorDrawable).toBitmap()
+                val defaultImageUri = Uri.parse("android.resource://${packageName}/${R.drawable.add_item}")
+                uploadImageButton.setImageBitmap(defaultBitmap)
+                isUploadImage = -1
+                uploadImageButton.visibility = View.INVISIBLE
+            }
+
+        }
 
 
 
@@ -144,6 +174,8 @@ class AddProduct :AppCompatActivity() {
                 // Handle nothing selected case (optional)
             }
         }
+
+
 
         acceptButton.setOnClickListener {
 
@@ -457,44 +489,7 @@ class AddProduct :AppCompatActivity() {
 
     }
 
-      private inner class MyTextWatcher (private val uploadImageButton: ImageButton) : TextWatcher{
 
-              override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                  // No se necesita
-              }
-              override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                  // No se necesita
-              }
-              override fun afterTextChanged(s: Editable?) {
-                  if(s?.length == 12){
-
-
-                      uploadImageButton.visibility = View.VISIBLE
-
-                      //TODO poner o no la foto en función de si existe o no el producto
-
-                      /* if (s existe en Lista de productos (mismo PN))
-                      *         coger URL y de la foto y ponerla como visualización
-                      *         no se puede seleccionar otra foto, hasta que se cambio PN
-                      *
-                      * else
-                      *       nada porque ya está que se pueda coger y poner una foto
-                      *
-                      *
-                      * */
-                  }
-                  else{
-                      val defaultImage = resources.getDrawable(R.drawable.add_item)
-                      val defaultBitmap = (defaultImage as VectorDrawable).toBitmap()
-                      val defaultImageUri = Uri.parse("android.resource://${packageName}/${R.drawable.add_item}")
-                      uploadImageButton.setImageBitmap(defaultBitmap)
-                      isUploadImage = -1
-                     uploadImageButton.visibility = View.INVISIBLE
-                  }
-
-              }
-
-      }
 
     companion object {
         private lateinit var actContext:AddProduct
