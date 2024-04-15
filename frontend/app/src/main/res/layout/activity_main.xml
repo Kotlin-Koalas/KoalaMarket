@@ -296,16 +296,5 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <ImageView
-        android:id="@+id/imageViewTest"
-        android:layout_width="252dp"
-        android:layout_height="274dp"
-        app:layout_constraintBottom_toTopOf="@+id/constraintLayout2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/logo"
-        tools:srcCompat="@tools:sample/avatars" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

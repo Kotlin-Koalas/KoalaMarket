@@ -501,6 +501,7 @@ object logic {
             {response ->
                     try{
                         val isProdcutExist = JSONObject(response).getBoolean("exist")
+                        AddProduct.exists(boolean)
 
                 }catch (e:Exception){
                     Log.e("AddProductError","Error parsing response: ${e.message}"  )
