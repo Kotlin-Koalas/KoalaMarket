@@ -1,17 +1,4 @@
 services:
-  api:
-    build: "./backend"
-    env_file:
-      - .env
-    links:
-      - db
-    environment:
-      - DATABASE_URL=${DATABASE_URL}
-      - DATABASE_USERNAME=${DATABASE_USERNAME}
-      - DATABASE_PASSWORD=${DATABASE_PASSWORD}
-    ports:
-      - "${PUBLIC_PORT}:${PORT}"
-
   db:
     env_file:
       - .env
@@ -27,22 +14,12 @@ services:
     volumes:
       - pgdata:/var/lib/postgresql/data
 
-  image:
+  imgpush:
+    image: hauxir/imgpush
     ports:
       - "${IMAGE_PORT}:${IMAGE_PORT}"
-    image: hauxir/imgpush
     volumes:
-      - ./app:/app
       - ./images:/images
-      - ./cache:/cache
-    healthcheck:
-      start_period: 0s
-      test:
-        [
-          "CMD-SHELL",
-          "curl localhost:${IMAGE_PORT}/liveness -s -f -o /dev/null || exit 1",
-        ]
-      interval: 30s
 
 volumes:
   pgdata:
