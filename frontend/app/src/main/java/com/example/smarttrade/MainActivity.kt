@@ -22,8 +22,6 @@ import com.example.smarttrade.nonactivityclasses.ImageURLtoBitmapConverter
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var bitmap: Bitmap
-    lateinit var testImageView:ImageView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -63,9 +61,8 @@ class MainActivity : AppCompatActivity() {
             startActivity(IntentS)
              */
         }
-
-        bitmap = ImageURLtoBitmapConverter.downloadImage("http://ec2-52-47-150-236.eu-west-3.compute.amazonaws.com:5000/b1g9a.jpg") as Bitmap
         testImageView = findViewById<ImageView>(R.id.imageViewTest)
+        ImageURLtoBitmapConverter.downloadImage("http://ec2-52-47-150-236.eu-west-3.compute.amazonaws.com:5000/b1g9a.jpg")
     }
 
 

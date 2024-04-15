@@ -21,7 +21,8 @@ object  ImageURLtoBitmapConverter {
             url,
             { response -> bitmap = response
             Log.i("image", bitmap.toString())
-            MainActivity.setImage(bitmap)},
+            MainActivity.setImage(bitmap)
+            },
             143,
             143,
             ImageView.ScaleType.CENTER_CROP,
