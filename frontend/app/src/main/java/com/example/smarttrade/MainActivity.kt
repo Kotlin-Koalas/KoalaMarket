@@ -3,8 +3,10 @@ package com.example.smarttrade
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.media.Image
 import android.os.Bundle
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
@@ -15,9 +17,13 @@ import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import com.example.smarttrade.logic.logic
+import com.example.smarttrade.nonactivityclasses.ImageURLtoBitmapConverter
 
 
 class MainActivity : AppCompatActivity() {
+
+    lateinit var bitmap: Bitmap
+    lateinit var testImageView:ImageView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -57,7 +63,12 @@ class MainActivity : AppCompatActivity() {
             startActivity(IntentS)
              */
         }
+
+        bitmap = ImageURLtoBitmapConverter.downloadImage("http://ec2-52-47-150-236.eu-west-3.compute.amazonaws.com:5000/b1g9a.jpg") as Bitmap
+        testImageView = findViewById<ImageView>(R.id.imageViewTest)
     }
+
+
 
 
 
@@ -82,6 +93,7 @@ class MainActivity : AppCompatActivity() {
 
     companion object {
         private lateinit var actContext:MainActivity
+        lateinit var testImageView:ImageView
         fun getContext(): Context {
             return actContext
         }
@@ -96,6 +108,9 @@ class MainActivity : AppCompatActivity() {
         fun loadSeller(){//TODO cambiar en un futuro Addproduct
             val IntentS = Intent(actContext,AddProduct::class.java)
             actContext.startActivity(IntentS)
+        }
+        fun setImage(image:Bitmap?){
+            testImageView.setImageBitmap(image)
         }
     }
 }

@@ -14,12 +14,14 @@ import com.example.smarttrade.MainActivity
 object  ImageURLtoBitmapConverter {
 
     fun downloadImage(url: String): Bitmap? {
-        val requestQueue = Volley.newRequestQueue(BrowseProducts.getContext())
+        val requestQueue = Volley.newRequestQueue(MainActivity.getContext())
         var bitmap: Bitmap? = null
 
         val imageRequest = ImageRequest(
             url,
-            { response -> bitmap = response },
+            { response -> bitmap = response
+            Log.i("image", bitmap.toString())
+            MainActivity.setImage(bitmap)},
             143,
             143,
             ImageView.ScaleType.CENTER_CROP,
