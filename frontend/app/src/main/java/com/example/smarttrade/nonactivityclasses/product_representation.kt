@@ -19,7 +19,7 @@ data class technology_representation (
     val leafColor: String,
     val PN: String,
     val brand: String,
-    val electricConsumption: Double,
+    val electricConsumption: String,
     )
 
 data class clothes_representation(

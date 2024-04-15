@@ -320,11 +320,11 @@ class AddProduct :AppCompatActivity() {
 
                     "Tecnología" -> {
 
-                        val consumption = cat1.toDouble()
-                        Log.i("LLEGUE", currName+doublePrice+encodedImageString+intStock+currDescription+leafColor+prodNum+cat2+consumption)
+
+                        Log.i("LLEGUE", currName+doublePrice+encodedImageString+intStock+currDescription+leafColor+prodNum+cat2+cat1)
                         Log.i("IMAGEN", encodedImageString)
                         try{
-                            logic.addTechnology(currName,doublePrice,encodedImageString,intStock,currDescription,leafColor,prodNum,cat2,consumption)
+                            logic.addTechnology(currName,doublePrice,encodedImageString,intStock,currDescription,leafColor,prodNum,cat2,cat1)
                         }catch (exception: Exception ){
                                 Log.e("ERROR", "Error adding technology: ${exception.message}")
                         }

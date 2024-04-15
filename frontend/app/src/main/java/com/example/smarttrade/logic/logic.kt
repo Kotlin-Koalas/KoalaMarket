@@ -45,7 +45,7 @@ object logic {
     lateinit var sellerVolleyQueue:RequestQueue
     lateinit var productVolleyQueue:RequestQueue
 
-    val url = "http://192.168.0.103:8080"
+    val url = "http://192.168.1.135:8080"
 
 
 
@@ -240,7 +240,7 @@ object logic {
         sellerVolleyQueue.add(jsonRequest)
     }
 
-     fun addTechnology(name:String,price:Double,image:String,stock:Int,description:String,leafColor:String,PN:String,brand:String,electricConsumption:Double){
+     fun addTechnology(name:String,price:Double,image:String,stock:Int,description:String,leafColor:String,PN:String,brand:String,electricConsumption:String){
 
          productVolleyQueue =Volley.newRequestQueue(AddProduct.getContext())
 
@@ -408,7 +408,7 @@ object logic {
                 val products = JSONArray(response)
                 for (i in 0 until products.length()) {
                     val p = products.getJSONObject(i)
-                    res.add(technology_representation(p.getString("name"),p.getString("price").toDouble(),p.getString("image"),p.getString("stock").toInt(),p.getString("description"),p.getString("ecology"),p.getString("productNumber"),p.getString("brand"),p.getString("electricConsumption").toDouble()))
+                    res.add(technology_representation(p.getString("name"),p.getString("price").toDouble(),p.getString("image"),p.getString("stock").toInt(),p.getString("description"),p.getString("ecology"),p.getString("productNumber"),p.getString("brand"),p.getString("electricConsumption")))
                 }
                 BrowseProductsFiltered.setProductsShown(res)
             },
