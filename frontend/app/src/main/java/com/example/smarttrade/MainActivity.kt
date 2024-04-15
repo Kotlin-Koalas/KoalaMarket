@@ -51,6 +51,8 @@ class MainActivity : AppCompatActivity() {
         val forgotPassword = findViewById<TextView>(R.id.editTextText3)
         forgotPassword.setOnClickListener {
             //TODO codigo para recuperar contraseña
+            val IntentS = Intent(this,AddProduct::class.java)
+            startActivity(IntentS)
         }
         val logInButton = findViewById<Button>(R.id.button)
         logInButton.setOnClickListener{
@@ -61,8 +63,6 @@ class MainActivity : AppCompatActivity() {
             startActivity(IntentS)
              */
         }
-        testImageView = findViewById<ImageView>(R.id.imageViewTest)
-        ImageURLtoBitmapConverter.downloadImage("http://ec2-52-47-150-236.eu-west-3.compute.amazonaws.com:5000/b1g9a.jpg")
     }
 
 
@@ -90,7 +90,6 @@ class MainActivity : AppCompatActivity() {
 
     companion object {
         private lateinit var actContext:MainActivity
-        lateinit var testImageView:ImageView
         fun getContext(): Context {
             return actContext
         }
@@ -106,8 +105,6 @@ class MainActivity : AppCompatActivity() {
             val IntentS = Intent(actContext,AddProduct::class.java)
             actContext.startActivity(IntentS)
         }
-        fun setImage(image:Bitmap?){
-            testImageView.setImageBitmap(image)
-        }
+
     }
 }

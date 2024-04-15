@@ -1,5 +1,6 @@
 package com.example.smarttrade
 
+import android.graphics.Bitmap
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -52,29 +53,18 @@ class ProductAdapter(
         notifyDataSetChanged()
     }
 
-
-
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         val view = convertView ?: LayoutInflater.from(parent?.context)
             .inflate(R.layout.product_representation, parent, false)
 
         // Find UI elements in the inflated view
-        val imageView = view.findViewById<ImageView>(R.id.imageViewCat)
         val textViewPrice = view.findViewById<TextView>(R.id.textViewPrice)
         val textViewName = view.findViewById<TextView>(R.id.textViewTitulo)
         val textViewStock = view.findViewById<TextView>(R.id.textViewCantStock)
         val imageViewLeaf = view.findViewById<ImageView>(R.id.imageViewLeaf)
 
-        // Get the data object for this position
-        //TODO descomentar codigo que emplee valores reales y quitar el temporal
-        //Codigo para cuando la lista este en funcionamiento
+        ImageURLtoBitmapConverter.downloadImage(popularProducts[position].image,view)
 
-        val bitmap = ImageURLtoBitmapConverter.downloadImage(popularProducts[position].image)
-        if (bitmap != null) {
-            imageView.setImageBitmap(bitmap)
-        } else {
-            imageView.setImageResource(R.drawable.no_photo)
-        }
         textViewPrice.text = popularProducts[position].price
         textViewName.text = popularProducts[position].name
         textViewStock.text = popularProducts[position].stock.toString()
@@ -99,6 +89,15 @@ class ProductAdapter(
         }
 
         return view
+    }
+
+    companion object{
+        fun setImage(image: Bitmap?,view:View){
+            val imageView = view.findViewById<ImageView>(R.id.imageViewCat)
+            if (image != null) {
+                imageView.setImageBitmap(image)
+            }
+        }
     }
 
 }

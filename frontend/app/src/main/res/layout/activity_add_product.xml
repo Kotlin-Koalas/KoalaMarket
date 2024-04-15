@@ -49,7 +49,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraitLayout2"
         android:layout_width="match_parent"
-        android:layout_height="649dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="80dp"
         android:background="@color/white"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -121,10 +122,12 @@
                         android:layout_height="50dp"
                         android:layout_margin="3dp"
                         android:background="@drawable/basic_grey_shape"
+                        android:fontFamily="@font/karla"
                         android:baselineAligned="false"
                         android:ems="10"
                         android:maxLength="12"
-                        android:hint="  9S7174541693"
+                        android:paddingHorizontal="8dp"
+                        android:hint="9S7174541693"
                         android:textColorHint="@color/greyLetter"
                         android:inputType="text"
                         android:textColor="@color/black" />
@@ -146,8 +149,10 @@
                         android:layout_margin="3dp"
                         android:background="@drawable/basic_grey_shape"
                         android:baselineAligned="false"
+                        android:fontFamily="@font/karla"
                         android:ems="10"
-                        android:hint="  Ejemplo nombre producto"
+                        android:hint="Ejemplo nombre producto"
+                        android:paddingHorizontal="8dp"
                         android:textColorHint="@color/greyLetter"
                         android:inputType="text"
                         android:textColor="@color/black" />
@@ -167,10 +172,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:background="@drawable/basic_grey_shape"
+                        android:fontFamily="@font/karla"
                         android:baselineAligned="false"
                         android:ems="10"
                         android:entries="@array/categoriesApp"
-                        android:textColor="@color/greyLetter" />
+                        android:textColor="@color/black" />
 
                     <TextView
                         android:id="@+id/textViewCategoria1"
@@ -188,9 +194,11 @@
                         android:layout_height="50dp"
                         android:layout_margin="3dp"
                         android:background="@drawable/basic_grey_shape"
+                        android:fontFamily="@font/karla"
                         android:baselineAligned="false"
                         android:ems="10"
-                        android:hint="  Ejemplo característca 1"
+                        android:paddingHorizontal="8dp"
+                        android:hint="Ejemplo característica 1"
                         android:textColorHint="@color/greyLetter"
                         android:inputType="text"
                         android:textColor="@color/black" />
@@ -212,8 +220,10 @@
                         android:layout_margin="3dp"
                         android:background="@drawable/basic_grey_shape"
                         android:baselineAligned="false"
+                        android:fontFamily="@font/karla"
                         android:ems="10"
-                        android:hint="  Ejemplo característca 2"
+                        android:hint="Ejemplo característica 2"
+                        android:paddingHorizontal="8dp"
                         android:textColorHint="@color/greyLetter"
                         android:inputType="text"
                         android:textColor="@color/black" />
@@ -235,8 +245,10 @@
                         android:layout_margin="3dp"
                         android:background="@drawable/basic_grey_shape"
                         android:baselineAligned="false"
+                        android:fontFamily="@font/karla"
                         android:ems="10"
-                        android:hint=" $88.50"
+                        android:hint="88.50"
+                        android:paddingHorizontal="8dp"
                         android:textColorHint="@color/greyLetter"
                         android:inputType="numberDecimal"
                         android:textColor="@color/black" />
@@ -259,7 +271,9 @@
                         android:background="@drawable/basic_grey_shape"
                         android:baselineAligned="false"
                         android:ems="10"
-                        android:hint=" Ordenador gaming portátil con..."
+                        android:fontFamily="@font/karla"
+                        android:hint="Ordenador gaming portátil con..."
+                        android:paddingHorizontal="8dp"
                         android:textColorHint="@color/greyLetter"
                         android:textColor="@color/black" />
 
@@ -280,8 +294,9 @@
                         android:background="@drawable/basic_grey_shape"
                         android:baselineAligned="false"
                         android:ems="10"
+                        android:fontFamily="@font/karla"
                         android:entries="@array/certificatesApp"
-                        android:textColor="@color/greyLetter" />
+                        android:textColor="@color/black" />
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/frameLayoutID10"
@@ -311,8 +326,9 @@
                             android:layout_marginStart="8dp"
                             android:background="@drawable/ciruclar_button"
                             android:text="Subir"
+                            android:fontFamily="@font/karla"
                             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                            android:textColor="@color/greyLetter"
+                            android:textColor="@color/black"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/textView10"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -350,7 +366,9 @@
                         android:background="@drawable/basic_grey_shape"
                         android:baselineAligned="false"
                         android:ems="10"
+                        android:fontFamily="@font/karla"
                         android:hint="89"
+                        android:paddingHorizontal="8dp"
                         android:textColorHint="@color/greyLetter"
                         android:inputType="number"
                         android:textColor="@color/black" />
@@ -358,34 +376,52 @@
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:layout_marginBottom="30dp"
                         android:layout_marginTop="20dp">
 
-                        <Button
-                            android:id="@+id/cancelAddButton"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="48dp"
-                            android:background="@drawable/ciruclar_button"
-                            android:text="Cancelar"
-                            android:textAllCaps="false"
-                            android:textColor="@color/greyLetter"
-                            android:textSize="20sp"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
 
-                        <Button
-                            android:id="@+id/acceptAddButton"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="32dp"
-                            android:background="@drawable/circular_button_green"
-                            android:text="Aceptar"
-                            android:textAllCaps="false"
-                            android:textColor="@color/white"
-                            android:textSize="20sp"
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="230dp"
+                            android:layout_height="match_parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toEndOf="@+id/cancelAddButton"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            tools:layout_editor_absoluteX="77dp"
+                            tools:layout_editor_absoluteY="5dp">
+
+                            <Button
+                                android:id="@+id/cancelAddButton"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/ciruclar_button"
+                                android:text="Cancelar"
+                                android:fontFamily="@font/karla"
+                                android:textAllCaps="false"
+                                android:textColor="@color/greyLetter"
+                                android:textSize="20sp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintVertical_bias="0.0" />
+
+                            <Button
+                                android:id="@+id/acceptAddButton"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/circular_button_green"
+                                android:text="Aceptar"
+                                android:textAllCaps="false"
+                                android:fontFamily="@font/karla"
+                                android:textColor="@color/white"
+                                android:textSize="20sp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintVertical_bias="0.0" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
