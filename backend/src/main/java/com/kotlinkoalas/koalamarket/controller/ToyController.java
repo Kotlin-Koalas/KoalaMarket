@@ -34,15 +34,15 @@ public class ToyController {
         String image = (String) payload.get("image");
         String cif = (String) payload.get("cif");
 
-        String electricConsumption = (String) payload.get("electricConsumption");
-        String brand = (String) payload.get("brand");
+        String age = (String) payload.get("age");
+        String material = (String) payload.get("material");
 
         if (repository.existsByProductNumberAndCif(productNumber, cif)) {
             throw new RuntimeException("Product number and cif already exists");
         }
 
         ProductFactory ToyFactory = new ToyFactory();
-        Toy technology = (Toy) ToyFactory.createProduct(productNumber, name, price, description, ecology, stock, image, cif, electricConsumption, brand);
+        Toy technology = (Toy) ToyFactory.createProduct(productNumber, name, price, description, ecology, stock, image, cif, age, material);
 
         return repository.save(technology);
     }

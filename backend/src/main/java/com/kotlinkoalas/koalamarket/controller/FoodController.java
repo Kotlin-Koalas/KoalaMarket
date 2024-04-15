@@ -33,6 +33,7 @@ public class FoodController {
         int stock = (int) payload.get("stock");
         String image = (String) payload.get("image");
         String cif = (String) payload.get("cif");
+        
         String calories = (String) payload.get("calories");
         String macros = (String) payload.get("macros");
 

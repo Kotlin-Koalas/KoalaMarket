@@ -36,6 +36,7 @@ public class TechnologyController {
         int stock = (int) payload.get("stock");
         String image = (String) payload.get("image");
         String cif = (String) payload.get("cif");
+
         String electricConsumption = (String) payload.get("electricConsumption");
         String brand = (String) payload.get("brand");
 
@@ -55,7 +56,7 @@ public class TechnologyController {
         Technology oldTechnology = repository.findByProductNumber(productNumber);
         oldTechnology.setPrice((double) payload.get("price"));
         oldTechnology.setDescription((String) payload.get("description"));
-        oldTechnology.setElectricConsumption((double) payload.get("electricConsumption"));
+        oldTechnology.setElectricConsumption((String) payload.get("electricConsumption"));
         oldTechnology.setEcology((String) payload.get("ecology"));
         oldTechnology.setBrand((String) payload.get("brand"));
         oldTechnology.setName((String) payload.get("name"));

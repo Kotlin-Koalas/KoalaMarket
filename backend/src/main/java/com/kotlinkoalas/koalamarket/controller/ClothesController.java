@@ -35,6 +35,7 @@ public class ClothesController {
         int stock = (int) payload.get("stock");
         String image = (String) payload.get("image");
         String cif = (String) payload.get("cif");
+
         String color = (String) payload.get("color");
         String size = (String) payload.get("size");
 

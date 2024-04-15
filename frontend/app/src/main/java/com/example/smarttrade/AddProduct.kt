@@ -540,8 +540,7 @@ class AddProduct :AppCompatActivity() {
         }
 
         fun productAded(){
-            val IntentS = Intent(actContext,BrowseProducts::class.java)
-            actContext.startActivity(IntentS)
+            actContext.showCustomDialogBox("Producto añadido correctamente")
         }
 
 

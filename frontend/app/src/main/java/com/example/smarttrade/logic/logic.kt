@@ -45,7 +45,8 @@ object logic {
     lateinit var sellerVolleyQueue:RequestQueue
     lateinit var productVolleyQueue:RequestQueue
 
-    val url = "http://192.168.1.135:8080"
+
+    val url = "http://192.168.1.37:8080"
 
 
 
@@ -254,7 +255,7 @@ object logic {
         json.put("stock",stock)
         json.put("image",image)
         json.put("cif",PersonSeller.getCIF())
-        json.put("electricalConsumption",electricConsumption)
+        json.put("electricConsumption",electricConsumption)
         json.put("brand",brand)
 
          val queue = Volley.newRequestQueue(AddProduct.getContext())
@@ -264,6 +265,7 @@ object logic {
             {response ->
                 val jsonRes:JSONObject = response
                 val technology = technology_representation(name,price,image,stock,description,leafColor,PN,brand,electricConsumption)
+                AddProduct.productAded()
 
 
             },
@@ -296,6 +298,7 @@ object logic {
             {response ->
                 val jsonRes:JSONObject = response
                 val toy = toy_representation(name,price,image,stock,description,leafColor,PN,material,age)
+                AddProduct.productAded()
 
             },
             {error ->
@@ -327,6 +330,7 @@ object logic {
             {response ->
                 val jsonRes:JSONObject = response
                 val clothes = clothes_representation(name,price,image,stock,description,leafColor,PN,size,color)
+                AddProduct.productAded()
 
             },
             {error ->
@@ -359,7 +363,7 @@ object logic {
             {response ->
                 val jsonRes:JSONObject = response
                 val foods = food_representation(name,price,image,stock,description,leafColor,PN,calories,macros)
-
+                AddProduct.productAded()
             },
             {error ->
                 AddProduct.popUpError()
