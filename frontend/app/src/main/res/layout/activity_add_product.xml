@@ -92,7 +92,7 @@
                     <!---android:visibility="invisible"-->
 
 
-                    <ImageButton
+                    <ImageView
                         android:id="@+id/uploadImageButton"
                         android:layout_width="200dp"
                         android:layout_height="200dp"
@@ -100,11 +100,9 @@
                         android:onClick="uploadImageButton"
                         android:saveEnabled="false"
                         android:scaleType="centerCrop"
-                        android:padding="10dp"
+                        android:focusable="false"
+                        android:src="@drawable/add_item"
                         android:defaultFocusHighlightEnabled="false"
-                        android:visibility="invisible"
-                        android:clickable="false"
-                        app:srcCompat="@drawable/add_item"
                         tools:visibility="visible" />
 
                     <TextView

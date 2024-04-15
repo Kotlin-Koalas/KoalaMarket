@@ -27,6 +27,7 @@ import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts.PickVisualMedia
+import androidx.activity.result.registerForActivityResult
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.graphics.drawable.toBitmap
 import androidx.core.net.toFile
@@ -46,7 +47,7 @@ class AddProduct :AppCompatActivity() {
     private val PICK_FILE_REQUEST_CODE= 1
     var isUploadImage = -1
     var isUploadCertificate = -1
-    lateinit var uploadImageButton: ImageButton
+    lateinit var uploadImageButton: ImageView
     lateinit var uploadCertificateButton : Button
     private lateinit var imageCertificate: ImageView
     private lateinit var encodedImageString :String
@@ -56,6 +57,7 @@ class AddProduct :AppCompatActivity() {
     private lateinit var textCat2 :TextView
     private lateinit var categorSelected : String
     private lateinit var leafColor: String
+    var BuscarFoto = false
 
 
     private var existProduct = false
@@ -71,10 +73,9 @@ class AddProduct :AppCompatActivity() {
 
 
         imageCertificate = findViewById<ImageView>(R.id.imageViewOkcertificate)
-        uploadImageButton = findViewById(R.id.uploadImageButton)
-        uploadImageButton.setOnClickListener {
-            pickmedia.launch(PickVisualMediaRequest(PickVisualMedia.ImageOnly))
-        }
+        uploadImageButton = findViewById<ImageView>(R.id.uploadImageButton)
+
+
 
         uploadCertificateButton = findViewById(R.id.buttonUploadCertificate)
         uploadCertificateButton.setOnClickListener {
@@ -95,30 +96,54 @@ class AddProduct :AppCompatActivity() {
 
         val prod = (findViewById<EditText>(R.id.editTextProductNumber))
         //prod.addTextChangedListener(MyTextWatcher(uploadImageButton))
+
+
+
+
+        uploadImageButton.setOnClickListener {
+
+            if(BuscarFoto){
+                pickmedia.launch(PickVisualMediaRequest(PickVisualMedia.ImageOnly))
+
+            }
+
+
+        }
+
+
         prod.addTextChangedListener {
 
             if(prod.length() == 12){
-                uploadImageButton.visibility = View.VISIBLE
-                uploadImageButton.setBackgroundColor(Color.TRANSPARENT)
-                uploadImageButton.background = null
+
+                //if(logic.existProduct(prod.text.toString())){
+                //val defaultImage = getProdcut(prod.text.toString()).getImage
+                //val defaultBitmap = (defaultImage as VectorDrawable).toBitmap()
+                //uploadImageButton.setImageBitmap(defaultBitmap)
+                // uploadImageButton.isClickable = false
+                //sUploadImage = 1
+
+
+                //}
+                //else{
+
+                uploadImageButton.isClickable = true
+
+                BuscarFoto = true
+
+
             }
             else{
 
-                //if(logic.existProduct(prod.text.toString())){
-                    //val defaultImage = getProdcut(prod.text.toString()).getImage
-                    //val defaultBitmap = (defaultImage as VectorDrawable).toBitmap()
-                    //uploadImageButton.setImageBitmap(defaultBitmap)
-                   // uploadImageButton.isEnabled(false)
-
-                //}
-
+                //uploadImageButton.setOnClickListener(null)
+                //uploadImageButton.setImageURI(null)
+                uploadImageButton.isClickable= false
 
                 val defaultImage = resources.getDrawable(R.drawable.add_item)
                 val defaultBitmap = (defaultImage as VectorDrawable).toBitmap()
                 val defaultImageUri = Uri.parse("android.resource://${packageName}/${R.drawable.add_item}")
                 uploadImageButton.setImageBitmap(defaultBitmap)
+
                 isUploadImage = -1
-                uploadImageButton.visibility = View.INVISIBLE
             }
 
         }
@@ -297,6 +322,7 @@ class AddProduct :AppCompatActivity() {
 
                         val consumption = cat1.toDouble()
                         Log.i("LLEGUE", currName+doublePrice+encodedImageString+intStock+currDescription+leafColor+prodNum+cat2+consumption)
+                        Log.i("IMAGEN", encodedImageString)
                         try{
                             logic.addTechnology(currName,doublePrice,encodedImageString,intStock,currDescription,leafColor,prodNum,cat2,consumption)
                         }catch (exception: Exception ){
@@ -396,6 +422,19 @@ class AddProduct :AppCompatActivity() {
         }
     }
 
+    val pickmedia =registerForActivityResult(PickVisualMedia()){uri->
+        if(uri!=null){
+            uploadImageButton.setImageURI(uri)
+             encodedImageString = "IMAGEN QUE HAY QUE PONER"
+            isUploadImage = 1
+
+
+        }else{
+
+        }
+
+    }
+
     fun convertImageToByteArray(imageFile: File): ByteArray {
         val fis = FileInputStream(imageFile)
         val byteArray = ByteArray(imageFile.length().toInt())
@@ -404,20 +443,19 @@ class AddProduct :AppCompatActivity() {
         return byteArray
     }
 
-
+/*
     private val pickmedia = registerForActivityResult(PickVisualMedia()) { uri ->
         if (uri != null) {
             when (uri.scheme) {
                 "file" -> {
-                    val archivoImagen = uri.toFile()
+
                     val ImagenUri = uri
 
                     if (archivoImagen.exists()) {
-                        val arregloBytesImagen = convertImageToByteArray(archivoImagen)
-                        encodedImageString = Base64.encodeToString(arregloBytesImagen, Base64.DEFAULT)
 
 
-                        uploadImageButton.setImageURI(uri)
+
+                        //uploadImageButton.setImageURI(uri)
                         isUploadImage = 1
                     } else {
                         Log.e("AddProduct", "Archivo no encontrado: $archivoImagen")
@@ -443,7 +481,7 @@ class AddProduct :AppCompatActivity() {
                             val arregloBytesImagen = convertImageToByteArray(archivoTemporal)
                             encodedImageString = Base64.encodeToString(arregloBytesImagen, Base64.DEFAULT)
 
-                            uploadImageButton.setImageURI(uri)
+                            uploadImageButton.setImage
                             isUploadImage = 1
                             }
                         }
@@ -459,7 +497,7 @@ class AddProduct :AppCompatActivity() {
             Log.i("aris", "No seleccionado")
         }
 
-    }
+    }*/
 
     fun backButtonClick(view: View) { //TODO cambiar de pagina
         val backPage = Intent(this, MainActivity::class.java)
