@@ -405,14 +405,14 @@ object logic {
             productVolleyQueue = Volley.newRequestQueue(BrowseProductsFiltered.getContext())
             isPQueue = true
         }
-        val res = mutableListOf<technology_representation>()
+        val res = mutableListOf<product_representation>()
         val stringRequest = StringRequest(
             Request.Method.GET,"$url/products/technology",
             {response ->
                 val products = JSONArray(response)
                 for (i in 0 until products.length()) {
                     val p = products.getJSONObject(i)
-                    res.add(technology_representation(p.getString("name"),p.getString("price").toDouble(),p.getString("image"),p.getString("stock").toInt(),p.getString("description"),p.getString("ecology"),p.getString("productNumber"),p.getString("brand"),p.getString("electricConsumption")))
+                    res.add(product_representation(p.getString("name"),p.getString("price"),p.getString("image"),p.getString("stock").toInt(),p.getString("description"),p.getString("ecology"),p.getString("productNumber")))
                 }
                 BrowseProductsFiltered.setProductsShown(res)
             },
@@ -428,14 +428,14 @@ object logic {
             productVolleyQueue = Volley.newRequestQueue(BrowseProductsFiltered.getContext())
             isPQueue = true
         }
-        val res = mutableListOf<food_representation>()
+        val res = mutableListOf<product_representation>()
         val stringRequest = StringRequest(
             Request.Method.GET,"$url/products/foods",
             {response ->
                 val products = JSONArray(response)
                 for (i in 0 until products.length()) {
                     val p = products.getJSONObject(i)
-                    res.add(food_representation(p.getString("name"),p.getString("price").toDouble(),p.getString("image"),p.getString("stock").toInt(),p.getString("description"),p.getString("ecology"),p.getString("productNumber"),p.getString("calories"),p.getString("macros")))
+                    res.add(product_representation(p.getString("name"),p.getString("price"),p.getString("image"),p.getString("stock").toInt(),p.getString("description"),p.getString("ecology"),p.getString("productNumber")))
                 }
                 BrowseProductsFiltered.setProductsShown(res)
             },
@@ -451,14 +451,14 @@ object logic {
             productVolleyQueue = Volley.newRequestQueue(BrowseProductsFiltered.getContext())
             isPQueue = true
         }
-        val res = mutableListOf<toy_representation>()
+        val res = mutableListOf<product_representation>()
         val stringRequest = StringRequest(
             Request.Method.GET,"$url/products/toys",
             {response ->
                 val products = JSONArray(response)
                 for (i in 0 until products.length()) {
                     val p = products.getJSONObject(i)
-                    res.add(toy_representation(p.getString("name"),p.getString("price").toDouble(),p.getString("image"),p.getString("stock").toInt(),p.getString("description"),p.getString("ecology"),p.getString("productNumber"),p.getString("materia"),p.getString("age")))
+                    res.add(product_representation(p.getString("name"),p.getString("price"),p.getString("image"),p.getString("stock").toInt(),p.getString("description"),p.getString("ecology"),p.getString("productNumber")))
                 }
                 BrowseProductsFiltered.setProductsShown(res)
             },
@@ -475,14 +475,14 @@ object logic {
             productVolleyQueue = Volley.newRequestQueue(BrowseProductsFiltered.getContext())
             isPQueue = true
         }
-        val res = mutableListOf<clothes_representation>()
+        val res = mutableListOf<product_representation>()
         val stringRequest = StringRequest(
             Request.Method.GET,"$url/products/clothes",
             {response ->
                 val products = JSONArray(response)
                 for (i in 0 until products.length()) {
                     val p = products.getJSONObject(i)
-                    res.add(clothes_representation(p.getString("name"),p.getString("price").toDouble(),p.getString("image"),p.getString("stock").toInt(),p.getString("description"),p.getString("ecology"),p.getString("productNumber"),p.getString("color"),p.getString("size")))
+                    res.add(product_representation(p.getString("name"),p.getString("price"),p.getString("image"),p.getString("stock").toInt(),p.getString("description"),p.getString("ecology"),p.getString("productNumber")))
                 }
                 BrowseProductsFiltered.setProductsShown(res)
             },
