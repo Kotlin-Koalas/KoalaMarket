@@ -62,7 +62,7 @@ class BrowseProductsFiltered : AppCompatActivity() {
         recommendationRV = findViewById<RecyclerView>(R.id.recyclerViewSearches)
 
         //Temporal
-        prevSearchesShown.add(search_representation("search de prueba"))
+        //prevSearchesShown.add(search_representation("search de prueba"))
 
         adapterS = SearchAdapterFiltered(prevSearchesShown)
 
@@ -116,9 +116,12 @@ class BrowseProductsFiltered : AppCompatActivity() {
         searchButton.setOnClickListener{
             val searchItem = searchBar.text.toString().lowercase().trim()
             filterProduct(searchItem)
-
-
         }
+
+        val topLayout = findViewById<ConstraintLayout>(R.id.main)
+        recommendationLayout = findViewById<ConstraintLayout>(R.id.recomendationsLayout)
+        topLayout.bringChildToFront(recommendationLayout)
+        recommendationLayout.visibility = View.INVISIBLE
 
         searchBar.setOnFocusChangeListener { v, hasFocus ->
             if (hasFocus && prevSearchesShown.size > 0) {
@@ -157,6 +160,7 @@ class BrowseProductsFiltered : AppCompatActivity() {
         }
         return super.dispatchTouchEvent(event)
     }
+
 
     fun updateSearch(text: String){
         searchBar.setText(text)

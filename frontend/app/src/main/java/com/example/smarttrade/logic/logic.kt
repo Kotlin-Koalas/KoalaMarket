@@ -31,7 +31,7 @@ import java.io.BufferedReader
 import java.io.File
 import java.io.InputStreamReader
 
-private const val host = "https://ec2-52-47-150-236.eu-west-3.compute.amazonaws.com:443"
+private const val host = "http://ec2-18-100-119-61.eu-south-2.compute.amazonaws.com:5000"
 
 
 object logic {
@@ -46,7 +46,7 @@ object logic {
     lateinit var productVolleyQueue:RequestQueue
 
 
-    val url = "http://192.168.1.37:8080"
+    val url = "http://192.168.73.164:8080"
 
 
 

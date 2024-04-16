@@ -17,11 +17,12 @@ import com.example.smarttrade.ProductAdapter
 object  ImageURLtoBitmapConverter {
 
     fun downloadImage(url: String, view : View): Bitmap? {
+        val urlC = "http://ec2-18-100-119-61.eu-south-2.compute.amazonaws.com:5000/"+url
         val requestQueue = Volley.newRequestQueue(MainActivity.getContext())
         var bitmap: Bitmap? = null
 
         val imageRequest = ImageRequest(
-            url,
+            urlC,
             { response -> bitmap = response
             Log.i("imageBitmap", bitmap.toString())
             ProductAdapter.setImage(bitmap, view)
