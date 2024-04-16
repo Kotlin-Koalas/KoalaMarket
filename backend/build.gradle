@@ -11,6 +11,10 @@ java {
 	sourceCompatibility = '17'
 }
 
+jar {
+    archiveBaseName = 'KoalamarketApplication'
+}
+
 test {
 	enabled = false
 }
@@ -39,4 +43,10 @@ dependencies {
 
 tasks.named('test') {
 	useJUnitPlatform()
+}
+
+task getDeps(type: Copy) {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    from configurations.compileClasspath into "libs/"
+    from configurations.runtimeClasspath into "libs/"
 }
