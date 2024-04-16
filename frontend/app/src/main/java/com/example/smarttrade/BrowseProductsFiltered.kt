@@ -123,7 +123,7 @@ class BrowseProductsFiltered : AppCompatActivity() {
         fun updateSearch(text:String) {
             //actContextBPF.updateSearch(text)
         }
-        fun setProductsShown(list:MutableList<*>){
+        fun setProductsShown(list:MutableList<product_representation>){
             productsShown = list
             //adapterP.addAllProducts(productsShown)
         }
