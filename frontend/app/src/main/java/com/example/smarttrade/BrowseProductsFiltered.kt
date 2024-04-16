@@ -31,8 +31,7 @@ class BrowseProductsFiltered : AppCompatActivity() {
 
     private lateinit var searchBar : EditText
     private lateinit var searchButton : ImageButton
-    private lateinit var adapterP: ProductAdapter
-    private lateinit var adapterS: SearchAdapter
+    private lateinit var adapterS: SearchAdapterFiltered
     private lateinit var backButton : ImageButton
     private lateinit var categoryName : TextView
     private lateinit var recommendationLayout: ConstraintLayout
@@ -65,7 +64,7 @@ class BrowseProductsFiltered : AppCompatActivity() {
         //Temporal
         prevSearchesShown.add(search_representation("search de prueba"))
 
-        adapterS = SearchAdapter(prevSearchesShown)
+        adapterS = SearchAdapterFiltered(prevSearchesShown)
 
         recommendationRV.adapter = adapterS
         recommendationRV.layoutManager = LinearLayoutManager(this)
@@ -159,6 +158,9 @@ class BrowseProductsFiltered : AppCompatActivity() {
         return super.dispatchTouchEvent(event)
     }
 
+    fun updateSearch(text: String){
+        searchBar.setText(text)
+    }
     private fun getCategoryName(intent: Intent): String?{
         val bundle = intent.extras
         return bundle?.getString("categoryName")
@@ -178,7 +180,7 @@ class BrowseProductsFiltered : AppCompatActivity() {
         private lateinit var productsShown: MutableList<product_representation>
         private lateinit var adapterP: ProductAdapter
         fun updateSearch(text:String) {
-            //actContextBPF.updateSearch(text)
+            actContextBPF.updateSearch(text)
         }
         fun setProductsShown(list:MutableList<product_representation>){
             productsShown = list
