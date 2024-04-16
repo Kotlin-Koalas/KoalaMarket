@@ -2,20 +2,28 @@ package com.example.smarttrade
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Rect
 import android.os.Bundle
 import android.util.Log
+import android.view.MotionEvent
+import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.GridView
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.content.res.AppCompatResources
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.smarttrade.logic.logic
 
 //import com.example.smarttrade.nonactivityclasses.LeafColor
 
 import com.example.smarttrade.nonactivityclasses.product_representation
-
+import com.example.smarttrade.nonactivityclasses.search_representation
 
 
 class BrowseProductsFiltered : AppCompatActivity() {
@@ -24,16 +32,20 @@ class BrowseProductsFiltered : AppCompatActivity() {
     private lateinit var searchBar : EditText
     private lateinit var searchButton : ImageButton
     private lateinit var adapterP: ProductAdapter
+    private lateinit var adapterS: SearchAdapter
     private lateinit var backButton : ImageButton
     private lateinit var categoryName : TextView
+    private lateinit var recommendationLayout: ConstraintLayout
+    private lateinit var recommendationRV: RecyclerView
     private var productsShown: MutableList<product_representation> = mutableListOf()
     private var productsFiltered : MutableList<product_representation> = mutableListOf()
+    private var prevSearchesShown: MutableList<search_representation> = mutableListOf()
 
 
     override fun onCreate(savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)
 
-        BrowseProductsFiltered.actContextBPF = this
+        actContextBPF = this
 
 
         enableEdgeToEdge()
@@ -47,6 +59,16 @@ class BrowseProductsFiltered : AppCompatActivity() {
         categoryName.setText("Categoría\n" + nameCategory.toString())
 
         backButton = findViewById(R.id.imageButtonBackfilter)
+
+        recommendationRV = findViewById<RecyclerView>(R.id.recyclerViewSearches)
+
+        //Temporal
+        prevSearchesShown.add(search_representation("search de prueba"))
+
+        adapterS = SearchAdapter(prevSearchesShown)
+
+        recommendationRV.adapter = adapterS
+        recommendationRV.layoutManager = LinearLayoutManager(this)
 
         backButton.setOnClickListener{
             val IntentS = Intent(this, BrowseProducts::class.java)
@@ -99,7 +121,42 @@ class BrowseProductsFiltered : AppCompatActivity() {
 
         }
 
+        searchBar.setOnFocusChangeListener { v, hasFocus ->
+            if (hasFocus && prevSearchesShown.size > 0) {
+                //TODO poner de nuevo las busquedas a la lista, añadirlas con el metodo del adaptador y meterlas a la BD
+                recommendationLayout.visibility = View.VISIBLE
+                searchBar.background = AppCompatResources.getDrawable(
+                    this,
+                    R.drawable.searchbar_background_desplegado
+                )
 
+            } else {
+                recommendationLayout.visibility = View.INVISIBLE
+                searchBar.background =
+                    AppCompatResources.getDrawable(this, R.drawable.rounded_button_cancel)
+            }
+
+
+        }
+    }
+
+    override fun dispatchTouchEvent(event: MotionEvent): Boolean {
+        if (event.action == MotionEvent.ACTION_DOWN) {
+            val v = currentFocus
+            if (v is EditText) {
+                val outRect = Rect()
+                val rectRecommended = Rect()
+                recommendationRV.getGlobalVisibleRect(rectRecommended)
+                v.getGlobalVisibleRect(outRect)
+                val isWithinCustomArea = rectRecommended.contains(event.rawX.toInt(), event.rawY.toInt())
+                if (!outRect.contains(event.rawX.toInt(), event.rawY.toInt()) && !isWithinCustomArea) {
+                    v.clearFocus()
+                    val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0)
+                }
+            }
+        }
+        return super.dispatchTouchEvent(event)
     }
 
     private fun getCategoryName(intent: Intent): String?{
