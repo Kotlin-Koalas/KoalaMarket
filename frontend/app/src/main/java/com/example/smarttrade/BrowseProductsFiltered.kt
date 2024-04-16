@@ -62,7 +62,8 @@ class BrowseProductsFiltered : AppCompatActivity() {
         recommendationRV = findViewById<RecyclerView>(R.id.recyclerViewSearches)
 
         //Temporal
-        //prevSearchesShown.add(search_representation("search de prueba"))
+        prevSearchesShown.add(search_representation("search de prueba"))
+        prevSearchesShown.add(search_representation("search de prueba 2"))
 
         adapterS = SearchAdapterFiltered(prevSearchesShown)
 

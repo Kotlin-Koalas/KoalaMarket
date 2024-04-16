@@ -46,7 +46,7 @@ object logic {
     lateinit var productVolleyQueue:RequestQueue
 
 
-    val url = "http://192.168.73.164:8080"
+    val url = "http://192.168.0.103:8080"
 
 
 
