@@ -12,4 +12,6 @@ public interface ClothesRepository extends JpaRepository<Clothes, productPK> {
     Clothes findByProductNumber(String productNumber);
     @Transactional
     void deleteByProductNumber(String productNumber);
+
+    boolean existsByProductNumberAndCif(String productNumber, String cif);
 }

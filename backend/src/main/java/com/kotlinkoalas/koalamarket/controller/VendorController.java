@@ -1,6 +1,5 @@
 package com.kotlinkoalas.koalamarket.controller;
 
-import com.kotlinkoalas.koalamarket.model.Buyer;
 import com.kotlinkoalas.koalamarket.model.Vendor;
 import com.kotlinkoalas.koalamarket.repo.VendorRepository;
 import org.springframework.http.ResponseEntity;
@@ -9,6 +8,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+
+import com.google.gson.Gson;
 
 @RestController
 public class VendorController {
@@ -88,10 +89,17 @@ public class VendorController {
         Vendor existingVendor = repository.findByDni(newVendor.getDni());
 
         if (existingVendor != null) {
-            return ResponseEntity.status(400).body("A buyer with the same DNI already exists");
+            return ResponseEntity.status(400)
+                    .contentType(org.springframework.http.MediaType.APPLICATION_JSON)
+                    .body("{\"message\": \"A buyer with the same DNI already exists\"}");
         } else {
             repository.save(newVendor);
-            return ResponseEntity.ok("Registration successful");
+            Gson gson = new Gson();
+            String response = gson.toJson(newVendor);
+            return ResponseEntity.ok()
+                    .contentType(org.springframework.http.MediaType.APPLICATION_JSON)
+                    .body(response);
         }
     }
+
 }

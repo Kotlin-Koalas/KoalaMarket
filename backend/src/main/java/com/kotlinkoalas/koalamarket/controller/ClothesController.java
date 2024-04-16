@@ -35,8 +35,13 @@ public class ClothesController {
         int stock = (int) payload.get("stock");
         String image = (String) payload.get("image");
         String cif = (String) payload.get("cif");
+
         String color = (String) payload.get("color");
         String size = (String) payload.get("size");
+
+        if (repository.existsByProductNumberAndCif(productNumber, cif)) {
+            throw new RuntimeException("Product number and cif already exists");
+        }
 
         ProductFactory ClothesFactory = new ClothesFactory();
         Clothes clothes = (Clothes) ClothesFactory.createProduct(productNumber, name, price, description, ecology, stock, image, cif, color, size);

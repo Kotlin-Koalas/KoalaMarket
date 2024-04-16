@@ -11,4 +11,6 @@ public interface FoodRepository extends JpaRepository<Food, productPK> {
     Food findByProductNumber(String productNumber);
     @Transactional
     void deleteByProductNumber(String productNumber);
+
+    boolean existsByProductNumberAndCif(String productNumber, String cif);
 }

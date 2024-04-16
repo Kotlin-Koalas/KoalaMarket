@@ -1,7 +1,10 @@
 package com.example.smarttrade
 
+import android.content.Context
+import android.graphics.Bitmap
 import android.graphics.Rect
 import android.os.Bundle
+import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -17,7 +20,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.smarttrade.logic.logic
-import com.example.smarttrade.nonactivityclasses.LeafColor
 import com.example.smarttrade.nonactivityclasses.category_representation
 import com.example.smarttrade.nonactivityclasses.product_representation
 import com.example.smarttrade.nonactivityclasses.search_representation
@@ -27,21 +29,21 @@ import org.w3c.dom.Text
 class BrowseProducts : AppCompatActivity() {
 
     private lateinit var searchBar:EditText
-    private lateinit var adapterP: ProductAdapter
     private lateinit var adapterS: SearchAdapter
     private lateinit var adapterCat: CategoryAdapter
     private lateinit var recommendationLayout: ConstraintLayout
     private lateinit var recommendationRV: RecyclerView
     private lateinit var textDescription: TextView
 
-    private var productsShown: MutableList<product_representation> = mutableListOf()
     private var categoriesShown: MutableList<category_representation> = mutableListOf()
     private var prevSearchesShown: MutableList<search_representation> = mutableListOf()
     private var productsFiltered : MutableList<product_representation> = mutableListOf()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        browseProducts = this
+        actContextBP = this
+        productsShown = mutableListOf()
+
 
         categoriesShown.add(category_representation("toys",R.drawable.icon_toy))
         categoriesShown.add(category_representation("food",R.drawable.icon_food))
@@ -77,15 +79,17 @@ class BrowseProducts : AppCompatActivity() {
         gridLayout.adapter = adapterP
 
         //TODO conseguir los datos de la BD y meterlos a la lista productsShown
+        logic.getAllProducts()
+        /*
         //Temporal solo para probar
         for(i in 1..5){
-            productsShown.add(product_representation("","","",1,LeafColor.GREEN,33))
-            productsShown.add(product_representation("aab","","",1,LeafColor.GREEN,33))
-            productsShown.add(product_representation("aaaab","","",1,LeafColor.GREEN,33))
+            productsShown.add(product_representation("","","",1,"yellow","yellow", "33"))
+            productsShown.add(product_representation("aab","","",1,"red","red","34" ))
+            productsShown.add(product_representation("aaaab","","",1,"green","green","33"))
 
         }
+        */
 
-        adapterP.addAllProducts(productsShown)
 
         val topLayout = findViewById<ConstraintLayout>(R.id.constraintLayoutTop)
         recommendationLayout = findViewById<ConstraintLayout>(R.id.recomendationsLayout)
@@ -95,7 +99,7 @@ class BrowseProducts : AppCompatActivity() {
         val startSearch = findViewById<ImageView>(R.id.imageViewSearchButton)
         startSearch.setOnClickListener{
             textDescription.text = "Resultados de la búsqueda:"
-            val searchItem = searchBar.text.toString().toLowerCase().trim()
+            val searchItem = searchBar.text.toString().lowercase().trim()
             filterProduct(searchItem)
         }
 
@@ -152,9 +156,18 @@ class BrowseProducts : AppCompatActivity() {
 
 
     companion object{
-        private lateinit var browseProducts: BrowseProducts
+        private lateinit var actContextBP:BrowseProducts
+        private lateinit var productsShown: MutableList<product_representation>
+        private lateinit var adapterP: ProductAdapter
         fun updateSearch(text:String) {
-            browseProducts.updateSearch(text)
+            actContextBP.updateSearch(text)
+        }
+        fun setProductsShown(list:MutableList<product_representation>){
+            productsShown = list
+            adapterP.addAllProducts(productsShown)
+        }
+        fun getContext(): Context {
+            return actContextBP
         }
     }
 
@@ -163,6 +176,7 @@ class BrowseProducts : AppCompatActivity() {
     private fun filterProduct(searchItem :String){
         productsFiltered.clear()
         productsFiltered.addAll(logic.filterProduct(productsShown, searchItem))
+        Log.i("productsFiletered", productsFiltered.toString())
         adapterP.updateProducts(productsFiltered)
     }
 

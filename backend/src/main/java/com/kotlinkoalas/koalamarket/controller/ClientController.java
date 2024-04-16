@@ -20,12 +20,6 @@ public class ClientController {
         return repository.findAll();
     }
 
-    @PostMapping("/clients")
-    public Client newClient(@RequestBody Client client) {
-        return repository.save(client);
-    }
-
-
     @PutMapping("/clients/{id}")
     Client replaceClient(@RequestBody Client newClient, @PathVariable String id) {
 

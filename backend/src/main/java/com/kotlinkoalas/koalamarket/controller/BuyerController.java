@@ -1,5 +1,6 @@
 package com.kotlinkoalas.koalamarket.controller;
 
+import com.google.gson.Gson;
 import com.kotlinkoalas.koalamarket.model.Address;
 import com.kotlinkoalas.koalamarket.model.Buyer;
 import com.kotlinkoalas.koalamarket.model.CreditCard;
@@ -7,6 +8,7 @@ import com.kotlinkoalas.koalamarket.repo.BuyerRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -85,19 +87,28 @@ public class BuyerController {
         buyer.setUserID(userID);
         buyer.setEmail(email);
         buyer.setPassword(password);
-        buyer.getBillingAddresses().add(new Address(billingAddress));
-        buyer.getShippingAddresses().add(new Address(shippingAddress));
 
-        if (!cardNumber.isEmpty() || !CVC.isEmpty() || !expirationDate.isEmpty()) {
+        List<Address> shippingAddresses = new ArrayList<>();
+        shippingAddresses.add(new Address(shippingAddress));
+        buyer.setShippingAddresses(shippingAddresses);
+
+        List<Address> billingAddresses = new ArrayList<>();
+        billingAddresses.add(new Address(billingAddress));
+        buyer.setBillingAddresses(billingAddresses);
+
+
+        if (cardNumber != null && !cardNumber.isEmpty() && expirationDate != null && !expirationDate.isEmpty() && CVC != null && !CVC.isEmpty()){
             CreditCard creditCard = new CreditCard(CVC, cardNumber, expirationDate);
-            buyer.getCreditCards().add(creditCard);
+            List<CreditCard> creditCards = new ArrayList<>();
+            creditCards.add(creditCard);
+            buyer.setCreditCards(creditCards);
         }
 
-        if (!bizum.isEmpty()) {
+        if (bizum != null && !bizum.isEmpty()) {
             buyer.setBizum(bizum);
         }
 
-        if (!paypal.isEmpty()) {
+        if (paypal != null && !paypal.isEmpty()) {
             buyer.setPaypal(paypal);
         }
 
@@ -105,9 +116,15 @@ public class BuyerController {
 
         if (existingBuyer == null) {
             repository.save(buyer);
-            return ResponseEntity.ok("Successfully registered");
+            Gson gson = new Gson();
+            String response = gson.toJson(buyer);
+            return ResponseEntity.ok()
+                    .contentType(org.springframework.http.MediaType.APPLICATION_JSON)
+                    .body(response);
         } else {
-            return ResponseEntity.badRequest().body("Buyer already exists");
+            return ResponseEntity.status(400)
+                    .contentType(org.springframework.http.MediaType.APPLICATION_JSON)
+                    .body("{\"message\": \"A buyer already exists\"}");
         }
     }
 }

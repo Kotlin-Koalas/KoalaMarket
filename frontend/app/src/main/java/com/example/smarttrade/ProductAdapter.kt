@@ -1,5 +1,7 @@
 package com.example.smarttrade
 
+import android.graphics.Bitmap
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -7,6 +9,7 @@ import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
+import com.example.smarttrade.nonactivityclasses.ImageURLtoBitmapConverter
 import com.example.smarttrade.nonactivityclasses.product_representation
 
 
@@ -24,7 +27,7 @@ class ProductAdapter(
     }
 
     override fun getItemId(position: Int): Long {
-        return popularProducts.get(position).PN
+        return position.toLong()
     }
 
     fun addProductToList(product: product_representation) {
@@ -44,49 +47,41 @@ class ProductAdapter(
 
     fun updateProducts(updateProductList: MutableList<product_representation>) {
         popularProducts.clear()
+        Log.i("popular after clear",popularProducts.toString())
         popularProducts.addAll(updateProductList)
+        Log.i("popular before noti",popularProducts.toString())
         notifyDataSetChanged()
     }
-
-
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         val view = convertView ?: LayoutInflater.from(parent?.context)
             .inflate(R.layout.product_representation, parent, false)
 
         // Find UI elements in the inflated view
-        val imageView = view.findViewById<ImageView>(R.id.imageViewCat)
         val textViewPrice = view.findViewById<TextView>(R.id.textViewPrice)
         val textViewName = view.findViewById<TextView>(R.id.textViewTitulo)
         val textViewStock = view.findViewById<TextView>(R.id.textViewCantStock)
         val imageViewLeaf = view.findViewById<ImageView>(R.id.imageViewLeaf)
 
-        // Get the data object for this position
-        //TODO descomentar codigo que emplee valores reales y quitar el temporal
-        //Codigo para cuando la lista este en funcionamiento
-        /*
-        val bitmap = ImageURLtoBitmapConverter.downloadImage(popularProducts[position].image)
-        if (bitmap != null) {
-            imageView.setImageBitmap(bitmap)
-        } else {
-            imageView.setImageResource(R.drawable.no_photo)
-        }
+        ImageURLtoBitmapConverter.downloadImage(popularProducts[position].image,view)
+
         textViewPrice.text = popularProducts[position].price
         textViewName.text = popularProducts[position].name
         textViewStock.text = popularProducts[position].stock.toString()
         when(popularProducts[position].leafColor){
-            LeafColor.RED -> imageView.setImageResource(R.drawable.hoja_roja)
-            LeafColor.YELLOW -> imageView.setImageResource(R.drawable.hoja_amarilla)
-            LeafColor.GREEN -> imageView.setImageResource(R.drawable.hoja_verde)
+            "red" -> imageViewLeaf.setImageResource(R.drawable.hoja_roja)
+            "yellow" -> imageViewLeaf.setImageResource(R.drawable.hoja_amarilla)
+            "green" -> imageViewLeaf.setImageResource(R.drawable.hoja_verde)
         }
-        */
 
+        /*
         //Temporal para probar
         imageView.setImageResource(R.drawable.no_photo)
         textViewPrice.text = "10"
         textViewName.text = "Prueba"
         textViewStock.text = "2"
         imageViewLeaf.setImageResource(R.drawable.hoja_roja)
+        */
 
         val productRepresentation = view.findViewById<ConstraintLayout>(R.id.layout)
         productRepresentation.setOnClickListener {
@@ -94,6 +89,15 @@ class ProductAdapter(
         }
 
         return view
+    }
+
+    companion object{
+        fun setImage(image: Bitmap?,view:View){
+            val imageView = view.findViewById<ImageView>(R.id.imageViewCat)
+            if (image != null) {
+                imageView.setImageBitmap(image)
+            }
+        }
     }
 
 }

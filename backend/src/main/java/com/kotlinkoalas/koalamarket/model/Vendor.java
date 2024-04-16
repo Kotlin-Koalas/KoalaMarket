@@ -10,13 +10,15 @@ import java.util.Objects;
 @Getter
 @Setter
 @ToString
-@RequiredArgsConstructor
 @Entity
 public class Vendor extends Client {
 
     @Column(name = "iban", nullable = false)
     private String iban;
 
-    @OneToOne(mappedBy = "vendor")
-    private Product product;
+
+    public Vendor(){
+        super();
+        this.iban = "";
+    }
 }

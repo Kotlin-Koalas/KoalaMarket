@@ -2,12 +2,15 @@ package com.example.smarttrade
 
 import android.app.DatePickerDialog
 import android.app.Dialog
+import android.app.Person
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -28,6 +31,8 @@ import androidx.appcompat.content.res.AppCompatResources
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.example.smarttrade.logic.logic
+import com.example.smarttrade.nonactivityclasses.CreditCard
 import com.example.smarttrade.nonactivityclasses.PersonBuyer
 import org.xmlpull.v1.XmlPullParser
 import java.time.LocalDate
@@ -52,6 +57,7 @@ class SignUpComprador : AppCompatActivity() {
             "Tarjeta de Crédito",
             "Bizum"
         )
+        actContextBuyer = this
         val adapter = ArrayAdapter<String>(this, R.layout.spinner_item_pago, items)
         spinner.adapter = adapter
         linearLayout = scrollView.getChildAt(0) as LinearLayout
@@ -231,10 +237,59 @@ class SignUpComprador : AppCompatActivity() {
             if(popUpOrNot){
                 showCustomDialogBox(popUpText)
             } else  {
-                val person = PersonBuyer
-                person.setName(currName)
-                //y los demas...
-                //TODO code to actually sign up
+                if(currentTypeOfPayment == R.layout.activity_calendar_view) {
+                    val currNumTarj = findViewById<EditText>(R.id.editTextnumTarj).text.toString()
+                    val currExpM = findViewById<EditText>(R.id.editTextCad).text.toString()
+                    val currExpY = findViewById<EditText>(R.id.editTextCad2).text.toString()
+                    val currCVC = findViewById<EditText>(R.id.editTextCVC).text.toString()
+                    logic.signInBuyer(
+                        currName,
+                        currSurname,
+                        firstPassword,
+                        currCorreo,
+                        currId,
+                        currDNI,
+                        currSA,
+                        currFA,
+                        "",
+                        "",
+                        CreditCard(currNumTarj,currExpM+"/"+currExpY,currCVC)
+                    )
+
+                }
+                if(currentTypeOfPayment == R.layout.bizum_option) {
+                    val currBizumNum = findViewById<EditText>(R.id.editTextBizumNumber).text.toString()
+                    logic.signInBuyer(
+                        currName,
+                        currSurname,
+                        firstPassword,
+                        currCorreo,
+                        currId,
+                        currDNI,
+                        currSA,
+                        currFA,
+                        currBizumNum,
+                        "",
+                        CreditCard("","","")
+                    )
+
+                }
+                if(currentTypeOfPayment == R.layout.paypal_option) {
+                    val currPayPalCorreo = findViewById<EditText>(R.id.editTextEmailPayPal).text.toString()
+                    logic.signInBuyer(
+                        currName,
+                        currSurname,
+                        firstPassword,
+                        currCorreo,
+                        currId,
+                        currDNI,
+                        currSA,
+                        currFA,
+                        "",
+                        currPayPalCorreo,
+                        CreditCard("","","")
+                    )
+                }
             }
         }
 
@@ -279,6 +334,20 @@ class SignUpComprador : AppCompatActivity() {
         }
         */
         linearLayout.removeViewAt(indexBefore + 1)
+    }
+
+    companion object {
+        private lateinit var actContextBuyer: SignUpComprador
+        fun getContext(): Context {
+            return actContextBuyer
+        }
+        fun loadBuyer(){
+            val IntentS = Intent(actContextBuyer,BrowseProducts::class.java)
+            actContextBuyer.startActivity(IntentS)
+        }
+        fun popUpError(){
+            actContextBuyer.showCustomDialogBox("Error, ya registrado, pruebe a iniciar sesión.")
+        }
     }
 
 

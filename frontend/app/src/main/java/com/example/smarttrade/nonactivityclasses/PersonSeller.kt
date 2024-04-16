@@ -1,13 +1,13 @@
 package com.example.smarttrade.nonactivityclasses
 
 object PersonSeller {
-    lateinit private var name:String
-    lateinit private var surnames:String
-    lateinit private var email:String
-    lateinit private var userID:String
-    lateinit private var password:String
-    lateinit private var cif:String
-    lateinit private var iban:String
+    private var name:String = ""
+    private var surnames:String = ""
+    private var email:String = ""
+    private var userID:String = ""
+    private var password:String = ""
+    private var cif:String = ""
+    private var iban:String = ""
     fun setName(name:String){
         this.name = name
     }

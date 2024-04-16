@@ -3,8 +3,10 @@ package com.example.smarttrade
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.media.Image
 import android.os.Bundle
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
@@ -14,9 +16,12 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import com.example.smarttrade.logic.logic
+import com.example.smarttrade.nonactivityclasses.ImageURLtoBitmapConverter
 
 
 class MainActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -46,15 +51,21 @@ class MainActivity : AppCompatActivity() {
         val forgotPassword = findViewById<TextView>(R.id.editTextText3)
         forgotPassword.setOnClickListener {
             //TODO codigo para recuperar contraseña
-        }
-        val logInButton = findViewById<Button>(R.id.button)
-        logInButton.setOnClickListener{
-            //TODO codigo para logIn y guardar las cosas en singleton y quitar los temporal
-            //temporal para acceder a la ventana de catalogo
             val IntentS = Intent(this,AddProduct::class.java)
             startActivity(IntentS)
         }
+        val logInButton = findViewById<Button>(R.id.button)
+        logInButton.setOnClickListener{
+            logic.logIn(findViewById<EditText>(R.id.editTextTextEmailAddress).text.toString(),firstPasswordField.text.toString())
+            /*
+            //temporal para acceder a la ventana de catalogo
+            val IntentS = Intent(this,AddProduct::class.java)
+            startActivity(IntentS)
+             */
+        }
     }
+
+
 
 
 
@@ -62,7 +73,7 @@ class MainActivity : AppCompatActivity() {
         val dialog = Dialog(this)
         dialog.setTitle("ERROR")
         dialog.setCancelable(false)
-        dialog.setContentView(R.layout.pop_up_alert)
+        dialog.setContentView(R.layout.pop_up_alert_login)
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
         val messageBox = dialog.findViewById<TextView>(R.id.textViewErrorText)
@@ -94,5 +105,6 @@ class MainActivity : AppCompatActivity() {
             val IntentS = Intent(actContext,AddProduct::class.java)
             actContext.startActivity(IntentS)
         }
+
     }
 }

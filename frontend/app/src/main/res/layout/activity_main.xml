@@ -34,6 +34,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/frame_11"
             tools:srcCompat="@drawable/frame_11" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -100,7 +101,6 @@
                 android:layout_marginBottom="6dp"
                 android:background="#1E735B"
                 android:fontFamily="@font/karla"
-                android:inputType="text"
                 android:text="Email:"
                 android:textSize="20dp"
                 app:layout_constraintHorizontal_bias="0.502"
@@ -168,7 +168,6 @@
                 android:layout_marginTop="10dp"
                 android:background="#1E735B"
                 android:fontFamily="@font/karla"
-                android:inputType="text"
                 android:text="Contraseña:"
                 android:textSize="20dp"
                 app:layout_constraintStart_toStartOf="@+id/frameLayoutPassword"

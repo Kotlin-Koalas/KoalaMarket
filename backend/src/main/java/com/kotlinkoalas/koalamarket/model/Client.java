@@ -9,27 +9,29 @@ import java.util.Objects;
 @Getter
 @Setter
 @ToString
-@RequiredArgsConstructor
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Client {
     @Id
-    @Column(name = "dni", length = 30, nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(name = "dni")
     private String dni;
 
-    @Column(name = "name", nullable = false, unique = true)
+    @Column(name = "name")
     private String name;
 
-    @Column(name = "surname", nullable = false)
+    @Column(name = "surname")
     private String surname;
 
-    @Column(name = "userID", nullable = false, unique = true)
+    @Column(name = "userID", unique = true)
     private String userID;
 
-    @Column(name = "email", nullable = false, unique = true)
+    @Column(name = "email", unique = true)
     private String email;
 
-    @Column(name = "password", nullable = false)
+    @Column(name = "password")
     private String password;
 
     @Override
@@ -46,5 +48,14 @@ public class Client {
     @Override
     public final int hashCode() {
         return this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass().hashCode() : getClass().hashCode();
+    }
+
+    public Client() {
+        this.dni = "";
+        this.name = "";
+        this.surname = "";
+        this.userID = "";
+        this.email = "";
+        this.password = "";
     }
 }
