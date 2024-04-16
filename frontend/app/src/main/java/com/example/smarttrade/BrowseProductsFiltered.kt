@@ -118,14 +118,14 @@ class BrowseProductsFiltered : AppCompatActivity() {
 
     companion object{
         private lateinit var actContextBPF:BrowseProductsFiltered
-        private lateinit var productsShown: MutableList<*>
+        private lateinit var productsShown: MutableList<product_representation>
         private lateinit var adapterP: ProductAdapter
         fun updateSearch(text:String) {
             //actContextBPF.updateSearch(text)
         }
         fun setProductsShown(list:MutableList<product_representation>){
             productsShown = list
-            //adapterP.addAllProducts(productsShown)
+            adapterP.addAllProducts(productsShown)
         }
         fun getContext(): Context {
             return actContextBPF
