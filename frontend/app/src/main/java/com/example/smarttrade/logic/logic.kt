@@ -3,6 +3,7 @@ package com.example.smarttrade.logic
 
 import android.util.Log
 import android.widget.Toast
+import androidx.compose.ui.graphics.vector.VectorProperty
 import com.android.volley.Request
 import com.android.volley.RequestQueue
 import com.android.volley.toolbox.JsonObjectRequest
@@ -529,7 +530,7 @@ object logic {
 
 
 
- suspend fun getImage(imageFIle : File) :Any{
+ suspend fun getImage(imageFIle : File) :String{
 
      val filePath = "/path/to/your/file.jpg"
 
@@ -576,7 +577,7 @@ object logic {
      }
 
         Log.i("resultado",deferredResult.await().toString())
-        return deferredResult.await()
+        return deferredResult.await().toString()
  }
 
 

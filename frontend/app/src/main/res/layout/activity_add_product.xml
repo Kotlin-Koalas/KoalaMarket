@@ -171,12 +171,13 @@
                         android:id="@+id/spinnerCategory"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
+                        android:dropDownSelector="@drawable/dropdown_arrow"
                         android:background="@drawable/basic_grey_shape"
                         android:fontFamily="@font/karla"
                         android:baselineAligned="false"
                         android:ems="10"
                         android:entries="@array/categoriesApp"
-                        android:textColor="@color/black" />
+                        />
 
                     <TextView
                         android:id="@+id/textViewCategoria1"
@@ -292,11 +293,12 @@
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:background="@drawable/basic_grey_shape"
+                        android:dropDownSelector="@drawable/dropdown_arrow"
                         android:baselineAligned="false"
                         android:ems="10"
                         android:fontFamily="@font/karla"
                         android:entries="@array/certificatesApp"
-                        android:textColor="@color/black" />
+                        />
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/frameLayoutID10"

@@ -35,12 +35,15 @@ import androidx.core.widget.addTextChangedListener
 import com.example.smarttrade.logic.logic
 import com.example.smarttrade.nonactivityclasses.product_representation
 import kotlinx.coroutines.Deferred
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
+import java.io.InputStream
 
 class AddProduct :AppCompatActivity() {
 
@@ -58,6 +61,7 @@ class AddProduct :AppCompatActivity() {
     private lateinit var categorSelected : String
     private lateinit var leafColor: String
     var BuscarFoto = false
+    lateinit var imageURI: Uri
 
 
     private var existProduct = false
@@ -101,13 +105,13 @@ class AddProduct :AppCompatActivity() {
 
 
         uploadImageButton.setOnClickListener {
-
             if(BuscarFoto){
-                pickmedia.launch(PickVisualMediaRequest(PickVisualMedia.ImageOnly))
-
+                GlobalScope.launch(Dispatchers.Main) {
+                    pickmedia.launch(PickVisualMediaRequest(PickVisualMedia.ImageOnly))
+                    // Call your suspend function here
+                    encodedImageString = logic.getImage(getFileFromUri(actContext, imageURI))
+                }
             }
-
-
         }
 
 
@@ -204,153 +208,230 @@ class AddProduct :AppCompatActivity() {
 
         acceptButton.setOnClickListener {
 
-            val patterOnlyLettNum = "^[a-zA-Z0-9]{12}".toRegex()
+            runBlocking {
 
-            var error = false
-            var msgErrror = ""
+                val patterOnlyLettNum = "^[a-zA-Z0-9]{12}".toRegex()
 
-
-            val prodNum = (prod.text).toString()
-            if (!patterOnlyLettNum.containsMatchIn(prodNum)){
-                error = true
-                msgErrror += "- El número del producto tiene 12 caracteres  solamente números y letras\n"
-
-            }
-
-            val currName = (findViewById<EditText>(R.id.editTextNameProduct).text).toString()
-            val patterName = "^[a-zA-Z0-9\\s\\.,:;\\-\\(\\)\\/áéíóúñ\\$%&#@]{1,30}$".toRegex()
-            if(!patterName.containsMatchIn(currName)){
-                error = true
-                msgErrror += "- El nombre del producto no puede contener más de 30 carácteres ni carácteres especiales\n"
-            }
-
-            val currPrice = (findViewById<EditText>(R.id.editTextNumberDecimalPrice).text).toString()
-            val patternPrice =  "^[-+]?[0-9]+([.][0-9]{1,2})?$".toRegex()
-            if(!patternPrice.containsMatchIn(currPrice)){
-                error = true
-                msgErrror += "-El precio solo puede tener 2 decimales\n"
-            }
-
-            val currDescription = (findViewById<EditText>(R.id.editTextDescription).text).toString()
-            val patterDescription =  "^[a-zA-Z0-9\\s\\.,:;\\-\\(\\)\\/áéíóúñ\\$%&#@]{1,150}$".toRegex()
-            if(!patterDescription.containsMatchIn(currDescription)){
-                error = true
-                msgErrror += "-La descripción no puede tener más de 150 carácteres\n"
-            }
-
-            val currQuantity = (findViewById<EditText>(R.id.editTextQuantity).text).toString()
-            val patternQuantity = "^(?!0)[0-9]{1,3}$".toRegex()
-            if (!patternQuantity.containsMatchIn(currQuantity)){
-                error = true
-                msgErrror += "-Cantidad mínima 1 y máxima son 999\n"
-            }
+                var error = false
+                var msgErrror = ""
 
 
-
-            val cat1 = (editTextCat1.text).toString()
-            val cat2 = (editTextCat2.text).toString()
-            when(categorSelected){
-                "Tecnología" -> {
-                    val patternCon =  "^[-+]?[0-9]+([.][0-9]{1,2})?$".toRegex()
-                    val patternTech = "^[a-zA-Z0-9 ]+$".toRegex()
-                    if (!patternCon.containsMatchIn(cat1) || !patternTech.containsMatchIn(cat2)) {
-                        error = true
-                        msgErrror += "-Tecnología: Consumo solo números como máximo 2 decimales (12.50) y marca solo pueden tener letras y números \n"
-                    }
+                val prodNum = (prod.text).toString()
+                if (!patterOnlyLettNum.containsMatchIn(prodNum)) {
+                    error = true
+                    msgErrror += "- El número del producto tiene 12 caracteres  solamente números y letras\n"
 
                 }
-                "Juguete" -> {
-                    val patternEdadRec = "^[0-9]{1,2}$".toRegex() // Números de 0 a 18
-                    val patternMaterial = "^[a-zA-Z]+$".toRegex() // Letras
-                    if (!patternEdadRec.containsMatchIn(cat1) || !patternMaterial.containsMatchIn(cat2)) {
-                        error = true
-                        msgErrror += "-Juguete: Edad Recomendada solo pueden ser números de 0 a 99, Material puede tener solo letras\n"
-                    }
+
+                val currName = (findViewById<EditText>(R.id.editTextNameProduct).text).toString()
+                val patterName = "^[a-zA-Z0-9\\s\\.,:;\\-\\(\\)\\/áéíóúñ\\$%&#@]{1,30}$".toRegex()
+                if (!patterName.containsMatchIn(currName)) {
+                    error = true
+                    msgErrror += "- El nombre del producto no puede contener más de 30 carácteres ni carácteres especiales\n"
                 }
-                "Ropa" -> {
-                    val patternTalla = "^[SMLX]{1,3}$|^([2][0-9]|[3][0-9]|[4][0-5])$".toRegex() //TODO habría que arreglarlo
-                    val patternColor = "^[a-zA-Z]+$".toRegex() // Letras
 
-                    if (!patternTalla.containsMatchIn(cat1) || !patternColor.containsMatchIn(cat2)) {
-                        error = true
-                        msgErrror += "-Ropa: Talla solo puede ser XS, S, M, L, XL, XXL o números de 30 a 50, Color solo puede tener letras\n"
-                    }
+                val currPrice =
+                    (findViewById<EditText>(R.id.editTextNumberDecimalPrice).text).toString()
+                val patternPrice = "^[-+]?[0-9]+([.][0-9]{1,2})?$".toRegex()
+                if (!patternPrice.containsMatchIn(currPrice)) {
+                    error = true
+                    msgErrror += "-El precio solo puede tener 2 decimales\n"
                 }
-                "Alimentación" -> {
-                    val patternMac = "^[a-zA-Z0-9 ]+$".toRegex()
-                    val patternCalorias = "^[0-9]{1,5}$".toRegex() // Número de 1 a 5 cifras
 
-                    if (!patternMac.containsMatchIn(cat1) || !patternCalorias.containsMatchIn(cat2)) {
-                        error = true
-                        msgErrror += "-Alimentación:Macros solo puede tener letras y números, Calorias solo puede ser un número de 1 a 5 cifras\n"
-                    }
+                val currDescription =
+                    (findViewById<EditText>(R.id.editTextDescription).text).toString()
+                val patterDescription =
+                    "^[a-zA-Z0-9\\s\\.,:;\\-\\(\\)\\/áéíóúñ\\$%&#@]{1,150}$".toRegex()
+                if (!patterDescription.containsMatchIn(currDescription)) {
+                    error = true
+                    msgErrror += "-La descripción no puede tener más de 150 carácteres\n"
                 }
-                else ->{
 
-
+                val currQuantity = (findViewById<EditText>(R.id.editTextQuantity).text).toString()
+                val patternQuantity = "^(?!0)[0-9]{1,3}$".toRegex()
+                if (!patternQuantity.containsMatchIn(currQuantity)) {
+                    error = true
+                    msgErrror += "-Cantidad mínima 1 y máxima son 999\n"
                 }
-            }
 
 
-
-            if( isUploadImage == -1  ){
-                error = true
-                msgErrror +="-Debes añadir una foto\n"
-            }
-
-            if(isUploadCertificate ==-1){
-                error = true
-                msgErrror += "-Debes añadir un certificado ecológico\n"
-            }
-
-
-            if(prodNum.isEmpty() || currName.isEmpty() || currPrice.isEmpty() || currDescription.isEmpty() || currQuantity.isEmpty() ||cat1.isEmpty() || cat2.isEmpty()){
-                error = true
-                msgErrror = "-Todos los campos deben estar rellenados\n" + msgErrror
-            }
-
-
-            if(error){
-                showCustomDialogBox(msgErrror)
-
-            } else {//TODO LOGIC
-                val doublePrice = currPrice.toDouble()
-                val intStock = currQuantity.toInt()
-                when(categorSelected){
-
+                val cat1 = (editTextCat1.text).toString()
+                val cat2 = (editTextCat2.text).toString()
+                when (categorSelected) {
                     "Tecnología" -> {
-
-
-                        Log.i("LLEGUE", currName+doublePrice+encodedImageString+intStock+currDescription+leafColor+prodNum+cat2+cat1)
-                        Log.i("IMAGEN", encodedImageString)
-                        try{
-                            logic.addTechnology(currName,doublePrice,encodedImageString,intStock,currDescription,leafColor,prodNum,cat2,cat1)
-                        }catch (exception: Exception ){
-                                Log.e("ERROR", "Error adding technology: ${exception.message}")
+                        val patternCon = "^[-+]?[0-9]+([.][0-9]{1,2})?$".toRegex()
+                        val patternTech = "^[a-zA-Z0-9 ]+$".toRegex()
+                        if (!patternCon.containsMatchIn(cat1) || !patternTech.containsMatchIn(cat2)) {
+                            error = true
+                            msgErrror += "-Tecnología: Consumo solo números como máximo 2 decimales (12.50) y marca solo pueden tener letras y números \n"
                         }
 
-
                     }
+
                     "Juguete" -> {
-
-                        logic.addToy(currName,doublePrice,encodedImageString,intStock,currDescription,leafColor,prodNum,cat2,cat1)
-
+                        val patternEdadRec = "^[0-9]{1,2}$".toRegex() // Números de 0 a 18
+                        val patternMaterial = "^[a-zA-Z]+$".toRegex() // Letras
+                        if (!patternEdadRec.containsMatchIn(cat1) || !patternMaterial.containsMatchIn(
+                                cat2
+                            )
+                        ) {
+                            error = true
+                            msgErrror += "-Juguete: Edad Recomendada solo pueden ser números de 0 a 99, Material puede tener solo letras\n"
+                        }
                     }
+
                     "Ropa" -> {
-                        logic.addClothes(currName,doublePrice,encodedImageString,intStock,currDescription,leafColor,prodNum,cat2,cat1)
+                        val patternTalla =
+                            "^[SMLX]{1,3}$|^([2][0-9]|[3][0-9]|[4][0-5])$".toRegex() //TODO habría que arreglarlo
+                        val patternColor = "^[a-zA-Z]+$".toRegex() // Letras
 
+                        if (!patternTalla.containsMatchIn(cat1) || !patternColor.containsMatchIn(
+                                cat2
+                            )
+                        ) {
+                            error = true
+                            msgErrror += "-Ropa: Talla solo puede ser XS, S, M, L, XL, XXL o números de 30 a 50, Color solo puede tener letras\n"
+                        }
                     }
+
                     "Alimentación" -> {
-                        logic.addFood(currName,doublePrice,encodedImageString,intStock,currDescription,leafColor,prodNum,cat2,cat1)
+                        val patternMac = "^[a-zA-Z0-9 ]+$".toRegex()
+                        val patternCalorias = "^[0-9]{1,5}$".toRegex() // Número de 1 a 5 cifras
+
+                        if (!patternMac.containsMatchIn(cat1) || !patternCalorias.containsMatchIn(
+                                cat2
+                            )
+                        ) {
+                            error = true
+                            msgErrror += "-Alimentación:Macros solo puede tener letras y números, Calorias solo puede ser un número de 1 a 5 cifras\n"
+                        }
+                    }
+
+                    else -> {
+
 
                     }
-                    else ->{
-                        Log.e("ERROR", "ERROR")
+                }
 
+
+
+                if (isUploadImage == -1) {
+                    error = true
+                    msgErrror += "-Debes añadir una foto\n"
+                }
+
+                if (isUploadCertificate == -1) {
+                    error = true
+                    msgErrror += "-Debes añadir un certificado ecológico\n"
+                }
+
+
+                if (prodNum.isEmpty() || currName.isEmpty() || currPrice.isEmpty() || currDescription.isEmpty() || currQuantity.isEmpty() || cat1.isEmpty() || cat2.isEmpty()) {
+                    error = true
+                    msgErrror = "-Todos los campos deben estar rellenados\n" + msgErrror
+                }
+
+
+                if (error) {
+                    showCustomDialogBox(msgErrror)
+
+                } else {//TODO LOGIC
+                    val doublePrice = currPrice.toDouble()
+                    val intStock = currQuantity.toInt()
+                    when (categorSelected) {
+
+                        "Tecnología" -> {
+
+
+                            Log.i(
+                                "LLEGUE",
+                                currName + doublePrice + encodedImageString + intStock + currDescription + leafColor + prodNum + cat2 + cat1
+                            )
+                            Log.i("IMAGEN", encodedImageString)
+                            try {
+                                logic.addTechnology(
+                                    currName,
+                                    doublePrice,
+                                    encodedImageString,
+                                    intStock,
+                                    currDescription,
+                                    leafColor,
+                                    prodNum,
+                                    cat2,
+                                    cat1
+                                )
+                            } catch (exception: Exception) {
+                                Log.e("ERROR", "Error adding technology: ${exception.message}")
+                            }
+
+
+                        }
+
+                        "Juguete" -> {
+
+                            logic.addToy(
+                                currName,
+                                doublePrice,
+                                encodedImageString,
+                                intStock,
+                                currDescription,
+                                leafColor,
+                                prodNum,
+                                cat2,
+                                cat1
+                            )
+
+                        }
+
+                        "Ropa" -> {
+                            logic.addClothes(
+                                currName,
+                                doublePrice,
+                                encodedImageString,
+                                intStock,
+                                currDescription,
+                                leafColor,
+                                prodNum,
+                                cat2,
+                                cat1
+                            )
+
+                        }
+
+                        "Alimentación" -> {
+                            logic.addFood(
+                                currName,
+                                doublePrice,
+                                encodedImageString,
+                                intStock,
+                                currDescription,
+                                leafColor,
+                                prodNum,
+                                cat2,
+                                cat1
+                            )
+
+                        }
+
+                        else -> {
+                            Log.e("ERROR", "ERROR")
+
+                        }
                     }
                 }
             }
         }
+    }
+
+    fun getFileFromUri(context: Context, uri: Uri): File {
+        val inputStream: InputStream = context.contentResolver.openInputStream(uri)!!
+        val file = File(context.cacheDir, "tempFile")
+        file.createNewFile()
+
+        val outputStream = FileOutputStream(file)
+        inputStream.copyTo(outputStream)
+
+        return file
     }
 
     fun showCustomDialogBox(msgErrror: String) {
@@ -425,7 +506,7 @@ class AddProduct :AppCompatActivity() {
     val pickmedia =registerForActivityResult(PickVisualMedia()){uri->
         if(uri!=null){
             uploadImageButton.setImageURI(uri)
-             encodedImageString = "IMAGEN QUE HAY QUE PONER"
+            imageURI = uri
             isUploadImage = 1
 
 
