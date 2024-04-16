@@ -164,7 +164,7 @@ class BrowseProducts : AppCompatActivity() {
         }
         fun setProductsShown(list:MutableList<product_representation>){
             productsShown = list
-            adapterP.addAllProducts(productsShown)
+            adapterP.updateProducts(productsShown)
         }
         fun getContext(): Context {
             return actContextBP

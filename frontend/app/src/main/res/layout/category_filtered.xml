@@ -25,14 +25,12 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.6"
             app:srcCompat="@drawable/back_white_arrow" />
 
         <TextView
             android:id="@+id/textViewNameCategory"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
             android:fontFamily="@font/karla"
             android:text="Categoría "
             android:textColor="@color/white"
@@ -40,7 +38,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/imageButtonBackfilter"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.694" />
+            app:layout_constraintVertical_bias="0.48" />
 
         <ImageButton
             android:id="@+id/imageButtonSearch"
@@ -60,7 +58,9 @@
             android:id="@+id/SearchBarFiltered"
             android:layout_width="0dp"
             android:layout_height="36dp"
+            android:layout_marginStart="12dp"
             android:layout_marginBottom="8dp"
+            android:layout_marginEnd="2dp"
             android:background="@drawable/rounded_button_cancel"
             android:ems="10"
             android:hint="Search..."
@@ -70,6 +70,7 @@
             android:textColorHint="@color/black"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/imageButtonSearch"
+            app:layout_constraintStart_toEndOf="@+id/textViewNameCategory"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.6" />
 

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">SmartTrade</string>
+    <string name="app_name">KoalaMarket</string>
     <string name="log_in">Log In</string>
     <string name="forgot_password">Forgot Password?</string>
     <string name="password">Password</string>

@@ -47,9 +47,7 @@ class ProductAdapter(
 
     fun updateProducts(updateProductList: MutableList<product_representation>) {
         popularProducts.clear()
-        Log.i("popular after clear",popularProducts.toString())
         popularProducts.addAll(updateProductList)
-        Log.i("popular before noti",popularProducts.toString())
         notifyDataSetChanged()
     }
 
