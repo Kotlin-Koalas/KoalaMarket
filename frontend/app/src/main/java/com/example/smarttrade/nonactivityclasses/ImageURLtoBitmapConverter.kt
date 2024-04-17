@@ -11,13 +11,15 @@ import com.android.volley.toolbox.ImageRequest
 import com.android.volley.toolbox.Volley
 import com.example.smarttrade.AddProduct
 import com.example.smarttrade.BrowseProducts
+import com.example.smarttrade.BuildConfig
 import com.example.smarttrade.MainActivity
 import com.example.smarttrade.ProductAdapter
 
 object  ImageURLtoBitmapConverter {
-
+    val host = BuildConfig.DB_LINK
     fun downloadImage(url: String, view : View): Bitmap? {
-        val urlC = "http://ec2-51-92-5-87.eu-south-2.compute.amazonaws.com:5000/"+url
+
+        val urlC = "$host:5000/"+url
         val requestQueue = Volley.newRequestQueue(MainActivity.getContext())
         var bitmap: Bitmap? = null
 

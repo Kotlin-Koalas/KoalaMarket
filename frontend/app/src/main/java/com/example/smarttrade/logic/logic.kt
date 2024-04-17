@@ -14,6 +14,7 @@ import com.android.volley.toolbox.Volley
 import com.example.smarttrade.AddProduct
 import com.example.smarttrade.BrowseProducts
 import com.example.smarttrade.BrowseProductsFiltered
+import com.example.smarttrade.BuildConfig
 import com.example.smarttrade.MainActivity
 import com.example.smarttrade.SignUpComprador
 import com.example.smarttrade.SignUpVendedor
@@ -34,7 +35,7 @@ import java.io.BufferedReader
 import java.io.File
 import java.io.InputStreamReader
 
-private const val host = "http://ec2-18-100-119-61.eu-south-2.compute.amazonaws.com:5000"
+private const val host = BuildConfig.DB_LINK
 
 
 object logic {
@@ -499,7 +500,7 @@ object logic {
 
 
     fun getImage(imageData: ByteArray,imageName: String){
-        val url = "http://ec2-51-92-5-87.eu-south-2.compute.amazonaws.com:5000"
+        val url = "$host:5000"
         val request = VolleyMultipartRequest(
             Request.Method.POST,
             url,
