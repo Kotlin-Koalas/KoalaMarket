@@ -27,7 +27,8 @@ public class ToyController {
     public Toy newToy(@RequestBody Map<String, Object> payload) {
         String productNumber = (String) payload.get("productNumber");
         String name = (String) payload.get("name");
-        double price = (double) payload.get("price");
+        String stringPrice = (String) payload.get("price");
+        double price = Double.parseDouble(stringPrice);
         String description = (String) payload.get("description");
         String ecology = (String) payload.get("ecology");
         int stock = (int) payload.get("stock");
@@ -51,7 +52,8 @@ public class ToyController {
     @PutMapping("/products/toys/{productNumber}")
     Toy replaceToy(@RequestBody Map<String, Object> payload, @PathVariable String productNumber) {
         Toy oldToy = repository.findByProductNumber(productNumber);
-        oldToy.setPrice((double) payload.get("price"));
+        String stringPrice = (String) payload.get("price");
+        oldToy.setPrice(Double.parseDouble(stringPrice));
         oldToy.setDescription((String) payload.get("description"));
         oldToy.setEcology((String) payload.get("ecology"));
         oldToy.setName((String) payload.get("name"));

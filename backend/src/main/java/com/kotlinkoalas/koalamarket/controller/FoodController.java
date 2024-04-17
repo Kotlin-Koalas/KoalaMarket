@@ -27,7 +27,8 @@ public class FoodController {
     public Food newFood(@RequestBody Map<String, Object> payload) {
         String productNumber = (String) payload.get("productNumber");
         String name = (String) payload.get("name");
-        double price = (double) payload.get("price");
+        String stringPrice = (String) payload.get("price");
+        double price = Double.parseDouble(stringPrice);
         String description = (String) payload.get("description");
         String ecology = (String) payload.get("ecology");
         int stock = (int) payload.get("stock");
@@ -51,7 +52,8 @@ public class FoodController {
     @PutMapping("/products/foods/{productNumber}")
     Food replaceFood(@RequestBody Map<String, Object> payload, @PathVariable String productNumber) {
         Food oldFood = repository.findByProductNumber(productNumber);
-        oldFood.setPrice((double) payload.get("price"));
+        String stringPrice = (String) payload.get("price");
+        oldFood.setPrice(Double.parseDouble(stringPrice));
         oldFood.setDescription((String) payload.get("description"));
         oldFood.setMacros((String) payload.get("macros"));
         oldFood.setEcology((String) payload.get("ecology"));

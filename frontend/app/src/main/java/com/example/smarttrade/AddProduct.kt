@@ -336,7 +336,7 @@ class AddProduct :AppCompatActivity() {
                 val outputStream = ByteArrayOutputStream()
                 bitmap.compress(android.graphics.Bitmap.CompressFormat.PNG, 100, outputStream)
                 val imageProduct = outputStream.toByteArray()
-                doublePrice = currPrice.toDouble()
+                doublePrice = currPrice
                 intStock = currQuantity.toInt()
                 logic.getImage(imageProduct,"").toString()
 
@@ -369,6 +369,24 @@ class AddProduct :AppCompatActivity() {
             dialog.dismiss()
         }
         messageBox.text = msgErrror
+
+        dialog.show()
+    }
+
+    fun showCustomDialogBoxSuccess(msgSuccess: String) {
+        val dialog = Dialog(this)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setCancelable(false)
+        dialog.setContentView(R.layout.pop_up_alert_success)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        val messageBox = dialog.findViewById<TextView>(R.id.textViewErrorText)
+        val btnOk = dialog.findViewById<Button>(R.id.buttonOkPopUp)
+
+        btnOk.setOnClickListener {
+            dialog.dismiss()
+        }
+        messageBox.text = msgSuccess
 
         dialog.show()
     }
@@ -536,7 +554,7 @@ class AddProduct :AppCompatActivity() {
         private lateinit var leafColor: String
         private lateinit var currName: String
         private var intStock = 0
-        private var doublePrice = 0.0
+        private lateinit var doublePrice:String
         private lateinit var currDescription: String
         private lateinit var prodNum: String
         private lateinit var cat1: String
@@ -550,7 +568,7 @@ class AddProduct :AppCompatActivity() {
         }
 
         fun productAded(){
-            actContext.showCustomDialogBox("Producto añadido correctamente")
+            actContext.showCustomDialogBoxSuccess("Producto añadido correctamente")
         }
         fun setEncodedImageString(encodedImageString: String){
             this.encodedImageString = encodedImageString

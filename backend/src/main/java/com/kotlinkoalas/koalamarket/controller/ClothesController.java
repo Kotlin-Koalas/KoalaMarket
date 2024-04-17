@@ -29,7 +29,8 @@ public class ClothesController {
     public Clothes newClothes(@RequestBody Map<String, Object> payload) {
         String productNumber = (String) payload.get("productNumber");
         String name = (String) payload.get("name");
-        double price = (double) payload.get("price");
+        String stringPrice = (String) payload.get("price");
+        double price = Double.parseDouble(stringPrice);
         String description = (String) payload.get("description");
         String ecology = (String) payload.get("ecology");
         int stock = (int) payload.get("stock");
@@ -53,7 +54,8 @@ public class ClothesController {
     @PutMapping("/products/clothes/{productNumber}")
     Clothes replaceClothes(@RequestBody Map<String, Object> payload, @PathVariable String productNumber) {
         Clothes oldClothes = repository.findByProductNumber(productNumber);
-        oldClothes.setPrice((double) payload.get("price"));
+        String stringPrice = (String) payload.get("price");
+        oldClothes.setPrice(Double.parseDouble(stringPrice));
         oldClothes.setDescription((String) payload.get("description"));
         oldClothes.setColor((String) payload.get("color"));
         oldClothes.setEcology((String) payload.get("ecology"));

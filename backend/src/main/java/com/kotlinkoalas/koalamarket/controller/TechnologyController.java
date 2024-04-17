@@ -30,7 +30,8 @@ public class TechnologyController {
     public Technology newTechnology(@RequestBody Map<String, Object> payload) {
         String productNumber = (String) payload.get("productNumber");
         String name = (String) payload.get("name");
-        double price = (double) payload.get("price");
+        String stringPrice = (String) payload.get("price");
+        double price = Double.parseDouble(stringPrice) ;
         String description = (String) payload.get("description");
         String ecology = (String) payload.get("ecology");
         int stock = (int) payload.get("stock");
@@ -54,7 +55,8 @@ public class TechnologyController {
     @PutMapping("/products/technology/{productNumber}")
     Technology replaceTechnology(@RequestBody Map<String, Object> payload, @PathVariable String productNumber) {
         Technology oldTechnology = repository.findByProductNumber(productNumber);
-        oldTechnology.setPrice((double) payload.get("price"));
+        String stringPrice = (String) payload.get("price");
+        oldTechnology.setPrice(Double.parseDouble(stringPrice));
         oldTechnology.setDescription((String) payload.get("description"));
         oldTechnology.setElectricConsumption((String) payload.get("electricConsumption"));
         oldTechnology.setEcology((String) payload.get("ecology"));

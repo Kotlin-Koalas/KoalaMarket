@@ -244,7 +244,7 @@ object logic {
         sellerVolleyQueue.add(jsonRequest)
     }
 
-     fun addTechnology(name:String,price:Double,image:String,stock:Int,description:String,leafColor:String,PN:String,brand:String,electricConsumption:String){
+     fun addTechnology(name:String,price:String,image:String,stock:Int,description:String,leafColor:String,PN:String,brand:String,electricConsumption:String){
 
          productVolleyQueue =Volley.newRequestQueue(AddProduct.getContext())
          Log.i("doublePrice value and type2",price.toString() + " " + price::class.simpleName)
@@ -267,7 +267,7 @@ object logic {
             Request.Method.POST,"$url/products/technology",json,
             {response ->
                 val jsonRes:JSONObject = response
-                val technology = technology_representation(name,price,image,stock,description,leafColor,PN,brand,electricConsumption)
+                val technology = technology_representation(name,price.toDouble(),image,stock,description,leafColor,PN,brand,electricConsumption)
                 AddProduct.productAded()
 
 
@@ -279,7 +279,7 @@ object logic {
          productVolleyQueue.add(jsonRequest)
     }
 
-    fun addToy(name:String,price:Double,image:String,stock:Int,description:String,leafColor:String,PN:String,material: String,age:String ){
+    fun addToy(name:String,price:String,image:String,stock:Int,description:String,leafColor:String,PN:String,material: String,age:String ){
 
         productVolleyQueue =Volley.newRequestQueue(AddProduct.getContext())
 
@@ -301,7 +301,7 @@ object logic {
             Request.Method.POST,"$url/products/toys",json,
             {response ->
                 val jsonRes:JSONObject = response
-                val toy = toy_representation(name,price,image,stock,description,leafColor,PN,material,age)
+                val toy = toy_representation(name,price.toDouble(),image,stock,description,leafColor,PN,material,age)
                 AddProduct.productAded()
 
             },
@@ -311,7 +311,7 @@ object logic {
         productVolleyQueue.add(jsonRequest)
     }
 
-    fun addClothes(name:String,price:Double,image:String,stock:Int,description:String,leafColor:String,PN:String,size:String,color:String){
+    fun addClothes(name:String,price:String,image:String,stock:Int,description:String,leafColor:String,PN:String,size:String,color:String){
 
 
         productVolleyQueue =Volley.newRequestQueue(AddProduct.getContext())
@@ -333,7 +333,7 @@ object logic {
             Request.Method.POST,"$url/products/clothes",json,
             {response ->
                 val jsonRes:JSONObject = response
-                val clothes = clothes_representation(name,price,image,stock,description,leafColor,PN,size,color)
+                val clothes = clothes_representation(name,price.toDouble(),image,stock,description,leafColor,PN,size,color)
                 AddProduct.productAded()
 
             },
@@ -344,7 +344,7 @@ object logic {
     }
 
 
-    fun addFood(name:String,price:Double,image:String,stock:Int,description:String,leafColor:String,PN:String,calories:String,macros:String){
+    fun addFood(name:String,price:String,image:String,stock:Int,description:String,leafColor:String,PN:String,calories:String,macros:String){
 
         productVolleyQueue =Volley.newRequestQueue(AddProduct.getContext())
 
@@ -366,7 +366,7 @@ object logic {
             Request.Method.POST,"$url/products/foods",json,
             {response ->
                 val jsonRes:JSONObject = response
-                val foods = food_representation(name,price,image,stock,description,leafColor,PN,calories,macros)
+                val foods = food_representation(name,price.toDouble(),image,stock,description,leafColor,PN,calories,macros)
                 AddProduct.productAded()
             },
             {error ->
