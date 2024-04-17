@@ -1,11 +1,13 @@
 package com.example.smarttrade.logic
 
 
+import VolleyMultipartRequest
 import android.util.Log
 import android.widget.Toast
 import androidx.compose.ui.graphics.vector.VectorProperty
 import com.android.volley.Request
 import com.android.volley.RequestQueue
+import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
@@ -47,7 +49,7 @@ object logic {
     lateinit var productVolleyQueue:RequestQueue
 
 
-    val url = "http://192.168.0.103:8080"
+    val url = "http://192.168.56.1:8080"
 
 
 
@@ -245,7 +247,7 @@ object logic {
      fun addTechnology(name:String,price:Double,image:String,stock:Int,description:String,leafColor:String,PN:String,brand:String,electricConsumption:String){
 
          productVolleyQueue =Volley.newRequestQueue(AddProduct.getContext())
-
+         Log.i("doublePrice value and type2",price.toString() + " " + price::class.simpleName)
 
         val json = JSONObject()
         json.put("productNumber", PN)
@@ -259,7 +261,7 @@ object logic {
         json.put("electricConsumption",electricConsumption)
         json.put("brand",brand)
 
-         val queue = Volley.newRequestQueue(AddProduct.getContext())
+         Log.i("techJson",json.toString())
 
         val jsonRequest = JsonObjectRequest(
             Request.Method.POST,"$url/products/technology",json,
@@ -271,6 +273,7 @@ object logic {
 
             },
             {error ->
+                Log.i("uploadError", error.message.toString())
                 AddProduct.popUpError()
             })
          productVolleyQueue.add(jsonRequest)
@@ -495,6 +498,30 @@ object logic {
     }
 
 
+    fun getImage(imageData: ByteArray,imageName: String){
+        val url = "http://ec2-51-92-5-87.eu-south-2.compute.amazonaws.com:5000"
+        val request = VolleyMultipartRequest(
+            Request.Method.POST,
+            url,
+            { response ->
+                val responseString = String(response.data, Charsets.UTF_8)
+                val jsonResponse = JSONObject(responseString)
+                AddProduct.setEncodedImageString(jsonResponse.getString("filename"))
+            },
+            { error ->
+                Log.i("getImageError", error.toString())
+            }
+        )
+
+        // add image data
+        val imageData = // get your image data here
+                    request.addByteData("file", imageName, imageData, "image/jpg")
+
+        // add request to Volley queue
+                val queue = Volley.newRequestQueue(AddProduct.getContext())
+                queue.add(request)
+    }
+
 
     /*
     *
@@ -529,56 +556,60 @@ object logic {
 
 
 
+/*
+     suspend fun getImage(imageFIle : File) :String{
 
- suspend fun getImage(imageFIle : File) :String{
+         val filePath = "/path/to/your/file.jpg"
 
-     val filePath = "/path/to/your/file.jpg"
-
-     var stringPath = imageFIle.toString()
-
-
-     var x  = "file=@$stringPath"
-
-     // Curl command
-     val curlCommand = "curl"
-     //val curlArgs = listOf("-F", "@$stringPath.", "http://ec2-52-47-150-236.eu-west-3.compute.amazonaws.com:5000")
-     val curlArgs = listOf("http://ec2-52-47-150-236.eu-west-3.compute.amazonaws.com:5000", "-F", x)
-
-     val coroutineScope = CoroutineScope(Dispatchers.IO)
-
-     // Create ProcessBuilder
-     val processBuilder = ProcessBuilder(curlCommand, *curlArgs.toTypedArray())
-     processBuilder.redirectErrorStream(true)
-     val deferredResult   = coroutineScope.async  {
-         // Start process
-         val process = processBuilder.start()
-
-         val response = StringBuilder()
-         // Read output
-         val reader = BufferedReader(InputStreamReader(process.inputStream))
-         var line: String?
-         while (reader.readLine().also { line = it } != null) {
-             response.append(line).append('\n')
-             // Wait for process to finish
-             val exitCode = process.waitFor()
-             println("Process exited with code $exitCode")
+         var stringPath = imageFIle.toString()
+         stringPath = "https://cope-cdnmed.cope.es/resources/jpg/4/0/1601032304304.jpg"
+         Log.i("stringPath",stringPath)
 
 
-             val res = response.toString()
-             val x = res.split("\n")
-             val y = x[x.size - 2]
-             val resultado :String =  y.substring(13, y.length - 2)
+         var x  = "file=@$stringPath"
+
+         // Curl command
+         val curlCommand = "curl"
+         //val curlArgs = listOf("-F", "@$stringPath.", "http://ec2-52-47-150-236.eu-west-3.compute.amazonaws.com:5000")
+         val curlArgs = listOf("http://ec2-52-47-150-236.eu-west-3.compute.amazonaws.com:5000", "-F", x)
+
+         val coroutineScope = CoroutineScope(Dispatchers.IO)
+
+         // Create ProcessBuilder
+         val processBuilder = ProcessBuilder(curlCommand, *curlArgs.toTypedArray())
+         processBuilder.redirectErrorStream(true)
+         val deferredResult   = coroutineScope.async  {
+             // Start process
+             val process = processBuilder.start()
+
+             val response = StringBuilder()
+             // Read output
+             val reader = BufferedReader(InputStreamReader(process.inputStream))
+             var line: String?
+             while (reader.readLine().also { line = it } != null) {
+                 response.append(line).append('\n')
+                 // Wait for process to finish
+                 val exitCode = process.waitFor()
+                 println("Process exited with code $exitCode")
 
 
-             Log.i("response", resultado)
+                 val res = response.toString()
+                 val x = res.split("\n")
+                 val y = x[x.size - 2]
+                 val resultado :String =  y.substring(13, y.length - 2)
 
-             return@async resultado
+
+                 Log.i("response", resultado)
+
+                 return@async resultado
+             }
          }
+
+            Log.i("resultado",deferredResult.await().toString())
+            return deferredResult.await().toString()
      }
 
-        Log.i("resultado",deferredResult.await().toString())
-        return deferredResult.await().toString()
- }
+ */
 
 
 
