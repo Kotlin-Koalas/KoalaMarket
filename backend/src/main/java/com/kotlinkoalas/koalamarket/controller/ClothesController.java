@@ -6,6 +6,7 @@ import com.kotlinkoalas.koalamarket.model.Clothes;
 
 import com.kotlinkoalas.koalamarket.repo.ClothesRepository;
 import com.kotlinkoalas.koalamarket.repo.TechnologyRepository;
+import com.kotlinkoalas.koalamarket.service.ClothesService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,15 +15,15 @@ import java.util.Map;
 @RestController
 public class ClothesController {
 
-    private final ClothesRepository repository;
+    private final ClothesService clothesService;
 
-    ClothesController(ClothesRepository repository) {
-        this.repository = repository;
+    public ClothesController(ClothesService clothesService) {
+        this.clothesService = clothesService;
     }
 
     @GetMapping("/products/clothes")
-    List<Clothes> all() {
-        return repository.findAll();
+    public List<Clothes> getAllClothes() {
+        return clothesService.getAllClothes();
     }
 
     @PostMapping("/products/clothes")
@@ -40,35 +41,28 @@ public class ClothesController {
         String color = (String) payload.get("color");
         String size = (String) payload.get("size");
 
-        if (repository.existsByProductNumberAndCif(productNumber, cif)) {
-            throw new RuntimeException("Product number and cif already exists");
-        }
-
-        ProductFactory ClothesFactory = new ClothesFactory();
-        Clothes clothes = (Clothes) ClothesFactory.createProduct(productNumber, name, price, description, ecology, stock, image, cif, color, size);
-
-        return repository.save(clothes);
+        return clothesService.createClothes(productNumber, name, price, description, ecology, stock, image, cif, color, size);
     }
 
 
     @PutMapping("/products/clothes/{productNumber}")
-    Clothes replaceClothes(@RequestBody Map<String, Object> payload, @PathVariable String productNumber) {
-        Clothes oldClothes = repository.findByProductNumber(productNumber);
+    public Clothes replaceClothes(@RequestBody Map<String, Object> payload, @PathVariable String productNumber) {
         String stringPrice = (String) payload.get("price");
-        oldClothes.setPrice(Double.parseDouble(stringPrice));
-        oldClothes.setDescription((String) payload.get("description"));
-        oldClothes.setColor((String) payload.get("color"));
-        oldClothes.setEcology((String) payload.get("ecology"));
-        oldClothes.setSize((String) payload.get("size"));
-        oldClothes.setName((String) payload.get("name"));
-        oldClothes.setStock((int) payload.get("stock"));
-        oldClothes.setImage((String) payload.get("image"));
-        return repository.save(oldClothes);
+        double price = Double.parseDouble(stringPrice);
+        String description = (String) payload.get("description");
+        String ecology = (String) payload.get("ecology");
+        String color = (String) payload.get("color");
+        String size = (String) payload.get("size");
+        String name = (String) payload.get("name");
+        int stock = (int) payload.get("stock");
+        String image = (String) payload.get("image");
+
+        return clothesService.updateClothes(productNumber, name, price, description, ecology, stock, image);
     }
 
     @DeleteMapping("/products/clothes/{productNumber}")
-    String deleteClothes(@PathVariable String productNumber) {
-        repository.deleteByProductNumber(productNumber);
+    public String deleteClothes(@PathVariable String productNumber) {
+        clothesService.deleteClothes(productNumber);
         return "Successfully deleted";
     }
 }
