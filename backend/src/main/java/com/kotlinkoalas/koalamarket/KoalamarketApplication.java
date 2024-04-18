@@ -9,5 +9,4 @@ public class KoalamarketApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(KoalamarketApplication.class, args);
 	}
-
 }
