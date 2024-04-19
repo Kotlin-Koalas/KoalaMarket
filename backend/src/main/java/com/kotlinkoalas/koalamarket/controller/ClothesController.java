@@ -57,7 +57,7 @@ public class ClothesController {
         int stock = (int) payload.get("stock");
         String image = (String) payload.get("image");
 
-        return clothesService.updateClothes(productNumber, name, price, description, ecology, stock, image);
+        return clothesService.updateClothes(productNumber, name, price, description, ecology, stock, image, color, size);
     }
 
     @DeleteMapping("/products/clothes/{productNumber}")

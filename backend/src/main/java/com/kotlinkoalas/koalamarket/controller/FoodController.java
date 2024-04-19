@@ -4,6 +4,7 @@ import com.kotlinkoalas.koalamarket.factory.FoodFactory;
 import com.kotlinkoalas.koalamarket.factory.ProductFactory;
 import com.kotlinkoalas.koalamarket.model.Food;
 import com.kotlinkoalas.koalamarket.repo.FoodRepository;
+import com.kotlinkoalas.koalamarket.service.FoodService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,15 +13,15 @@ import java.util.Map;
 @RestController
 public class FoodController {
 
-    private final FoodRepository repository;
+    private final FoodService foodService;
 
-    FoodController(FoodRepository repository) {
-        this.repository = repository;
+    FoodController(FoodService foodService) {
+        this.foodService = foodService;
     }
 
     @GetMapping("/products/foods")
     List<Food> all() {
-        return repository.findAll();
+        return foodService.getAllFoods();
     }
 
     @PostMapping("/products/foods")
@@ -38,35 +39,29 @@ public class FoodController {
         String calories = (String) payload.get("calories");
         String macros = (String) payload.get("macros");
 
-        if (repository.existsByProductNumberAndCif(productNumber, cif)) {
-            throw new RuntimeException("Product number and cif already exists");
-        }
-
-        ProductFactory FoodFactory = new FoodFactory();
-        Food food = (Food) FoodFactory.createProduct(productNumber, name, price, description, ecology, stock, image, cif, calories, macros);
-
-        return repository.save(food);
+        return foodService.createFood(productNumber,name,price,description,ecology,stock,image,cif,calories,macros);
     }
 
 
     @PutMapping("/products/foods/{productNumber}")
     Food replaceFood(@RequestBody Map<String, Object> payload, @PathVariable String productNumber) {
-        Food oldFood = repository.findByProductNumber(productNumber);
         String stringPrice = (String) payload.get("price");
-        oldFood.setPrice(Double.parseDouble(stringPrice));
-        oldFood.setDescription((String) payload.get("description"));
-        oldFood.setMacros((String) payload.get("macros"));
-        oldFood.setEcology((String) payload.get("ecology"));
-        oldFood.setCalories((Integer) payload.get("calories"));
-        oldFood.setName((String) payload.get("name"));
-        oldFood.setStock((int) payload.get("stock"));
-        oldFood.setImage((String) payload.get("image"));
-        return repository.save(oldFood);
+        double price = Double.parseDouble(stringPrice);
+        String description = (String) payload.get("description");
+        String ecology = (String) payload.get("ecology");
+        String name = (String) payload.get("name");
+        int stock = (int) payload.get("stock");
+        String image = (String) payload.get("image");
+
+        int calories = (int) payload.get("calories");
+        String macros = (String) payload.get("macros");
+
+        return foodService.updateFood(productNumber,name,price,description,ecology,stock,image,macros,calories);
     }
 
     @DeleteMapping("/products/foods/{productNumber}")
     String deleteFood(@PathVariable String productNumber) {
-        repository.deleteByProductNumber(productNumber);
+        foodService.deleteFood(productNumber);
         return "Successfully deleted";
     }
 }

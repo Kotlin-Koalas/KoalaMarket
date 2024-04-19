@@ -1,6 +1,8 @@
 package com.kotlinkoalas.koalamarket.service;
 
+import com.kotlinkoalas.koalamarket.factory.ClothesFactory;
 import com.kotlinkoalas.koalamarket.model.Clothes;
+import com.kotlinkoalas.koalamarket.model.Food;
 import com.kotlinkoalas.koalamarket.repo.ClothesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,6 +13,8 @@ import java.util.List;
 
 @Service
 public class ClothesService {
+
+    private final ClothesFactory clothesFactory = new ClothesFactory();
 
     private final ClothesRepository repository;
 
@@ -27,12 +31,12 @@ public class ClothesService {
         if (repository.existsByProductNumberAndCif(productNumber, cif)) {
             throw new RuntimeException("Product number and cif already exists");
         }
-        Clothes clothes = new Clothes(productNumber, name, price, description, ecology, stock, image, cif, color, size);
+        Clothes clothes = (Clothes) clothesFactory.createProduct(productNumber,name,price,description,ecology,stock,image,cif,color,size);
         return repository.save(clothes);
     }
 
     public Clothes updateClothes(String productNumber, String name, double price, String description,
-                                 String ecology, int stock, String image) {
+                                 String ecology, int stock, String image, String color, String size) {
         Clothes existingClothes = repository.findByProductNumber(productNumber);
         existingClothes.setName(name);
         existingClothes.setPrice(price);
@@ -40,6 +44,10 @@ public class ClothesService {
         existingClothes.setEcology(ecology);
         existingClothes.setStock(stock);
         existingClothes.setImage(image);
+
+        existingClothes.setColor(color);
+        existingClothes.setSize(size);
+
         return repository.save(existingClothes);
     }
 
