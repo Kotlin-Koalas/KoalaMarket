@@ -1,4 +1,4 @@
-package com.example.smarttrade.nonactivityclasses
+package com.example.smarttrade.models
 
 data class CreditCard (
     val number:String,

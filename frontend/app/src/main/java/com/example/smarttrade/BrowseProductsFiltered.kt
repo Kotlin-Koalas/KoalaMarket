@@ -18,12 +18,14 @@ import androidx.appcompat.content.res.AppCompatResources
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.smarttrade.adapters.ProductAdapter
+import com.example.smarttrade.adapters.SearchAdapterFiltered
 import com.example.smarttrade.logic.logic
 
-//import com.example.smarttrade.nonactivityclasses.LeafColor
+//import com.example.smarttrade.models.LeafColor
 
-import com.example.smarttrade.nonactivityclasses.product_representation
-import com.example.smarttrade.nonactivityclasses.search_representation
+import com.example.smarttrade.models.product_representation
+import com.example.smarttrade.models.search_representation
 
 
 class BrowseProductsFiltered : AppCompatActivity() {

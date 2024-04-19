@@ -3,10 +3,8 @@ package com.example.smarttrade
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.media.Image
 import android.os.Bundle
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
@@ -17,7 +15,6 @@ import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import com.example.smarttrade.logic.logic
-import com.example.smarttrade.nonactivityclasses.ImageURLtoBitmapConverter
 
 
 class MainActivity : AppCompatActivity() {

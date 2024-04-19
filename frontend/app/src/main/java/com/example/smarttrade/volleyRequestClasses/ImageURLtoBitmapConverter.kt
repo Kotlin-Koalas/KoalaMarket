@@ -1,19 +1,14 @@
-package com.example.smarttrade.nonactivityclasses
+package com.example.smarttrade.volleyRequestClasses
 
-import android.content.Context
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.util.Log
 import android.view.View
 import android.widget.ImageView
-import com.android.volley.Response
 import com.android.volley.toolbox.ImageRequest
 import com.android.volley.toolbox.Volley
-import com.example.smarttrade.AddProduct
-import com.example.smarttrade.BrowseProducts
 import com.example.smarttrade.BuildConfig
 import com.example.smarttrade.MainActivity
-import com.example.smarttrade.ProductAdapter
+import com.example.smarttrade.adapters.ProductAdapter
 
 object  ImageURLtoBitmapConverter {
     val host = BuildConfig.DB_LINK

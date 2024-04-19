@@ -1,3 +1,5 @@
+package com.example.smarttrade.volleyRequestClasses
+
 import com.android.volley.NetworkResponse
 import com.android.volley.ParseError
 import com.android.volley.Request

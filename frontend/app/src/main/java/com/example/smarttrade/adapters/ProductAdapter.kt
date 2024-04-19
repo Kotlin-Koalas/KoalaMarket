@@ -1,7 +1,6 @@
-package com.example.smarttrade
+package com.example.smarttrade.adapters
 
 import android.graphics.Bitmap
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,8 +8,9 @@ import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
-import com.example.smarttrade.nonactivityclasses.ImageURLtoBitmapConverter
-import com.example.smarttrade.nonactivityclasses.product_representation
+import com.example.smarttrade.R
+import com.example.smarttrade.volleyRequestClasses.ImageURLtoBitmapConverter
+import com.example.smarttrade.models.product_representation
 
 
 class ProductAdapter(

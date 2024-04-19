@@ -1,27 +1,22 @@
-package com.example.smarttrade
+package com.example.smarttrade.adapters
 
-import android.media.Image
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.BaseAdapter
-import android.widget.GridLayout
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
-import com.example.smarttrade.nonactivityclasses.ImageURLtoBitmapConverter
+import com.example.smarttrade.BrowseProductsFiltered
+import com.example.smarttrade.R
 
-//import com.example.smarttrade.nonactivityclasses.LeafColor
+//import com.example.smarttrade.models.LeafColor
 
-import com.example.smarttrade.nonactivityclasses.category_representation
-import com.example.smarttrade.nonactivityclasses.product_representation
-import com.example.smarttrade.nonactivityclasses.search_representation
+import com.example.smarttrade.models.search_representation
 
 
-class SearchAdapter(
+class SearchAdapterFiltered(
     private val prevSearch: MutableList<search_representation>
-) : RecyclerView.Adapter<SearchAdapter.CategoryViewHolder>() {
+) : RecyclerView.Adapter<SearchAdapterFiltered.CategoryViewHolder>() {
 
     class CategoryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
@@ -53,7 +48,7 @@ class SearchAdapter(
         val selected = holder.itemView.findViewById<ConstraintLayout>(R.id.layoutSearch)
 
         selected.setOnClickListener {
-            BrowseProducts.updateSearch(curS.search)
+            BrowseProductsFiltered.updateSearch(curS.search)
         }
     }
 

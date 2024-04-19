@@ -14,6 +14,7 @@ if (localPropertiesFile.exists()) {
 }
 
 val dbLink = localProperties["DB_LINK"] ?: ""
+val myIP = localProperties["MY_IP"] ?: ""
 android {
     namespace = "com.example.smarttrade"
     compileSdk = 34
@@ -26,6 +27,7 @@ android {
         versionCode = 1
         versionName = "1.0"
         buildConfigField("String", "DB_LINK", "\"${dbLink}\"")
+        buildConfigField("String", "MY_IP", "\"${myIP}\"")
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary = true

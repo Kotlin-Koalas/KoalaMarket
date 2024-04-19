@@ -1,4 +1,4 @@
-package com.example.smarttrade.nonactivityclasses
+package com.example.smarttrade.models
 
 object PersonBuyer {
     private var name:String = ""

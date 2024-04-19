@@ -1,8 +1,6 @@
 package com.example.smarttrade
 
-import android.app.DatePickerDialog
 import android.app.Dialog
-import android.app.Person
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
@@ -10,11 +8,8 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import android.view.Window
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Button
@@ -24,21 +19,13 @@ import android.widget.LinearLayout
 import android.widget.ScrollView
 import android.widget.Spinner
 import android.widget.TextView
-import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.content.res.AppCompatResources
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.example.smarttrade.logic.logic
-import com.example.smarttrade.nonactivityclasses.CreditCard
-import com.example.smarttrade.nonactivityclasses.PersonBuyer
-import org.xmlpull.v1.XmlPullParser
+import com.example.smarttrade.models.CreditCard
 import java.time.LocalDate
 import java.util.Calendar
-import kotlin.math.sign
-import kotlin.properties.Delegates
 
 class SignUpComprador : AppCompatActivity() {
 

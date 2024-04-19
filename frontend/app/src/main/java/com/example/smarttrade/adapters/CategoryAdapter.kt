@@ -1,4 +1,4 @@
-package com.example.smarttrade
+package com.example.smarttrade.adapters
 
 
 import android.content.Intent
@@ -8,7 +8,9 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
-import com.example.smarttrade.nonactivityclasses.category_representation
+import com.example.smarttrade.BrowseProductsFiltered
+import com.example.smarttrade.R
+import com.example.smarttrade.models.category_representation
 
 class CategoryAdapter(
     private val categories: MutableList<category_representation>

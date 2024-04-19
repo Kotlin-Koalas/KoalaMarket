@@ -1,7 +1,6 @@
 package com.example.smarttrade
 
 import android.content.Context
-import android.graphics.Bitmap
 import android.graphics.Rect
 import android.os.Bundle
 import android.util.Log
@@ -16,15 +15,15 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.smarttrade.adapters.CategoryAdapter
+import com.example.smarttrade.adapters.ProductAdapter
+import com.example.smarttrade.adapters.SearchAdapter
 import com.example.smarttrade.logic.logic
-import com.example.smarttrade.nonactivityclasses.category_representation
-import com.example.smarttrade.nonactivityclasses.product_representation
-import com.example.smarttrade.nonactivityclasses.search_representation
-import kotlinx.coroutines.launch
-import org.w3c.dom.Text
+import com.example.smarttrade.models.category_representation
+import com.example.smarttrade.models.product_representation
+import com.example.smarttrade.models.search_representation
 
 class BrowseProducts : AppCompatActivity() {
 

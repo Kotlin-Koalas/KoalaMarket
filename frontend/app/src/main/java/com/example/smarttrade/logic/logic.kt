@@ -1,13 +1,11 @@
 package com.example.smarttrade.logic
 
 
-import VolleyMultipartRequest
+import com.example.smarttrade.volleyRequestClasses.VolleyMultipartRequest
 import android.util.Log
 import android.widget.Toast
-import androidx.compose.ui.graphics.vector.VectorProperty
 import com.android.volley.Request
 import com.android.volley.RequestQueue
-import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
@@ -18,24 +16,20 @@ import com.example.smarttrade.BuildConfig
 import com.example.smarttrade.MainActivity
 import com.example.smarttrade.SignUpComprador
 import com.example.smarttrade.SignUpVendedor
-import com.example.smarttrade.nonactivityclasses.CreditCard
-import com.example.smarttrade.nonactivityclasses.PersonBuyer
-import com.example.smarttrade.nonactivityclasses.PersonSeller
-import com.example.smarttrade.nonactivityclasses.clothes_representation
-import com.example.smarttrade.nonactivityclasses.food_representation
-import com.example.smarttrade.nonactivityclasses.product_representation
-import com.example.smarttrade.nonactivityclasses.technology_representation
-import com.example.smarttrade.nonactivityclasses.toy_representation
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
+import com.example.smarttrade.models.CreditCard
+import com.example.smarttrade.models.PersonBuyer
+import com.example.smarttrade.models.PersonSeller
+import com.example.smarttrade.models.clothes_representation
+import com.example.smarttrade.models.food_representation
+import com.example.smarttrade.models.product_representation
+import com.example.smarttrade.models.technology_representation
+import com.example.smarttrade.models.toy_representation
 import org.json.JSONArray
 import org.json.JSONObject
-import java.io.BufferedReader
-import java.io.File
-import java.io.InputStreamReader
 
 private const val host = BuildConfig.DB_LINK
+private const val myIP = BuildConfig.MY_IP
+private val url = "http://$myIP:8080"
 
 
 object logic {
@@ -48,10 +42,6 @@ object logic {
     lateinit var buyerVolleyQueue:RequestQueue
     lateinit var sellerVolleyQueue:RequestQueue
     lateinit var productVolleyQueue:RequestQueue
-
-
-    val url = "http://192.168.56.1:8080"
-
 
 
     fun filterProduct(producList: MutableList<product_representation>, searchItem:String) : MutableList<product_representation>{
