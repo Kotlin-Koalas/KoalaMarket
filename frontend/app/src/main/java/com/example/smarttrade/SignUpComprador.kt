@@ -22,6 +22,7 @@ import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
+import com.example.smarttrade.logic.Identification
 import com.example.smarttrade.logic.logic
 import com.example.smarttrade.models.CreditCard
 import java.time.LocalDate
@@ -229,7 +230,7 @@ class SignUpComprador : AppCompatActivity() {
                     val currExpM = findViewById<EditText>(R.id.editTextCad).text.toString()
                     val currExpY = findViewById<EditText>(R.id.editTextCad2).text.toString()
                     val currCVC = findViewById<EditText>(R.id.editTextCVC).text.toString()
-                    logic.signInBuyer(
+                    Identification.signInBuyer(
                         currName,
                         currSurname,
                         firstPassword,
@@ -246,7 +247,7 @@ class SignUpComprador : AppCompatActivity() {
                 }
                 if(currentTypeOfPayment == R.layout.bizum_option) {
                     val currBizumNum = findViewById<EditText>(R.id.editTextBizumNumber).text.toString()
-                    logic.signInBuyer(
+                    Identification.signInBuyer(
                         currName,
                         currSurname,
                         firstPassword,
@@ -263,7 +264,7 @@ class SignUpComprador : AppCompatActivity() {
                 }
                 if(currentTypeOfPayment == R.layout.paypal_option) {
                     val currPayPalCorreo = findViewById<EditText>(R.id.editTextEmailPayPal).text.toString()
-                    logic.signInBuyer(
+                    Identification.signInBuyer(
                         currName,
                         currSurname,
                         firstPassword,

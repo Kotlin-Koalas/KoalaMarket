@@ -30,6 +30,7 @@ import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.example.smarttrade.logic.Identification
 import com.example.smarttrade.logic.logic
 import org.xmlpull.v1.XmlPullParser
 import java.time.LocalDate
@@ -145,7 +146,7 @@ class SignUpVendedor : AppCompatActivity() {
             if(popUpOrNot){
                 showCustomDialogBoxSeller(popUpText)
             } else {
-                logic.signInSeller(currName,currSurname,firstPassword,currCorreo,currId,currDNI,currIBAN)
+                Identification.signInSeller(currName,currSurname,firstPassword,currCorreo,currId,currDNI,currIBAN)
             }
 
         }
