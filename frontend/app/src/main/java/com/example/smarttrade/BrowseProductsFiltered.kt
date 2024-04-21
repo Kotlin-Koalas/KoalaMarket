@@ -38,7 +38,7 @@ class BrowseProductsFiltered : AppCompatActivity() {
     private lateinit var categoryName : TextView
     private lateinit var recommendationLayout: ConstraintLayout
     private lateinit var recommendationRV: RecyclerView
-    private var productsShown: MutableList<product_representation> = mutableListOf()
+    //private var productsShown: MutableList<product_representation> = mutableListOf()
     private var productsFiltered : MutableList<product_representation> = mutableListOf()
     private var prevSearchesShown: MutableList<search_representation> = mutableListOf()
 
@@ -92,7 +92,8 @@ class BrowseProductsFiltered : AppCompatActivity() {
             "food" ->{
                 logic.getAllProductsFood()
             }
-            "techology" ->{
+            "technology" ->{
+
                 logic.getAllProductsTechnology()
             }
             "clothes" ->{
@@ -110,7 +111,7 @@ class BrowseProductsFiltered : AppCompatActivity() {
 
         }
 
-        adapterP.addAllProducts(productsShown)
+        //adapterP.addAllProducts(productsShown)
 
 
         searchBar = findViewById(R.id.SearchBarFiltered)
