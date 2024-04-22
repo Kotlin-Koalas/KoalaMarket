@@ -33,7 +33,6 @@ private val url = "http://$myIP:8080"
 
 
 object logic {
-//TODO clase para comunicarse mediante el uso de api y conseguir cosas como el LogIn o el SignUp
     var isBuyer = false
 
     var isBQueue = false
