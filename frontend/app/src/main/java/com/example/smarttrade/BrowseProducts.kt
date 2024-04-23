@@ -46,7 +46,7 @@ class BrowseProducts : AppCompatActivity() {
         //TODO conseguir los datos de la BD y meterlos a la lista prevSearchesShown
         setContentView(R.layout.activity_browse_products)
 
-        val shoppingCart = findViewById<ImageView>(R.id.constraintLayoutCart)
+        val shoppingCart = findViewById<ConstraintLayout>(R.id.constraintLayoutCart)
         shoppingCart.setOnClickListener{
             //TODO ir a la ventana del carrito
         }
