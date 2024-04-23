@@ -82,6 +82,7 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation(libs.androidx.gridlayout)
     implementation(libs.volley)
+    implementation("androidx.fragment:fragment-ktx:1.5.4")
     implementation("com.google.firebase:firebase-crashlytics-buildtools:2.9.9")
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
