@@ -16,6 +16,7 @@ import com.example.smarttrade.BuildConfig
 import com.example.smarttrade.MainActivity
 import com.example.smarttrade.SignUpComprador
 import com.example.smarttrade.SignUpVendedor
+import com.example.smarttrade.mainBuyerFrargments.HomeFragment
 import com.example.smarttrade.models.CreditCard
 import com.example.smarttrade.models.PersonBuyer
 import com.example.smarttrade.models.PersonSeller
@@ -33,10 +34,7 @@ private val url = "http://$myIP:8080"
 
 
 object logic {
-    var isBuyer = false
 
-    var isBQueue = false
-    var isSQueue = false
     var isPQueue = false
 
     lateinit var buyerVolleyQueue:RequestQueue
@@ -208,7 +206,7 @@ object logic {
                     val p = products.getJSONObject(i)
                     res.add(product_representation(p.getString("name"),p.getString("price"),p.getString("image"),p.getString("stock").toInt(),p.getString("description"),p.getString("ecology"),p.getString("productNumber")))
                 }
-                BrowseProducts.setProductsShown(res)
+                HomeFragment.setProductsShown(res)
             },
             {error ->
                 Toast.makeText(MainActivity.getContext(), "Error: $error", Toast.LENGTH_SHORT)

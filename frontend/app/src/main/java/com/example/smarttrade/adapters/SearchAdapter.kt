@@ -8,6 +8,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.example.smarttrade.BrowseProducts
 import com.example.smarttrade.R
+import com.example.smarttrade.mainBuyerFrargments.HomeFragment
 
 //import com.example.smarttrade.models.LeafColor
 
@@ -48,7 +49,7 @@ class SearchAdapter(
         val selected = holder.itemView.findViewById<ConstraintLayout>(R.id.layoutSearch)
 
         selected.setOnClickListener {
-            BrowseProducts.updateSearch(curS.search)
+            HomeFragment.updateSearch(curS.search)
         }
     }
 
