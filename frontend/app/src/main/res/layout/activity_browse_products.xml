@@ -32,7 +32,7 @@
             android:layout_width="109dp"
             android:layout_height="68dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:background="transparent"
+            android:background="@color/verdeOscuro"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -52,7 +52,7 @@
             android:id="@+id/constraintLayoutPerson"
             android:layout_width="109dp"
             android:layout_height="68dp"
-            android:background="transparent"
+            android:background="@color/verdeOscuro"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.6"
