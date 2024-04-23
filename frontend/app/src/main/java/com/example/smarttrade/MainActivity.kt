@@ -15,7 +15,6 @@ import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import com.example.smarttrade.logic.Identification
-import com.example.smarttrade.logic.logic
 
 
 class MainActivity : AppCompatActivity() {
@@ -96,7 +95,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         fun loadBuyer(){
-            val IntentS = Intent(actContext,BrowseProducts::class.java)
+            val IntentS = Intent(actContext,BuyerMainScreen::class.java)
             actContext.startActivity(IntentS)
         }
         fun loadSeller(){//TODO cambiar en un futuro Addproduct

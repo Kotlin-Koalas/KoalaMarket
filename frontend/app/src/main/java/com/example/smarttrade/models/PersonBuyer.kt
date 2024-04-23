@@ -12,6 +12,7 @@ object PersonBuyer {
     private var bizum:String = ""
     private var paypal:String = ""
     private var creditCards:MutableList<CreditCard> = mutableListOf()
+    private var shoppingCart:MutableList<product_representation> = mutableListOf()
 
 
 

@@ -6,7 +6,6 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
-import com.example.smarttrade.BrowseProducts
 import com.example.smarttrade.R
 import com.example.smarttrade.mainBuyerFrargments.HomeFragment
 

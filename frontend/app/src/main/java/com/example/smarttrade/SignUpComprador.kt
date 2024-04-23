@@ -23,7 +23,6 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.smarttrade.logic.Identification
-import com.example.smarttrade.logic.logic
 import com.example.smarttrade.models.CreditCard
 import java.time.LocalDate
 import java.util.Calendar
@@ -330,7 +329,7 @@ class SignUpComprador : AppCompatActivity() {
             return actContextBuyer
         }
         fun loadBuyer(){
-            val IntentS = Intent(actContextBuyer,BrowseProducts::class.java)
+            val IntentS = Intent(actContextBuyer,BuyerMainScreen::class.java)
             actContextBuyer.startActivity(IntentS)
         }
         fun popUpError(){

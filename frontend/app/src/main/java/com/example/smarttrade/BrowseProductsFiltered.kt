@@ -73,7 +73,7 @@ class BrowseProductsFiltered : AppCompatActivity() {
         recommendationRV.layoutManager = LinearLayoutManager(this)
 
         backButton.setOnClickListener{
-            val IntentS = Intent(this, BrowseProducts::class.java)
+            val IntentS = Intent(this, BuyerMainScreen::class.java)
             startActivity(IntentS)
          }
 

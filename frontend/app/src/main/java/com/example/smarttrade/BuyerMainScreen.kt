@@ -3,32 +3,17 @@ package com.example.smarttrade
 import android.content.Context
 import android.graphics.Rect
 import android.os.Bundle
-import android.util.Log
 import android.view.MotionEvent
-import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
-import android.widget.GridView
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.fragment.app.commit
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.content.res.AppCompatResources
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.add
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.example.smarttrade.adapters.CategoryAdapter
-import com.example.smarttrade.adapters.ProductAdapter
-import com.example.smarttrade.adapters.SearchAdapter
-import com.example.smarttrade.logic.logic
 import com.example.smarttrade.mainBuyerFrargments.HomeFragment
-import com.example.smarttrade.models.category_representation
-import com.example.smarttrade.models.product_representation
-import com.example.smarttrade.models.search_representation
 
-class BrowseProducts : AppCompatActivity() {
+class BuyerMainScreen : AppCompatActivity() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,12 +28,21 @@ class BrowseProducts : AppCompatActivity() {
             add<HomeFragment>(R.id.fragment_container_view)
         }
 
-        //TODO conseguir los datos de la BD y meterlos a la lista prevSearchesShown
         setContentView(R.layout.activity_browse_products)
 
         val shoppingCart = findViewById<ConstraintLayout>(R.id.constraintLayoutCart)
         shoppingCart.setOnClickListener{
             //TODO ir a la ventana del carrito
+        }
+
+        val account = findViewById<ConstraintLayout>(R.id.constraintLayoutPerson)
+        account.setOnClickListener{
+            //TODO ir a la ventana de la cuenta
+        }
+
+        val home = findViewById<ConstraintLayout>(R.id.constraintLayoutHome)
+        home.setOnClickListener{
+            //TODO ir a la ventana de inicio
         }
     }
 
@@ -72,7 +66,7 @@ class BrowseProducts : AppCompatActivity() {
     }
 
     companion object{
-        private lateinit var actContextBP:BrowseProducts
+        private lateinit var actContextBP:BuyerMainScreen
         fun getContext(): Context {
             return actContextBP
         }
