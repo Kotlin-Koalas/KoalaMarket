@@ -1,26 +1,21 @@
 package com.example.smarttrade.mainBuyerFrargments
 
 import android.content.Context
-import android.graphics.Rect
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.GridView
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.smarttrade.BrowseProducts
+import com.example.smarttrade.BuyerMainScreen
 import com.example.smarttrade.R
 import com.example.smarttrade.adapters.CategoryAdapter
 import com.example.smarttrade.adapters.ProductAdapter
@@ -76,7 +71,7 @@ class HomeFragment : Fragment() {
 
         instance = this
 
-        actContextBP = BrowseProducts.getContext()
+        actContextBP = BuyerMainScreen.getContext()
         productsShown = mutableListOf()
 
 

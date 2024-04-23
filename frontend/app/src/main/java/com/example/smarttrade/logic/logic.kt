@@ -10,15 +10,11 @@ import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.example.smarttrade.AddProduct
-import com.example.smarttrade.BrowseProducts
+import com.example.smarttrade.BuyerMainScreen
 import com.example.smarttrade.BrowseProductsFiltered
 import com.example.smarttrade.BuildConfig
 import com.example.smarttrade.MainActivity
-import com.example.smarttrade.SignUpComprador
-import com.example.smarttrade.SignUpVendedor
 import com.example.smarttrade.mainBuyerFrargments.HomeFragment
-import com.example.smarttrade.models.CreditCard
-import com.example.smarttrade.models.PersonBuyer
 import com.example.smarttrade.models.PersonSeller
 import com.example.smarttrade.models.clothes_representation
 import com.example.smarttrade.models.food_representation
@@ -194,7 +190,7 @@ object logic {
 
     fun getAllProducts() {
         if(!isPQueue) {
-            productVolleyQueue = Volley.newRequestQueue(BrowseProducts.getContext())
+            productVolleyQueue = Volley.newRequestQueue(BuyerMainScreen.getContext())
             isPQueue = true
         }
         val res = mutableListOf<product_representation>()
