@@ -99,7 +99,7 @@ class HomeFragment : Fragment() {
         adapterCat = CategoryAdapter(categoriesShown)
 
         val gridLayout = view.findViewById<GridView>(R.id.gridViewProd)
-        adapterP = ProductAdapter(mutableListOf())
+        adapterP = ProductAdapter(actContextBP, mutableListOf())
 
         recommendationRV.adapter = adapterS
         recommendationRV.layoutManager = LinearLayoutManager(actContextBP)

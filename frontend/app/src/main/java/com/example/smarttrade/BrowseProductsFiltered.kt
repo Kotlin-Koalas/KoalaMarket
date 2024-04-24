@@ -78,7 +78,7 @@ class BrowseProductsFiltered : AppCompatActivity() {
          }
 
         val gridLayout =findViewById<GridView>(R.id.gridViewCategories)
-        adapterP = ProductAdapter(mutableListOf())
+        adapterP = ProductAdapter(this, mutableListOf())
         gridLayout.adapter = adapterP
 
 
