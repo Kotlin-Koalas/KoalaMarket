@@ -5,4 +5,6 @@
     <color name="green4">#1E735B</color>
     <color name ="greyLetter">#808080</color>
     <color name="verdeOscuro">#1e735b</color>
+    <color name="blancoFlecha">#D9D9D9</color>
+    <color name="verdeClaro">#71D3AA</color>
 </resources>
