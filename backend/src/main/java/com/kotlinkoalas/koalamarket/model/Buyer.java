@@ -24,6 +24,10 @@ public class Buyer extends Client{
     @Column(name = "paypal")
     private String paypal;
 
+    @OneToOne(mappedBy = "buyer")
+    @ToString.Exclude
+    private ShoppingCart shoppingCart;
+
     @OneToMany(mappedBy = "buyer")
     @ToString.Exclude
     private List<Address> shippingAddresses;

@@ -14,7 +14,7 @@ import java.util.Objects;
 @Inheritance(strategy = InheritanceType.JOINED)
 @Entity
 @IdClass(value = productPK.class)
-public class Product {
+public abstract class Product {
     @Id
     @Column(name = "product_number", length = 30, nullable = false)
     private String productNumber;
