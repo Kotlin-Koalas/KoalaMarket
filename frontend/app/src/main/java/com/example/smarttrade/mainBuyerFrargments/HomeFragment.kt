@@ -107,7 +107,6 @@ class HomeFragment : Fragment() {
         catLayout.layoutManager = LinearLayoutManager(actContextBP, LinearLayoutManager.HORIZONTAL,false)
         gridLayout.adapter = adapterP
 
-        //TODO conseguir los datos de la BD y meterlos a la lista productsShown
         logic.getAllProducts()
 
 

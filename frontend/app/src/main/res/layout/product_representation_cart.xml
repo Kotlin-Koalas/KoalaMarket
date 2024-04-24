@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="125dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="15dp"
+    app:cardElevation="5dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#ebebeb">
+
+        <ImageView
+            android:id="@+id/imageViewCat"
+            android:layout_width="110dp"
+            android:layout_height="110dp"
+            android:layout_marginStart="10dp"
+            android:background="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imageViewSelected"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/no_photo" />
+
+        <TextView
+            android:id="@+id/textViewTitulo"
+            android:layout_width="163dp"
+            android:layout_height="18dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginStart="10dp"
+            android:fontFamily="@font/karla"
+            android:text="Item example display"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imageViewCat"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.01" />
+
+        <TextView
+            android:id="@+id/textViewPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/karla"
+            android:gravity="center"
+            android:text="10"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            app:layout_constraintStart_toEndOf="@+id/imageViewCat"
+            app:layout_constraintTop_toBottomOf="@+id/textViewTitulo" />
+
+        <TextView
+            android:id="@+id/textViewDivisa"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="3dp"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/karla"
+            android:gravity="center"
+            android:text="€"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            app:layout_constraintStart_toEndOf="@+id/textViewPrice"
+            app:layout_constraintTop_toBottomOf="@+id/textViewTitulo" />
+
+        <ImageView
+            android:id="@+id/imageViewSelected"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="13dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ellipse_5" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

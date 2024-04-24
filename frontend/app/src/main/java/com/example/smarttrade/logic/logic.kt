@@ -75,7 +75,7 @@ object logic {
             Request.Method.POST,"$url/products/technology",json,
             {response ->
                 val jsonRes:JSONObject = response
-                val technology = technology_representation(name,price.toDouble(),image,stock,description,leafColor,PN,brand,electricConsumption)
+                val technology = technology_representation(name,price,image,stock,description,leafColor,PN,brand,electricConsumption)
                 AddProduct.productAded()
 
 
@@ -109,7 +109,7 @@ object logic {
             Request.Method.POST,"$url/products/toys",json,
             {response ->
                 val jsonRes:JSONObject = response
-                val toy = toy_representation(name,price.toDouble(),image,stock,description,leafColor,PN,material,age)
+                val toy = toy_representation(name,price,image,stock,description,leafColor,PN,material,age)
                 AddProduct.productAded()
 
             },
@@ -141,7 +141,7 @@ object logic {
             Request.Method.POST,"$url/products/clothes",json,
             {response ->
                 val jsonRes:JSONObject = response
-                val clothes = clothes_representation(name,price.toDouble(),image,stock,description,leafColor,PN,size,color)
+                val clothes = clothes_representation(name,price,image,stock,description,leafColor,PN,size,color)
                 AddProduct.productAded()
 
             },
@@ -174,7 +174,7 @@ object logic {
             Request.Method.POST,"$url/products/foods",json,
             {response ->
                 val jsonRes:JSONObject = response
-                val foods = food_representation(name,price.toDouble(),image,stock,description,leafColor,PN,calories,macros)
+                val foods = food_representation(name,price,image,stock,description,leafColor,PN,calories,macros)
                 AddProduct.productAded()
             },
             {error ->
@@ -186,7 +186,7 @@ object logic {
 
 
 
-
+    //TODO preparar recepcion de distintos tipos de productos, casteando a product_representation
 
     fun getAllProducts() {
         if(!isPQueue) {
@@ -200,7 +200,7 @@ object logic {
                 val products = JSONArray(response)
                 for (i in 0 until products.length()) {
                     val p = products.getJSONObject(i)
-                    res.add(product_representation(p.getString("name"),p.getString("price"),p.getString("image"),p.getString("stock").toInt(),p.getString("description"),p.getString("ecology"),p.getString("productNumber")))
+                    res.add(product_representation(p.getString("type"),p.getString("name"),p.getString("price"),p.getString("image"),p.getString("stock").toInt(),p.getString("description"),p.getString("ecology"),p.getString("productNumber")))
                 }
                 HomeFragment.setProductsShown(res)
             },
@@ -224,7 +224,7 @@ object logic {
                 val products = JSONArray(response)
                 for (i in 0 until products.length()) {
                     val p = products.getJSONObject(i)
-                    res.add(product_representation(p.getString("name"),p.getString("price"),p.getString("image"),p.getString("stock").toInt(),p.getString("description"),p.getString("ecology"),p.getString("productNumber")))
+                    res.add(product_representation(p.getString("type"),p.getString("name"),p.getString("price"),p.getString("image"),p.getString("stock").toInt(),p.getString("description"),p.getString("ecology"),p.getString("productNumber")))
                 }
                 BrowseProductsFiltered.setProductsShown(res)
             },
@@ -247,7 +247,7 @@ object logic {
                 val products = JSONArray(response)
                 for (i in 0 until products.length()) {
                     val p = products.getJSONObject(i)
-                    res.add(product_representation(p.getString("name"),p.getString("price"),p.getString("image"),p.getString("stock").toInt(),p.getString("description"),p.getString("ecology"),p.getString("productNumber")))
+                    res.add(product_representation(p.getString("type"),p.getString("name"),p.getString("price"),p.getString("image"),p.getString("stock").toInt(),p.getString("description"),p.getString("ecology"),p.getString("productNumber")))
                 }
                 BrowseProductsFiltered.setProductsShown(res)
             },
@@ -270,7 +270,7 @@ object logic {
                 val products = JSONArray(response)
                 for (i in 0 until products.length()) {
                     val p = products.getJSONObject(i)
-                    res.add(product_representation(p.getString("name"),p.getString("price"),p.getString("image"),p.getString("stock").toInt(),p.getString("description"),p.getString("ecology"),p.getString("productNumber")))
+                    res.add(product_representation(p.getString("type"),p.getString("name"),p.getString("price"),p.getString("image"),p.getString("stock").toInt(),p.getString("description"),p.getString("ecology"),p.getString("productNumber")))
                 }
                 BrowseProductsFiltered.setProductsShown(res)
             },
@@ -294,7 +294,7 @@ object logic {
                 val products = JSONArray(response)
                 for (i in 0 until products.length()) {
                     val p = products.getJSONObject(i)
-                    res.add(product_representation(p.getString("name"),p.getString("price"),p.getString("image"),p.getString("stock").toInt(),p.getString("description"),p.getString("ecology"),p.getString("productNumber")))
+                    res.add(product_representation(p.getString("type"),p.getString("name"),p.getString("price"),p.getString("image"),p.getString("stock").toInt(),p.getString("description"),p.getString("ecology"),p.getString("productNumber")))
                 }
                 BrowseProductsFiltered.setProductsShown(res)
             },
