@@ -25,7 +25,7 @@ public class Food extends Product{
     private String macros;
 
     public Food(String productNumber, String name, double price, String description, String ecology, int stock, String image, String cif, int calories, String macros) {
-        super(productNumber, name, price, description, ecology, stock, image, cif);
+        super("food",productNumber, name, price, description, ecology, stock, image, cif);
         this.calories = calories;
         this.macros = macros;
     }

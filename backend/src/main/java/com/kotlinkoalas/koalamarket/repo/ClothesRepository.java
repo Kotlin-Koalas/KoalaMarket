@@ -14,4 +14,6 @@ public interface ClothesRepository extends JpaRepository<Clothes, productPK> {
     void deleteByProductNumber(String productNumber);
 
     boolean existsByProductNumberAndCif(String productNumber, String cif);
+
+    Clothes findByProductNumberAndCif(String productNumber, String cif);
 }

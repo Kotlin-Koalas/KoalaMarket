@@ -14,17 +14,21 @@ public class CartItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    private Product product;
+    private String buyerId;
+
+    private String productNumber;
+
+    private String cif;
+
+    private String category;
 
     private int quantity;
 
-    @ManyToOne
-    private ShoppingCart shoppingCart;
-
-    public CartItem(Product product, int quantity, ShoppingCart shoppingCart) {
-        this.product = product;
+    public CartItem(String productNumber, String cif, String category, int quantity, String buyerId) {
+        this.productNumber = productNumber;
+        this.cif = cif;
+        this.category = category;
         this.quantity = quantity;
-        this.shoppingCart = shoppingCart;
+        this.buyerId = buyerId;
     }
 }
