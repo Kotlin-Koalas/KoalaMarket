@@ -1,4 +1,4 @@
-package com.example.smarttrade.mainBuyerFrargments
+package com.example.smarttrade.mainBuyerFragments
 
 import android.content.Context
 import android.os.Bundle

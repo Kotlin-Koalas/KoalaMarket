@@ -77,6 +77,49 @@
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ellipse_5" />
 
+        <LinearLayout
+            android:layout_width="70dp"
+            android:layout_height="22dp"
+            android:layout_gravity="right"
+            android:background="@drawable/ciruclar_button_cart"
+            android:orientation="horizontal"
+            app:layout_constraintVertical_bias="0.8"
+            app:layout_constraintHorizontal_bias="0.9"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewTitulo">
+
+
+            <ImageView
+                android:id="@+id/substractStock"
+                android:layout_width="9dp"
+                android:layout_height="9dp"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                app:srcCompat="@drawable/substract" />
+
+            <TextView
+                android:id="@+id/stock"
+                android:layout_width="15dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:fontFamily="@font/karla"
+                android:gravity="center"
+                android:text="0"
+                android:textColor="@color/black"
+                android:textSize="14dp" />
+
+            <ImageView
+                android:id="@+id/addStock"
+                android:layout_width="9dp"
+                android:layout_height="9dp"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                app:srcCompat="@drawable/addition" />
+        </LinearLayout>
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

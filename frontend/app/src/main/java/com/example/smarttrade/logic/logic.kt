@@ -14,7 +14,7 @@ import com.example.smarttrade.BuyerMainScreen
 import com.example.smarttrade.BrowseProductsFiltered
 import com.example.smarttrade.BuildConfig
 import com.example.smarttrade.MainActivity
-import com.example.smarttrade.mainBuyerFrargments.HomeFragment
+import com.example.smarttrade.mainBuyerFragments.HomeFragment
 import com.example.smarttrade.models.PersonSeller
 import com.example.smarttrade.models.clothes_representation
 import com.example.smarttrade.models.food_representation

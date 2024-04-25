@@ -11,7 +11,7 @@ import androidx.fragment.app.commit
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.add
-import com.example.smarttrade.mainBuyerFrargments.HomeFragment
+import com.example.smarttrade.mainBuyerFragments.HomeFragment
 
 class BuyerMainScreen : AppCompatActivity() {
 
