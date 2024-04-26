@@ -88,12 +88,22 @@
                         android:textSize="20dp"
                         android:maxLength="6"
                     />
+                    <TextView
+                        android:id="@+id/euro"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/karla"
+                        android:text="€"
+                        android:textColor="@color/white"
+                        android:textSize="20dp"
+                        android:maxLength="6"
+                        />
 
                     <LinearLayout
-                        android:layout_width="62dp"
-                        android:layout_height="match_parent"
+                        android:layout_width="95dp"
+                        android:layout_height="31dp"
                         android:layout_gravity="right"
-                        android:layout_marginLeft="121sp"
+                        android:layout_marginLeft="70sp"
                         android:background="@drawable/ciruclar_button"
                         android:orientation="horizontal">
 
@@ -101,7 +111,7 @@
                         <ImageView
                             android:id="@+id/substractStock"
                             android:layout_width="9dp"
-                            android:layout_height="9dp"
+                            android:layout_height="13dp"
                             android:layout_gravity="center"
                             android:layout_weight="1"
                             app:srcCompat="@drawable/substract" />
@@ -120,8 +130,8 @@
 
                         <ImageView
                             android:id="@+id/addStock"
-                            android:layout_width="9dp"
-                            android:layout_height="9dp"
+                            android:layout_width="11dp"
+                            android:layout_height="14dp"
                             android:layout_gravity="center"
                             android:layout_weight="1"
                             app:srcCompat="@drawable/addition" />
