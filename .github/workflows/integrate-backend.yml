@@ -45,10 +45,6 @@ jobs:
         with:
           node-version: "18"
 
-      - name: Start backend service
-        run: |
-          nohup ./backend/gradlew bootRun -p ./backend >/dev/null 2>&1 &
-
       - name: Install newman
         run: npm install -g newman
 
