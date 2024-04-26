@@ -45,20 +45,12 @@ jobs:
         with:
           node-version: "18"
 
-      - name: Install newman
-        run: npm install -g newman
-
       - name: Start backend service
         run: |
           nohup ./backend/gradlew bootRun -p ./backend >/dev/null 2>&1 &
 
-      - name: Wait for backend to run tests
-        run: |
-          while [ "$(curl -s -o /dev/null -w "%{http_code}" ${{ secrets.BASE_URL }})" -ne 200 ]; do
-            curl -s -o /dev/null -w "%{http_code}" ${{ secrets.BASE_URL }}
-            echo "Backend not ready yet, waiting..."
-            sleep 5
-          done
+      - name: Install newman
+        run: npm install -g newman
 
       - name: Run tests
         run: newman run ./koalamarket-apitests.json --env-var="baseUrl=${{ secrets.BASE_URL }}"
