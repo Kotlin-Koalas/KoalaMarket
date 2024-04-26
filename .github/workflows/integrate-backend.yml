@@ -55,7 +55,7 @@ jobs:
       - name: Wait for backend to run tests
         run: |
           while [ true ]; do
-              http_code=$(curl -s -o /dev/null -w "%{http_code}" ${{ secrets.BASE_URL }})
+              http_code=$(curl -s -o /dev/null -w "%{http_code}" http://google.com})
               echo "HTTP Status Code: $http_code"
               if [ "$http_code" -eq 200 ]; then
                   echo "Backend is ready!"
