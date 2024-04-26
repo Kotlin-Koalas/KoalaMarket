@@ -55,6 +55,7 @@ jobs:
       - name: Wait for backend to run tests
         run: |
           while [ "$(curl -s -o /dev/null -w "%{http_code}" ${{ secrets.BASE_URL }})" -ne 200 ]; do
+            curl -s -o /dev/null -w "%{http_code}" ${{ secrets.BASE_URL }}
             echo "Backend not ready yet, waiting..."
             sleep 5
           done
