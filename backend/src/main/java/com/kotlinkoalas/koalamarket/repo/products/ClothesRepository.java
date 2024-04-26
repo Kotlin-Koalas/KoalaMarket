@@ -1,7 +1,6 @@
-package com.kotlinkoalas.koalamarket.repo;
+package com.kotlinkoalas.koalamarket.repo.products;
 
 import com.kotlinkoalas.koalamarket.model.Clothes;
-import com.kotlinkoalas.koalamarket.model.Food;
 import com.kotlinkoalas.koalamarket.model.pk.productPK;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;

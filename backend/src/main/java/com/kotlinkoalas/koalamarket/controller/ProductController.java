@@ -1,43 +1,39 @@
 package com.kotlinkoalas.koalamarket.controller;
 
 import com.kotlinkoalas.koalamarket.model.Product;
-import com.kotlinkoalas.koalamarket.repo.ProductRepository;
+import com.kotlinkoalas.koalamarket.repo.products.ProductRepository;
+import com.kotlinkoalas.koalamarket.service.products.ProductService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class ProductController {
 
-    private final ProductRepository repository;
+    private final ProductService repository;
 
-    ProductController(ProductRepository repository) {
+    ProductController(ProductService repository) {
         this.repository = repository;
     }
 
     @GetMapping("/products/{productNumber}/exist")
     public ResponseEntity<?> existProductNumber(@PathVariable String productNumber) {
-        return ResponseEntity.ok(repository.existsByProductNumber(productNumber));
+        return repository.existsProduct(productNumber);
     }
 
     @GetMapping("/products/{productNumber}")
-    public List<Product> getProduct(@PathVariable String productNumber) {
-        return repository.findByProductNumber(productNumber);
+    public ResponseEntity<Map<String,Object>> getProduct(@PathVariable String productNumber) {
+        return repository.getProduct(productNumber);
     }
 
     @GetMapping("/products")
     public List<Product> allDistinct() {
-        List<String> productNumbers = repository.findDistinctProducts();
-        List<Product> products = new ArrayList<>();
-        for (String productNumber : productNumbers) {
-            products.add(repository.findByProductNumber(productNumber).get(0));
-        }
-        return products;
+        return repository.allDistinctProducts();
     }
 
 }

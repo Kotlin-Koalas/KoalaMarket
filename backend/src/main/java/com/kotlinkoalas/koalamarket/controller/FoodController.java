@@ -1,10 +1,7 @@
 package com.kotlinkoalas.koalamarket.controller;
 
-import com.kotlinkoalas.koalamarket.factory.FoodFactory;
-import com.kotlinkoalas.koalamarket.factory.ProductFactory;
 import com.kotlinkoalas.koalamarket.model.Food;
-import com.kotlinkoalas.koalamarket.repo.FoodRepository;
-import com.kotlinkoalas.koalamarket.service.FoodService;
+import com.kotlinkoalas.koalamarket.service.products.FoodService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

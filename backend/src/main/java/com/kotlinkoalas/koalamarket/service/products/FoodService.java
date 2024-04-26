@@ -1,8 +1,8 @@
-package com.kotlinkoalas.koalamarket.service;
+package com.kotlinkoalas.koalamarket.service.products;
 
 import com.kotlinkoalas.koalamarket.factory.FoodFactory;
 import com.kotlinkoalas.koalamarket.model.Food;
-import com.kotlinkoalas.koalamarket.repo.FoodRepository;
+import com.kotlinkoalas.koalamarket.repo.products.FoodRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

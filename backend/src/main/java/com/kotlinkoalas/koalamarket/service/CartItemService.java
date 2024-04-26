@@ -2,6 +2,10 @@ package com.kotlinkoalas.koalamarket.service;
 
 import com.kotlinkoalas.koalamarket.model.*;
 import com.kotlinkoalas.koalamarket.repo.CartItemRepository;
+import com.kotlinkoalas.koalamarket.service.products.ClothesService;
+import com.kotlinkoalas.koalamarket.service.products.FoodService;
+import com.kotlinkoalas.koalamarket.service.products.TechnologyService;
+import com.kotlinkoalas.koalamarket.service.products.ToyService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
