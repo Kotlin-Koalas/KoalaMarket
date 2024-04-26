@@ -45,17 +45,17 @@ jobs:
         with:
           node-version: "18"
 
+      - name: Install newman
+        run: npm install -g newman
+
       - name: Start backend service
         run: |
           ./backend/gradlew bootRun -p ./backend &
 
-      - name: Install newman
-        run: npm install -g newman
-
       - name: Wait for backend to run tests
         run: |
           while [ true ]; do
-              http_code=$(curl -s -o /dev/null -w "%{http_code}" https://www.google.es/?gws_rd=ssl)
+              http_code=$(curl -s -o /dev/null -w "%{http_code}" ${{ secrets.BASE_URL }})
               echo "HTTP Status Code: $http_code"
               if [ "$http_code" -eq 200 ]; then
                   echo "Backend is ready!"
