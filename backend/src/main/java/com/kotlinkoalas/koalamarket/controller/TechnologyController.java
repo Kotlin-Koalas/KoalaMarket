@@ -15,7 +15,6 @@ import java.util.Map;
 
 @RestController
 public class TechnologyController {
-
     private final TechnologyService technologyService;
 
     TechnologyController(TechnologyService technologyService) {
