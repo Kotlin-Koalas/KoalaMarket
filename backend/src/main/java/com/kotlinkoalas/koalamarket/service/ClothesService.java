@@ -26,6 +26,10 @@ public class ClothesService {
         return repository.findAll();
     }
 
+    public Clothes getClothesByProductNumber(String productNumber, String cif) {
+        return repository.findByProductNumberAndCif(productNumber, cif);
+    }
+
     public Clothes createClothes(String productNumber, String name, double price, String description,
                                  String ecology, int stock, String image, String cif, String color, String size) {
         if (repository.existsByProductNumberAndCif(productNumber, cif)) {

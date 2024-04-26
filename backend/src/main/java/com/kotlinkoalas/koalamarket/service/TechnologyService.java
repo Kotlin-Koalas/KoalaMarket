@@ -1,6 +1,7 @@
 package com.kotlinkoalas.koalamarket.service;
 
 import com.kotlinkoalas.koalamarket.factory.TechnologyFactory;
+import com.kotlinkoalas.koalamarket.model.Food;
 import com.kotlinkoalas.koalamarket.model.Technology;
 import com.kotlinkoalas.koalamarket.repo.TechnologyRepository;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,10 @@ public class TechnologyService {
 
     public List<Technology> getAllTechnologies() {
         return repository.findAll();
+    }
+
+    public Technology getTechnologyByProductNumber(String productNumber, String cif) {
+        return repository.findByProductNumberAndCif(productNumber, cif);
     }
 
     public Technology createTechnology(String productNumber, String name, double price, String description,

@@ -22,6 +22,10 @@ public class FoodService {
         return repository.findAll();
     }
 
+    public Food getFoodByProductNumber(String productNumber, String cif) {
+        return repository.findByProductNumberAndCif(productNumber, cif);
+    }
+
     public Food createFood(String productNumber, String name, double price, String description,
                                  String ecology, int stock, String image, String cif, String calories, String macros) {
         if (repository.existsByProductNumberAndCif(productNumber, cif)) {

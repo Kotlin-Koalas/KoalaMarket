@@ -13,4 +13,6 @@ public interface TechnologyRepository extends JpaRepository<Technology, productP
     void deleteByProductNumber(String productNumber);
 
     boolean existsByProductNumberAndCif(String productNumber, String cif);
+
+    Technology findByProductNumberAndCif(String productNumber, String cif);
 }

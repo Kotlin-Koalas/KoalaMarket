@@ -1,6 +1,7 @@
 package com.kotlinkoalas.koalamarket.service;
 
 import com.kotlinkoalas.koalamarket.factory.ToyFactory;
+import com.kotlinkoalas.koalamarket.model.Food;
 import com.kotlinkoalas.koalamarket.model.Toy;
 import com.kotlinkoalas.koalamarket.repo.ToyRepository;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,10 @@ public class ToyService {
 
     public List<Toy> getAllToys() {
         return repository.findAll();
+    }
+
+    public Toy getToyByProductNumber(String productNumber, String cif) {
+        return repository.findByProductNumberAndCif(productNumber, cif);
     }
 
     public Toy createToy(String productNumber, String name, double price, String description,

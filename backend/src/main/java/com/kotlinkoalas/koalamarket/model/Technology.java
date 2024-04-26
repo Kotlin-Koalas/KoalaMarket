@@ -22,7 +22,7 @@ public class Technology extends Product {
     private String brand;
 
     public Technology(String productNumber, String name, double price, String description, String ecology, int stock, String image,String cif, String electricConsumption, String brand){
-        super(productNumber, name, price, description, ecology, stock, image, cif);
+        super("technology",productNumber, name, price, description, ecology, stock, image, cif);
         this.electricConsumption = electricConsumption;
         this.brand = brand;
     }
