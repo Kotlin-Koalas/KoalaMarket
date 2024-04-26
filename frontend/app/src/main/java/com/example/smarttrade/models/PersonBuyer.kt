@@ -12,7 +12,7 @@ object PersonBuyer {
     private var bizum:String = ""
     private var paypal:String = ""
     private var creditCards:MutableList<CreditCard> = mutableListOf()
-    private var shoppingCart:MutableList<product_representation> = mutableListOf()
+    private var shoppingCart:MutableList<product_representation_cart> = mutableListOf()
 
 
 
@@ -94,6 +94,20 @@ object PersonBuyer {
     }
     fun getCreditCards(): MutableList<CreditCard> {
         return creditCards
+    }
+
+    fun addProductToCart(product: product_representation_cart) {
+        shoppingCart.add(product)
+    }
+    fun getShoppingCart(): MutableList<product_representation_cart> {
+        return shoppingCart
+    }
+    fun removeProductFromCart(product: product_representation_cart) {
+        shoppingCart.remove(product)
+    }
+
+    fun setProductsInCart(products: MutableList<product_representation_cart>) {
+        shoppingCart = products
     }
 
 }

@@ -15,7 +15,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/constraintLayoutCategories">
+        app:layout_constraintBottom_toTopOf="@id/constraintLayoutProducts">
 
         <ImageView
             android:id="@+id/imageViewHeart"
@@ -46,7 +46,7 @@
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayoutCategories"
+        android:id="@+id/constraintLayoutProducts"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:background="@color/white"
@@ -56,17 +56,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayoutSearch">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/HorizontalScrollViewCat"
+        <GridView
+            android:id="@+id/VerticalGridViewProductsCart"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            android:numColumns="1">
 
-        </androidx.recyclerview.widget.RecyclerView>
+        </GridView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout

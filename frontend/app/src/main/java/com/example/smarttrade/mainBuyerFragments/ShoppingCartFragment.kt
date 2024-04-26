@@ -6,9 +6,16 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.GridView
+import android.widget.ScrollView
+import androidx.recyclerview.widget.RecyclerView
+import com.example.smarttrade.BuyerMainScreen
 import com.example.smarttrade.R
 import com.example.smarttrade.adapters.ProductAdapter
+import com.example.smarttrade.adapters.ProductCartAdapter
+import com.example.smarttrade.models.PersonBuyer
 import com.example.smarttrade.models.product_representation
+import com.example.smarttrade.models.product_representation_cart
 
 
 class ShoppingCartFragment : Fragment() {
@@ -32,6 +39,14 @@ class ShoppingCartFragment : Fragment() {
     ): View? {
         view = inflater.inflate(R.layout.fragment_shopping_cart, container, false)
         // Inflate the layout for this fragment
+        instance = this
+
+        actContextBP = BuyerMainScreen.getContext()
+
+        adapterPC =  ProductCartAdapter(PersonBuyer.getShoppingCart())
+
+        val productsLayout = view.findViewById<GridView>(R.id.VerticalGridViewProductsCart)
+        productsLayout.adapter = adapterPC
 
         return view
     }
@@ -40,8 +55,7 @@ class ShoppingCartFragment : Fragment() {
         //private const val ARG_PARAM1 = "param1"
         //private const val ARG_PARAM2 = "param2"
         private lateinit var actContextBP: Context
-        private lateinit var cartProducts: MutableList<product_representation>
-        private lateinit var adapterPC: ProductAdapter
+        private lateinit var adapterPC: ProductCartAdapter
         private lateinit var instance: ShoppingCartFragment
         /*
         @JvmStatic
@@ -53,9 +67,9 @@ class ShoppingCartFragment : Fragment() {
                 }
             }
         */
-        fun setProductsShown(list:MutableList<product_representation>){
-            cartProducts = list
-            adapterPC.updateProducts(cartProducts)
+        fun setProductsShown(list:MutableList<product_representation_cart>){
+            PersonBuyer.setProductsInCart(list)
+            adapterPC.updateProducts(PersonBuyer.getShoppingCart())
         }
 
     }
