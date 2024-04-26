@@ -3,10 +3,10 @@ name: Build Backend
 on:
   push:
     branches: [main]
-    paths: "backend/**"
+    # paths: "backend/**"
   pull_request:
     branches: [main]
-    paths: "backend/**"
+    # paths: "backend/**"
 
 jobs:
   build:
@@ -55,7 +55,7 @@ jobs:
       - name: Wait for backend to run tests
         run: |
           while [ true ]; do
-              http_code=$(curl -s -o /dev/null -w "%{http_code}" ${{ secrets.BASEURL }})
+              http_code=$(curl -s -o /dev/null -w "%{http_code}" ${{ secrets.BASE_URL }})
               echo "HTTP Status Code: $http_code"
               if [ "$http_code" -eq 200 ]; then
                   echo "Backend is ready!"
@@ -67,4 +67,4 @@ jobs:
           done
 
       - name: Run tests
-        run: newman run ./koalamarket-apitests.json --env-var="baseUrl=${{ secrets.BASEURL }}"
+        run: newman run ./koalamarket-apitests.json --env-var="baseUrl=${{ secrets.BASE_URL }}"
