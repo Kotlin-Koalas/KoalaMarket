@@ -7,12 +7,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.GridView
+import android.widget.ImageView
 import android.widget.ScrollView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.smarttrade.BuyerMainScreen
 import com.example.smarttrade.R
 import com.example.smarttrade.adapters.ProductAdapter
 import com.example.smarttrade.adapters.ProductCartAdapter
+import com.example.smarttrade.logic.ShoppingCartRequests
 import com.example.smarttrade.models.PersonBuyer
 import com.example.smarttrade.models.product_representation
 import com.example.smarttrade.models.product_representation_cart
@@ -43,10 +45,22 @@ class ShoppingCartFragment : Fragment() {
 
         actContextBP = BuyerMainScreen.getContext()
 
-        adapterPC =  ProductCartAdapter(PersonBuyer.getShoppingCart())
+        adapterPC =  ProductCartAdapter(mutableListOf())
 
         val productsLayout = view.findViewById<GridView>(R.id.VerticalGridViewProductsCart)
         productsLayout.adapter = adapterPC
+
+        ShoppingCartRequests.getShoppingCart()
+
+        val allSelected = false
+        val selectAll = view.findViewById<ImageView>(R.id.imageViewSelectTodos)
+        selectAll.setOnClickListener{
+            if(!allSelected){
+                ProductCartAdapter.setAllSelected()
+            } else {
+                ProductCartAdapter.setAllUnselected()
+            }
+        }
 
         return view
     }
@@ -67,8 +81,7 @@ class ShoppingCartFragment : Fragment() {
                 }
             }
         */
-        fun setProductsShown(list:MutableList<product_representation_cart>){
-            PersonBuyer.setProductsInCart(list)
+        fun setInitialProductsShown(){
             adapterPC.updateProducts(PersonBuyer.getShoppingCart())
         }
 

@@ -1,15 +1,15 @@
 package com.example.smarttrade.adapters
 
+import android.content.Context
 import android.graphics.Bitmap
+import android.graphics.Canvas
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.smarttrade.R
-import com.example.smarttrade.logic.ImageObtainer
 import com.example.smarttrade.volleyRequestClasses.ImageURLtoBitmapConverter
 import com.example.smarttrade.models.product_representation_cart
 
@@ -48,6 +48,7 @@ class ProductCartAdapter(
     }
 
     fun updateProducts(updateProductList: MutableList<product_representation_cart>) {
+        views.clear()
         cartProducts.clear()
         cartProducts.addAll(updateProductList)
         notifyDataSetChanged()
@@ -60,23 +61,23 @@ class ProductCartAdapter(
         // Find UI elements in the inflated view
         val textViewPrice = view.findViewById<TextView>(R.id.textViewPrice)
         val textViewName = view.findViewById<TextView>(R.id.textViewTitulo)
-        var selectedOrNot = false
-        ImageURLtoBitmapConverter.downloadImage(cartProducts[position].image,view)
+        ImageURLtoBitmapConverter.downloadImageCart(cartProducts[position].image,view)
 
         textViewPrice.text = cartProducts[position].price
         textViewName.text = cartProducts[position].name
 
         val selectedImageView = view.findViewById<ImageView>(R.id.imageViewSelected)
+        selectedImageView.tag = R.drawable.ellipse_5
 
         val selected = view.findViewById<ImageView>(R.id.imageViewSelected)
         selected.setOnClickListener {
-            if (!selectedOrNot) {
-                val bitmap = ImageObtainer.layoutToImage(R.layout.cart_selected, view.context)
+            if (selectedImageView.tag == R.drawable.ellipse_5) {
+                val bitmap = layoutToImage(R.layout.cart_selected, view.context)
                 selectedImageView.setImageBitmap(bitmap)
-                selectedOrNot = true
+                selectedImageView.tag = R.layout.cart_selected
             } else {
                 selectedImageView.setImageResource(R.drawable.ellipse_5)
-                selectedOrNot = false
+                selectedImageView.tag = R.drawable.ellipse_5
             }
             //TODO avisar al mediador que se ha seleccionado un producto
         }
@@ -93,7 +94,7 @@ class ProductCartAdapter(
                 stockText.text = currentStock.toString()
                 cartProducts[position].quantity = currentStock
             }
-            //TODO avisar al mediador
+            //TODO avisar al mediador de que se ha añadido un producto
         }
 
         val substractQuantity = view.findViewById<ImageView>(R.id.substractStock)
@@ -102,19 +103,55 @@ class ProductCartAdapter(
                 currentStock--
                 stockText.text = currentStock.toString()
                 cartProducts[position].quantity = currentStock
+                //TODO avisar al mediador de que se ha restado un producto
+            } else{
+                cartProducts.removeAt(position)
+                views.remove(view)
+                notifyDataSetChanged()
+                //TODO avisar al mediador de que se ha eliminado un producto
             }
-            //TODO avisar al mediador
         }
-
+        views.add(view)
         return view
     }
 
+
+
     companion object{
+        val views = mutableListOf<View>()
         fun setImage(image: Bitmap?,view:View){
             val imageView = view.findViewById<ImageView>(R.id.imageViewCat)
             if (image != null) {
                 imageView.setImageBitmap(image)
             }
+        }
+        fun setAllSelected(){
+            for (v in views){
+                val selectedImageView = v.findViewById<ImageView>(R.id.imageViewSelected)
+                val bitmap = layoutToImage(R.layout.cart_selected, v.context)
+                selectedImageView.setImageBitmap(bitmap)
+                selectedImageView.tag = R.layout.cart_selected
+            }
+            //TODO avisar al mediador de que se ha seleccionado todo
+        }
+        fun setAllUnselected(){
+            for (v in views){
+                val selectedImageView = v.findViewById<ImageView>(R.id.imageViewSelected)
+                selectedImageView.setImageResource(R.drawable.ellipse_5)
+                selectedImageView.tag = R.drawable.ellipse_5
+            }
+            //TODO avisar al mediador de que se ha deseleccionado todo
+        }
+        private fun layoutToImage(layoutId: Int, context: Context): Bitmap {
+            val layout = LayoutInflater.from(context).inflate(layoutId, null)
+            layout.measure(
+                View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED),
+                View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED))
+            layout.layout(0, 0, layout.measuredWidth, layout.measuredHeight)
+            val bitmap = Bitmap.createBitmap(layout.measuredWidth, layout.measuredHeight, Bitmap.Config.ARGB_8888)
+            val canvas = Canvas(bitmap)
+            layout.draw(canvas)
+            return bitmap
         }
     }
 
