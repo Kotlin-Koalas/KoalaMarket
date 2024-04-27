@@ -36,10 +36,13 @@ class SellerAdapter(
          val textPrice = view.findViewById<TextView>(R.id.price)
          val stockText = view.findViewById<TextView>(R.id.stock)
          val cart = view.findViewById<ImageView>(R.id.carritoImageView)
+         val specificAttirbutes = view.findViewById<TextView>(R.id.specificAttribute)
 
          textNameSeller.text = sellerList[position].name
          textPrice.text = sellerList[position].price.toString()
          stockText.text = sellerList[position].stock.toString()
+         specificAttirbutes.text = sellerList[position].specificAttribute
+
 
          cart.setOnClickListener {
              // TODO: implementar que se añada al carrito a ese precio
