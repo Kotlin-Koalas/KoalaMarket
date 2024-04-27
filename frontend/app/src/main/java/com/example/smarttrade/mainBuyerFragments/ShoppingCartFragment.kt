@@ -23,7 +23,7 @@ import com.example.smarttrade.models.product_representation_cart
 class ShoppingCartFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
-    private lateinit var view: View
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,7 +39,7 @@ class ShoppingCartFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        view = inflater.inflate(R.layout.fragment_shopping_cart, container, false)
+        currView = inflater.inflate(R.layout.fragment_shopping_cart, container, false)
         // Inflate the layout for this fragment
         instance = this
 
@@ -47,13 +47,13 @@ class ShoppingCartFragment : Fragment() {
 
         adapterPC =  ProductCartAdapter(mutableListOf())
 
-        val productsLayout = view.findViewById<GridView>(R.id.VerticalGridViewProductsCart)
+        val productsLayout = currView.findViewById<GridView>(R.id.VerticalGridViewProductsCart)
         productsLayout.adapter = adapterPC
 
         ShoppingCartRequests.getShoppingCart()
 
         val allSelected = false
-        val selectAll = view.findViewById<ImageView>(R.id.imageViewSelectTodos)
+        val selectAll = currView.findViewById<ImageView>(R.id.imageViewSelectTodos)
         selectAll.setOnClickListener{
             if(!allSelected){
                 ProductCartAdapter.setAllSelected()
@@ -62,7 +62,7 @@ class ShoppingCartFragment : Fragment() {
             }
         }
 
-        return view
+        return currView
     }
 
     companion object {
@@ -71,6 +71,7 @@ class ShoppingCartFragment : Fragment() {
         private lateinit var actContextBP: Context
         private lateinit var adapterPC: ProductCartAdapter
         private lateinit var instance: ShoppingCartFragment
+        private lateinit var currView: View
         /*
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
@@ -83,6 +84,9 @@ class ShoppingCartFragment : Fragment() {
         */
         fun setInitialProductsShown(){
             adapterPC.updateProducts(PersonBuyer.getShoppingCart())
+        }
+        fun getCurrView(): View{
+            return currView
         }
 
     }

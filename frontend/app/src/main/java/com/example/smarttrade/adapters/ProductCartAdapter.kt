@@ -9,7 +9,9 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.compose.material3.MediumTopAppBar
 import com.example.smarttrade.R
+import com.example.smarttrade.mediador.Mediador
 import com.example.smarttrade.volleyRequestClasses.ImageURLtoBitmapConverter
 import com.example.smarttrade.models.product_representation_cart
 
@@ -75,11 +77,12 @@ class ProductCartAdapter(
                 val bitmap = layoutToImage(R.layout.cart_selected, view.context)
                 selectedImageView.setImageBitmap(bitmap)
                 selectedImageView.tag = R.layout.cart_selected
+                Mediador.notifyItemSelected(cartProducts[position])
             } else {
                 selectedImageView.setImageResource(R.drawable.ellipse_5)
                 selectedImageView.tag = R.drawable.ellipse_5
+                Mediador.notifyItemUnselected(cartProducts[position])
             }
-            //TODO avisar al mediador que se ha seleccionado un producto
         }
 
         var currentStock = cartProducts[position].quantity
@@ -94,7 +97,7 @@ class ProductCartAdapter(
                 stockText.text = currentStock.toString()
                 cartProducts[position].quantity = currentStock
             }
-            //TODO avisar al mediador de que se ha añadido un producto
+            Mediador.notifyItemQuantityIncreased(cartProducts[position],view)
         }
 
         val substractQuantity = view.findViewById<ImageView>(R.id.substractStock)
@@ -103,7 +106,7 @@ class ProductCartAdapter(
                 currentStock--
                 stockText.text = currentStock.toString()
                 cartProducts[position].quantity = currentStock
-                //TODO avisar al mediador de que se ha restado un producto
+                Mediador.notifyItemQuantityDecreased(cartProducts[position],view)
             } else{
                 cartProducts.removeAt(position)
                 views.remove(view)

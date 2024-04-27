@@ -136,6 +136,7 @@
             android:text="0"
             android:maxLength="5"
             android:layout_marginRight="3dp"
+            android:inputType="number"
             android:textSize="20sp"
             android:textColor="@color/black"
             app:layout_constraintBottom_toBottomOf="parent"

@@ -13,6 +13,7 @@ object PersonBuyer {
     private var paypal:String = ""
     private var creditCards:MutableList<CreditCard> = mutableListOf()
     private var shoppingCart:MutableList<product_representation_cart> = mutableListOf()
+    private var selectedItemsCart:MutableList<product_representation_cart> = mutableListOf()
 
 
 
@@ -110,4 +111,31 @@ object PersonBuyer {
         shoppingCart = products
     }
 
+    fun addSelectedItemToCart(product: product_representation_cart) {
+        selectedItemsCart.add(product)
+    }
+
+    fun getSelectedItemsCart(): MutableList<product_representation_cart> {
+        return selectedItemsCart
+    }
+
+    fun removeSelectedItemFromCart(product: product_representation_cart) {
+        selectedItemsCart.remove(product)
+    }
+
+    fun modifySelectedItemInCart(PN: String, quantity: Int) {
+        for (product in selectedItemsCart) {
+            if (product.PN == PN) {
+                product.quantity = quantity
+            }
+        }
+    }
+
+    fun modifyProductInCart(PN: String, quantity: Int) {
+        for (product in shoppingCart) {
+            if (product.PN == PN) {
+                product.quantity = quantity
+            }
+        }
+    }
 }
