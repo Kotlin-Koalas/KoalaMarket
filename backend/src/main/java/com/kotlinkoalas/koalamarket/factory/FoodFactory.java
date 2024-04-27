@@ -1,7 +1,7 @@
 package com.kotlinkoalas.koalamarket.factory;
 
-import com.kotlinkoalas.koalamarket.model.Food;
-import com.kotlinkoalas.koalamarket.model.Product;
+import com.kotlinkoalas.koalamarket.model.products.Food;
+import com.kotlinkoalas.koalamarket.model.products.Product;
 
 public class FoodFactory extends ProductFactory {
 

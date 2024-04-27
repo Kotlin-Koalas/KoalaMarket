@@ -1,8 +1,7 @@
 package com.kotlinkoalas.koalamarket.factory;
 
-import com.kotlinkoalas.koalamarket.model.Product;
-import com.kotlinkoalas.koalamarket.model.Technology;
-import com.kotlinkoalas.koalamarket.model.Toy;
+import com.kotlinkoalas.koalamarket.model.products.Product;
+import com.kotlinkoalas.koalamarket.model.products.Toy;
 
 public class ToyFactory extends ProductFactory{
     @Override

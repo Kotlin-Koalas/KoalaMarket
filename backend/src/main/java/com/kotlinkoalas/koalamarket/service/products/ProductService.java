@@ -1,6 +1,6 @@
 package com.kotlinkoalas.koalamarket.service.products;
 
-import com.kotlinkoalas.koalamarket.model.*;
+import com.kotlinkoalas.koalamarket.model.products.*;
 import com.kotlinkoalas.koalamarket.repo.ClientRepository;
 import com.kotlinkoalas.koalamarket.repo.products.ProductRepository;
 import org.springframework.http.ResponseEntity;

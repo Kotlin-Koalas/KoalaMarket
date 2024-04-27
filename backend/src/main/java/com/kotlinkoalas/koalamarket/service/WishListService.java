@@ -5,7 +5,7 @@ import com.kotlinkoalas.koalamarket.model.products.Clothes;
 import com.kotlinkoalas.koalamarket.model.products.Food;
 import com.kotlinkoalas.koalamarket.model.products.Technology;
 import com.kotlinkoalas.koalamarket.model.products.Toy;
-import com.kotlinkoalas.koalamarket.repo.CartItemRepository;
+import com.kotlinkoalas.koalamarket.repo.WishListRepository;
 import com.kotlinkoalas.koalamarket.service.products.ClothesService;
 import com.kotlinkoalas.koalamarket.service.products.FoodService;
 import com.kotlinkoalas.koalamarket.service.products.TechnologyService;
@@ -19,9 +19,8 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class CartItemService {
-
-    private final CartItemRepository repository;
+public class WishListService {
+    private final WishListRepository repository;
 
     private final ClothesService clothesService;
 
@@ -31,31 +30,30 @@ public class CartItemService {
 
     private final ToyService toyService;
 
-    public CartItemService(CartItemRepository repository, ClothesService clothesService, FoodService foodService, TechnologyService technologyService, ToyService toyService) {
-        this.repository = repository;
+    public WishListService(WishListRepository wishListRepository, ClothesService clothesService, FoodService foodService, TechnologyService technologyService, ToyService toyService) {
+        this.repository = wishListRepository;
         this.clothesService = clothesService;
         this.foodService = foodService;
         this.technologyService = technologyService;
         this.toyService = toyService;
     }
 
-    public ResponseEntity<Map<String,Object>> getAllItemsInCart(String clientId){
-        List<CartItem> items = repository.findAllByBuyerId(clientId);
+    public ResponseEntity<Map<String, Object>> getAllItemsInWishList(String clientId) {
+        List<WishList> items = repository.findAllByBuyerId(clientId);
         Map<String, Object> response = new HashMap<>();
-        if(items.isEmpty()){
-            response.put("message", "Cart is empty");
+        if (items.isEmpty()) {
+            response.put("message", "WishList is empty");
             return ResponseEntity.ok(response);
         }
 
         List<Map<String, Object>> itemsList = new ArrayList<>();
 
-        for (CartItem item : items) {
+        for (WishList item : items) {
             String productNumber = item.getProductNumber();
             String cif = item.getCif();
             String category = item.getCategory();
-            int quantity = item.getQuantity();
             Map<String, Object> itemDetails = new HashMap<>();
-            switch (category){
+            switch (category) {
                 case "clothes":
                     Clothes clothes = clothesService.getClothesByProductNumber(productNumber, cif);
                     itemDetails.put("name", clothes.getName());
@@ -105,30 +103,20 @@ public class CartItemService {
                     itemDetails.put("category", toy.getCategory());
                     break;
             }
-            itemDetails.put("quantity", quantity);
             itemsList.add(itemDetails);
         }
         response.put("items", itemsList);
         return ResponseEntity.ok(response);
     }
 
-    public ResponseEntity<String> addItemToCart(String id, String productNumber, String cif, String category, int quantity) {
 
-        repository.save(new CartItem(productNumber, cif, category, quantity, id));
+    public ResponseEntity<String> addItemToWishList(String clientId, String productNumber, String cif, String category) {
+
+        repository.save(new WishList(productNumber, cif, category, clientId));
         return ResponseEntity.ok().contentType(org.springframework.http.MediaType.APPLICATION_JSON).body("Item added to cart");
     }
 
-    public ResponseEntity<String> updateItemInCart(String id, String productNumber, String cif, String category, int quantity) {
-        repository.findAllByBuyerId(id).forEach(item -> {
-            if (item.getProductNumber().equals(productNumber) && item.getCif().equals(cif) && item.getCategory().equals(category)) {
-                item.setQuantity(quantity);
-                repository.save(item);
-            }
-        });
-        return ResponseEntity.ok().contentType(org.springframework.http.MediaType.APPLICATION_JSON).body("Item updated in cart");
-    }
-
-    public ResponseEntity<String> deleteItemFromCart(String id, String productNumber, String cif, String category) {
+    public ResponseEntity<String> deleteItemFromWishList(String id, String productNumber, String cif, String category) {
         repository.findAllByBuyerId(id).forEach(item -> {
             if (item.getProductNumber().equals(productNumber) && item.getCif().equals(cif) && item.getCategory().equals(category)) {
                 repository.delete(item);
@@ -136,4 +124,6 @@ public class CartItemService {
         });
         return ResponseEntity.ok().contentType(org.springframework.http.MediaType.APPLICATION_JSON).body("Item deleted from cart");
     }
+
+
 }
