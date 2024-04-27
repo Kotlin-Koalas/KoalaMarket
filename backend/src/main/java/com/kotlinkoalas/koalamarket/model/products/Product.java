@@ -1,6 +1,6 @@
-package com.kotlinkoalas.koalamarket.model;
+package com.kotlinkoalas.koalamarket.model.products;
 
-import com.kotlinkoalas.koalamarket.model.pk.productPK;
+import com.kotlinkoalas.koalamarket.model.products.pk.productPK;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.proxy.HibernateProxy;
@@ -14,7 +14,7 @@ import java.util.Objects;
 @Inheritance(strategy = InheritanceType.JOINED)
 @Entity
 @IdClass(value = productPK.class)
-public class Product {
+public abstract class Product {
     @Id
     @Column(name = "product_number", length = 30, nullable = false)
     private String productNumber;
@@ -37,11 +37,15 @@ public class Product {
     @Column(name = "image", nullable = false)
     private String image;
 
+    @Column(name = "category", nullable = false)
+    private String category;
+
     @Id
     @Column(name = "cif", length = 30, nullable = false)
     private String cif;
 
-    public Product(String productNumber, String name, double price, String description, String ecology, int stock, String image,String cif) {
+    public Product(String category,String productNumber, String name, double price, String description, String ecology, int stock, String image,String cif) {
+        this.category = category;
         this.productNumber = productNumber;
         this.name = name;
         this.price = price;

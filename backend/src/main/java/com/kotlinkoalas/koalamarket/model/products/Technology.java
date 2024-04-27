@@ -1,9 +1,8 @@
-package com.kotlinkoalas.koalamarket.model;
+package com.kotlinkoalas.koalamarket.model.products;
 
-import com.kotlinkoalas.koalamarket.model.pk.productPK;
+import com.kotlinkoalas.koalamarket.model.products.pk.productPK;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
 import jakarta.persistence.IdClass;
 import lombok.*;
 
@@ -22,7 +21,7 @@ public class Technology extends Product {
     private String brand;
 
     public Technology(String productNumber, String name, double price, String description, String ecology, int stock, String image,String cif, String electricConsumption, String brand){
-        super(productNumber, name, price, description, ecology, stock, image, cif);
+        super("technology",productNumber, name, price, description, ecology, stock, image, cif);
         this.electricConsumption = electricConsumption;
         this.brand = brand;
     }

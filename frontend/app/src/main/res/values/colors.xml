@@ -7,4 +7,5 @@
     <color name="verdeOscuro">#1e735b</color>
     <color name="blancoFlecha">#D9D9D9</color>
     <color name="verdeClaro">#71D3AA</color>
+    <color name="amarilloAlerta">#ffd100</color>
 </resources>

@@ -6,4 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.rest.webmvc.RepositoryRestController;
 
 @RepositoryRestController
-public interface ClientRepository extends JpaRepository<Client, String> {}
+public interface ClientRepository extends JpaRepository<Client, String> {
+    Client findByDni(String dni);
+}

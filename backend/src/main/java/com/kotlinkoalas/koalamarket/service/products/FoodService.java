@@ -1,8 +1,8 @@
-package com.kotlinkoalas.koalamarket.service;
+package com.kotlinkoalas.koalamarket.service.products;
 
 import com.kotlinkoalas.koalamarket.factory.FoodFactory;
-import com.kotlinkoalas.koalamarket.model.Food;
-import com.kotlinkoalas.koalamarket.repo.FoodRepository;
+import com.kotlinkoalas.koalamarket.model.products.Food;
+import com.kotlinkoalas.koalamarket.repo.products.FoodRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,6 +20,10 @@ public class FoodService {
 
     public List<Food> getAllFoods() {
         return repository.findAll();
+    }
+
+    public Food getFoodByProductNumber(String productNumber, String cif) {
+        return repository.findByProductNumberAndCif(productNumber, cif);
     }
 
     public Food createFood(String productNumber, String name, double price, String description,
