@@ -47,9 +47,7 @@ class MainActivity : AppCompatActivity() {
         }
         val forgotPassword = findViewById<TextView>(R.id.editTextText3)
         forgotPassword.setOnClickListener {
-            //TODO codigo para recuperar contraseña
-            val IntentS = Intent(this,AddProduct::class.java)
-            startActivity(IntentS)
+
         }
         val logInButton = findViewById<Button>(R.id.button)
         logInButton.setOnClickListener{
@@ -98,8 +96,8 @@ class MainActivity : AppCompatActivity() {
             val IntentS = Intent(actContext,BuyerMainScreen::class.java)
             actContext.startActivity(IntentS)
         }
-        fun loadSeller(){//TODO cambiar en un futuro Addproduct
-            val IntentS = Intent(actContext,AddProduct::class.java)
+        fun loadSeller(){
+            val IntentS = Intent(actContext,SellerMain::class.java)
             actContext.startActivity(IntentS)
         }
 
