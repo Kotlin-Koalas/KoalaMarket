@@ -34,4 +34,8 @@ public class ProductController {
         return repository.allDistinctProducts();
     }
 
+    @GetMapping("{vendor}/products")
+    public List<Product> allVendorProducts(@PathVariable String vendor) {
+        return repository.allVendorProducts(vendor);
+    }
 }

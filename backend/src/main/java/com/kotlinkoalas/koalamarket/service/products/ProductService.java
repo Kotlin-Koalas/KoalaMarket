@@ -114,5 +114,9 @@ public class ProductService {
         }
         return products;
     }
+
+    public List<Product> allVendorProducts(String cif){
+        return repository.findByCif(cif);
+    }
 }
 

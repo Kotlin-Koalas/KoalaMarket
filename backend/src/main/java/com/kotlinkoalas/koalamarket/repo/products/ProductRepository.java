@@ -16,4 +16,6 @@ public interface ProductRepository extends JpaRepository<Product, productPK> {
     List<String> findDistinctProducts();
 
     List<Product> findByProductNumber(String productNumber);
+
+    List<Product> findByCif(String cif);
 }
