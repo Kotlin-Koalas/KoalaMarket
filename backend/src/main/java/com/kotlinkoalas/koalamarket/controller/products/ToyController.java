@@ -1,6 +1,6 @@
-package com.kotlinkoalas.koalamarket.controller;
+package com.kotlinkoalas.koalamarket.controller.products;
 
-import com.kotlinkoalas.koalamarket.model.Toy;
+import com.kotlinkoalas.koalamarket.model.products.Toy;
 import com.kotlinkoalas.koalamarket.service.products.ToyService;
 import org.springframework.web.bind.annotation.*;
 

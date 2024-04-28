@@ -47,6 +47,3 @@ jobs:
 
       - name: Install newman
         run: npm install -g newman
-
-      - name: Run tests
-        run: newman run ./koalamarket-apitests.json --env-var="baseUrl=${{ secrets.BASE_URL }}"

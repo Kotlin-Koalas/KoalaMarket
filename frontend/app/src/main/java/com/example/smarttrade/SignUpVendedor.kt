@@ -159,7 +159,6 @@ class SignUpVendedor : AppCompatActivity() {
         dialog.setCancelable(false)
         dialog.setContentView(R.layout.pop_up_alert)
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-
         val messageBox = dialog.findViewById<TextView>(R.id.textViewErrorText)
         val btnOk = dialog.findViewById<Button>(R.id.buttonOkPopUp)
 

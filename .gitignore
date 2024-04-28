@@ -2,3 +2,4 @@
 .env
 compose-copy.yaml
 images
+backend/local.properties

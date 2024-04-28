@@ -20,23 +20,23 @@ public class ClientController {
         return repository.findAll();
     }
 
-    @PutMapping("/clients/{id}")
-    Client replaceClient(@RequestBody Client newClient, @PathVariable String id) {
+    @PutMapping("/clients/{dni}")
+    Client replaceClient(@RequestBody Client newClient, @PathVariable String dni) {
 
-        return repository.findById(id)
+        return repository.findById(dni)
                 .map(Client -> {
                     Client.setName(Client.getName());
                     return repository.save(Client);
                 })
                 .orElseGet(() -> {
-                    newClient.setDni(id);
+                    newClient.setDni(dni);
                     return repository.save(newClient);
                 });
     }
 
-    @DeleteMapping("/clients/{id}")
-    String deleteClient(@PathVariable String id) {
-        repository.deleteById(id);
+    @DeleteMapping("/clients/{dni}")
+    String deleteClient(@PathVariable String dni) {
+        repository.deleteById(dni);
         return "Successfully deleted";
     }
 }

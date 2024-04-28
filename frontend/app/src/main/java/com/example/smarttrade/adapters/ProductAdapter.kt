@@ -1,5 +1,7 @@
 package com.example.smarttrade.adapters
 
+import android.content.Context
+import android.content.Intent
 import android.graphics.Bitmap
 import android.view.LayoutInflater
 import android.view.View
@@ -8,12 +10,14 @@ import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
+import com.example.smarttrade.ProductView
 import com.example.smarttrade.R
 import com.example.smarttrade.models.product_representation
 import com.example.smarttrade.volleyRequestClasses.ImageURLtoBitmapConverter
 
 
 class ProductAdapter(
+    private val context: Context,
     private val popularProducts: MutableList<product_representation>
 ) : BaseAdapter() {
 
@@ -84,6 +88,18 @@ class ProductAdapter(
         val productRepresentation = view.findViewById<ConstraintLayout>(R.id.layout)
         productRepresentation.setOnClickListener {
             //TODO ir a la pagina del propio producto
+
+            val i = Intent(context, ProductView::class.java)
+            i.putExtra("name", popularProducts[position].name)
+            i.putExtra("stock", popularProducts[position].stock)
+            i.putExtra("price", popularProducts[position].price)
+            i.putExtra("description", popularProducts[position].description)
+            i.putExtra("image", popularProducts[position].image)
+            i.putExtra("product number", popularProducts[position].PN)
+
+            context.startActivity(i)
+
+
         }
 
         return view
@@ -96,6 +112,7 @@ class ProductAdapter(
                 imageView.setImageBitmap(image)
             }
         }
+
     }
 
 }

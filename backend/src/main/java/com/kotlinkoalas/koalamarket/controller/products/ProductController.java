@@ -1,14 +1,12 @@
-package com.kotlinkoalas.koalamarket.controller;
+package com.kotlinkoalas.koalamarket.controller.products;
 
-import com.kotlinkoalas.koalamarket.model.Product;
-import com.kotlinkoalas.koalamarket.repo.products.ProductRepository;
+import com.kotlinkoalas.koalamarket.model.products.Product;
 import com.kotlinkoalas.koalamarket.service.products.ProductService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -36,4 +34,8 @@ public class ProductController {
         return repository.allDistinctProducts();
     }
 
+    @GetMapping("{vendor}/products")
+    public List<Product> allVendorProducts(@PathVariable String vendor) {
+        return repository.allVendorProducts(vendor);
+    }
 }

@@ -12,7 +12,8 @@ object PersonBuyer {
     private var bizum:String = ""
     private var paypal:String = ""
     private var creditCards:MutableList<CreditCard> = mutableListOf()
-    private var shoppingCart:MutableList<product_representation> = mutableListOf()
+    private var shoppingCart:MutableList<product_representation_cart> = mutableListOf()
+    private var selectedItemsCart:MutableList<product_representation_cart> = mutableListOf()
 
 
 
@@ -96,4 +97,57 @@ object PersonBuyer {
         return creditCards
     }
 
+    fun addProductToCart(product: product_representation_cart) {
+        shoppingCart.add(product)
+    }
+    fun getShoppingCart(): MutableList<product_representation_cart> {
+        return shoppingCart
+    }
+    fun removeProductFromCart(product: product_representation_cart) {
+        shoppingCart.remove(product)
+    }
+
+    fun clearShoppingCart() {
+        shoppingCart.clear()
+    }
+
+    fun removeProductFromCart(position: Int){
+        shoppingCart.removeAt(position)
+    }
+
+    fun setProductsInCart(products: MutableList<product_representation_cart>) {
+        shoppingCart = products
+    }
+
+    fun addSelectedItemToCart(product: product_representation_cart) {
+        selectedItemsCart.add(product)
+    }
+
+    fun setSelectedItemsInCart(products: MutableList<product_representation_cart>) {
+        selectedItemsCart = products
+    }
+
+    fun getSelectedItemsCart(): MutableList<product_representation_cart> {
+        return selectedItemsCart
+    }
+
+    fun removeSelectedItemFromCart(product: product_representation_cart) {
+        selectedItemsCart.remove(product)
+    }
+
+    fun modifySelectedItemInCart(PN: String, quantity: Int) {
+        for (product in selectedItemsCart) {
+            if (product.PN == PN) {
+                product.quantity = quantity
+            }
+        }
+    }
+
+    fun modifyProductInCart(PN: String, quantity: Int) {
+        for (product in shoppingCart) {
+            if (product.PN == PN) {
+                product.quantity = quantity
+            }
+        }
+    }
 }

@@ -1,4 +1,4 @@
-package com.example.smarttrade.mainBuyerFrargments
+package com.example.smarttrade.mainBuyerFragments
 
 import android.content.Context
 import android.os.Bundle
@@ -99,7 +99,7 @@ class HomeFragment : Fragment() {
         adapterCat = CategoryAdapter(categoriesShown)
 
         val gridLayout = view.findViewById<GridView>(R.id.gridViewProd)
-        adapterP = ProductAdapter(mutableListOf())
+        adapterP = ProductAdapter(actContextBP, mutableListOf())
 
         recommendationRV.adapter = adapterS
         recommendationRV.layoutManager = LinearLayoutManager(actContextBP)
@@ -107,7 +107,6 @@ class HomeFragment : Fragment() {
         catLayout.layoutManager = LinearLayoutManager(actContextBP, LinearLayoutManager.HORIZONTAL,false)
         gridLayout.adapter = adapterP
 
-        //TODO conseguir los datos de la BD y meterlos a la lista productsShown
         logic.getAllProducts()
 
 

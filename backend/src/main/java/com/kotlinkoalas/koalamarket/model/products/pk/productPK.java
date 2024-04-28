@@ -1,4 +1,4 @@
-package com.kotlinkoalas.koalamarket.model.pk;
+package com.kotlinkoalas.koalamarket.model.products.pk;
 
 import java.util.Objects;
 

@@ -1,17 +1,27 @@
 package com.example.smarttrade.logic
 
 import android.util.Log
+import android.widget.Toast
 import com.android.volley.Request
 import com.android.volley.RequestQueue
 import com.android.volley.toolbox.JsonObjectRequest
+import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.example.smarttrade.MainActivity
 import com.example.smarttrade.SignUpComprador
 import com.example.smarttrade.SignUpVendedor
 import com.example.smarttrade.BuildConfig
+import com.example.smarttrade.mainBuyerFragments.HomeFragment
 import com.example.smarttrade.models.CreditCard
 import com.example.smarttrade.models.PersonBuyer
 import com.example.smarttrade.models.PersonSeller
+import com.example.smarttrade.models.clothes_representation_cart
+import com.example.smarttrade.models.food_representation_cart
+import com.example.smarttrade.models.product_representation
+import com.example.smarttrade.models.product_representation_cart
+import com.example.smarttrade.models.technology_representation_cart
+import com.example.smarttrade.models.toy_representation_cart
+import org.json.JSONArray
 import org.json.JSONObject
 
 object Identification {
@@ -23,9 +33,11 @@ object Identification {
 
     var isBQueue = false
     var isSQueue = false
+    var isCartQueue = false
 
     lateinit var buyerVolleyQueue: RequestQueue
     lateinit var sellerVolleyQueue: RequestQueue
+    lateinit var cartVolleyQueue: RequestQueue
     fun logIn(email:String, password:String){
         val json = JSONObject()
         json.put("email", email)
@@ -204,4 +216,5 @@ object Identification {
             })
         sellerVolleyQueue.add(jsonRequest)
     }
+
 }

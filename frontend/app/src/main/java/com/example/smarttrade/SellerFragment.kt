@@ -41,6 +41,8 @@ class SellerFragment : Fragment() {
         gridViewSell= viewS.findViewById(R.id.productsSellerGridView)
         adapterP = ProductAdapterSeller(mutableListOf())
 
+        //adapterP = ProductAdapter(mutableListOf())
+ 
         gridViewSell.adapter = adapterP
 
         productSown = mutableListOf()
