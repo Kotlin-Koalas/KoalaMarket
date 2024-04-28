@@ -49,6 +49,9 @@ public class ProductService {
             String itemCif = item.getCif();
             String itemCategory = item.getCategory();
             Map<String, Object> itemDetails = new HashMap<>();
+            itemDetails.put("productNumber", itemProductNumber);
+            itemDetails.put("category", itemCategory);
+            itemDetails.put("cif", itemCif);
             switch (itemCategory) {
                 case "clothes":
                     Clothes clothes = clothesService.getClothesByProductNumber(itemProductNumber, itemCif);
@@ -92,9 +95,10 @@ public class ProductService {
                     itemDetails.put("stock", toy.getStock());
                     itemDetails.put("image", toy.getImage());
                     itemDetails.put("age", toy.getAge());
-                    itemDetails.put("category", toy.getCategory());
+                    itemDetails.put("material", toy.getMaterial());
                     break;
             }
+
             itemDetails.put("vendorName",clientRepository.findByDni(itemCif).getName());
             itemsList.add(itemDetails);
         }

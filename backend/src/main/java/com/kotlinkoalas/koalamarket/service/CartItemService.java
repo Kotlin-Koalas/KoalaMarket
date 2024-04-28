@@ -56,6 +56,9 @@ public class CartItemService {
             String category = item.getCategory();
             int quantity = item.getQuantity();
             Map<String, Object> itemDetails = new HashMap<>();
+            itemDetails.put("productNumber", productNumber);
+            itemDetails.put("cif", cif);
+            itemDetails.put("category", category);
             switch (category){
                 case "clothes":
                     Clothes clothes = clothesService.getClothesByProductNumber(productNumber, cif);
@@ -67,7 +70,6 @@ public class CartItemService {
                     itemDetails.put("image", clothes.getImage());
                     itemDetails.put("color", clothes.getColor());
                     itemDetails.put("size", clothes.getSize());
-                    itemDetails.put("category", clothes.getCategory());
                     break;
                 case "food":
                     Food food = foodService.getFoodByProductNumber(productNumber, cif);
@@ -79,7 +81,6 @@ public class CartItemService {
                     itemDetails.put("image", food.getImage());
                     itemDetails.put("calories", food.getCalories());
                     itemDetails.put("macros", food.getMacros());
-                    itemDetails.put("category", food.getCategory());
                     break;
                 case "technology":
                     Technology technology = technologyService.getTechnologyByProductNumber(productNumber, cif);
@@ -91,7 +92,6 @@ public class CartItemService {
                     itemDetails.put("image", technology.getImage());
                     itemDetails.put("electricConsumption", technology.getElectricConsumption());
                     itemDetails.put("brand", technology.getBrand());
-                    itemDetails.put("category", technology.getCategory());
                     break;
                 case "toy":
                     Toy toy = toyService.getToyByProductNumber(productNumber, cif);
@@ -103,7 +103,6 @@ public class CartItemService {
                     itemDetails.put("image", toy.getImage());
                     itemDetails.put("material", toy.getMaterial());
                     itemDetails.put("age", toy.getAge());
-                    itemDetails.put("category", toy.getCategory());
                     break;
             }
             itemDetails.put("quantity", quantity);
