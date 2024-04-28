@@ -60,10 +60,12 @@ class ProductCartAdapter(
         // Find UI elements in the inflated view
         val textViewPrice = view.findViewById<TextView>(R.id.textViewPrice)
         val textViewName = view.findViewById<TextView>(R.id.textViewTitulo)
+        val stockText = view.findViewById<TextView>(R.id.stock)
         ImageURLtoBitmapConverter.downloadImageCart(cartProducts[position].image,view)
 
         textViewPrice.text = cartProducts[position].price
         textViewName.text = cartProducts[position].name
+        stockText.text = cartProducts[position].quantity.toString()
 
         val selectedImageView = view.findViewById<ImageView>(R.id.imageViewSelected)
         selectedImageView.tag = R.drawable.ellipse_5
@@ -85,7 +87,7 @@ class ProductCartAdapter(
         val stock = cartProducts[position].stock
 
         val addQuantity = view.findViewById<ImageView>(R.id.addStock)
-        val stockText = view.findViewById<TextView>(R.id.stock)
+
 
         addQuantity.setOnClickListener {
             if(currentStock < stock){
