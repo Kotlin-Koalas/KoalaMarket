@@ -107,6 +107,14 @@ object PersonBuyer {
         shoppingCart.remove(product)
     }
 
+    fun clearShoppingCart() {
+        shoppingCart.clear()
+    }
+
+    fun removeProductFromCart(position: Int){
+        shoppingCart.removeAt(position)
+    }
+
     fun setProductsInCart(products: MutableList<product_representation_cart>) {
         shoppingCart = products
     }

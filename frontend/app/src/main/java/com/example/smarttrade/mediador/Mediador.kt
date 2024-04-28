@@ -12,11 +12,11 @@ import com.example.smarttrade.models.product_representation_cart
 
 object Mediador {
     fun notifyItemSelected(product: product_representation_cart){
-        addPriceToTotal(product.price.toDouble())
+        addPriceToTotal(product.price.toDouble(),product.quantity)
         PersonBuyer.addSelectedItemToCart(product)
     }
     fun notifyItemUnselected(product: product_representation_cart){
-       removePriceFromTotal(product.price.toDouble())
+       removePriceFromTotal(product.price.toDouble(),product.quantity)
         PersonBuyer.removeSelectedItemFromCart(product)
     }
 
@@ -24,17 +24,17 @@ object Mediador {
         ShoppingCartRequests.editProductInCart(product)
         val selectedImageView = view.findViewById<ImageView>(R.id.imageViewSelected)
         if(selectedImageView.tag == R.drawable.cart_selected){
-            addPriceToTotal(product.price.toDouble())
+            addPriceToTotal(product.price.toDouble(),1)
             PersonBuyer.modifySelectedItemInCart(product.PN,product.quantity)
         }
-        PersonBuyer.modifyProductInCart(product.PN,product.quantity)
+
     }
 
     fun notifyItemQuantityDecreased(product: product_representation_cart,view: View){
         ShoppingCartRequests.editProductInCart(product)
         val selectedImageView = view.findViewById<ImageView>(R.id.imageViewSelected)
         if(selectedImageView.tag == R.drawable.cart_selected){
-            removePriceFromTotal(product.price.toDouble())
+            removePriceFromTotal(product.price.toDouble(),1)
             PersonBuyer.modifySelectedItemInCart(product.PN,product.quantity)
         }
         PersonBuyer.modifyProductInCart(product.PN,product.quantity)
@@ -42,13 +42,11 @@ object Mediador {
 
     fun notifyItemDeleted(product: product_representation_cart, view: View){
         ShoppingCartRequests.deleteProductInCart(product)
-        removePriceFromTotal(product.price.toDouble())
         val selectedImageView = view.findViewById<ImageView>(R.id.imageViewSelected)
         if(selectedImageView.tag == R.drawable.cart_selected) {
-            removePriceFromTotal(product.price.toDouble())
+            removePriceFromTotal(product.price.toDouble(),1)
             PersonBuyer.removeSelectedItemFromCart(product)
         }
-        PersonBuyer.removeProductFromCart(product)
     }
 
     fun notifyAllItemsSelected(){
@@ -71,19 +69,19 @@ object Mediador {
         PersonBuyer.setSelectedItemsInCart(mutableListOf())
     }
 
-    private fun addPriceToTotal(price: Double){
+    private fun addPriceToTotal(price: Double, quantity: Int){
         val view = ShoppingCartFragment.getCurrView()
         val totalPrice = view.findViewById<TextView>(R.id.textViewPrecioTotal)
         val oldPrice = totalPrice.text.toString().toDouble()
-        val newPrice = oldPrice + price
+        val newPrice = oldPrice + (price*quantity)
         totalPrice.text = newPrice.toString()
     }
 
-    private fun removePriceFromTotal(price: Double){
+    private fun removePriceFromTotal(price: Double, quantity: Int){
         val view = ShoppingCartFragment.getCurrView()
         val totalPrice = view.findViewById<TextView>(R.id.textViewPrecioTotal)
         val oldPrice = totalPrice.text.toString().toDouble()
-        val newPrice = oldPrice - price
+        val newPrice = oldPrice - (price*quantity)
         totalPrice.text = newPrice.toString()
     }
 

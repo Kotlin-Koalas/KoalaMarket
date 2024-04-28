@@ -12,20 +12,20 @@ import android.widget.TextView
 import androidx.compose.material3.MediumTopAppBar
 import com.example.smarttrade.R
 import com.example.smarttrade.mediador.Mediador
+import com.example.smarttrade.models.PersonBuyer
 import com.example.smarttrade.volleyRequestClasses.ImageURLtoBitmapConverter
 import com.example.smarttrade.models.product_representation_cart
 
 
 class ProductCartAdapter(
-    private val cartProducts: MutableList<product_representation_cart>
 ) : BaseAdapter() {
 
     override fun getCount(): Int {
-        return cartProducts.count()
+        return PersonBuyer.getShoppingCart().count()
     }
 
     override fun getItem(position: Int): Any {
-        return cartProducts.get(position)
+        return PersonBuyer.getShoppingCart().get(position)
     }
 
     override fun getItemId(position: Int): Long {
@@ -33,21 +33,19 @@ class ProductCartAdapter(
     }
 
     fun removeProduct(position: Int){
-        cartProducts.removeAt(position)
+        PersonBuyer.removeProductFromCart(position)
         views.clear()
         notifyDataSetChanged()
     }
 
     fun addProduct(product: product_representation_cart){
-        cartProducts.add(product)
+        PersonBuyer.addProductToCart(product)
         views.clear()
         notifyDataSetChanged()
     }
 
-    fun updateProducts(updateProductList: MutableList<product_representation_cart>) {
+    fun updateProducts() {
         views.clear()
-        cartProducts.clear()
-        cartProducts.addAll(updateProductList)
         notifyDataSetChanged()
     }
 
@@ -61,11 +59,10 @@ class ProductCartAdapter(
         val textViewPrice = view.findViewById<TextView>(R.id.textViewPrice)
         val textViewName = view.findViewById<TextView>(R.id.textViewTitulo)
         val stockText = view.findViewById<TextView>(R.id.stock)
-        ImageURLtoBitmapConverter.downloadImageCart(cartProducts[position].image,view)
+        ImageURLtoBitmapConverter.downloadImageCart(PersonBuyer.getShoppingCart()[position].image,view)
 
-        textViewPrice.text = cartProducts[position].price
-        textViewName.text = cartProducts[position].name
-        stockText.text = cartProducts[position].quantity.toString()
+        textViewPrice.text = PersonBuyer.getShoppingCart()[position].price
+        textViewName.text = PersonBuyer.getShoppingCart()[position].name
 
         val selectedImageView = view.findViewById<ImageView>(R.id.imageViewSelected)
         selectedImageView.tag = R.drawable.ellipse_5
@@ -75,16 +72,18 @@ class ProductCartAdapter(
             if (selectedImageView.tag == R.drawable.ellipse_5) {
                 selectedImageView.setImageResource(R.drawable.cart_selected)
                 selectedImageView.tag = R.drawable.cart_selected
-                Mediador.notifyItemSelected(cartProducts[position])
+                Mediador.notifyItemSelected(PersonBuyer.getShoppingCart()[position])
             } else {
                 selectedImageView.setImageResource(R.drawable.ellipse_5)
                 selectedImageView.tag = R.drawable.ellipse_5
-                Mediador.notifyItemUnselected(cartProducts[position])
+                Mediador.notifyItemUnselected(PersonBuyer.getShoppingCart()[position])
             }
         }
 
-        var currentStock = cartProducts[position].quantity
-        val stock = cartProducts[position].stock
+        var currentStock = PersonBuyer.getShoppingCart()[position].quantity.toInt()
+        val stock = PersonBuyer.getShoppingCart()[position].stock
+
+        stockText.text = currentStock.toString()
 
         val addQuantity = view.findViewById<ImageView>(R.id.addStock)
 
@@ -93,9 +92,9 @@ class ProductCartAdapter(
             if(currentStock < stock){
                 currentStock++
                 stockText.text = currentStock.toString()
-                cartProducts[position].quantity = currentStock
+                PersonBuyer.modifyProductInCart(PersonBuyer.getShoppingCart()[position].PN,currentStock)
             }
-            Mediador.notifyItemQuantityIncreased(cartProducts[position],view)
+            Mediador.notifyItemQuantityIncreased(PersonBuyer.getShoppingCart()[position],view)
         }
 
         val substractQuantity = view.findViewById<ImageView>(R.id.substractStock)
@@ -103,11 +102,11 @@ class ProductCartAdapter(
             if(currentStock > 0){
                 currentStock--
                 stockText.text = currentStock.toString()
-                cartProducts[position].quantity = currentStock
-                Mediador.notifyItemQuantityDecreased(cartProducts[position],view)
+                PersonBuyer.modifyProductInCart(PersonBuyer.getShoppingCart()[position].PN,currentStock)
+                Mediador.notifyItemQuantityDecreased(PersonBuyer.getShoppingCart()[position],view)
             } else{
                 removeProduct(position)
-                Mediador.notifyItemDeleted(cartProducts[position],view)
+                Mediador.notifyItemDeleted(PersonBuyer.getShoppingCart()[position],view)
             }
         }
         views.add(view)
@@ -140,10 +139,6 @@ class ProductCartAdapter(
                 selectedImageView.tag = R.drawable.ellipse_5
             }
             Mediador.notifyAllItemsUnselected()
-        }
-
-        fun updateCart(updateProductList: MutableList<product_representation_cart>){
-            who.updateProducts(updateProductList)
         }
 
     }

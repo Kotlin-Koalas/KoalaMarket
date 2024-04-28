@@ -45,7 +45,7 @@ class ShoppingCartFragment : Fragment() {
 
         actContextBP = BuyerMainScreen.getContext()
 
-        adapterPC =  ProductCartAdapter(mutableListOf())
+        adapterPC =  ProductCartAdapter()
 
         val productsLayout = currView.findViewById<GridView>(R.id.VerticalGridViewProductsCart)
         productsLayout.adapter = adapterPC
@@ -87,7 +87,7 @@ class ShoppingCartFragment : Fragment() {
             }
         */
         fun setInitialProductsShown(){
-            adapterPC.updateProducts(PersonBuyer.getShoppingCart())
+            adapterPC.updateProducts()
         }
         fun getCurrView(): View{
             return currView

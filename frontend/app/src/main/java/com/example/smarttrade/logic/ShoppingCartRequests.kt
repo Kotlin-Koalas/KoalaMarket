@@ -38,6 +38,7 @@ object ShoppingCartRequests {
         val stringRequest = StringRequest(
             Request.Method.GET,"${url}/buyers/$id/cart",
             {response ->
+                PersonBuyer.clearShoppingCart()
                 val objects = JSONObject(response)
                 val products = objects.getJSONArray("items")
                 for (i in 0 until products.length()) {
@@ -49,6 +50,7 @@ object ShoppingCartRequests {
                         "clothes" -> PersonBuyer.addProductToCart(clothes_representation_cart(p.getString("name"), p.getDouble("price").toString(), p.getString("image"), p.getInt("stock"), p.getString("description"), p.getString("ecology"), p.getString("productNumber"), p.getInt("quantity"),p.getString("cif"), p.getString("size"), p.getString("color")))
                     }
                 }
+                Log.i("ShoppingCartList", PersonBuyer.getShoppingCart().toString())
                 ShoppingCartFragment.setInitialProductsShown()
             },
             {error ->
@@ -96,7 +98,7 @@ object ShoppingCartRequests {
         val id = PersonBuyer.getDNI()
 
         val jsonRequest = JsonObjectRequest(
-            Request.Method.POST,"${url}/buyers/$id/cart",json,
+            Request.Method.PUT,"${url}/buyers/$id/cart",json,
             {response ->
                 //TODO handle response
                 Log.i("ProductAdded", response.toString())
@@ -120,7 +122,7 @@ object ShoppingCartRequests {
         val id = PersonBuyer.getDNI()
 
         val jsonRequest = JsonObjectRequest(
-            Request.Method.POST,"${url}/buyers/$id/cart",json,
+            Request.Method.DELETE,"${url}/buyers/$id/cart",json,
             {response ->
                 //TODO handle response
                 Log.i("ProductAdded", response.toString())
