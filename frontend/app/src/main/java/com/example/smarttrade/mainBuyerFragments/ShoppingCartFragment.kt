@@ -6,15 +6,24 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.GridView
+import android.widget.ImageView
+import android.widget.ScrollView
+import androidx.recyclerview.widget.RecyclerView
+import com.example.smarttrade.BuyerMainScreen
 import com.example.smarttrade.R
 import com.example.smarttrade.adapters.ProductAdapter
+import com.example.smarttrade.adapters.ProductCartAdapter
+import com.example.smarttrade.logic.ShoppingCartRequests
+import com.example.smarttrade.models.PersonBuyer
 import com.example.smarttrade.models.product_representation
+import com.example.smarttrade.models.product_representation_cart
 
 
 class ShoppingCartFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
-    private lateinit var view: View
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,19 +39,43 @@ class ShoppingCartFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        view = inflater.inflate(R.layout.fragment_shopping_cart, container, false)
+        currView = inflater.inflate(R.layout.fragment_shopping_cart, container, false)
         // Inflate the layout for this fragment
+        instance = this
 
-        return view
+        actContextBP = BuyerMainScreen.getContext()
+
+        adapterPC =  ProductCartAdapter(mutableListOf())
+
+        val productsLayout = currView.findViewById<GridView>(R.id.VerticalGridViewProductsCart)
+        productsLayout.adapter = adapterPC
+
+        //ShoppingCartRequests.getShoppingCart()
+
+        var allSelected = false
+        val selectAll = currView.findViewById<ImageView>(R.id.imageViewSelectTodos)
+        selectAll.setOnClickListener{
+            if(!allSelected){
+                ProductCartAdapter.setAllSelected()
+                selectAll.setImageResource(R.drawable.cart_selected)
+                allSelected = true
+            } else {
+                ProductCartAdapter.setAllUnselected()
+                selectAll.setImageResource(R.drawable.ellipse_5)
+                allSelected = false
+            }
+        }
+
+        return currView
     }
 
     companion object {
         //private const val ARG_PARAM1 = "param1"
         //private const val ARG_PARAM2 = "param2"
         private lateinit var actContextBP: Context
-        private lateinit var cartProducts: MutableList<product_representation>
-        private lateinit var adapterPC: ProductAdapter
+        private lateinit var adapterPC: ProductCartAdapter
         private lateinit var instance: ShoppingCartFragment
+        private lateinit var currView: View
         /*
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
@@ -53,9 +86,11 @@ class ShoppingCartFragment : Fragment() {
                 }
             }
         */
-        fun setProductsShown(list:MutableList<product_representation>){
-            cartProducts = list
-            adapterPC.updateProducts(cartProducts)
+        fun setInitialProductsShown(){
+            adapterPC.updateProducts(PersonBuyer.getShoppingCart())
+        }
+        fun getCurrView(): View{
+            return currView
         }
 
     }
