@@ -32,7 +32,7 @@ class SellerFragment : Fragment() {
 
         gridViewSell = viewS.findViewById(R.id.productsSellerLayout)
 
-        adapterP = ProductAdapter(mutableListOf())
+        //adapterP = ProductAdapter(mutableListOf())
         gridViewSell.adapter = adapterP
         logic.getAllProducts()//TODO cambiar coger todos los productos del vendedor
 
