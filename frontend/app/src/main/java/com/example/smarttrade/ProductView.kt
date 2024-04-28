@@ -42,9 +42,9 @@ class ProductView : AppCompatActivity() {
         val recyclerView = findViewById<GridView>(R.id.recycledViewSellers)
         val sellerList : MutableList<seller_representation> = mutableListOf()
         //TODO: Prueba para saber si funciona
-        sellerList.add(seller_representation("Pepe","5","5.7","Talla : S"))
-        sellerList.add(seller_representation("Paco","20","1.24","Talla : M"))
-        sellerList.add(seller_representation("Kiko","15","21.30","Talla : L"))
+        //sellerList.add(seller_representation("Pepe","5","5.7","Talla : S"))
+        //sellerList.add(seller_representation("Paco","20","1.24","Talla : M"))
+        //sellerList.add(seller_representation("Kiko","15","21.30","Talla : L"))
         val adapter = SellerAdapter(sellerList)
         recyclerView.adapter = adapter
 
