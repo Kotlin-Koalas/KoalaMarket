@@ -99,7 +99,7 @@ class ProductCartAdapter(
 
         val substractQuantity = view.findViewById<ImageView>(R.id.substractStock)
         substractQuantity.setOnClickListener {
-            if(currentStock > 0){
+            if(currentStock > 1){
                 currentStock--
                 stockText.text = currentStock.toString()
                 PersonBuyer.modifyProductInCart(PersonBuyer.getShoppingCart()[position].PN,currentStock)
