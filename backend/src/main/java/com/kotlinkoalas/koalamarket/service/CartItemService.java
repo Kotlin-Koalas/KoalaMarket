@@ -42,12 +42,13 @@ public class CartItemService {
     public ResponseEntity<Map<String,Object>> getAllItemsInCart(String clientId){
         List<CartItem> items = repository.findAllByBuyerId(clientId);
         Map<String, Object> response = new HashMap<>();
+        List<Map<String, Object>> itemsList = new ArrayList<>();
         if(items.isEmpty()){
-            response.put("message", "Cart is empty");
+            response.put("items", itemsList);
             return ResponseEntity.ok(response);
         }
 
-        List<Map<String, Object>> itemsList = new ArrayList<>();
+
 
         for (CartItem item : items) {
             String productNumber = item.getProductNumber();
