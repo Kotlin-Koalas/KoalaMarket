@@ -50,16 +50,18 @@ class ShoppingCartFragment : Fragment() {
         val productsLayout = currView.findViewById<GridView>(R.id.VerticalGridViewProductsCart)
         productsLayout.adapter = adapterPC
 
-        ShoppingCartRequests.getShoppingCart()
+        //ShoppingCartRequests.getShoppingCart()
 
         var allSelected = false
         val selectAll = currView.findViewById<ImageView>(R.id.imageViewSelectTodos)
         selectAll.setOnClickListener{
             if(!allSelected){
                 ProductCartAdapter.setAllSelected()
+                selectAll.setImageResource(R.drawable.cart_selected)
                 allSelected = true
             } else {
                 ProductCartAdapter.setAllUnselected()
+                selectAll.setImageResource(R.drawable.ellipse_5)
                 allSelected = false
             }
         }

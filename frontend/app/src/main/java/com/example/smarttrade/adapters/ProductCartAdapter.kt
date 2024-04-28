@@ -71,9 +71,8 @@ class ProductCartAdapter(
         val selected = view.findViewById<ImageView>(R.id.imageViewSelected)
         selected.setOnClickListener {
             if (selectedImageView.tag == R.drawable.ellipse_5) {
-                val bitmap = layoutToImage(R.layout.cart_selected, view.context)
-                selectedImageView.setImageBitmap(bitmap)
-                selectedImageView.tag = R.layout.cart_selected
+                selectedImageView.setImageResource(R.drawable.cart_selected)
+                selectedImageView.tag = R.drawable.cart_selected
                 Mediador.notifyItemSelected(cartProducts[position])
             } else {
                 selectedImageView.setImageResource(R.drawable.ellipse_5)
@@ -126,9 +125,8 @@ class ProductCartAdapter(
         fun setAllSelected(){
             for (v in views){
                 val selectedImageView = v.findViewById<ImageView>(R.id.imageViewSelected)
-                val bitmap = layoutToImage(R.layout.cart_selected, v.context)
-                selectedImageView.setImageBitmap(bitmap)
-                selectedImageView.tag = R.layout.cart_selected
+                selectedImageView.setImageResource(R.drawable.cart_selected)
+                selectedImageView.tag = R.drawable.cart_selected
             }
             Mediador.notifyAllItemsSelected()
         }
@@ -140,17 +138,7 @@ class ProductCartAdapter(
             }
             Mediador.notifyAllItemsUnselected()
         }
-        private fun layoutToImage(layoutId: Int, context: Context): Bitmap {
-            val layout = LayoutInflater.from(context).inflate(layoutId, null)
-            layout.measure(
-                View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED),
-                View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED))
-            layout.layout(0, 0, layout.measuredWidth, layout.measuredHeight)
-            val bitmap = Bitmap.createBitmap(layout.measuredWidth, layout.measuredHeight, Bitmap.Config.ARGB_8888)
-            val canvas = Canvas(bitmap)
-            layout.draw(canvas)
-            return bitmap
-        }
+
     }
 
 }

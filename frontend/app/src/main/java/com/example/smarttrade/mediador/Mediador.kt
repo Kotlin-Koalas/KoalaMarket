@@ -23,7 +23,7 @@ object Mediador {
     fun notifyItemQuantityIncreased(product: product_representation_cart,view: View){
         ShoppingCartRequests.editProductInCart(product)
         val selectedImageView = view.findViewById<ImageView>(R.id.imageViewSelected)
-        if(selectedImageView.tag == R.layout.cart_selected){
+        if(selectedImageView.tag == R.drawable.cart_selected){
             addPriceToTotal(product.price.toDouble())
             PersonBuyer.modifySelectedItemInCart(product.PN,product.quantity)
         }
@@ -33,7 +33,7 @@ object Mediador {
     fun notifyItemQuantityDecreased(product: product_representation_cart,view: View){
         ShoppingCartRequests.editProductInCart(product)
         val selectedImageView = view.findViewById<ImageView>(R.id.imageViewSelected)
-        if(selectedImageView.tag == R.layout.cart_selected){
+        if(selectedImageView.tag == R.drawable.cart_selected){
             removePriceFromTotal(product.price.toDouble())
             PersonBuyer.modifySelectedItemInCart(product.PN,product.quantity)
         }
@@ -44,7 +44,7 @@ object Mediador {
         ShoppingCartRequests.deleteProductInCart(product)
         removePriceFromTotal(product.price.toDouble())
         val selectedImageView = view.findViewById<ImageView>(R.id.imageViewSelected)
-        if(selectedImageView.tag == R.layout.cart_selected) {
+        if(selectedImageView.tag == R.drawable.cart_selected) {
             removePriceFromTotal(product.price.toDouble())
             PersonBuyer.removeSelectedItemFromCart(product)
         }
@@ -53,7 +53,7 @@ object Mediador {
 
     fun notifyAllItemsSelected(){
         val productList = PersonBuyer.getShoppingCart()
-        var totalPrice = 0.0
+        var totalPrice: Double = 0.0
         for (product in productList){
             totalPrice += product.price.toDouble()
         }
@@ -66,7 +66,8 @@ object Mediador {
     fun notifyAllItemsUnselected(){
         val view = ShoppingCartFragment.getCurrView()
         val totalPriceView = view.findViewById<TextView>(R.id.textViewPrecioTotal)
-        totalPriceView.text = 0.toString()
+        val none = 0.0
+        totalPriceView.text = none.toString()
         PersonBuyer.setSelectedItemsInCart(mutableListOf())
     }
 
