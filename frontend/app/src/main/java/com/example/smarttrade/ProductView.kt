@@ -1,17 +1,24 @@
 package com.example.smarttrade
 
+import android.app.Dialog
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.Window
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.example.smarttrade.adapters.ProductCartAdapter
+import com.example.smarttrade.models.PersonBuyer
 import com.example.smarttrade.volleyRequestClasses.ImageURLtoBitmapConverter
 import com.google.android.material.internal.ViewUtils.getContentView
 
@@ -43,6 +50,7 @@ class ProductView : AppCompatActivity() {
         val imageViewProduct = findViewById<ImageView>(R.id.imageProduct)
         val sumStock = findViewById<ImageView>(R.id.addStock)
         val substractStock = findViewById<ImageView>(R.id.substractStock)
+        val addProduct = findViewById<Button>(R.id.buttonSignUp)
 
         nameText.text = name
         priceText.text = price
@@ -74,8 +82,32 @@ class ProductView : AppCompatActivity() {
             startActivity(i)
         }
 
+        addProduct.setOnClickListener {
+            //TODO: Add product to cart
+            //val product = product_representation_cart(name, price, image, stock, description, "leafColor", "PN", currentStock, "seller", "material", "age")
+            //PersonBuyer.addProductToCart(product)
+            showCustomDialogBoxSuccess("Producto añadido al carrito correctamente")
+        }
 
 
+    }
+
+    fun showCustomDialogBoxSuccess(msgSuccess: String) {
+        val dialog = Dialog(this)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setCancelable(false)
+        dialog.setContentView(R.layout.pop_up_alert_success)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        val messageBox = dialog.findViewById<TextView>(R.id.textViewErrorText)
+        val btnOk = dialog.findViewById<Button>(R.id.buttonOkPopUp)
+
+        btnOk.setOnClickListener {
+            dialog.dismiss()
+        }
+        messageBox.text = msgSuccess
+
+        dialog.show()
     }
 
 

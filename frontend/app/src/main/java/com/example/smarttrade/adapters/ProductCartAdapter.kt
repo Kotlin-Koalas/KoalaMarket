@@ -20,8 +20,6 @@ class ProductCartAdapter(
     private val cartProducts: MutableList<product_representation_cart>
 ) : BaseAdapter() {
 
-    val who = this
-
     override fun getCount(): Int {
         return cartProducts.count()
     }
@@ -56,6 +54,8 @@ class ProductCartAdapter(
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         val view = convertView ?: LayoutInflater.from(parent?.context)
             .inflate(R.layout.product_representation_cart, parent, false)
+
+        who = this
 
         // Find UI elements in the inflated view
         val textViewPrice = view.findViewById<TextView>(R.id.textViewPrice)
@@ -116,6 +116,7 @@ class ProductCartAdapter(
 
     companion object{
         val views = mutableListOf<View>()
+        lateinit var who: ProductCartAdapter
         fun setImage(image: Bitmap?,view:View){
             val imageView = view.findViewById<ImageView>(R.id.imageViewCat)
             if (image != null) {
@@ -137,6 +138,10 @@ class ProductCartAdapter(
                 selectedImageView.tag = R.drawable.ellipse_5
             }
             Mediador.notifyAllItemsUnselected()
+        }
+
+        fun updateCart(updateProductList: MutableList<product_representation_cart>){
+            who.updateProducts(updateProductList)
         }
 
     }

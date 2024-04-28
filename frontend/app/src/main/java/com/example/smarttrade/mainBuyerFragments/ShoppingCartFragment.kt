@@ -50,7 +50,7 @@ class ShoppingCartFragment : Fragment() {
         val productsLayout = currView.findViewById<GridView>(R.id.VerticalGridViewProductsCart)
         productsLayout.adapter = adapterPC
 
-        //ShoppingCartRequests.getShoppingCart()
+        ShoppingCartRequests.getShoppingCart()
 
         var allSelected = false
         val selectAll = currView.findViewById<ImageView>(R.id.imageViewSelectTodos)

@@ -38,14 +38,15 @@ object ShoppingCartRequests {
         val stringRequest = StringRequest(
             Request.Method.GET,"${url}/buyers/$id/cart",
             {response ->
-                val products = JSONArray(response)
+                val objects = JSONObject(response)
+                val products = objects.getJSONArray("items")
                 for (i in 0 until products.length()) {
                     val p = products.getJSONObject(i)
                     when(p.getString("category")){
-                        "toy" -> PersonBuyer.addProductToCart(toy_representation_cart(p.getString("name"), p.getString("price"), p.getString("image"), p.getInt("stock"), p.getString("description"), p.getString("leafColor"), p.getString("PN"), p.getInt("quantity"),p.getString("seller"), p.getString("material"), p.getString("age")))
-                        "food" -> PersonBuyer.addProductToCart(food_representation_cart(p.getString("name"), p.getString("price"), p.getString("image"), p.getInt("stock"), p.getString("description"), p.getString("leafColor"), p.getString("PN"), p.getInt("quantity"),p.getString("seller"), p.getString("calories"), p.getString("macros")))
-                        "technology" -> PersonBuyer.addProductToCart(technology_representation_cart(p.getString("name"), p.getString("price"), p.getString("image"), p.getInt("stock"), p.getString("description"), p.getString("leafColor"), p.getString("PN"), p.getInt("quantity"),p.getString("seller"), p.getString("brand"), p.getString("electricConsumption")))
-                        "clothes" -> PersonBuyer.addProductToCart(clothes_representation_cart(p.getString("name"), p.getString("price"), p.getString("image"), p.getInt("stock"), p.getString("description"), p.getString("leafColor"), p.getString("PN"), p.getInt("quantity"),p.getString("seller"), p.getString("size"), p.getString("color")))
+                        "toy" -> PersonBuyer.addProductToCart(toy_representation_cart(p.getString("name"), p.getDouble("price").toString(), p.getString("image"), p.getInt("stock"), p.getString("description"), p.getString("ecology"), p.getString("PN"), p.getInt("quantity"),p.getString("seller"), p.getString("material"), p.getString("age")))
+                        "food" -> PersonBuyer.addProductToCart(food_representation_cart(p.getString("name"), p.getDouble("price").toString(), p.getString("image"), p.getInt("stock"), p.getString("description"), p.getString("ecology"), p.getString("PN"), p.getInt("quantity"),p.getString("seller"), p.getInt("calories").toString(), p.getString("macros")))
+                        "technology" -> PersonBuyer.addProductToCart(technology_representation_cart(p.getString("name"), p.getDouble("price").toString(), p.getString("image"), p.getInt("stock"), p.getString("description"), p.getString("ecology"), p.getString("PN"), p.getInt("quantity"),p.getString("seller"), p.getString("brand"), p.getString("electricConsumption")))
+                        "clothes" -> PersonBuyer.addProductToCart(clothes_representation_cart(p.getString("name"), p.getDouble("price").toString(), p.getString("image"), p.getInt("stock"), p.getString("description"), p.getString("ecology"), p.getString("PN"), p.getInt("quantity"),p.getString("seller"), p.getString("size"), p.getString("color")))
                     }
                 }
                 ShoppingCartFragment.setInitialProductsShown()
