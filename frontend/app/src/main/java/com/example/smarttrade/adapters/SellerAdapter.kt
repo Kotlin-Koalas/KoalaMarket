@@ -33,16 +33,18 @@ class SellerAdapter(
          val view = convertView ?: LayoutInflater.from(parent?.context)
              .inflate(R.layout.seller_representation, parent, false)
 
+         who = this
+
          val textNameSeller = view.findViewById<TextView>(R.id.sellerName)
          val textPrice = view.findViewById<TextView>(R.id.price)
          val stockText = view.findViewById<TextView>(R.id.stockProduct)
          val cart = view.findViewById<ImageView>(R.id.carritoImageView)
          val specificAttirbutes = view.findViewById<TextView>(R.id.specificAttribute)
 
-         textNameSeller.text = sellerList[position].name
+         textNameSeller.text = sellerList[position].vendorName
          textPrice.text = sellerList[position].price
          stockText.text = sellerList[position].stock
-         specificAttirbutes.text = sellerList[position].specificAttribute
+
 
 
          cart.setOnClickListener {
@@ -51,6 +53,15 @@ class SellerAdapter(
          }
 
          return view
+     }
+
+     companion object{
+         private lateinit var who: SellerAdapter
+         fun setSellerList(sellerList: MutableList<seller_representation>){
+             who.sellerList.clear()
+             who.sellerList.addAll(sellerList)
+             who.notifyDataSetChanged()
+         }
      }
 
 

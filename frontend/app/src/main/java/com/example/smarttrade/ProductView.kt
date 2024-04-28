@@ -106,10 +106,9 @@ class ProductView : AppCompatActivity() {
         }
 
         addProduct.setOnClickListener {
-            //TODO: Add product to cart
-            //val product = product_representation_cart(name, price, image, stock, description, "leafColor", "PN", currentStock, "seller", "material", "age")
+            //val product = product_representation_cart(...)
             //PersonBuyer.addProductToCart(product)
-            showCustomDialogBoxSuccess("Producto añadido al carrito correctamente")
+            //showCustomDialogBoxSuccess("Producto añadido al carrito correctamente")
         }
 
 

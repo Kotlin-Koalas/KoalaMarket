@@ -14,13 +14,19 @@ import com.example.smarttrade.BuyerMainScreen
 import com.example.smarttrade.BrowseProductsFiltered
 import com.example.smarttrade.BuildConfig
 import com.example.smarttrade.MainActivity
+import com.example.smarttrade.adapters.SellerAdapter
 import com.example.smarttrade.mainBuyerFragments.HomeFragment
 import com.example.smarttrade.models.PersonSeller
 import com.example.smarttrade.models.clothes_representation
+import com.example.smarttrade.models.clothes_representation_seller
 import com.example.smarttrade.models.food_representation
+import com.example.smarttrade.models.food_representation_seller
 import com.example.smarttrade.models.product_representation
+import com.example.smarttrade.models.seller_representation
 import com.example.smarttrade.models.technology_representation
+import com.example.smarttrade.models.technology_representation_seller
 import com.example.smarttrade.models.toy_representation
+import com.example.smarttrade.models.toy_representation_seller
 import org.json.JSONArray
 import org.json.JSONObject
 
@@ -328,6 +334,35 @@ object logic {
         // add request to Volley queue
                 val queue = Volley.newRequestQueue(AddProduct.getContext())
                 queue.add(request)
+    }
+
+    fun getAllSellers(PN: String){
+        if(!isPQueue) {
+            productVolleyQueue = Volley.newRequestQueue(BuyerMainScreen.getContext())
+            isPQueue = true
+        }
+        val res = mutableListOf<seller_representation>()
+        val request = StringRequest(
+            Request.Method.GET,"$url/products/$PN",
+            {response ->
+                val objects = JSONObject(response)
+                val products = objects.getJSONArray("items")
+                for (i in 0 until products.length()) {
+                    val p = products.getJSONObject(i)
+                    when(p.getString("category")){
+                        "toy" -> res.add(toy_representation_seller(p.getString("cif"),p.getString("image"),p.getString("ecology"),p.getDouble("price").toString(),p.getString("name"),p.getString("description"),p.getString("productNumber"),p.getString("category"),p.getInt("stock").toString(),p.getString("vendorName"),p.getString("material"),p.getString("age")))
+                        "food" -> res.add(food_representation_seller(p.getString("cif"),p.getString("image"),p.getString("ecology"),p.getDouble("price").toString(),p.getString("name"),p.getString("description"),p.getString("productNumber"),p.getString("category"),p.getInt("stock").toString(),p.getString("vendorName"),p.getInt("calories").toString(),p.getString("macros")))
+                        "technology" -> res.add(technology_representation_seller(p.getString("cif"),p.getString("image"),p.getString("ecology"),p.getDouble("price").toString(),p.getString("name"),p.getString("description"),p.getString("productNumber"),p.getString("category"),p.getInt("stock").toString(),p.getString("vendorName"),p.getString("brand"),p.getString("electricConsumption")))
+                        "clothes" -> res.add(clothes_representation_seller(p.getString("cif"),p.getString("image"),p.getString("ecology"),p.getDouble("price").toString(),p.getString("name"),p.getString("description"),p.getString("productNumber"),p.getString("category"),p.getInt("stock").toString(),p.getString("vendorName"),p.getString("size"),p.getString("color")))
+                    }
+                }
+                SellerAdapter.setSellerList(res)
+            },
+            {error ->
+                Toast.makeText(MainActivity.getContext(), "Error: $error", Toast.LENGTH_SHORT)
+                    .show()
+            })
+        productVolleyQueue.add(request)
     }
 
 
