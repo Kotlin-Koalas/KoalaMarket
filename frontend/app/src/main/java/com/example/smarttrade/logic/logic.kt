@@ -1,6 +1,7 @@
 package com.example.smarttrade.logic
 
 
+import com.example.smarttrade.volleyRequestClasses.VolleyMultipartRequest
 import android.util.Log
 import android.widget.Toast
 import com.android.volley.Request
@@ -20,7 +21,6 @@ import com.example.smarttrade.models.food_representation
 import com.example.smarttrade.models.product_representation
 import com.example.smarttrade.models.technology_representation
 import com.example.smarttrade.models.toy_representation
-import com.example.smarttrade.volleyRequestClasses.VolleyMultipartRequest
 import org.json.JSONArray
 import org.json.JSONObject
 
