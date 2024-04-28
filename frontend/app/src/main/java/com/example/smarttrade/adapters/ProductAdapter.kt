@@ -95,6 +95,7 @@ class ProductAdapter(
             i.putExtra("price", popularProducts[position].price)
             i.putExtra("description", popularProducts[position].description)
             i.putExtra("image", popularProducts[position].image)
+            i.putExtra("product number", popularProducts[position].PN)
 
             context.startActivity(i)
 
