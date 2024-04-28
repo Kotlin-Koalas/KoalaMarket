@@ -102,21 +102,18 @@ class AddProduct :AppCompatActivity() {
         prod.addTextChangedListener {
 
             if(prod.length() == 12){
+                //TODO comprobar si funciona
+                logic.existProduct(prod.text.toString()){ productExist ->
+                    if(productExist){
+                        uploadImageButton.isClickable = false
+                    }
 
-                //if(logic.existProduct(prod.text.toString())){
-                //val defaultImage = getProdcut(prod.text.toString()).getImage
-                //val defaultBitmap = (defaultImage as VectorDrawable).toBitmap()
-                //uploadImageButton.setImageBitmap(defaultBitmap)
-                // uploadImageButton.isClickable = false
-                //sUploadImage = 1
+                    else{
+                        uploadImageButton.isClickable = true
+                        BuscarFoto = true
+                    }
 
-
-                //}
-                //else{
-
-                uploadImageButton.isClickable = true
-
-                BuscarFoto = true
+                }
 
 
             }

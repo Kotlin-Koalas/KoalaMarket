@@ -9,8 +9,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.smarttrade.R
-import com.example.smarttrade.volleyRequestClasses.ImageURLtoBitmapConverter
 import com.example.smarttrade.models.product_representation
+import com.example.smarttrade.volleyRequestClasses.ImageURLtoBitmapConverter
 
 
 class ProductAdapter(
