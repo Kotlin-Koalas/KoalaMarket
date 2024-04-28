@@ -115,6 +115,10 @@ object PersonBuyer {
         selectedItemsCart.add(product)
     }
 
+    fun setSelectedItemsInCart(products: MutableList<product_representation_cart>) {
+        selectedItemsCart = products
+    }
+
     fun getSelectedItemsCart(): MutableList<product_representation_cart> {
         return selectedItemsCart
     }

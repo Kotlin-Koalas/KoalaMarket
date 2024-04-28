@@ -34,18 +34,15 @@ class ProductCartAdapter(
         return position.toLong()
     }
 
-    fun addProductToList(product: product_representation_cart) {
-        cartProducts.add(product)
-    }
-
-    fun notifyAddedProduct(product: product_representation_cart) {
+    fun removeProduct(position: Int){
+        cartProducts.removeAt(position)
+        views.clear()
         notifyDataSetChanged()
     }
 
-    fun addAllProducts(productList: MutableList<product_representation_cart>) {
-        for (product in productList) {
-            cartProducts.add(product)
-        }
+    fun addProduct(product: product_representation_cart){
+        cartProducts.add(product)
+        views.clear()
         notifyDataSetChanged()
     }
 
@@ -108,10 +105,8 @@ class ProductCartAdapter(
                 cartProducts[position].quantity = currentStock
                 Mediador.notifyItemQuantityDecreased(cartProducts[position],view)
             } else{
-                cartProducts.removeAt(position)
-                views.remove(view)
-                notifyDataSetChanged()
-                //TODO avisar al mediador de que se ha eliminado un producto
+                removeProduct(position)
+                Mediador.notifyItemDeleted(cartProducts[position],view)
             }
         }
         views.add(view)
@@ -135,7 +130,7 @@ class ProductCartAdapter(
                 selectedImageView.setImageBitmap(bitmap)
                 selectedImageView.tag = R.layout.cart_selected
             }
-            //TODO avisar al mediador de que se ha seleccionado todo
+            Mediador.notifyAllItemsSelected()
         }
         fun setAllUnselected(){
             for (v in views){
@@ -143,7 +138,7 @@ class ProductCartAdapter(
                 selectedImageView.setImageResource(R.drawable.ellipse_5)
                 selectedImageView.tag = R.drawable.ellipse_5
             }
-            //TODO avisar al mediador de que se ha deseleccionado todo
+            Mediador.notifyAllItemsUnselected()
         }
         private fun layoutToImage(layoutId: Int, context: Context): Bitmap {
             val layout = LayoutInflater.from(context).inflate(layoutId, null)

@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.add
 import com.example.smarttrade.mainBuyerFragments.HomeFragment
+import com.example.smarttrade.mainBuyerFragments.ShoppingCartFragment
 
 class BuyerMainScreen : AppCompatActivity() {
 
@@ -31,18 +32,31 @@ class BuyerMainScreen : AppCompatActivity() {
         setContentView(R.layout.activity_browse_products)
 
         val shoppingCart = findViewById<ConstraintLayout>(R.id.constraintLayoutCart)
+        val account = findViewById<ConstraintLayout>(R.id.constraintLayoutPerson)
+        val home = findViewById<ConstraintLayout>(R.id.constraintLayoutHome)
+
         shoppingCart.setOnClickListener{
-            //TODO ir a la ventana del carrito
+            shoppingCart.setBackgroundResource(R.drawable.bottom_selected_background)
+            account.setBackgroundResource(R.color.verdeOscuro)
+            home.setBackgroundResource(R.color.verdeOscuro)
+            supportFragmentManager.commit {
+                setReorderingAllowed(true)
+                add<ShoppingCartFragment>(R.id.fragment_container_view)
+            }
         }
 
-        val account = findViewById<ConstraintLayout>(R.id.constraintLayoutPerson)
         account.setOnClickListener{
             //TODO ir a la ventana de la cuenta
         }
 
-        val home = findViewById<ConstraintLayout>(R.id.constraintLayoutHome)
         home.setOnClickListener{
-            //TODO ir a la ventana de inicio
+            home.setBackgroundResource(R.drawable.bottom_selected_background)
+            account.setBackgroundResource(R.color.verdeOscuro)
+            shoppingCart.setBackgroundResource(R.color.verdeOscuro)
+            supportFragmentManager.commit {
+                setReorderingAllowed(true)
+                add<HomeFragment>(R.id.fragment_container_view)
+            }
         }
     }
 

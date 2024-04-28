@@ -52,13 +52,15 @@ class ShoppingCartFragment : Fragment() {
 
         ShoppingCartRequests.getShoppingCart()
 
-        val allSelected = false
+        var allSelected = false
         val selectAll = currView.findViewById<ImageView>(R.id.imageViewSelectTodos)
         selectAll.setOnClickListener{
             if(!allSelected){
                 ProductCartAdapter.setAllSelected()
+                allSelected = true
             } else {
                 ProductCartAdapter.setAllUnselected()
+                allSelected = false
             }
         }
 
