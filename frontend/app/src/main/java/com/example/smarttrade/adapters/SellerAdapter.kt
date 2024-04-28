@@ -1,5 +1,6 @@
 package com.example.smarttrade.adapters
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -34,13 +35,13 @@ class SellerAdapter(
 
          val textNameSeller = view.findViewById<TextView>(R.id.sellerName)
          val textPrice = view.findViewById<TextView>(R.id.price)
-         val stockText = view.findViewById<TextView>(R.id.stock)
+         val stockText = view.findViewById<TextView>(R.id.stockProduct)
          val cart = view.findViewById<ImageView>(R.id.carritoImageView)
          val specificAttirbutes = view.findViewById<TextView>(R.id.specificAttribute)
 
          textNameSeller.text = sellerList[position].name
-         textPrice.text = sellerList[position].price.toString()
-         stockText.text = sellerList[position].stock.toString()
+         textPrice.text = sellerList[position].price
+         stockText.text = sellerList[position].stock
          specificAttirbutes.text = sellerList[position].specificAttribute
 
 
