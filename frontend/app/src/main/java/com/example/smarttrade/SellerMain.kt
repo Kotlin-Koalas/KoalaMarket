@@ -5,7 +5,8 @@ import android.os.Bundle
 import android.widget.ImageView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import com.example.smarttrade.SellerFragment
+import com.example.smarttrade.mainBuyerFrargments.HomeFragment
+
 import androidx.fragment.app.commit
 import androidx.fragment.app.add
 
@@ -21,12 +22,14 @@ class SellerMain: AppCompatActivity() {
 
         actContextSell = this
 
-        supportFragmentManager.commit{
+
+        supportFragmentManager.commit {
             setReorderingAllowed(true)
-            add<SellerFragment>(R.id.Seller_container_view)
+            add<SellerFragment>(R.id.seller_container_view)
         }
 
         setContentView(R.layout.seller_bottom_bar)
+
 
         val addProduct = findViewById<ImageView>(R.id.imageAddProduct)
         addProduct.setOnClickListener {

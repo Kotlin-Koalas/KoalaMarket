@@ -10,9 +10,9 @@ import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.example.smarttrade.AddProduct
-import com.example.smarttrade.BuyerMainScreen
 import com.example.smarttrade.BrowseProductsFiltered
 import com.example.smarttrade.BuildConfig
+import com.example.smarttrade.BuyerMainScreen
 import com.example.smarttrade.MainActivity
 import com.example.smarttrade.adapters.SellerAdapter
 import com.example.smarttrade.mainBuyerFragments.HomeFragment
@@ -366,9 +366,9 @@ object logic {
     }
 
 
-    /*
-    *
-    * fun  existProduct(productNumber : String) :  Boolean{
+
+
+     fun  existProduct(productNumber : String, completion: (Boolean) ->Unit){
         productVolleyQueue =Volley.newRequestQueue(AddProduct.getContext())
 
         val stringRequest = StringRequest(
@@ -376,10 +376,11 @@ object logic {
             {response ->
                     try{
                         val isProdcutExist = JSONObject(response).getBoolean("exist")
-                        AddProduct.exists(boolean)
+                        completion(isProdcutExist)
 
                 }catch (e:Exception){
                     Log.e("AddProductError","Error parsing response: ${e.message}"  )
+                        completion(false)
                 }
 
             },
@@ -390,9 +391,7 @@ object logic {
 
             productVolleyQueue.add(stringRequest)
     }
-    *
-    *
-    * */
+
 
 
 
