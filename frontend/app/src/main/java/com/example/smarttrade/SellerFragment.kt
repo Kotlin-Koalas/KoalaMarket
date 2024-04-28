@@ -1,20 +1,20 @@
 package com.example.smarttrade
 
-
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.GridView
-import android.widget.TextView
 import androidx.fragment.app.Fragment
+import com.example.smarttrade.adapters.ProductAdapter
+import com.example.smarttrade.logic.logic
 import com.example.smarttrade.adapters.ProductAdapterSeller
 import com.example.smarttrade.models.product_representation
 import android.app.Dialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-
+import android.widget.Button
+import android.widget.TextView
 
 class SellerFragment : Fragment() {
 
