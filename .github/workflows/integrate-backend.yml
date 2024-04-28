@@ -3,10 +3,10 @@ name: Build Backend
 on:
   push:
     branches: [main]
-    paths: 'backend/**'
+    # paths: "backend/**"
   pull_request:
     branches: [main]
-    paths: 'backend/**'
+    # paths: "backend/**"
 
 jobs:
   build:
@@ -45,19 +45,8 @@ jobs:
         with:
           node-version: "18"
 
-      - name: Start backend service
-        run: |
-          ./backend/gradlew bootRun -p ./backend &
-
       - name: Install newman
         run: npm install -g newman
 
-      - name: Wait for backend to run tests
-        run: |
-          while [ "$(curl -s -o /dev/null -w "%{http_code}" ${{ secrets.baseUrl }})" -ne 200 ]; do
-            echo "Backend not ready yet, waiting..."
-            sleep 5
-          done
-
       - name: Run tests
-        run: newman run ./koalamarket-apitests.json --env-var="baseUrl=${{ secrets.baseUrl }}"
+        run: newman run ./koalamarket-apitests.json --env-var="baseUrl=${{ secrets.BASE_URL }}"

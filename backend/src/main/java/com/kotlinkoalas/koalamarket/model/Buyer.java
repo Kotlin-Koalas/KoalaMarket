@@ -1,5 +1,6 @@
 package com.kotlinkoalas.koalamarket.model;
 
+import com.google.gson.annotations.Expose;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -12,15 +13,19 @@ import java.util.List;
 @Entity
 public class Buyer extends Client{
 
+    @Expose
     @Column(name = "buying_limit")
     private String buyingLimit;
 
+    @Expose
     @Column(name = "points")
     private int points;
 
+    @Expose
     @Column(name = "bizum")
     private String bizum;
 
+    @Expose
     @Column(name = "paypal")
     private String paypal;
 

@@ -1,14 +1,10 @@
-package com.kotlinkoalas.koalamarket.model;
+package com.kotlinkoalas.koalamarket.model.products;
 
-import com.kotlinkoalas.koalamarket.model.pk.productPK;
+import com.kotlinkoalas.koalamarket.model.products.pk.productPK;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
 import jakarta.persistence.IdClass;
 import lombok.*;
-import org.hibernate.proxy.HibernateProxy;
-
-import java.util.Objects;
 
 @Getter
 @Setter
@@ -25,7 +21,7 @@ public class Food extends Product{
     private String macros;
 
     public Food(String productNumber, String name, double price, String description, String ecology, int stock, String image, String cif, int calories, String macros) {
-        super(productNumber, name, price, description, ecology, stock, image, cif);
+        super("food",productNumber, name, price, description, ecology, stock, image, cif);
         this.calories = calories;
         this.macros = macros;
     }
