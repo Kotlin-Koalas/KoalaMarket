@@ -1,12 +1,8 @@
-package com.kotlinkoalas.koalamarket.service;
+package com.kotlinkoalas.koalamarket.service.products;
 
 import com.kotlinkoalas.koalamarket.factory.ClothesFactory;
-import com.kotlinkoalas.koalamarket.model.Clothes;
-import com.kotlinkoalas.koalamarket.model.Food;
-import com.kotlinkoalas.koalamarket.repo.ClothesRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import com.kotlinkoalas.koalamarket.model.products.Clothes;
+import com.kotlinkoalas.koalamarket.repo.products.ClothesRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
