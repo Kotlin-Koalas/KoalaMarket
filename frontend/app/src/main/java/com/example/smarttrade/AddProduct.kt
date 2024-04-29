@@ -48,7 +48,7 @@ class AddProduct :AppCompatActivity() {
     private lateinit var textCat1 :TextView
     private lateinit var editTextCat2 :EditText
     private lateinit var textCat2 :TextView
-    var BuscarFoto = false
+    var buscarFoto = false
     lateinit var imageURI: Uri
 
 
@@ -93,7 +93,7 @@ class AddProduct :AppCompatActivity() {
 
 
         uploadImageButton.setOnClickListener {
-            if(BuscarFoto){
+            if(buscarFoto){
                         pickmedia.launch(PickVisualMediaRequest(PickVisualMedia.ImageOnly))
             }
         }
@@ -106,11 +106,12 @@ class AddProduct :AppCompatActivity() {
                 logic.existProduct(prod.text.toString()){ productExist ->
                     if(productExist){
                         uploadImageButton.isClickable = false
+                        buscarFoto = false
                     }
 
                     else{
                         uploadImageButton.isClickable = true
-                        BuscarFoto = true
+                        buscarFoto = true
                     }
 
                 }

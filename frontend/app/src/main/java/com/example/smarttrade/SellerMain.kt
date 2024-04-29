@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.widget.ImageView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import com.example.smarttrade.mainBuyerFrargments.HomeFragment
+import com.example.smarttrade.mainBuyerFragments.HomeFragment
 
 import androidx.fragment.app.commit
 import androidx.fragment.app.add

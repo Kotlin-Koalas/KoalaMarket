@@ -1,20 +1,18 @@
 package com.example.smarttrade
 
+import android.app.Dialog
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.GridView
+import android.widget.TextView
 import androidx.fragment.app.Fragment
-import com.example.smarttrade.adapters.ProductAdapter
-import com.example.smarttrade.logic.logic
 import com.example.smarttrade.adapters.ProductAdapterSeller
 import com.example.smarttrade.models.product_representation
-import android.app.Dialog
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
-import android.widget.Button
-import android.widget.TextView
 
 class SellerFragment : Fragment() {
 
@@ -52,7 +50,7 @@ class SellerFragment : Fragment() {
 
         //TODO temporal productos cambiar por coger los productos
         for(i in 0..10){
-            adapterP.addProductToList(product_representation("Producto $i", "33", "Precio $i", i, "Categoria $i", "Imagen $i","PN $i"))
+            adapterP.addProductToList(product_representation("Tipo$i","Producto $i", "33", "Precio $i", i, "Categoria $i", "Imagen $i","PN $i"))
         }
 
         return viewS
