@@ -36,7 +36,7 @@ object ShoppingCartRequests {
         val id = PersonBuyer.getDNI()
 
         val stringRequest = StringRequest(
-            Request.Method.GET,"${url}/buyers/$id/cart",
+            Request.Method.GET,"$url/buyers/$id/cart",
             {response ->
                 PersonBuyer.clearShoppingCart()
                 val objects = JSONObject(response)
@@ -73,13 +73,13 @@ object ShoppingCartRequests {
         val id = PersonBuyer.getDNI()
 
         val jsonRequest = JsonObjectRequest(
-            Request.Method.POST,"${url}/buyers/$id/cart",json,
+            Request.Method.POST,"$url/buyers/$id/cart",json,
             {response ->
                 //TODO handle response
                 Log.i("ProductAdded", response.toString())
             },
             {error ->
-                Log.i("ErrorAddingProduct", error.message.toString())
+                Log.i("ErrorAñadiendo", error.message.toString())
             })
         cartVolleyQueue.add(jsonRequest)
     }
@@ -95,16 +95,18 @@ object ShoppingCartRequests {
         json.put("category", product.category)
         json.put("quantity", product.quantity)
 
+        Log.i("jsonBuyer",json.toString())
+
         val id = PersonBuyer.getDNI()
 
         val jsonRequest = JsonObjectRequest(
-            Request.Method.PUT,"${url}/buyers/$id/cart",json,
+            Request.Method.PUT,"$url/buyers/$id/cart",json,
             {response ->
                 //TODO handle response
                 Log.i("ProductAdded", response.toString())
             },
             {error ->
-                Log.i("ErrorAddingProduct", error.message.toString())
+                Log.i("ErrorEditando", error.message.toString())
             })
         cartVolleyQueue.add(jsonRequest)
     }
@@ -122,13 +124,13 @@ object ShoppingCartRequests {
         val id = PersonBuyer.getDNI()
 
         val jsonRequest = JsonObjectRequest(
-            Request.Method.DELETE,"${url}/buyers/$id/cart",json,
+            Request.Method.DELETE,"$url/buyers/$id/cart",json,
             {response ->
                 //TODO handle response
                 Log.i("ProductAdded", response.toString())
             },
             {error ->
-                Log.i("ErrorAddingProduct", error.message.toString())
+                Log.i("ErrorBorrando", error.message.toString())
             })
         cartVolleyQueue.add(jsonRequest)
     }
