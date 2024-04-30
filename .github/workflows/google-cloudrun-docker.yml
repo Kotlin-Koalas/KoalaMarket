@@ -49,7 +49,7 @@ on:
     branches: [ "main" ]
 
 env:
-  PROJECT_ID: koalamarket
+  PROJECT_ID: koalamarket/koalamarket-registry
   GAR_LOCATION: europe-west9
   SERVICE: api
   REGION: europe-west9
