@@ -90,19 +90,28 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textViewTitulo">
 
-
-            <ImageView
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/substractStock"
-                android:layout_width="9dp"
-                android:layout_height="9dp"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                app:srcCompat="@drawable/substract" />
+                android:layout_width="25dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center">
+
+                <ImageView
+                    android:layout_width="9dp"
+                    android:layout_height="9dp"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/substract" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView
                 android:id="@+id/stock"
-                android:layout_width="15dp"
-                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:fontFamily="@font/karla"
@@ -111,15 +120,23 @@
                 android:textColor="@color/black"
                 android:textSize="14dp" />
 
-            <ImageView
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/addStock"
-                android:layout_width="9dp"
-                android:layout_height="9dp"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                app:srcCompat="@drawable/addition" />
+                android:layout_width="25dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center">
+
+                <ImageView
+                    android:layout_width="9dp"
+                    android:layout_height="9dp"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/addition" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
-
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>
