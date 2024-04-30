@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.ImageView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.smarttrade.mainBuyerFragments.HomeFragment
 
 import androidx.fragment.app.commit
@@ -22,7 +23,6 @@ class SellerMain: AppCompatActivity() {
 
         actContextSell = this
 
-
         supportFragmentManager.commit {
             setReorderingAllowed(true)
             add<SellerFragment>(R.id.seller_container_view)
@@ -31,19 +31,22 @@ class SellerMain: AppCompatActivity() {
         setContentView(R.layout.seller_bottom_bar)
 
 
-        val addProduct = findViewById<ImageView>(R.id.imageAddProduct)
+        val addProduct = findViewById<ConstraintLayout>(R.id.constraintLayoutAddProductSeller)//TODO PONER CONSTRAINT LAYOUT
+        val accountSeller = findViewById<ConstraintLayout>(R.id.constraintLayoutProfileSeller)
+        val homeSeller = findViewById<ConstraintLayout>(R.id.constraintLayoutHomeSeller)
+
         addProduct.setOnClickListener {
-            //TODO ir a la ventana de añadir producto y cambiar foco del background
+
 
         }
 
 
-        val accountSeller = findViewById<ImageView>(R.id.imageProfileSeller)
+
         accountSeller.setOnClickListener {
             //TODO ir a la ventana de la cuenta
         }
 
-        val homeSeller = findViewById<ImageView>(R.id.imageHomeSeller)
+
         homeSeller.setOnClickListener {
             //TODO ir a la ventana de inicio
         }

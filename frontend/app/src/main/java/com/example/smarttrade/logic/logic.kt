@@ -1,7 +1,6 @@
 package com.example.smarttrade.logic
 
 
-import com.example.smarttrade.volleyRequestClasses.VolleyMultipartRequest
 import android.util.Log
 import android.widget.Toast
 import com.android.volley.Request
@@ -14,6 +13,7 @@ import com.example.smarttrade.BrowseProductsFiltered
 import com.example.smarttrade.BuildConfig
 import com.example.smarttrade.BuyerMainScreen
 import com.example.smarttrade.MainActivity
+import com.example.smarttrade.SellerFragment
 import com.example.smarttrade.adapters.SellerAdapter
 import com.example.smarttrade.mainBuyerFragments.HomeFragment
 import com.example.smarttrade.models.PersonSeller
@@ -27,6 +27,7 @@ import com.example.smarttrade.models.technology_representation
 import com.example.smarttrade.models.technology_representation_seller
 import com.example.smarttrade.models.toy_representation
 import com.example.smarttrade.models.toy_representation_seller
+import com.example.smarttrade.volleyRequestClasses.VolleyMultipartRequest
 import org.json.JSONArray
 import org.json.JSONObject
 
@@ -38,10 +39,12 @@ private val url = "http://$myIP:8080"
 object logic {
 
     var isPQueue = false
+    var isPSQueue = false
 
     lateinit var buyerVolleyQueue:RequestQueue
     lateinit var sellerVolleyQueue:RequestQueue
     lateinit var productVolleyQueue:RequestQueue
+    lateinit var productSellerQueue: RequestQueue
 
 
     fun filterProduct(producList: MutableList<product_representation>, searchItem:String) : MutableList<product_representation>{
@@ -392,6 +395,63 @@ object logic {
             productVolleyQueue.add(stringRequest)
     }
 
+    fun getAllProductsSeller(sellerCif : String){
+        if(!isPSQueue) {
+            productSellerQueue = Volley.newRequestQueue(SellerFragment.getContext())
+            isPSQueue = true
+        }
+        val res = mutableListOf<product_representation>()
+        val stringRequest = StringRequest(
+            Request.Method.GET,"$url/$sellerCif/vendors/",
+            {response ->
+                val products = JSONArray(response)
+                for (i in 0 until products.length()) {
+                    val p = products.getJSONObject(i)
+                    res.add(product_representation(p.getString("category"),p.getString("name"),p.getString("price"),p.getString("image"),p.getString("stock").toInt(),p.getString("description"),p.getString("ecology"),p.getString("productNumber")))
+                }
+                HomeFragment.setProductsShown(res)
+            },
+            {error ->
+                Toast.makeText(MainActivity.getContext(), "Error: $error", Toast.LENGTH_SHORT)
+                    .show()
+            })
+        productSellerQueue.add(stringRequest)
+    }
+
+    fun deleteProduct(PN: String, CIF: String){
+
+        productSellerQueue = Volley.newRequestQueue(SellerFragment.getContext())
+        val stringRequest = StringRequest(
+            Request.Method.DELETE,"$url/products/$PN/$CIF",
+            {response ->
+                Toast.makeText(SellerFragment.getContext(), "Producto eliminado con éxito", Toast.LENGTH_SHORT).show()
+            },
+            {error ->
+                Toast.makeText(MainActivity.getContext(), "Error: $error", Toast.LENGTH_SHORT)
+                    .show()
+            })
+        productSellerQueue.add(stringRequest)
+    }
+
+
+    fun changePriceProduct(PN: String, CIF: String, price: String){
+        productSellerQueue = Volley.newRequestQueue(SellerFragment.getContext())
+        val json = JSONObject()
+        json.put("price", price)
+        val stringRequest = JsonObjectRequest(
+            Request.Method.PUT,"$url/products/$PN/$CIF",json,
+            {response ->
+                Toast.makeText(SellerFragment.getContext(), "Precio del producto actualizado con éxito", Toast.LENGTH_SHORT).show()
+            },
+            {error ->
+                Toast.makeText(MainActivity.getContext(), "Error: $error", Toast.LENGTH_SHORT)
+                    .show()
+            })
+        productSellerQueue.add(stringRequest)
+    }
+
+
+
 
 
 
@@ -453,8 +513,9 @@ object logic {
 
  */
 
-
-
-
-
 }
+
+
+
+
+
