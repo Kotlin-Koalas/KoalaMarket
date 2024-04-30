@@ -3,9 +3,7 @@ package com.kotlinkoalas.koalamarket.controller.products;
 import com.kotlinkoalas.koalamarket.model.products.Product;
 import com.kotlinkoalas.koalamarket.service.products.ProductService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
@@ -32,6 +30,17 @@ public class ProductController {
     @GetMapping("/products")
     public List<Product> allDistinct() {
         return repository.allDistinctProducts();
+    }
+
+    @PutMapping("/products/{productNumber}/{cif}")
+    public ResponseEntity<String> updateProduct(@PathVariable String productNumber, @PathVariable String cif, Map<String, Object> payload) {
+        String price = (String) payload.get("price");
+        return repository.updateProduct(productNumber, cif, price);
+    }
+
+    @DeleteMapping("/products/{productNumber}/{cif}")
+    public ResponseEntity<String> deleteProduct(@PathVariable String productNumber, @PathVariable String cif) {
+        return repository.deleteProduct(productNumber, cif);
     }
 
     @GetMapping("{vendor}/products")

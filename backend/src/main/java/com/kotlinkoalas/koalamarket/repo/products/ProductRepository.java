@@ -18,4 +18,6 @@ public interface ProductRepository extends JpaRepository<Product, productPK> {
     List<Product> findByProductNumber(String productNumber);
 
     List<Product> findByCif(String cif);
+
+    Product findByCifAndProductNumber(String cif, String productNumber);
 }
