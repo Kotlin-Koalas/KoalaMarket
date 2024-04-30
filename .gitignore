@@ -3,3 +3,4 @@
 compose-copy.yaml
 images
 backend/local.properties
+gha-creds-*.json

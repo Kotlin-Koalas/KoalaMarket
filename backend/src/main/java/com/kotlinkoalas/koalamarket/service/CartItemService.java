@@ -121,8 +121,12 @@ public class CartItemService {
     public ResponseEntity<String> updateItemInCart(String id, String productNumber, String cif, String category, int quantity) {
         repository.findAllByBuyerId(id).forEach(item -> {
             if (item.getProductNumber().equals(productNumber) && item.getCif().equals(cif) && item.getCategory().equals(category)) {
-                item.setQuantity(quantity);
-                repository.save(item);
+                if(quantity <= 0){
+                    repository.delete(item);
+                }else {
+                    item.setQuantity(quantity);
+                    repository.save(item);
+                }
             }
         });
         return ResponseEntity.ok().contentType(org.springframework.http.MediaType.APPLICATION_JSON).body("Item updated in cart");

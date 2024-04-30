@@ -3,6 +3,7 @@ package com.example.smarttrade.adapters
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Canvas
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -73,6 +74,8 @@ class ProductCartAdapter(
                 selectedImageView.setImageResource(R.drawable.cart_selected)
                 selectedImageView.tag = R.drawable.cart_selected
                 Mediador.notifyItemSelected(PersonBuyer.getShoppingCart()[position])
+                Log.i("Selected", PersonBuyer.getShoppingCart()[position].toString())
+                Log.i("SelectedPosition", position.toString())
             } else {
                 selectedImageView.setImageResource(R.drawable.ellipse_5)
                 selectedImageView.tag = R.drawable.ellipse_5
@@ -92,9 +95,8 @@ class ProductCartAdapter(
             if(currentStock < stock){
                 currentStock++
                 stockText.text = currentStock.toString()
-                PersonBuyer.modifyProductInCart(PersonBuyer.getShoppingCart()[position].PN,currentStock)
+                Mediador.notifyItemQuantityIncreased(PersonBuyer.getShoppingCart()[position],view,currentStock)
             }
-            Mediador.notifyItemQuantityIncreased(PersonBuyer.getShoppingCart()[position],view)
         }
 
         val substractQuantity = view.findViewById<ImageView>(R.id.substractStock)
@@ -102,11 +104,12 @@ class ProductCartAdapter(
             if(currentStock > 1){
                 currentStock--
                 stockText.text = currentStock.toString()
-                PersonBuyer.modifyProductInCart(PersonBuyer.getShoppingCart()[position].PN,currentStock)
-                Mediador.notifyItemQuantityDecreased(PersonBuyer.getShoppingCart()[position],view)
+                Mediador.notifyItemQuantityDecreased(PersonBuyer.getShoppingCart()[position],view,currentStock)
+                Log.i("Views",views.toString())
             } else{
                 removeProduct(position)
                 Mediador.notifyItemDeleted(PersonBuyer.getShoppingCart()[position],view)
+                Log.i("Views",views.toString())
             }
         }
         views.add(view)
@@ -131,6 +134,7 @@ class ProductCartAdapter(
                 selectedImageView.tag = R.drawable.cart_selected
             }
             Mediador.notifyAllItemsSelected()
+            Log.i("Views",views.toString())
         }
         fun setAllUnselected(){
             for (v in views){
@@ -139,6 +143,7 @@ class ProductCartAdapter(
                 selectedImageView.tag = R.drawable.ellipse_5
             }
             Mediador.notifyAllItemsUnselected()
+            Log.i("Views",views.toString())
         }
 
     }

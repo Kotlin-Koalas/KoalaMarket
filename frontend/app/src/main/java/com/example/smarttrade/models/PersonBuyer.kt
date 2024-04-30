@@ -1,5 +1,7 @@
 package com.example.smarttrade.models
 
+import android.util.Log
+
 object PersonBuyer {
     private var name:String = ""
     private var surnames:String = ""
@@ -112,6 +114,8 @@ object PersonBuyer {
     }
 
     fun removeProductFromCart(position: Int){
+        Log.i("Delete Product Position", position.toString())
+        Log.i("Delete Product", shoppingCart.toString())
         shoppingCart.removeAt(position)
     }
 
@@ -119,7 +123,7 @@ object PersonBuyer {
         shoppingCart = products
     }
 
-    fun addSelectedItemToCart(product: product_representation_cart) {
+    fun addSelectedItemFromCart(product: product_representation_cart) {
         selectedItemsCart.add(product)
     }
 
@@ -135,19 +139,23 @@ object PersonBuyer {
         selectedItemsCart.remove(product)
     }
 
-    fun modifySelectedItemInCart(PN: String, quantity: Int) {
-        for (product in selectedItemsCart) {
-            if (product.PN == PN) {
-                product.quantity = quantity
+    fun modifySelectedItemInCart(product: product_representation_cart, quantity: Int): product_representation_cart {
+        for (p in selectedItemsCart) {
+            if (p == product) {
+                p.quantity = quantity
+                return p
             }
         }
+        return product_representation_cart("","","","",0,"","","",0,"")
     }
 
-    fun modifyProductInCart(PN: String, quantity: Int) {
-        for (product in shoppingCart) {
-            if (product.PN == PN) {
-                product.quantity = quantity
+    fun modifyProductInCart(product: product_representation_cart, quantity: Int): product_representation_cart {
+        for (p in shoppingCart) {
+            if (p == product) {
+                p.quantity = quantity
+                return p
             }
         }
+        return product_representation_cart("","","","",0,"","","",0,"")
     }
 }

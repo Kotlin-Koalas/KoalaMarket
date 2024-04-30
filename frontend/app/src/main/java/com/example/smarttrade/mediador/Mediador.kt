@@ -1,6 +1,7 @@
 package com.example.smarttrade.mediador
 
 import android.app.Person
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -12,32 +13,34 @@ import com.example.smarttrade.models.product_representation_cart
 
 object Mediador {
     fun notifyItemSelected(product: product_representation_cart){
+        Log.i("AddPrice", product.quantity.toString())
+        Log.i("AddPrice", product_representation_cart::class.java.toString())
         addPriceToTotal(product.price.toDouble(),product.quantity)
-        PersonBuyer.addSelectedItemToCart(product)
+        PersonBuyer.addSelectedItemFromCart(product)
     }
     fun notifyItemUnselected(product: product_representation_cart){
        removePriceFromTotal(product.price.toDouble(),product.quantity)
         PersonBuyer.removeSelectedItemFromCart(product)
     }
 
-    fun notifyItemQuantityIncreased(product: product_representation_cart,view: View){
-        ShoppingCartRequests.editProductInCart(product)
+    fun notifyItemQuantityIncreased(product: product_representation_cart,view: View, quantity: Int){
         val selectedImageView = view.findViewById<ImageView>(R.id.imageViewSelected)
         if(selectedImageView.tag == R.drawable.cart_selected){
             addPriceToTotal(product.price.toDouble(),1)
-            PersonBuyer.modifySelectedItemInCart(product.PN,product.quantity)
+            PersonBuyer.modifySelectedItemInCart(product,quantity)
         }
-
+        val p = PersonBuyer.modifyProductInCart(product,quantity)
+        ShoppingCartRequests.editProductInCart(p)
     }
 
-    fun notifyItemQuantityDecreased(product: product_representation_cart,view: View){
-        ShoppingCartRequests.editProductInCart(product)
+    fun notifyItemQuantityDecreased(product: product_representation_cart,view: View, quantity: Int){
         val selectedImageView = view.findViewById<ImageView>(R.id.imageViewSelected)
         if(selectedImageView.tag == R.drawable.cart_selected){
             removePriceFromTotal(product.price.toDouble(),1)
-            PersonBuyer.modifySelectedItemInCart(product.PN,product.quantity)
+            PersonBuyer.modifySelectedItemInCart(product,quantity)
         }
-        PersonBuyer.modifyProductInCart(product.PN,product.quantity)
+        val p = PersonBuyer.modifyProductInCart(product,quantity)
+        ShoppingCartRequests.editProductInCart(p)
     }
 
     fun notifyItemDeleted(product: product_representation_cart, view: View){
