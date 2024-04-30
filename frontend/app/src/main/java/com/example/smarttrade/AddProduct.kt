@@ -1,5 +1,6 @@
 package com.example.smarttrade
 
+import android.app.Activity
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
@@ -11,6 +12,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.view.Window
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -20,23 +22,19 @@ import android.widget.ImageView
 import android.widget.ScrollView
 import android.widget.Spinner
 import android.widget.TextView
-import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts.PickVisualMedia
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.graphics.drawable.toBitmap
 import androidx.core.widget.addTextChangedListener
+import androidx.fragment.app.Fragment
 import com.example.smarttrade.logic.logic
-import kotlinx.coroutines.Deferred
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.async
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
 import java.io.InputStream
 
-class AddProduct :AppCompatActivity() {
+class AddProduct :Fragment() {
 
     private val PICK_FILE_REQUEST_CODE= 1
     var isUploadImage = -1
@@ -56,20 +54,28 @@ class AddProduct :AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContentView(R.layout.activity_add_product)
-        val scrollViewAddP = findViewById<ScrollView>(R.id.scrollView2)
+
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?): View? {
+
+        currview =  inflater.inflate(R.layout.activity_add_product, container, false)
+
+        val scrollViewAddP = currview.findViewById<ScrollView>(R.id.scrollView2)
         scrollViewAddP.overScrollMode = View.OVER_SCROLL_ALWAYS
 
         actContext = this
 
 
-        imageCertificate = findViewById<ImageView>(R.id.imageViewOkcertificate)
-        uploadImageButton = findViewById<ImageView>(R.id.uploadImageButton)
+        imageCertificate = currview.findViewById<ImageView>(R.id.imageViewOkcertificate)
+        uploadImageButton = currview.findViewById<ImageView>(R.id.uploadImageButton)
 
 
 
-        uploadCertificateButton = findViewById(R.id.buttonUploadCertificate)
+        uploadCertificateButton = currview.findViewById(R.id.buttonUploadCertificate)
         uploadCertificateButton.setOnClickListener {
             val intentU = Intent(Intent.ACTION_GET_CONTENT)
             intentU.type = "*/*"
@@ -77,16 +83,16 @@ class AddProduct :AppCompatActivity() {
             startActivityForResult(intentU,PICK_FILE_REQUEST_CODE)
         }
 
-        val acceptButton = findViewById<Button>(R.id.acceptAddButton)
-        val cancelButton = findViewById<Button>(R.id.cancelAddButton)
+        val acceptButton = currview.findViewById<Button>(R.id.acceptAddButton)
+        val cancelButton = currview.findViewById<Button>(R.id.cancelAddButton)
 
-
-        cancelButton.setOnClickListener{//TODO cambiar de página
+        /*
+        cancelButton.setOnClickListener{//TODO QUITAR
             val IntentS = Intent(this, MainActivity::class.java)
             startActivity(IntentS)
         }
-
-        val prod = (findViewById<EditText>(R.id.editTextProductNumber))
+        */
+        val prod = (currview.findViewById<EditText>(R.id.editTextProductNumber))
         //prod.addTextChangedListener(MyTextWatcher(uploadImageButton))
 
 
@@ -94,7 +100,7 @@ class AddProduct :AppCompatActivity() {
 
         uploadImageButton.setOnClickListener {
             if(buscarFoto){
-                        pickmedia.launch(PickVisualMediaRequest(PickVisualMedia.ImageOnly))
+                pickmedia.launch(PickVisualMediaRequest(PickVisualMedia.ImageOnly))
             }
         }
 
@@ -126,7 +132,7 @@ class AddProduct :AppCompatActivity() {
 
                 val defaultImage = resources.getDrawable(R.drawable.add_item)
                 val defaultBitmap = (defaultImage as VectorDrawable).toBitmap()
-                val defaultImageUri = Uri.parse("android.resource://${packageName}/${R.drawable.add_item}")
+                val defaultImageUri = Uri.parse("android.resource://${requireActivity().packageName}/${R.drawable.add_item}")
                 uploadImageButton.setImageBitmap(defaultBitmap)
 
                 isUploadImage = -1
@@ -136,16 +142,16 @@ class AddProduct :AppCompatActivity() {
 
 
 
-        editTextCat1 = (findViewById<EditText>(R.id.editTextCategoria1))
-        editTextCat2 = (findViewById<EditText>(R.id.editTextCategoria2))
-        textCat1 = (findViewById<TextView>(R.id.textViewCategoria1))
-        textCat2 = (findViewById<TextView>(R.id.textViewCategoria2))
+        editTextCat1 = (currview.findViewById<EditText>(R.id.editTextCategoria1))
+        editTextCat2 = (currview.findViewById<EditText>(R.id.editTextCategoria2))
+        textCat1 = (currview.findViewById<TextView>(R.id.textViewCategoria1))
+        textCat2 = (currview.findViewById<TextView>(R.id.textViewCategoria2))
         val categoriesArray = resources.getStringArray(R.array.categoriesApp)
         val categories = categoriesArray.toMutableList()
 
-        val spinnerEcology = (findViewById<Spinner>(R.id.spinnerEcology))
-        val spinnerCategory =(findViewById<Spinner>(R.id.spinnerCategory))
-        val spinnerAdapter = ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, categories)
+        val spinnerEcology = (currview.findViewById<Spinner>(R.id.spinnerEcology))
+        val spinnerCategory =(currview.findViewById<Spinner>(R.id.spinnerCategory))
+        val spinnerAdapter = ArrayAdapter<String>(actContext.requireContext(), android.R.layout.simple_spinner_dropdown_item, categories)
         spinnerCategory.adapter = spinnerAdapter
 
         spinnerCategory.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -204,7 +210,7 @@ class AddProduct :AppCompatActivity() {
 
             }
 
-            currName = (findViewById<EditText>(R.id.editTextNameProduct).text).toString()
+            currName = (currview.findViewById<EditText>(R.id.editTextNameProduct).text).toString()
             val patterName = "^[a-zA-Z0-9\\s\\.,:;\\-\\(\\)\\/áéíóúñ\\$%&#@]{1,30}$".toRegex()
             if (!patterName.containsMatchIn(currName)) {
                 error = true
@@ -212,7 +218,7 @@ class AddProduct :AppCompatActivity() {
             }
 
             val currPrice =
-                (findViewById<EditText>(R.id.editTextNumberDecimalPrice).text).toString()
+                (currview.findViewById<EditText>(R.id.editTextNumberDecimalPrice).text).toString()
             val patternPrice = "^[-+]?[0-9]+([.][0-9]{1,2})?$".toRegex()
             if (!patternPrice.containsMatchIn(currPrice)) {
                 error = true
@@ -220,7 +226,7 @@ class AddProduct :AppCompatActivity() {
             }
 
             currDescription =
-                (findViewById<EditText>(R.id.editTextDescription).text).toString()
+                (currview.findViewById<EditText>(R.id.editTextDescription).text).toString()
             val patterDescription =
                 "^[a-zA-Z0-9\\s\\.,:;\\-\\(\\)\\/áéíóúñ\\$%&#@]{1,150}$".toRegex()
             if (!patterDescription.containsMatchIn(currDescription)) {
@@ -228,7 +234,7 @@ class AddProduct :AppCompatActivity() {
                 msgErrror += "-La descripción no puede tener más de 150 carácteres\n"
             }
 
-            val currQuantity = (findViewById<EditText>(R.id.editTextQuantity).text).toString()
+            val currQuantity = (currview.findViewById<EditText>(R.id.editTextQuantity).text).toString()
             val patternQuantity = "^(?!0)[0-9]{1,3}$".toRegex()
             if (!patternQuantity.containsMatchIn(currQuantity)) {
                 error = true
@@ -329,6 +335,9 @@ class AddProduct :AppCompatActivity() {
 
             }
         }
+
+
+        return currview
     }
 
     fun getFileFromUri(context: Context, uri: Uri): File {
@@ -343,7 +352,7 @@ class AddProduct :AppCompatActivity() {
     }
 
     fun showCustomDialogBox(msgErrror: String) {
-        val dialog = Dialog(this)
+        val dialog = Dialog(actContext.requireContext())
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setCancelable(false)
         dialog.setContentView(R.layout.pop_up_alert)
@@ -361,7 +370,7 @@ class AddProduct :AppCompatActivity() {
     }
 
     fun showCustomDialogBoxSuccess(msgSuccess: String) {
-        val dialog = Dialog(this)
+        val dialog = Dialog(actContext.requireContext())
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setCancelable(false)
         dialog.setContentView(R.layout.pop_up_alert_success)
@@ -379,7 +388,7 @@ class AddProduct :AppCompatActivity() {
     }
 
     private fun updateCategoryText(selectedCategory: String) {
-        val layoutInflater = LayoutInflater.from(this)
+        val layoutInflater = LayoutInflater.from(actContext.requireContext())
 
         when (selectedCategory) {
             "Ropa" -> {
@@ -504,23 +513,26 @@ class AddProduct :AppCompatActivity() {
 
     }*/
 
-    fun backButtonClick(view: View) { //TODO cambiar de pagina
+    /*
+    fun backButtonClick(view: View) { //TODO QUITAR
         val backPage = Intent(this, MainActivity::class.java)
         startActivity(backPage)
     }
+*/
 
-    private suspend fun crearArchivoTemporalImagen():Deferred< File>{
+    /*
+    private suspend fun crearArchivoTemporalImagen():Deferred< File>{//TODO QUITAR
         return GlobalScope.async {
             val nombreTemporal = "imagen_temporal_${System.currentTimeMillis()}.jpg"
             val directorioCache = applicationContext.cacheDir
             return@async File(directorioCache, nombreTemporal)
         }
 
-    }
+    }*/
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == PICK_FILE_REQUEST_CODE && resultCode == RESULT_OK) {
+        if (requestCode == PICK_FILE_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             val uri = data?.data
 
             isUploadCertificate = 1
@@ -546,8 +558,9 @@ class AddProduct :AppCompatActivity() {
         private lateinit var prodNum: String
         private lateinit var cat1: String
         private lateinit var cat2: String
+        private lateinit var currview : View
         fun getContext(): Context {
-            return actContext
+            return actContext.requireContext()
         }
 
         fun popUpError(){
@@ -635,6 +648,10 @@ class AddProduct :AppCompatActivity() {
                 }
             }
 
+        }
+
+        fun getCurrView(): View{
+            return currview
         }
 
     }

@@ -28,7 +28,7 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintLayoutProducts"
+            android:id="@+id/constraintLayoutHomeSeller"
             android:layout_width="109dp"
             android:layout_height="68dp"
             android:background="@drawable/bottom_selected_background"
@@ -48,12 +48,12 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintLayoutProfile"
+            android:id="@+id/constraintLayoutAddProductSeller"
             android:layout_width="109dp"
             android:layout_height="68dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/constraintLayoutAddProduct"
-            app:layout_constraintStart_toEndOf="@+id/constraintLayoutProducts"
+            app:layout_constraintEnd_toStartOf="@+id/constraintLayoutProfileSeller"
+            app:layout_constraintStart_toEndOf="@+id/constraintLayoutHomeSeller"
             app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
@@ -70,7 +70,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintLayoutAddProduct"
+            android:id="@+id/constraintLayoutProfileSeller"
             android:layout_width="109dp"
             android:layout_height="68dp"
             app:layout_constraintBottom_toBottomOf="parent"

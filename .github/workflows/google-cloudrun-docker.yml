@@ -49,7 +49,7 @@ on:
     branches: [ "main" ]
 
 env:
-  PROJECT_ID: koalamarket
+  PROJECT_ID: koalamarket/koalamarket-registry
   GAR_LOCATION: europe-west9
   SERVICE: api
   REGION: europe-west9
@@ -102,7 +102,7 @@ jobs:
 
       - name: Deploy to Cloud Run
         id: deploy
-        uses: google-github-actions/deploy-cloudrun@v0
+        uses: google-github-actions/deploy-cloudrun@v2
         with:
           service: ${{ env.SERVICE }}
           region: ${{ env.REGION }}

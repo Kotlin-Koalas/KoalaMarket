@@ -93,7 +93,7 @@ class ProductAdapterSeller(
         //TODO cambiar parámetros a enviar
         deleteProduct.setOnClickListener {
             sellerFragment.showAlertDeleteProductBox("¿Estás seguro de que quieres borrar este producto?",
-                                                    "","")
+                                                    pNProduct,)
 
         }
 
@@ -101,7 +101,7 @@ class ProductAdapterSeller(
 
             if(currentPrice != "" && currentPrice != popularProducts[position].price && patternPrice.containsMatchIn(currentPrice)){
                 sellerFragment.showAlertChangePriceProductBox("¿Estás seguro de que quieres cambiar el precio de este producto?"
-                    ,"","","")
+                    , pNProduct, currentPrice)
             }
 
         }
