@@ -19,7 +19,6 @@ import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
-import android.widget.ScrollView
 import android.widget.Spinner
 import android.widget.TextView
 import androidx.activity.result.PickVisualMediaRequest
@@ -48,6 +47,7 @@ class AddProduct :Fragment() {
     private lateinit var textCat2 :TextView
     var buscarFoto = false
     lateinit var imageURI: Uri
+    private lateinit var currview : View
 
 
     private var existProduct = false
@@ -64,8 +64,8 @@ class AddProduct :Fragment() {
 
         currview =  inflater.inflate(R.layout.activity_add_product, container, false)
 
-        val scrollViewAddP = currview.findViewById<ScrollView>(R.id.scrollView2)
-        scrollViewAddP.overScrollMode = View.OVER_SCROLL_ALWAYS
+        //val scrollViewAddP = currview.findViewById<ScrollView>(R.id.scrollView2)
+        //scrollViewAddP.overScrollMode = View.OVER_SCROLL_ALWAYS
 
         actContext = this
 
@@ -566,6 +566,7 @@ class AddProduct :Fragment() {
         fun popUpError(){
             actContext.showCustomDialogBox("Error al intentar añadir producto")
         }
+
 
         fun productAded(){
             actContext.showCustomDialogBoxSuccess("Producto añadido correctamente")
