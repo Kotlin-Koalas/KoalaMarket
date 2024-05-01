@@ -101,9 +101,10 @@ class SellerFragment : Fragment() {
 
     }
 
-    fun showAlertChangePriceProductBox(popUpText: String, PN:String, price:String) {
+    fun showAlertChangePriceProductBox(popUpText: String, PN:String, price:String, stock: String) {
 
         sellerCIF = PersonSeller.getCIF()
+        val stockInt = stock.toInt()
 
         val dialog = Dialog(contextFragment.requireContext())
         dialog.setTitle("ALERTA")
@@ -116,7 +117,7 @@ class SellerFragment : Fragment() {
 
         btnOk.setOnClickListener {
 
-            logic.changePriceProduct(PN,sellerCIF , price)
+            logic.changePriceProduct(PN,sellerCIF , price, stockInt)
 
             adapterP.notifyDataSetChanged()
             //dialog.dismiss()

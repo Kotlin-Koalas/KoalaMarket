@@ -416,10 +416,11 @@ object logic {
     }
 
 
-    fun changePriceProduct(PN: String, CIF: String, price: String){
+    fun changePriceProduct(PN: String, CIF: String, price: String, stock: Int){
         productSellerQueue = Volley.newRequestQueue(SellerFragment.getContext())
         val json = JSONObject()
         json.put("price", price)
+        json.put("stock", stock)
         val stringRequest = JsonObjectRequest(
             Request.Method.PUT,"$url/products/$PN/$CIF",json,
             {response ->
