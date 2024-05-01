@@ -117,6 +117,7 @@ object Identification {
                             //.show()
                             Log.i("CACA",error.toString())
                         })
+                    Log.i("jsonLogREQUE",jsonRequest2.body.toString())
                     queue.add(jsonRequest2)
                 }
             },
@@ -125,7 +126,7 @@ object Identification {
                 // .show()
                 Log.i("CACA",error.toString())
             })
-
+        Log.i("jsonLogREQUE",jsonRequest.body.toString())
         queue.add(jsonRequest)
 
     }

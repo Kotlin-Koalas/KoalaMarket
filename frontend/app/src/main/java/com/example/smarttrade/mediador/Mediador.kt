@@ -43,20 +43,21 @@ object Mediador {
         ShoppingCartRequests.editProductInCart(p)
     }
 
-    fun notifyItemDeleted(product: product_representation_cart, view: View){
-        ShoppingCartRequests.deleteProductInCart(product)
+    fun notifyItemDeleted(product: product_representation_cart, view: View, pos:Int){
         val selectedImageView = view.findViewById<ImageView>(R.id.imageViewSelected)
         if(selectedImageView.tag == R.drawable.cart_selected) {
             removePriceFromTotal(product.price.toDouble(),1)
             PersonBuyer.removeSelectedItemFromCart(product)
         }
+        PersonBuyer.removeProductFromCart(pos)
+        ShoppingCartRequests.deleteProductInCart(product)
     }
 
     fun notifyAllItemsSelected(){
         val productList = PersonBuyer.getShoppingCart()
         var totalPrice: Double = 0.0
         for (product in productList){
-            totalPrice += product.price.toDouble()
+            totalPrice += product.price.toDouble()*product.quantity
         }
         val view = ShoppingCartFragment.getCurrView()
         val totalPriceView = view.findViewById<TextView>(R.id.textViewPrecioTotal)

@@ -64,8 +64,10 @@ class AddProduct :Fragment() {
 
         currview =  inflater.inflate(R.layout.activity_add_product, container, false)
 
+
         //val scrollViewAddP = currview.findViewById<ScrollView>(R.id.scrollView2)
         //scrollViewAddP.overScrollMode = View.OVER_SCROLL_ALWAYS
+
 
         actContext = this
 

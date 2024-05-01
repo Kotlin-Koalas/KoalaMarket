@@ -40,7 +40,9 @@ class SellerFragment : Fragment() {
          viewS = inflater.inflate(R.layout.seller_view, container, false)
 
         sellerCIF = PersonSeller.getCIF()
+
         Log.i("Seller : ", sellerCIF)
+
 
         contextFragment = this
 
@@ -71,7 +73,9 @@ class SellerFragment : Fragment() {
 
 
     fun showAlertDeleteProductBox(popUpText: String, PN:String) {
+
         sellerCIF = PersonSeller.getCIF()
+
         val dialog = Dialog(contextFragment.requireContext())
         dialog.setTitle("ALERTA")
         dialog.setCancelable(false)
@@ -98,7 +102,9 @@ class SellerFragment : Fragment() {
     }
 
     fun showAlertChangePriceProductBox(popUpText: String, PN:String, price:String) {
+
         sellerCIF = PersonSeller.getCIF()
+
         val dialog = Dialog(contextFragment.requireContext())
         dialog.setTitle("ALERTA")
         dialog.setCancelable(false)
@@ -109,7 +115,9 @@ class SellerFragment : Fragment() {
         val btnCancel = dialog.findViewById<Button>(R.id.buttonCancelChanges)
 
         btnOk.setOnClickListener {
+
             logic.changePriceProduct(PN,sellerCIF , price)
+
             adapterP.notifyDataSetChanged()
             //dialog.dismiss()
         }
