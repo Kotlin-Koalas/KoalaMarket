@@ -1,5 +1,7 @@
 package com.example.smarttrade.models
 
+import java.io.Serializable
+
 open class product_representation_cart (
     open val category: String,
     open val name: String,
@@ -11,7 +13,7 @@ open class product_representation_cart (
     open val PN: String,
     open var quantity: Int,
     open var seller: String
-)
+):Serializable
 
 data class technology_representation_cart (
     override val name: String,

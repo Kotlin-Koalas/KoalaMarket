@@ -12,7 +12,7 @@ open class seller_representation (
     open val productNumber: String,
     open val category: String,
     open val stock : String,
-    open val vendorName: String
+    open val vendorName: String,
 )
 
 data class technology_representation_seller(
@@ -43,7 +43,7 @@ data class clothes_representation_seller(
     override val vendorName: String,
     val size: String,
     val color : String
-) : seller_representation(cif, image, ecology, price, name, description, productNumber, category, stock, vendorName)
+) : seller_representation(cif, image, ecology, price, name, description, productNumber, category, stock, vendorName )
 
 data class food_representation_seller(
     override val cif : String,

@@ -12,7 +12,11 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.smarttrade.ProductView
 import com.example.smarttrade.R
+import com.example.smarttrade.models.clothes_representation
+import com.example.smarttrade.models.food_representation
 import com.example.smarttrade.models.product_representation
+import com.example.smarttrade.models.technology_representation
+import com.example.smarttrade.models.toy_representation
 import com.example.smarttrade.volleyRequestClasses.ImageURLtoBitmapConverter
 
 
@@ -87,16 +91,9 @@ class ProductAdapter(
 
         val productRepresentation = view.findViewById<ConstraintLayout>(R.id.layout)
         productRepresentation.setOnClickListener {
-            //TODO ir a la pagina del propio producto
 
             val i = Intent(context, ProductView::class.java)
-            i.putExtra("name", popularProducts[position].name)
-            i.putExtra("stock", popularProducts[position].stock)
-            i.putExtra("price", popularProducts[position].price)
-            i.putExtra("description", popularProducts[position].description)
-            i.putExtra("image", popularProducts[position].image)
-            i.putExtra("product number", popularProducts[position].PN)
-
+            i.putExtra("product", popularProducts[position])
             context.startActivity(i)
 
 

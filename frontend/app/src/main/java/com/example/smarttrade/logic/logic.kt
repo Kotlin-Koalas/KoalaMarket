@@ -350,7 +350,7 @@ object logic {
                 for (i in 0 until products.length()) {
                     val p = products.getJSONObject(i)
                     when(p.getString("category")){
-                        "toy" -> res.add(toy_representation_seller(p.getString("cif"),p.getString("image"),p.getString("ecology"),p.getDouble("price").toString(),p.getString("name"),p.getString("description"),p.getString("productNumber"),p.getString("category"),p.getInt("stock").toString(),p.getString("vendorName"),p.getString("material"),p.getString("age")))
+                        "toy" -> res.add(toy_representation_seller(p.getString("cif"),p.getString("image"),p.getString("ecology"),p.getDouble("price").toString(),p.getString("name"),p.getString("description"),p.getString("productNumber"),p.getString("category"),p.getInt("stock").toString(),p.getString("vendorName"),p.getString("age"),p.getString("material")))
                         "food" -> res.add(food_representation_seller(p.getString("cif"),p.getString("image"),p.getString("ecology"),p.getDouble("price").toString(),p.getString("name"),p.getString("description"),p.getString("productNumber"),p.getString("category"),p.getInt("stock").toString(),p.getString("vendorName"),p.getInt("calories").toString(),p.getString("macros")))
                         "technology" -> res.add(technology_representation_seller(p.getString("cif"),p.getString("image"),p.getString("ecology"),p.getDouble("price").toString(),p.getString("name"),p.getString("description"),p.getString("productNumber"),p.getString("category"),p.getInt("stock").toString(),p.getString("vendorName"),p.getString("brand"),p.getString("electricConsumption")))
                         "clothes" -> res.add(clothes_representation_seller(p.getString("cif"),p.getString("image"),p.getString("ecology"),p.getDouble("price").toString(),p.getString("name"),p.getString("description"),p.getString("productNumber"),p.getString("category"),p.getInt("stock").toString(),p.getString("vendorName"),p.getString("size"),p.getString("color")))
@@ -363,6 +363,38 @@ object logic {
                     .show()
             })
         productVolleyQueue.add(request)
+    }
+
+    fun getSpecificSeller(PN: String, price: String, stock: String): seller_representation? {
+        if(!isPQueue) {
+            productVolleyQueue = Volley.newRequestQueue(BuyerMainScreen.getContext())
+            isPQueue = true
+        }
+        var res: seller_representation? = null
+        val request = StringRequest(
+            Request.Method.GET,"$url/products/$PN",
+            {response ->
+                val objects = JSONObject(response)
+                val products = objects.getJSONArray("items")
+                for (i in 0 until products.length()) {
+                    val p = products.getJSONObject(i)
+                    if(p.getString("productNumber") == PN && p.getDouble("price").toString() == price && p.getInt("stock").toString() == stock) {
+                        when(p.getString("category")){
+                            "toy" -> res = toy_representation_seller(p.getString("cif"),p.getString("image"),p.getString("ecology"),p.getDouble("price").toString(),p.getString("name"),p.getString("description"),p.getString("productNumber"),p.getString("category"),p.getInt("stock").toString(),p.getString("vendorName"),p.getString("age"),p.getString("material"))
+                            "food" -> res = food_representation_seller(p.getString("cif"),p.getString("image"),p.getString("ecology"),p.getDouble("price").toString(),p.getString("name"),p.getString("description"),p.getString("productNumber"),p.getString("category"),p.getInt("stock").toString(),p.getString("vendorName"),p.getInt("calories").toString(),p.getString("macros"))
+                            "technology" -> res = technology_representation_seller(p.getString("cif"),p.getString("image"),p.getString("ecology"),p.getDouble("price").toString(),p.getString("name"),p.getString("description"),p.getString("productNumber"),p.getString("category"),p.getInt("stock").toString(),p.getString("vendorName"),p.getString("brand"),p.getString("electricConsumption"))
+                            "clothes" -> res = clothes_representation_seller(p.getString("cif"),p.getString("image"),p.getString("ecology"),p.getDouble("price").toString(),p.getString("name"),p.getString("description"),p.getString("productNumber"),p.getString("category"),p.getInt("stock").toString(),p.getString("vendorName"),p.getString("size"),p.getString("color"))
+                        }
+                        break
+                    }
+                }
+            },
+            {error ->
+                Toast.makeText(MainActivity.getContext(), "Error: $error", Toast.LENGTH_SHORT)
+                    .show()
+            })
+        productVolleyQueue.add(request)
+        return res
     }
 
 

@@ -16,19 +16,38 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.smarttrade.adapters.ProductCartAdapter
 import com.example.smarttrade.models.PersonBuyer
 import androidx.recyclerview.widget.RecyclerView
 import com.example.smarttrade.adapters.SellerAdapter
+import com.example.smarttrade.logic.logic
+import com.example.smarttrade.models.clothes_representation
+import com.example.smarttrade.models.clothes_representation_cart
+import com.example.smarttrade.models.clothes_representation_seller
+import com.example.smarttrade.models.food_representation
+import com.example.smarttrade.models.food_representation_cart
+import com.example.smarttrade.models.food_representation_seller
+import com.example.smarttrade.models.product_representation
+import com.example.smarttrade.models.product_representation_cart
 import com.example.smarttrade.models.seller_representation
+import com.example.smarttrade.models.technology_representation
+import com.example.smarttrade.models.technology_representation_cart
+import com.example.smarttrade.models.technology_representation_seller
+import com.example.smarttrade.models.toy_representation
+import com.example.smarttrade.models.toy_representation_cart
+import com.example.smarttrade.models.toy_representation_seller
 import com.example.smarttrade.volleyRequestClasses.ImageURLtoBitmapConverter
 import com.google.android.material.internal.ViewUtils.getContentView
 
 class ProductView : AppCompatActivity() {
 
-    var currentStock  = 0
+    var currentStock  = 1
+    lateinit var adapterS : SellerAdapter
+    lateinit var sellerList : MutableList<seller_representation>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -39,26 +58,30 @@ class ProductView : AppCompatActivity() {
             insets
         }
 
+
+
         val recyclerView = findViewById<GridView>(R.id.recycledViewSellers)
-        val sellerList : MutableList<seller_representation> = mutableListOf()
-        //TODO: Prueba para saber si funciona
-        //sellerList.add(seller_representation("Pepe","5","5.7","Talla : S"))
-        //sellerList.add(seller_representation("Paco","20","1.24","Talla : M"))
-        //sellerList.add(seller_representation("Kiko","15","21.30","Talla : L"))
-        val adapter = SellerAdapter(sellerList)
-        recyclerView.adapter = adapter
+        sellerList  = mutableListOf()
+        adapterS = SellerAdapter(this,sellerList)
+        recyclerView.adapter = adapterS
+
+        val product = intent.getSerializableExtra("product") as product_representation
+
+        val name = product.name
+        val price = product.price
+        val description = product.description
+        val image = product.image
+        val stock = product.stock
+        val productNumber = product.PN
+        val category = product.type
+
+        adapterS.setLeafColor(product.leafColor)
 
 
 
 
-        val name = intent.getSerializableExtra("name") as String
-        val price = intent.getSerializableExtra("price") as String
-        val stock = intent.getSerializableExtra("stock") as Int
-        val description = intent.getSerializableExtra("description") as String
-        val image = intent.getSerializableExtra("image") as String
-        val productNumber = intent.getSerializableExtra("product number") as String
 
-
+        logic.getAllSellers(productNumber)
 
 
         val backMainScreen = findViewById<ImageView>(R.id.backArrow)
@@ -67,14 +90,14 @@ class ProductView : AppCompatActivity() {
         val stockText = findViewById<TextView>(R.id.stock)
         val descriptionText = findViewById<TextView>(R.id.detailDescriptionProduct)
         val imageViewProduct = findViewById<ImageView>(R.id.imageProduct)
-        val sumStock = findViewById<ImageView>(R.id.addStock)
-        val substractStock = findViewById<ImageView>(R.id.substractStock)
         val addProduct = findViewById<Button>(R.id.buttonSignUp)
+        val layoutSum = findViewById<ConstraintLayout>(R.id.layoutSum)
+        val layoutSubstract = findViewById<ConstraintLayout>(R.id.layoutSubstract)
 
 
+        val seller = logic.getSpecificSeller(productNumber,price,stock.toString())
 
-
-
+        stockText.text = currentStock.toString()
         nameText.text = name
         priceText.text = price
         descriptionText.text = description
@@ -82,7 +105,7 @@ class ProductView : AppCompatActivity() {
         ImageURLtoBitmapConverter.downloadImageProduct(image,imageViewProduct)
 
 
-        sumStock.setOnClickListener {
+        layoutSum.setOnClickListener {
 
             if(currentStock < stock){
                 currentStock++
@@ -91,9 +114,9 @@ class ProductView : AppCompatActivity() {
 
         }
 
-        substractStock.setOnClickListener {
+        layoutSubstract.setOnClickListener {
 
-            if(currentStock > 0){
+            if(currentStock > 1){
                 currentStock--
                 stockText.text = currentStock.toString()
 
@@ -106,13 +129,96 @@ class ProductView : AppCompatActivity() {
         }
 
         addProduct.setOnClickListener {
-            //val product = product_representation_cart(...)
-            //PersonBuyer.addProductToCart(product)
-            //showCustomDialogBoxSuccess("Producto añadido al carrito correctamente")
+            when(category){
+                "technology" ->{
+                    val sellerTech = seller as technology_representation_seller
+                    val cartProduct = technology_representation_cart(
+                        name,
+                        price,
+                        image,
+                        stock,
+                        description,
+                        product.leafColor,
+                        productNumber,
+                        currentStock,
+                        seller!!.name,
+                        sellerTech.brand,
+                        sellerTech.electricConsumption
+                    )
+                    PersonBuyer.addProductToCart(cartProduct)
+                    showCustomDialogBoxSuccess("Producto añadido al carrito correctamente")
+                }
+                "toy" ->{
+                    val sellerToy = seller as toy_representation_seller
+                    val cartProduct = toy_representation_cart(
+                        name,
+                        price,
+                        image,
+                        stock,
+                        description,
+                        product.leafColor,
+                        productNumber,
+                        currentStock,
+                        seller!!.name,
+                        sellerToy.material,
+                        sellerToy.age
+                    )
+                    PersonBuyer.addProductToCart(cartProduct)
+                    showCustomDialogBoxSuccess("Producto añadido al carrito correctamente")
+                }
+                "clothes" ->{
+                    val sellerClothes = seller as clothes_representation_seller
+                    val cartProduct = clothes_representation_cart(
+                        name,
+                        price,
+                        image,
+                        stock,
+                        description,
+                        product.leafColor,
+                        productNumber,
+                        currentStock,
+                        seller!!.name,
+                        sellerClothes.size,
+                        sellerClothes.color
+                    )
+                    PersonBuyer.addProductToCart(cartProduct)
+                    showCustomDialogBoxSuccess("Producto añadido al carrito correctamente")
+                }
+                "food" ->{
+                    val sellerFood = seller as food_representation_seller
+                    val cartProduct = food_representation_cart(
+                        name,
+                        price,
+                        image,
+                        stock,
+                        description,
+                        product.leafColor,
+                        productNumber,
+                        currentStock,
+                        seller!!.name,
+                        sellerFood.calories,
+                        sellerFood.macros
+                    )
+                    PersonBuyer.addProductToCart(cartProduct)
+                    showCustomDialogBoxSuccess("Producto añadido al carrito correctamente")
+                }
+
+            }
+
+
         }
 
 
+
+
     }
+
+    fun setSellersShown(list: MutableList<seller_representation>){
+        sellerList = list
+        adapterS.setSellerListForInstance(adapterS, sellerList)
+
+    }
+
 
     fun showCustomDialogBoxSuccess(msgSuccess: String) {
         val dialog = Dialog(this)
@@ -140,6 +246,8 @@ class ProductView : AppCompatActivity() {
                 view.setImageBitmap(image)
             }
         }
+
+
 
     }
 }
