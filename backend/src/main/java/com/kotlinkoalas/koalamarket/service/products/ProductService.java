@@ -119,12 +119,13 @@ public class ProductService {
         return products;
     }
 
-    public ResponseEntity<String> updateProduct(String productNumber, String cif, String price){
+    public ResponseEntity<String> updateProduct(String productNumber, String cif, String price, int stock){
         Product product = repository.findByCifAndProductNumber(productNumber, cif);
         if(product == null){
             return ResponseEntity.ok().contentType(org.springframework.http.MediaType.APPLICATION_JSON).body("Item not found");
         }
         product.setPrice(Double.parseDouble(price));
+        product.setStock(stock);
         repository.save(product);
         return ResponseEntity.ok().contentType(org.springframework.http.MediaType.APPLICATION_JSON).body("Item updated successfully");
     }
