@@ -35,7 +35,7 @@ public class ProductController {
     @PutMapping("/products/{productNumber}/{cif}")
     public ResponseEntity<String> updateProduct(@PathVariable String productNumber, @PathVariable String cif, @RequestBody Map<String, Object> payload) {
         String price = (String) payload.get("price");
-        int stock = Integer.parseInt((String) payload.get("stock"));
+        int stock = (Integer) payload.get("stock");
         return repository.updateProduct(productNumber, cif, price, stock);
     }
 
