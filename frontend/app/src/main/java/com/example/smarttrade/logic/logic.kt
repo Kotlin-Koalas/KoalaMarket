@@ -404,7 +404,7 @@ object logic {
 
         productSellerQueue = Volley.newRequestQueue(SellerFragment.getContext())
         val stringRequest = StringRequest(
-            Request.Method.DELETE,"$url/products/$PN/$CIF",
+            Request.Method.DELETE,"$url/products/$CIF/$PN",
             {response ->
                 Toast.makeText(SellerFragment.getContext(), "Producto eliminado con éxito", Toast.LENGTH_SHORT).show()
             },

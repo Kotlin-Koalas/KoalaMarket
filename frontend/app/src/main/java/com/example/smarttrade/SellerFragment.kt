@@ -89,7 +89,9 @@ class SellerFragment : Fragment() {
         btnOk.setOnClickListener{
             logic.deleteProduct(PN, sellerCIF)
             adapterP.notifyDataSetChanged()
-            //dialog.dismiss()
+            dialog.dismiss()
+            activity?.recreate()
+
         }
         btnCancel.setOnClickListener{
             dialog.dismiss()
@@ -116,9 +118,7 @@ class SellerFragment : Fragment() {
         val btnCancel = dialog.findViewById<Button>(R.id.buttonCancelChanges)
 
         btnOk.setOnClickListener {
-
             logic.changePriceProduct(PN,sellerCIF , price, stockInt)
-
             adapterP.notifyDataSetChanged()
             dialog.dismiss()
             activity?.recreate()
