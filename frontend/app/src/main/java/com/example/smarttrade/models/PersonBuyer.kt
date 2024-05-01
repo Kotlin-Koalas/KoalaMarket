@@ -130,7 +130,10 @@ object PersonBuyer {
     }
 
     fun setSelectedItemsInCart(products: MutableList<product_representation_cart>) {
-        selectedItemsCart = products
+        selectedItemsCart.clear()
+        for (p in products) {
+            selectedItemsCart.add(p)
+        }
     }
 
     fun getSelectedItemsCart(): MutableList<product_representation_cart> {
