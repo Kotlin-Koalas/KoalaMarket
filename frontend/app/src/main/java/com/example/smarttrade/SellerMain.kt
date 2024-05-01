@@ -1,14 +1,13 @@
 package com.example.smarttrade
 
+
 import android.content.Context
 import android.os.Bundle
-import android.widget.ImageView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import com.example.smarttrade.mainBuyerFragments.HomeFragment
-
-import androidx.fragment.app.commit
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.add
+import androidx.fragment.app.commit
 
 class SellerMain: AppCompatActivity() {
 
@@ -20,8 +19,9 @@ class SellerMain: AppCompatActivity() {
 
         enableEdgeToEdge()
 
-        actContextSell = this
 
+
+        actContextSell = this
 
         supportFragmentManager.commit {
             setReorderingAllowed(true)
@@ -31,25 +31,48 @@ class SellerMain: AppCompatActivity() {
         setContentView(R.layout.seller_bottom_bar)
 
 
-        val addProduct = findViewById<ImageView>(R.id.imageAddProduct)
+        val addProduct = findViewById<ConstraintLayout>(R.id.constraintLayoutAddProductSeller)
+        val accountSeller = findViewById<ConstraintLayout>(R.id.constraintLayoutProfileSeller)
+        val homeSeller = findViewById<ConstraintLayout>(R.id.constraintLayoutHomeSeller)
+
+
         addProduct.setOnClickListener {
-            //TODO ir a la ventana de añadir producto y cambiar foco del background
+
+
+            addProduct.setOnClickListener {
+                addProduct.setBackgroundResource(R.drawable.bottom_selected_background)
+                accountSeller.setBackgroundResource(R.color.verdeOscuro)
+                homeSeller.setBackgroundResource(R.color.verdeOscuro)
+                val fragment = AddProduct()
+                supportFragmentManager.commit {
+                    setReorderingAllowed(true)
+                    replace(R.id.seller_container_view, fragment)
+                }
+            }
+
+
+
+            accountSeller.setOnClickListener {
+                //TODO ir a la ventana de la cuenta
+            }
+
+
+            homeSeller.setOnClickListener {
+                homeSeller.setBackgroundResource(R.drawable.bottom_selected_background)
+                accountSeller.setBackgroundResource(R.color.verdeOscuro)
+                addProduct.setBackgroundResource(R.color.verdeOscuro)
+                val fragment = SellerFragment()
+                supportFragmentManager.commit {
+                    setReorderingAllowed(true)
+                    replace(R.id.seller_container_view, fragment)
+                }
+            }
+
 
         }
-
-
-        val accountSeller = findViewById<ImageView>(R.id.imageProfileSeller)
-        accountSeller.setOnClickListener {
-            //TODO ir a la ventana de la cuenta
-        }
-
-        val homeSeller = findViewById<ImageView>(R.id.imageHomeSeller)
-        homeSeller.setOnClickListener {
-            //TODO ir a la ventana de inicio
-        }
-
 
     }
+
 
 
     companion object{

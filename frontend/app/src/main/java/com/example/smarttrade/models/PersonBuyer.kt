@@ -1,6 +1,7 @@
 package com.example.smarttrade.models
 
 import android.util.Log
+import com.example.smarttrade.adapters.ProductCartAdapter
 
 object PersonBuyer {
     private var name:String = ""
@@ -117,6 +118,7 @@ object PersonBuyer {
         Log.i("Delete Product Position", position.toString())
         Log.i("Delete Product", shoppingCart.toString())
         shoppingCart.removeAt(position)
+        ProductCartAdapter.updateProducts()
     }
 
     fun setProductsInCart(products: MutableList<product_representation_cart>) {
@@ -128,7 +130,10 @@ object PersonBuyer {
     }
 
     fun setSelectedItemsInCart(products: MutableList<product_representation_cart>) {
-        selectedItemsCart = products
+        selectedItemsCart.clear()
+        for (p in products) {
+            selectedItemsCart.add(p)
+        }
     }
 
     fun getSelectedItemsCart(): MutableList<product_representation_cart> {

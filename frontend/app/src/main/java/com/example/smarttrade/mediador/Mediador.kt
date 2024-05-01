@@ -12,6 +12,8 @@ import com.example.smarttrade.models.PersonBuyer
 import com.example.smarttrade.models.product_representation_cart
 
 object Mediador {
+
+    var totalPrice = 0.0
     fun notifyItemSelected(product: product_representation_cart){
         Log.i("AddPrice", product.quantity.toString())
         Log.i("AddPrice", product_representation_cart::class.java.toString())
@@ -43,20 +45,21 @@ object Mediador {
         ShoppingCartRequests.editProductInCart(p)
     }
 
-    fun notifyItemDeleted(product: product_representation_cart, view: View){
-        ShoppingCartRequests.deleteProductInCart(product)
+    fun notifyItemDeleted(product: product_representation_cart, view: View, pos:Int){
         val selectedImageView = view.findViewById<ImageView>(R.id.imageViewSelected)
         if(selectedImageView.tag == R.drawable.cart_selected) {
             removePriceFromTotal(product.price.toDouble(),1)
             PersonBuyer.removeSelectedItemFromCart(product)
         }
+        PersonBuyer.removeProductFromCart(pos)
+        ShoppingCartRequests.deleteProductInCart(product)
     }
 
     fun notifyAllItemsSelected(){
         val productList = PersonBuyer.getShoppingCart()
-        var totalPrice: Double = 0.0
+        totalPrice = 0.0
         for (product in productList){
-            totalPrice += product.price.toDouble()
+            totalPrice += product.price.toDouble()*product.quantity
         }
         val view = ShoppingCartFragment.getCurrView()
         val totalPriceView = view.findViewById<TextView>(R.id.textViewPrecioTotal)
@@ -67,25 +70,23 @@ object Mediador {
     fun notifyAllItemsUnselected(){
         val view = ShoppingCartFragment.getCurrView()
         val totalPriceView = view.findViewById<TextView>(R.id.textViewPrecioTotal)
-        val none = 0.0
-        totalPriceView.text = none.toString()
+        totalPrice = 0.0
+        totalPriceView.text = totalPrice.toString()
         PersonBuyer.setSelectedItemsInCart(mutableListOf())
     }
 
     private fun addPriceToTotal(price: Double, quantity: Int){
         val view = ShoppingCartFragment.getCurrView()
-        val totalPrice = view.findViewById<TextView>(R.id.textViewPrecioTotal)
-        val oldPrice = totalPrice.text.toString().toDouble()
-        val newPrice = oldPrice + (price*quantity)
-        totalPrice.text = newPrice.toString()
+        val totalPriceView = view.findViewById<TextView>(R.id.textViewPrecioTotal)
+        totalPrice += (price*quantity)
+        totalPriceView.text = totalPrice.toString()
     }
 
     private fun removePriceFromTotal(price: Double, quantity: Int){
         val view = ShoppingCartFragment.getCurrView()
-        val totalPrice = view.findViewById<TextView>(R.id.textViewPrecioTotal)
-        val oldPrice = totalPrice.text.toString().toDouble()
-        val newPrice = oldPrice - (price*quantity)
-        totalPrice.text = newPrice.toString()
+        val totalPriceView = view.findViewById<TextView>(R.id.textViewPrecioTotal)
+        totalPrice -= (price*quantity)
+        totalPriceView.text = totalPrice.toString()
     }
 
 }

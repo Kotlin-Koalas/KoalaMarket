@@ -8,6 +8,7 @@ import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.example.smarttrade.BuildConfig
 import com.example.smarttrade.MainActivity
+import com.example.smarttrade.adapters.ProductCartAdapter
 import com.example.smarttrade.mainBuyerFragments.ShoppingCartFragment
 import com.example.smarttrade.models.PersonBuyer
 import com.example.smarttrade.models.clothes_representation_cart
@@ -101,13 +102,11 @@ object ShoppingCartRequests {
 
         val jsonRequest = JsonObjectRequest(
             Request.Method.PUT,"$url/buyers/$id/cart",json,
-            {response ->
-                //TODO handle response
-                Log.i("ProductAdded", response.toString())
-            },
+            null,
             {error ->
                 Log.i("ErrorEditando", error.message.toString())
             })
+        Log.i("jsonEDITREQUE",jsonRequest.body.toString())
         cartVolleyQueue.add(jsonRequest)
     }
     fun deleteProductInCart(product: product_representation_cart){
@@ -120,11 +119,13 @@ object ShoppingCartRequests {
         json.put("productNumber", product.PN)
         json.put("cif",product.seller)
         json.put("category", product.category)
+        json.put("quantity", 0)
+        Log.i("jsonDelete",json.toString())
 
         val id = PersonBuyer.getDNI()
 
         val jsonRequest = JsonObjectRequest(
-            Request.Method.DELETE,"$url/buyers/$id/cart",json,
+            Request.Method.PUT,"$url/buyers/$id/cart",json,
             {response ->
                 //TODO handle response
                 Log.i("ProductAdded", response.toString())
@@ -132,6 +133,7 @@ object ShoppingCartRequests {
             {error ->
                 Log.i("ErrorBorrando", error.message.toString())
             })
+        Log.i("jsonDELETEREQUE",jsonRequest.body.toString())
         cartVolleyQueue.add(jsonRequest)
     }
 }
