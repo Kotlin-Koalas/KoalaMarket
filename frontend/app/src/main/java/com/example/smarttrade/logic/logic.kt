@@ -417,18 +417,19 @@ object logic {
 
 
     fun changePriceProduct(PN: String, CIF: String, price: String, stock: Int){
-        productSellerQueue = Volley.newRequestQueue(SellerFragment.getContext())
+        productSellerQueue = Volley.newRequestQueue(SellerMain.getContext())
         val json = JSONObject()
         json.put("price", price)
         json.put("stock", stock)
         val stringRequest = JsonObjectRequest(
-            Request.Method.PUT,"$url/products/$PN/$CIF",json,
+            Request.Method.PUT,"$url/products/$CIF/$PN",json,
             {response ->
-                Toast.makeText(SellerFragment.getContext(), "Precio del producto actualizado con éxito", Toast.LENGTH_SHORT).show()
+                Toast.makeText(SellerMain.getContext(), "Precio del producto actualizado con éxito", Toast.LENGTH_SHORT).show()
             },
             {error ->
-                Toast.makeText(MainActivity.getContext(), "Error: $error", Toast.LENGTH_SHORT)
+                Toast.makeText(SellerMain.getContext(), "Error: $error", Toast.LENGTH_SHORT)
                     .show()
+                Log.i ("ERROR","$error")
             })
         productSellerQueue.add(stringRequest)
     }
@@ -456,7 +457,7 @@ object logic {
             {error ->
                 Toast.makeText(MainActivity.getContext(), "Error: $error", Toast.LENGTH_SHORT)
                     .show()
-                Log.i("ERROR","$error")
+                Log.i("AAAA","$error")
             })
         productSellerQueue.add(stringRequest)
     }

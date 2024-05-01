@@ -120,7 +120,8 @@ class SellerFragment : Fragment() {
             logic.changePriceProduct(PN,sellerCIF , price, stockInt)
 
             adapterP.notifyDataSetChanged()
-            //dialog.dismiss()
+            dialog.dismiss()
+            activity?.recreate()
         }
         btnCancel.setOnClickListener {
             dialog.dismiss()

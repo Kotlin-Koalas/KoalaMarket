@@ -387,6 +387,8 @@ class AddProduct :Fragment() {
         messageBox.text = msgSuccess
 
         dialog.show()
+
+
     }
 
     private fun updateCategoryText(selectedCategory: String) {
