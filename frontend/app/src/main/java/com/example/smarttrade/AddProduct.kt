@@ -4,6 +4,7 @@ import android.app.Activity
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.VectorDrawable
@@ -27,6 +28,8 @@ import androidx.core.graphics.drawable.toBitmap
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import com.example.smarttrade.logic.logic
+import com.example.smarttrade.models.product_representation
+import com.example.smarttrade.volleyRequestClasses.ImageURLtoBitmapConverter
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileInputStream
@@ -48,9 +51,10 @@ class AddProduct :Fragment() {
     var buscarFoto = false
     lateinit var imageURI: Uri
     private lateinit var currview : View
+    private lateinit var productImage : product_representation
 
 
-    private var existProduct = false
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,7 +66,7 @@ class AddProduct :Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?): View? {
 
-        currview =  inflater.inflate(R.layout.activity_add_product, container, false)
+        currview = inflater.inflate(R.layout.activity_add_product, container, false)
 
 
         //val scrollViewAddP = currview.findViewById<ScrollView>(R.id.scrollView2)
@@ -82,7 +86,7 @@ class AddProduct :Fragment() {
             val intentU = Intent(Intent.ACTION_GET_CONTENT)
             intentU.type = "*/*"
             intentU.addCategory(Intent.CATEGORY_OPENABLE)
-            startActivityForResult(intentU,PICK_FILE_REQUEST_CODE)
+            startActivityForResult(intentU, PICK_FILE_REQUEST_CODE)
         }
 
         val acceptButton = currview.findViewById<Button>(R.id.acceptAddButton)
@@ -98,49 +102,60 @@ class AddProduct :Fragment() {
         //prod.addTextChangedListener(MyTextWatcher(uploadImageButton))
 
 
-
-
         uploadImageButton.setOnClickListener {
-            if(buscarFoto){
-                pickmedia.launch(PickVisualMediaRequest(PickVisualMedia.ImageOnly))
+            if (buscarFoto) {
+
             }
         }
 
 
         prod.addTextChangedListener {
 
-            if(prod.length() == 12){
+            if (prod.length() == 12) {
                 //TODO comprobar si funciona
-                logic.existProduct(prod.text.toString()){ productExist ->
-                    if(productExist){
+
+                logic.existProduct(prod.text.toString()){productExist ->
+
+                    if (productExist) {
+
+
+                            Log.i("Product", imagePNExist)
+
+
+                        //encodedImageString = imagePNExist
                         uploadImageButton.isClickable = false
                         buscarFoto = false
-                    }
+                        ImageURLtoBitmapConverter.downloadImageAddProduct(imagePNExist, currview)
+                        Log.i("LLEGO", imagePNExist)
+                        isUploadImage = 1
 
-                    else{
+
+                    } else {
                         uploadImageButton.isClickable = true
                         buscarFoto = true
+                        imagePNExist = ""
+                        pickmedia.launch(PickVisualMediaRequest(PickVisualMedia.ImageOnly))
+
                     }
-
                 }
-
 
             }
             else{
-
-                //uploadImageButton.setOnClickListener(null)
-                //uploadImageButton.setImageURI(null)
-                uploadImageButton.isClickable= false
+                uploadImageButton.setOnClickListener(null)
+                uploadImageButton.setImageURI(null)
+                uploadImageButton.isClickable = false
+                buscarFoto = false
 
                 val defaultImage = resources.getDrawable(R.drawable.add_item)
                 val defaultBitmap = (defaultImage as VectorDrawable).toBitmap()
-                val defaultImageUri = Uri.parse("android.resource://${requireActivity().packageName}/${R.drawable.add_item}")
+                val defaultImageUri =
+                    Uri.parse("android.resource://${requireActivity().packageName}/${R.drawable.add_item}")
                 uploadImageButton.setImageBitmap(defaultBitmap)
-
+                imagePNExist = ""
                 isUploadImage = -1
             }
-
         }
+
 
 
 
@@ -387,6 +402,8 @@ class AddProduct :Fragment() {
         messageBox.text = msgSuccess
 
         dialog.show()
+
+
     }
 
     private fun updateCategoryText(selectedCategory: String) {
@@ -561,6 +578,10 @@ class AddProduct :Fragment() {
         private lateinit var cat1: String
         private lateinit var cat2: String
         private lateinit var currview : View
+        private lateinit var productImage : product_representation
+        private var existProduct : Boolean = false
+        private var imagePNExist = ""
+
         fun getContext(): Context {
             return actContext.requireContext()
         }
@@ -569,12 +590,30 @@ class AddProduct :Fragment() {
             actContext.showCustomDialogBox("Error al intentar añadir producto")
         }
 
+        fun setImage(image: Bitmap?, view:View){
+            val imageView = view.findViewById<ImageView>(R.id.uploadImageButton)
+            if (image != null) {
+                imageView.setImageBitmap(image)
+            }
+        }
+
+        fun newImage(image: String){
+            imagePNExist = image
+
+        }
+
+        fun setExistProduct(bool: Boolean){
+            existProduct = bool
+        }
+
 
         fun productAded(){
             actContext.showCustomDialogBoxSuccess("Producto añadido correctamente")
         }
         fun setEncodedImageString(encodedImageString: String){
             this.encodedImageString = encodedImageString
+            Log.i("imagen", encodedImageString)
+            Log.i("imagen", this.encodedImageString)
             when (categorSelected) {
 
                 "Tecnología" -> {

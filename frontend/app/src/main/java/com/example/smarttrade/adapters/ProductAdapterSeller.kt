@@ -66,13 +66,13 @@ class ProductAdapterSeller(
         val updatePrice = view.findViewById<ImageView>(R.id.imageViewCheckPrice)
         val textViewName = view.findViewById<TextView>(R.id.textViewNameProduct)
         val textPrice = view.findViewById<EditText>(R.id.editTextPriceProduct)
-        val imageProduct = view.findViewById<ImageView>(R.id.imageView9)
+        val imageProductSeller= view.findViewById<ImageView>(R.id.imageView9)
         val deleteProduct = view.findViewById<ImageView>(R.id.imageViewDeleteProduct)
         val stockProduct = view.findViewById<TextView>(R.id.editTextStockProduct)
 
         val pNProduct = popularProducts[position].PN
 
-        ImageURLtoBitmapConverter.downloadImage(popularProducts[position].image, view)
+        ImageURLtoBitmapConverter.downloadImageProductSeller(popularProducts[position].image, view)
         textViewName.text = popularProducts[position].name
         textPrice.hint = popularProducts[position].price
         stockProduct.hint = popularProducts[position].stock.toString()
@@ -116,10 +116,11 @@ class ProductAdapterSeller(
                                                     pNProduct,)
 
         }
+        //currentPrice != popularProducts[position].price &&
 
         updatePrice.setOnClickListener(){
 
-            if(currentPrice != "" && currentPrice != popularProducts[position].price && patternPrice.containsMatchIn(currentPrice) && currentStock != "" && currentStock != popularProducts[position].stock.toString() && currentStock != "0"){
+            if(currentPrice != "" &&  patternPrice.containsMatchIn(currentPrice) && currentStock != "" && currentStock != popularProducts[position].stock.toString()){
                 sellerFragment.showAlertChangePriceProductBox("¿Estás seguro de que quieres cambiar el precio y stock de este producto?"
                     , pNProduct, currentPrice, currentStock)
             }
@@ -135,7 +136,7 @@ class ProductAdapterSeller(
 
     companion object{
         fun setImage(image: Bitmap?, view: View){
-            val imageView = view.findViewById<ImageView>(R.id.imageViewCat)
+            val imageView = view.findViewById<ImageView>(R.id.imageView9)
             if (image != null) {
                 imageView.setImageBitmap(image)
             }
