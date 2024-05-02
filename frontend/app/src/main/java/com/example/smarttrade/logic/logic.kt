@@ -1,7 +1,6 @@
 package com.example.smarttrade.logic
 
 
-import com.example.smarttrade.volleyRequestClasses.VolleyMultipartRequest
 import android.util.Log
 import android.widget.Toast
 import com.android.volley.Request
@@ -14,6 +13,8 @@ import com.example.smarttrade.BrowseProductsFiltered
 import com.example.smarttrade.BuildConfig
 import com.example.smarttrade.BuyerMainScreen
 import com.example.smarttrade.MainActivity
+import com.example.smarttrade.SellerFragment
+import com.example.smarttrade.SellerMain
 import com.example.smarttrade.adapters.SellerAdapter
 import com.example.smarttrade.mainBuyerFragments.HomeFragment
 import com.example.smarttrade.models.PersonSeller
@@ -27,6 +28,7 @@ import com.example.smarttrade.models.technology_representation
 import com.example.smarttrade.models.technology_representation_seller
 import com.example.smarttrade.models.toy_representation
 import com.example.smarttrade.models.toy_representation_seller
+import com.example.smarttrade.volleyRequestClasses.VolleyMultipartRequest
 import org.json.JSONArray
 import org.json.JSONObject
 
@@ -38,10 +40,12 @@ private val url = "http://$myIP:8080"
 object logic {
 
     var isPQueue = false
+    var isPSQueue = false
 
     lateinit var buyerVolleyQueue:RequestQueue
     lateinit var sellerVolleyQueue:RequestQueue
     lateinit var productVolleyQueue:RequestQueue
+    lateinit var productSellerQueue: RequestQueue
 
 
     fun filterProduct(producList: MutableList<product_representation>, searchItem:String) : MutableList<product_representation>{
@@ -368,29 +372,129 @@ object logic {
 
 
 
-     fun  existProduct(productNumber : String, completion: (Boolean) ->Unit){
-        productVolleyQueue =Volley.newRequestQueue(AddProduct.getContext())
+     fun  existProduct(PN : String, callback: (Boolean) -> Unit){
+         productVolleyQueue =Volley.newRequestQueue(AddProduct.getContext())
+         val stringRequest = StringRequest(
+             Request.Method.GET,"$url/products/$PN",
+             {response ->
+                 val objects = JSONObject(response)
+
+                 try{
+                        val product = objects.getJSONArray("items")
+                        val p = product.getJSONObject(0)
+                        val res = p.getString("image")
+                        Log.i("TRUE","PRODUCTO EXISTE")
+                        Log.i("IMAGEN",res.toString())
+                        AddProduct.newImage(res)
+                        callback(true)
+                 }catch (e: Exception){
+                     Log.i("FALSE","PRODUCTO NO EXISTE")
+                     AddProduct.newImage("")
+                     callback(false)
+                 }
+
+
+             },
+             {error ->
+                    //Log.i("FALSE","PRODUCTO NO EXISTE")
+                 //AddProduct.newImage("")
+                    callback(false)
+             })
+         productVolleyQueue.add(stringRequest)
+    }
+
+    /*
+    fun getProduct(PN: String, cb: (String) -> Unit){//TODO AQUI NO ENTRA
+        productVolleyQueue = Volley.newRequestQueue(AddProduct.getContext())
 
         val stringRequest = StringRequest(
-            Request.Method.GET,"$url/products/$productNumber/exist",
+            Request.Method.GET,"$url/products/$PN",
             {response ->
-                    try{
-                        val isProdcutExist = JSONObject(response).getBoolean("exist")
-                        completion(isProdcutExist)
-
-                }catch (e:Exception){
-                    Log.e("AddProductError","Error parsing response: ${e.message}"  )
-                        completion(false)
-                }
+                val p = JSONObject(response)
+                var res = p.getString("image")
+                Log.i("VA,",res.toString())
+                cb("VA")
 
             },
             {error ->
-                Log.e("AddProduct", "Error in network request: ${error.message}")
-                completion(false) // Handle network error gracefully
-            })
+                  var res = "error"
+                Log.i("NO VA,",res)
+                cb("NO VA")
 
-            productVolleyQueue.add(stringRequest)
+            })
+        productVolleyQueue.add(stringRequest)
     }
+*/
+
+
+    fun deleteProduct(PN: String, CIF: String){
+
+        productSellerQueue = Volley.newRequestQueue(SellerFragment.getContext())
+        val stringRequest = StringRequest(
+            Request.Method.DELETE,"$url/products/$CIF/$PN",
+            {response ->
+                Toast.makeText(SellerFragment.getContext(), "Producto eliminado con éxito", Toast.LENGTH_SHORT).show()
+            },
+            {error ->
+                Toast.makeText(MainActivity.getContext(), "Error: $error", Toast.LENGTH_SHORT)
+                    .show()
+            })
+        productSellerQueue.add(stringRequest)
+    }
+
+
+    fun changePriceProduct(PN: String, CIF: String, price: String, stock: Int){
+        productSellerQueue = Volley.newRequestQueue(SellerMain.getContext())
+        val json = JSONObject()
+        json.put("price", price)
+        json.put("stock", stock)
+        val stringRequest = JsonObjectRequest(
+            Request.Method.PUT,"$url/products/$CIF/$PN",json,
+            {response ->
+                Toast.makeText(SellerMain.getContext(), "Precio del producto actualizado con éxito", Toast.LENGTH_SHORT).show()
+            },
+            {error ->
+                Toast.makeText(SellerMain.getContext(), "Error: $error", Toast.LENGTH_SHORT)
+                    .show()
+                Log.i ("ERROR","$error")
+            })
+        productSellerQueue.add(stringRequest)
+    }
+
+
+
+
+
+    fun getAllProductsSeller(sellerCif : String){
+        if(!isPSQueue) {
+            productSellerQueue = Volley.newRequestQueue(SellerMain.getContext())
+            isPSQueue = true
+        }
+        val res = mutableListOf<product_representation>()
+        val stringRequest = StringRequest(
+            Request.Method.GET,"$url/$sellerCif/products",
+            {response ->
+                val products = JSONArray(response)
+                for (i in 0 until products.length()) {
+                    val p = products.getJSONObject(i)
+                    res.add(product_representation(p.getString("category"),p.getString("name"),p.getString("price"),p.getString("image"),p.getString("stock").toInt(),p.getString("description"),p.getString("ecology"),p.getString("productNumber")))
+                }
+                SellerFragment.setProductsSeller(res)
+            },
+            {error ->
+                Toast.makeText(MainActivity.getContext(), "Error: $error", Toast.LENGTH_SHORT)
+                    .show()
+                Log.i("AAAA","$error")
+            })
+        productSellerQueue.add(stringRequest)
+    }
+
+
+
+
+
+
+
 
 
 
@@ -453,8 +557,9 @@ object logic {
 
  */
 
-
-
-
-
 }
+
+
+
+
+

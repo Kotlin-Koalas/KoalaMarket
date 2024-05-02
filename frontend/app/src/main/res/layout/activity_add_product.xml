@@ -16,24 +16,11 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ImageButton
-            android:id="@+id/BackButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:background="@null"
-            android:onClick="backButtonClick"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.777"
-            app:srcCompat="@drawable/back_white_arrow" />
-
         <TextView
             android:id="@+id/textTittle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
             android:fontFamily="@font/karla"
@@ -41,7 +28,7 @@
             android:textColor="@color/white"
             android:textSize="17sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/BackButton"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.797" />
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -50,7 +37,6 @@
         android:id="@+id/constraitLayout2"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginBottom="80dp"
         android:background="@color/white"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -98,12 +84,12 @@
                         android:layout_width="200dp"
                         android:layout_height="200dp"
                         android:layout_gravity="center"
+                        android:defaultFocusHighlightEnabled="false"
+                        android:focusable="false"
                         android:onClick="uploadImageButton"
                         android:saveEnabled="false"
                         android:scaleType="centerCrop"
-                        android:focusable="false"
                         android:src="@drawable/add_item"
-                        android:defaultFocusHighlightEnabled="false"
                         tools:visibility="visible" />
 
                     <TextView
@@ -122,15 +108,15 @@
                         android:layout_height="50dp"
                         android:layout_margin="3dp"
                         android:background="@drawable/basic_grey_shape"
-                        android:fontFamily="@font/karla"
                         android:baselineAligned="false"
                         android:ems="10"
+                        android:fontFamily="@font/karla"
+                        android:hint="9S7174541693"
+                        android:inputType="text"
                         android:maxLength="12"
                         android:paddingHorizontal="8dp"
-                        android:hint="9S7174541693"
-                        android:textColorHint="@color/greyLetter"
-                        android:inputType="text"
-                        android:textColor="@color/black" />
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/greyLetter" />
 
                     <TextView
                         android:id="@+id/textView5"
@@ -149,13 +135,13 @@
                         android:layout_margin="3dp"
                         android:background="@drawable/basic_grey_shape"
                         android:baselineAligned="false"
-                        android:fontFamily="@font/karla"
                         android:ems="10"
+                        android:fontFamily="@font/karla"
                         android:hint="Ejemplo nombre producto"
-                        android:paddingHorizontal="8dp"
-                        android:textColorHint="@color/greyLetter"
                         android:inputType="text"
-                        android:textColor="@color/black" />
+                        android:paddingHorizontal="8dp"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/greyLetter" />
 
                     <TextView
                         android:id="@+id/textView6"
@@ -171,13 +157,12 @@
                         android:id="@+id/spinnerCategory"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
-                        android:dropDownSelector="@drawable/dropdown_arrow"
                         android:background="@drawable/basic_grey_shape"
-                        android:fontFamily="@font/karla"
                         android:baselineAligned="false"
+                        android:dropDownSelector="@drawable/dropdown_arrow"
                         android:ems="10"
                         android:entries="@array/categoriesApp"
-                        />
+                        android:fontFamily="@font/karla" />
 
                     <TextView
                         android:id="@+id/textViewCategoria1"
@@ -185,9 +170,9 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="20dp"
                         android:fontFamily="@font/karla"
+                        android:text="Característica categoria 1:"
                         android:textColor="@color/black"
-                        android:textSize="17sp"
-                        android:text="Característica categoria 1:" />
+                        android:textSize="17sp" />
 
                     <EditText
                         android:id="@+id/editTextCategoria1"
@@ -195,14 +180,14 @@
                         android:layout_height="50dp"
                         android:layout_margin="3dp"
                         android:background="@drawable/basic_grey_shape"
-                        android:fontFamily="@font/karla"
                         android:baselineAligned="false"
                         android:ems="10"
-                        android:paddingHorizontal="8dp"
+                        android:fontFamily="@font/karla"
                         android:hint="Ejemplo característica 1"
-                        android:textColorHint="@color/greyLetter"
                         android:inputType="text"
-                        android:textColor="@color/black" />
+                        android:paddingHorizontal="8dp"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/greyLetter" />
 
                     <TextView
                         android:id="@+id/textViewCategoria2"
@@ -210,9 +195,9 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="20dp"
                         android:fontFamily="@font/karla"
+                        android:text="Característica categoria 2"
                         android:textColor="@color/black"
-                        android:textSize="17sp"
-                        android:text="Característica categoria 2" />
+                        android:textSize="17sp" />
 
                     <EditText
                         android:id="@+id/editTextCategoria2"
@@ -221,13 +206,13 @@
                         android:layout_margin="3dp"
                         android:background="@drawable/basic_grey_shape"
                         android:baselineAligned="false"
-                        android:fontFamily="@font/karla"
                         android:ems="10"
+                        android:fontFamily="@font/karla"
                         android:hint="Ejemplo característica 2"
-                        android:paddingHorizontal="8dp"
-                        android:textColorHint="@color/greyLetter"
                         android:inputType="text"
-                        android:textColor="@color/black" />
+                        android:paddingHorizontal="8dp"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/greyLetter" />
 
                     <TextView
                         android:id="@+id/textView7"
@@ -246,13 +231,13 @@
                         android:layout_margin="3dp"
                         android:background="@drawable/basic_grey_shape"
                         android:baselineAligned="false"
-                        android:fontFamily="@font/karla"
                         android:ems="10"
+                        android:fontFamily="@font/karla"
                         android:hint="88.50"
-                        android:paddingHorizontal="8dp"
-                        android:textColorHint="@color/greyLetter"
                         android:inputType="numberDecimal"
-                        android:textColor="@color/black" />
+                        android:paddingHorizontal="8dp"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/greyLetter" />
 
                     <TextView
                         android:id="@+id/textView8"
@@ -275,8 +260,8 @@
                         android:fontFamily="@font/karla"
                         android:hint="Ordenador gaming portátil con..."
                         android:paddingHorizontal="8dp"
-                        android:textColorHint="@color/greyLetter"
-                        android:textColor="@color/black" />
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/greyLetter" />
 
                     <TextView
                         android:id="@+id/textView9"
@@ -293,12 +278,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:background="@drawable/basic_grey_shape"
-                        android:dropDownSelector="@drawable/dropdown_arrow"
                         android:baselineAligned="false"
+                        android:dropDownSelector="@drawable/dropdown_arrow"
                         android:ems="10"
-                        android:fontFamily="@font/karla"
                         android:entries="@array/certificatesApp"
-                        />
+                        android:fontFamily="@font/karla" />
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/frameLayoutID10"
@@ -327,8 +311,8 @@
                             android:layout_height="32dp"
                             android:layout_marginStart="8dp"
                             android:background="@drawable/ciruclar_button"
-                            android:text="Subir"
                             android:fontFamily="@font/karla"
+                            android:text="Subir"
                             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                             android:textColor="@color/black"
                             app:layout_constraintBottom_toBottomOf="parent"
@@ -340,13 +324,13 @@
                             android:layout_width="24dp"
                             android:layout_height="25dp"
                             android:layout_marginStart="8dp"
+                            android:saveEnabled="false"
                             android:visibility="invisible"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/buttonUploadCertificate"
                             app:layout_constraintTop_toTopOf="parent"
-                            android:saveEnabled="false"
-                            tools:visibility="visible"
-                            app:srcCompat="@drawable/ok_download" />
+                            app:srcCompat="@drawable/ok_download"
+                            tools:visibility="visible" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -370,26 +354,25 @@
                         android:ems="10"
                         android:fontFamily="@font/karla"
                         android:hint="89"
-                        android:paddingHorizontal="8dp"
-                        android:textColorHint="@color/greyLetter"
                         android:inputType="number"
-                        android:textColor="@color/black" />
+                        android:paddingHorizontal="8dp"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/greyLetter" />
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginBottom="30dp"
-                        android:layout_marginTop="20dp">
-
+                        android:layout_marginTop="20dp"
+                        android:layout_marginBottom="30dp">
 
 
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="230dp"
                             android:layout_height="match_parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
                             app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
                             tools:layout_editor_absoluteX="77dp"
                             tools:layout_editor_absoluteY="5dp">
 
@@ -398,8 +381,8 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:background="@drawable/ciruclar_button"
-                                android:text="Cancelar"
                                 android:fontFamily="@font/karla"
+                                android:text="Cancelar"
                                 android:textAllCaps="false"
                                 android:textColor="@color/greyLetter"
                                 android:textSize="20sp"
@@ -413,9 +396,9 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:background="@drawable/circular_button_green"
+                                android:fontFamily="@font/karla"
                                 android:text="Aceptar"
                                 android:textAllCaps="false"
-                                android:fontFamily="@font/karla"
                                 android:textColor="@color/white"
                                 android:textSize="20sp"
                                 app:layout_constraintBottom_toBottomOf="parent"

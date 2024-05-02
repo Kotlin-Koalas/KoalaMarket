@@ -11,6 +11,7 @@ import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.compose.material3.MediumTopAppBar
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.smarttrade.R
 import com.example.smarttrade.mediador.Mediador
 import com.example.smarttrade.models.PersonBuyer
@@ -68,27 +69,35 @@ class ProductCartAdapter(
         val selectedImageView = view.findViewById<ImageView>(R.id.imageViewSelected)
         selectedImageView.tag = R.drawable.ellipse_5
 
+        var currentStock = PersonBuyer.getShoppingCart()[position].quantity
+
         val selected = view.findViewById<ImageView>(R.id.imageViewSelected)
         selected.setOnClickListener {
             if (selectedImageView.tag == R.drawable.ellipse_5) {
                 selectedImageView.setImageResource(R.drawable.cart_selected)
                 selectedImageView.tag = R.drawable.cart_selected
+                Log.i("ShoppingCart", PersonBuyer.getShoppingCart().toString())
+                Log.i("ShoppingCartSize", PersonBuyer.getShoppingCart().size.toString())
+                Log.i("Selected", position.toString())
                 Mediador.notifyItemSelected(PersonBuyer.getShoppingCart()[position])
                 Log.i("Selected", PersonBuyer.getShoppingCart()[position].toString())
                 Log.i("SelectedPosition", position.toString())
+                Log.i("representedProduct quant", currentStock.toString())
+                Log.i("Posicion en carrito", PersonBuyer.getShoppingCart().indexOf(PersonBuyer.getShoppingCart()[position]).toString())
             } else {
                 selectedImageView.setImageResource(R.drawable.ellipse_5)
                 selectedImageView.tag = R.drawable.ellipse_5
+                Log.i("CartBeforeUnSelected",PersonBuyer.getShoppingCart().toString())
                 Mediador.notifyItemUnselected(PersonBuyer.getShoppingCart()[position])
+                Log.i("CartAfterUnSelected",PersonBuyer.getShoppingCart().toString())
             }
         }
 
-        var currentStock = PersonBuyer.getShoppingCart()[position].quantity.toInt()
         val stock = PersonBuyer.getShoppingCart()[position].stock
 
         stockText.text = currentStock.toString()
 
-        val addQuantity = view.findViewById<ImageView>(R.id.addStock)
+        val addQuantity = view.findViewById<ConstraintLayout>(R.id.addStock)
 
 
         addQuantity.setOnClickListener {
@@ -99,7 +108,7 @@ class ProductCartAdapter(
             }
         }
 
-        val substractQuantity = view.findViewById<ImageView>(R.id.substractStock)
+        val substractQuantity = view.findViewById<ConstraintLayout>(R.id.substractStock)
         substractQuantity.setOnClickListener {
             if(currentStock > 1){
                 currentStock--
@@ -107,8 +116,7 @@ class ProductCartAdapter(
                 Mediador.notifyItemQuantityDecreased(PersonBuyer.getShoppingCart()[position],view,currentStock)
                 Log.i("Views",views.toString())
             } else{
-                removeProduct(position)
-                Mediador.notifyItemDeleted(PersonBuyer.getShoppingCart()[position],view)
+                Mediador.notifyItemDeleted(PersonBuyer.getShoppingCart()[position],view,position)
                 Log.i("Views",views.toString())
             }
         }
@@ -128,6 +136,7 @@ class ProductCartAdapter(
             }
         }
         fun setAllSelected(){
+            Log.i("CartWhenAllSelected",PersonBuyer.getShoppingCart().toString())
             for (v in views){
                 val selectedImageView = v.findViewById<ImageView>(R.id.imageViewSelected)
                 selectedImageView.setImageResource(R.drawable.cart_selected)
@@ -144,6 +153,10 @@ class ProductCartAdapter(
             }
             Mediador.notifyAllItemsUnselected()
             Log.i("Views",views.toString())
+        }
+
+        fun updateProducts(){
+            who.updateProducts()
         }
 
     }

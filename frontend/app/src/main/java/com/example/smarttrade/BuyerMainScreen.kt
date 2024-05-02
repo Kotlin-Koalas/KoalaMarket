@@ -11,6 +11,7 @@ import androidx.fragment.app.commit
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.add
+import com.example.smarttrade.adapters.ProductAdapter
 import com.example.smarttrade.mainBuyerFragments.HomeFragment
 import com.example.smarttrade.mainBuyerFragments.ShoppingCartFragment
 
@@ -43,6 +44,7 @@ class BuyerMainScreen : AppCompatActivity() {
                 setReorderingAllowed(true)
                 add<ShoppingCartFragment>(R.id.fragment_container_view)
             }
+            ProductAdapter.deleteListeners()
         }
 
         account.setOnClickListener{
