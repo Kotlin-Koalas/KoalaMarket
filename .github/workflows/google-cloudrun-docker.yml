@@ -113,7 +113,6 @@ jobs:
             DATABASE_URL=${{ secrets.DATABASE_URL }}
             DATABASE_USERNAME=${{ secrets.DATABASE_USERNAME }}
             DATABASE_PASSWORD=${{ secrets.DATABASE_PASSWORD }}
-          port: ${{ secrets.API_PORT }}
 
       # If required, use the Cloud Run url output in later steps
       - name: Show Output
