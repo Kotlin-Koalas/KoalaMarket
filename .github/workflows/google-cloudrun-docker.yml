@@ -108,7 +108,7 @@ jobs:
           region: ${{ env.REGION }}
           # NOTE: If using a pre-built image, update the image name here
           image: ${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{ github.sha }}
-          memory: 2Gi
+          flags: '--memory 2Gi'
           env_vars: |
             DATABASE_URL: ${{ secrets.DATABASE_URL }}
             DATABASE_USERNAME: ${{ secrets.DATABASE_USERNAME }}
