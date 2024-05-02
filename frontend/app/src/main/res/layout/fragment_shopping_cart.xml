@@ -65,7 +65,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:numColumns="1">
+            android:numColumns="1"
+            android:verticalSpacing="20dp">
 
         </GridView>
     </androidx.constraintlayout.widget.ConstraintLayout>
