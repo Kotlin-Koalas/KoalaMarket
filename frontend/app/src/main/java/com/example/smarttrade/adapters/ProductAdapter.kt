@@ -50,6 +50,7 @@ class ProductAdapter(
     }
 
     fun updateProducts(updateProductList: MutableList<product_representation>) {
+        views.clear()
         popularProducts.clear()
         popularProducts.addAll(updateProductList)
         notifyDataSetChanged()
@@ -76,19 +77,8 @@ class ProductAdapter(
             "green" -> imageViewLeaf.setImageResource(R.drawable.hoja_verde)
         }
 
-        /*
-        //Temporal para probar
-        imageView.setImageResource(R.drawable.no_photo)
-        textViewPrice.text = "10"
-        textViewName.text = "Prueba"
-        textViewStock.text = "2"
-        imageViewLeaf.setImageResource(R.drawable.hoja_roja)
-        */
-
         val productRepresentation = view.findViewById<ConstraintLayout>(R.id.layout)
         productRepresentation.setOnClickListener {
-            //TODO ir a la pagina del propio producto
-
             val i = Intent(context, ProductView::class.java)
             i.putExtra("name", popularProducts[position].name)
             i.putExtra("stock", popularProducts[position].stock)
@@ -98,20 +88,27 @@ class ProductAdapter(
             i.putExtra("product number", popularProducts[position].PN)
 
             context.startActivity(i)
-
-
         }
-
+        views.add(view)
         return view
     }
 
     companion object{
+        var views = mutableListOf<View>()
         fun setImage(image: Bitmap?,view:View){
             val imageView = view.findViewById<ImageView>(R.id.imageViewCat)
             if (image != null) {
                 imageView.setImageBitmap(image)
             }
         }
+
+        fun deleteListeners(){
+            for (v in views){
+                val productRepresentation = v.findViewById<ConstraintLayout>(R.id.layout)
+                productRepresentation.setOnClickListener(null)
+            }
+        }
+
 
     }
 
