@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.ImageView
 import com.android.volley.toolbox.ImageRequest
 import com.android.volley.toolbox.Volley
+import com.example.smarttrade.AddProduct
 import com.example.smarttrade.BuildConfig
 import com.example.smarttrade.MainActivity
 import com.example.smarttrade.ProductView
@@ -90,22 +91,24 @@ object  ImageURLtoBitmapConverter {
         return bitmap
     }
 
-    fun downloadImageAddProduct(url: String): Bitmap? {
+    fun downloadImageAddProduct(url: String, view:View): Bitmap? {
+
+        var urlC = "$host:5000/"+url
         val requestQueue = Volley.newRequestQueue(MainActivity.getContext())
         var bitmap: Bitmap? = null
 
         val imageRequest = ImageRequest(
-            url,
+            urlC,
             { response -> bitmap = response
                 Log.i("imageBitmap", bitmap.toString())
-                //AddProduct.setImage(bitmap)
+                AddProduct.setImage(bitmap, view)
             },
-            143,
-            143,
+            200,
+            200,
             ImageView.ScaleType.CENTER_CROP,
             Bitmap.Config.RGB_565,
             { error -> Log.e("ImageLoadError", "Error listener: $error")
-                //AddProduct.setImage(null)
+                AddProduct.setImage(null, view)
         }
         )
 
