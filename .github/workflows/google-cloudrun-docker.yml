@@ -65,6 +65,8 @@ jobs:
       id-token: 'write'
 
     runs-on: ubuntu-latest
+    timeout-minutes: 18
+    
     steps:
       - name: Checkout
         uses: actions/checkout@v4
