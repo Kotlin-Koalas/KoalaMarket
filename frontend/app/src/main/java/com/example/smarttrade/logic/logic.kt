@@ -31,8 +31,10 @@ import com.example.smarttrade.models.technology_representation_seller
 import com.example.smarttrade.models.toy_representation
 import com.example.smarttrade.models.toy_representation_seller
 import com.example.smarttrade.volleyRequestClasses.VolleyMultipartRequest
+import kotlinx.coroutines.flow.callbackFlow
 import org.json.JSONArray
 import org.json.JSONObject
+import kotlin.math.log
 
 private const val host = BuildConfig.DB_LINK
 private const val myIP = BuildConfig.MY_IP
@@ -371,12 +373,11 @@ object logic {
         productVolleyQueue.add(request)
     }
 
-    fun getSpecificSeller(PN: String, price: String, stock: String): seller_representation? {
+    fun getSpecificSeller(PN: String, price: String, stock: Int, callback: (seller_representation?) -> Unit) {
         if(!isPQueue) {
             productVolleyQueue = Volley.newRequestQueue(BuyerMainScreen.getContext())
             isPQueue = true
         }
-        var res: seller_representation? = null
         val request = StringRequest(
             Request.Method.GET,"$url/products/$PN",
             {response ->
@@ -384,23 +385,26 @@ object logic {
                 val products = objects.getJSONArray("items")
                 for (i in 0 until products.length()) {
                     val p = products.getJSONObject(i)
-                    if(p.getString("productNumber") == PN && p.getDouble("price").toString() == price && p.getInt("stock").toString() == stock) {
+                    val priceS = p.getDouble("price").toString()
+                    val stockS = p.getInt("stock")
+                    if(stockS == stock && priceS == price) {
                         when(p.getString("category")){
-                            "toy" -> res = toy_representation_seller(p.getString("cif"),p.getString("image"),p.getString("ecology"),p.getDouble("price").toString(),p.getString("name"),p.getString("description"),p.getString("productNumber"),p.getString("category"),p.getInt("stock").toString(),p.getString("vendorName"),p.getString("age"),p.getString("material"))
-                            "food" -> res = food_representation_seller(p.getString("cif"),p.getString("image"),p.getString("ecology"),p.getDouble("price").toString(),p.getString("name"),p.getString("description"),p.getString("productNumber"),p.getString("category"),p.getInt("stock").toString(),p.getString("vendorName"),p.getInt("calories").toString(),p.getString("macros"))
-                            "technology" -> res = technology_representation_seller(p.getString("cif"),p.getString("image"),p.getString("ecology"),p.getDouble("price").toString(),p.getString("name"),p.getString("description"),p.getString("productNumber"),p.getString("category"),p.getInt("stock").toString(),p.getString("vendorName"),p.getString("brand"),p.getString("electricConsumption"))
-                            "clothes" -> res = clothes_representation_seller(p.getString("cif"),p.getString("image"),p.getString("ecology"),p.getDouble("price").toString(),p.getString("name"),p.getString("description"),p.getString("productNumber"),p.getString("category"),p.getInt("stock").toString(),p.getString("vendorName"),p.getString("size"),p.getString("color"))
+                            "toy" -> callback(toy_representation_seller(p.getString("cif"),p.getString("image"),p.getString("ecology"),p.getDouble("price").toString(),p.getString("name"),p.getString("description"),p.getString("productNumber"),p.getString("category"),p.getInt("stock").toString(),p.getString("vendorName"),p.getString("age"),p.getString("material")))
+                            "food" -> callback(food_representation_seller(p.getString("cif"),p.getString("image"),p.getString("ecology"),p.getDouble("price").toString(),p.getString("name"),p.getString("description"),p.getString("productNumber"),p.getString("category"),p.getInt("stock").toString(),p.getString("vendorName"),p.getInt("calories").toString(),p.getString("macros")))
+                            "technology" -> callback(technology_representation_seller(p.getString("cif"),p.getString("image"),p.getString("ecology"),p.getDouble("price").toString(),p.getString("name"),p.getString("description"),p.getString("productNumber"),p.getString("category"),p.getInt("stock").toString(),p.getString("vendorName"),p.getString("brand"),p.getString("electricConsumption")))
+                            "clothes" -> callback(clothes_representation_seller(p.getString("cif"),p.getString("image"),p.getString("ecology"),p.getDouble("price").toString(),p.getString("name"),p.getString("description"),p.getString("productNumber"),p.getString("category"),p.getInt("stock").toString(),p.getString("vendorName"),p.getString("size"),p.getString("color")))
                         }
-                        break
+                        return@StringRequest
                     }
                 }
+                callback(null)
             },
             {error ->
                 Toast.makeText(MainActivity.getContext(), "Error: $error", Toast.LENGTH_SHORT)
                     .show()
+                callback(null)
             })
         productVolleyQueue.add(request)
-        return res
     }
 
 

@@ -106,7 +106,6 @@ class SellerAdapter(
 
 
          cart.setOnClickListener {
-             // TODO: implementar que se añada al carrito a ese precio
              when(category){
                  "toy" ->{
                      val toy = sellerList[position] as toy_representation_seller
