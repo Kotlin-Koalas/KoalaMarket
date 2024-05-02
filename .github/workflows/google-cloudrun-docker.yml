@@ -47,7 +47,9 @@ name: Build and Deploy to Cloud Run
 on:
   push:
     branches: [ "main" ]
-    paths: "backend/**"
+    paths: 
+      - "backend/**"
+      - '.github/workflows/google-cloudrun-docker.yml'
 
 env:
   PROJECT_ID: koalamarket/koalamarket-registry
