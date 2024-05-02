@@ -47,6 +47,7 @@ name: Build and Deploy to Cloud Run
 on:
   push:
     branches: [ "main" ]
+    paths: "backend/**"
 
 env:
   PROJECT_ID: koalamarket/koalamarket-registry
