@@ -45,10 +45,12 @@
 name: Build and Deploy to Cloud Run
 
 on:
+  workflow_run:
+    workflows: [build]
+    types: [completed]
   push:
     branches: [ "main" ]
     paths: 
-      - "backend/**"
       - '.github/workflows/google-cloudrun-docker.yml'
 
 env:
@@ -63,8 +65,8 @@ jobs:
     permissions:
       contents: 'read'
       id-token: 'write'
-
     runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     timeout-minutes: 18
     
     steps:
@@ -122,3 +124,9 @@ jobs:
       # If required, use the Cloud Run url output in later steps
       - name: Show Output
         run: echo ${{ steps.deploy.outputs.url }}
+
+  on-failure:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'failure' }}
+    steps:
+      - run: echo 'The triggering workflow failed'
