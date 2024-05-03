@@ -62,4 +62,4 @@ jobs:
           done
 
       - name: Run tests
-        run: newman run ./koalamarket-apitests.json --env-var="baseUrl=${{ secrets.BASE_URL }}"
+        run: newman run ./backend/koalamarket-apitests.json --env-var="baseUrl=${{ secrets.BASE_URL }}"

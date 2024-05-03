@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "db42e796-1bcf-4602-9ea1-a4cd2868311d",
-		"name": "Koala Market Copy",
+		"_postman_id": "a7b1c4c2-4a75-4af5-8e78-c5846668bc27",
+		"name": "Koala Market",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "21761187"
 	},
@@ -79,7 +79,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"productNumber\": \"{{productNumber}}\",\r\n    \"name\": \"{{name}}\",\r\n    \"price\": {{price}},\r\n    \"description\": \"{{description}}\",\r\n    \"ecology\": \"{{ecology}}\",\r\n    \"stock\": {{stock}},\r\n    \"image\": \"{{image}}\",\r\n    \"cif\": \"{{cif}}\",\r\n    \"color\": \"{{color}}\",\r\n    \"size\": \"{{size}}\"\r\n}",
+							"raw": "{\r\n    \"productNumber\": \"{{productNumber}}\",\r\n    \"name\": \"{{name}}\",\r\n    \"price\": \"{{price}}\",\r\n    \"description\": \"{{description}}\",\r\n    \"ecology\": \"{{ecology}}\",\r\n    \"stock\": {{stock}},\r\n    \"image\": \"{{image}}\",\r\n    \"cif\": \"{{cif}}\",\r\n    \"color\": \"{{color}}\",\r\n    \"size\": \"{{size}}\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -174,7 +174,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"productNumber\": \"{{productNumber}}\",\r\n    \"name\": \"{{name}}\",\r\n    \"price\": {{price}},\r\n    \"description\": \"{{description}}\",\r\n    \"ecology\": \"{{ecology}}\",\r\n    \"stock\": {{stock}},\r\n    \"image\": \"{{image}}\",\r\n    \"cif\": \"{{cif}}\",\r\n    \"calories\": \"{{calories}}\",\r\n    \"macros\": \"{{macros}}\"\r\n}",
+							"raw": "{\r\n    \"productNumber\": \"{{productNumber}}\",\r\n    \"name\": \"{{name}}\",\r\n    \"price\": \"{{price}}\",\r\n    \"description\": \"{{description}}\",\r\n    \"ecology\": \"{{ecology}}\",\r\n    \"stock\": {{stock}},\r\n    \"image\": \"{{image}}\",\r\n    \"cif\": \"{{cif}}\",\r\n    \"calories\": \"{{calories}}\",\r\n    \"macros\": \"{{macros}}\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -210,7 +210,7 @@
 									"    pm.response.to.have.status(200);\r",
 									"})\r",
 									"\r",
-									"pm.test(\"Check clothes response values\", function () {\r",
+									"pm.test(\"Check technology response values\", function () {\r",
 									"    // Parse the response JSON\r",
 									"    var responseBody = pm.response.json();\r",
 									"\r",
@@ -235,7 +235,7 @@
 									"    pm.expect(responseBody.stock).to.eql(stock);\r",
 									"    pm.expect(responseBody.image).to.eql(image);\r",
 									"    pm.expect(responseBody.cif).to.eql(cif);\r",
-									"    pm.expect(responseBody.electricConsumption).to.eql(electricConsumption);\r",
+									"    pm.expect(responseBody.electricConsumption).to.eql(electricConsumption.toString());\r",
 									"    pm.expect(responseBody.brand).to.eql(brand);\r",
 									"});\r",
 									""
@@ -269,7 +269,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"productNumber\": \"{{productNumber}}\",\r\n    \"name\": \"{{name}}\",\r\n    \"price\": {{price}},\r\n    \"description\": \"{{description}}\",\r\n    \"ecology\": \"{{ecology}}\",\r\n    \"stock\": {{stock}},\r\n    \"image\": \"{{image}}\",\r\n    \"cif\": \"{{cif}}\",\r\n    \"electricConsumption\": \"{{electricConsumption}}\",\r\n    \"brand\": \"{{brand}}\"\r\n}",
+							"raw": "{\r\n    \"productNumber\": \"{{productNumber}}\",\r\n    \"name\": \"{{name}}\",\r\n    \"price\": \"{{price}}\",\r\n    \"description\": \"{{description}}\",\r\n    \"ecology\": \"{{ecology}}\",\r\n    \"stock\": {{stock}},\r\n    \"image\": \"{{image}}\",\r\n    \"cif\": \"{{cif}}\",\r\n    \"electricConsumption\": \"{{electricConsumption}}\",\r\n    \"brand\": \"{{brand}}\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -345,19 +345,16 @@
 					"    },\r",
 					"\r",
 					"    generateName: () => {\r",
-					"        const firstAdjectives = [\"personal\", \"digital\", \"electronic\", \"human\", \"central\", \"remote\", \"laptop\", \"local\", \"small\", \"single\", \"large\", \"modern\", \"ieee\", \"purpose\", \"main\", \"portable\", \"parallel\", \"particular\", \"powerful\", \"automatic\", \"speed\", \"compatible\", \"board\", \"typical\", \"based\", \"line\", \"mini\", \"top\", \"conventional\", \"windows\", \"bit\", \"scale\", \"click\", \"onboard\", \"standard\", \"sophisticated\", \"networked\", \"programmed\", \"fast\", \"man\", \"universal\", \"hybrid\", \"mechanical\", \"mobile\", \"micro\", \"shared\", \"held\", \"available\", \"fastest\", \"advanced\", \"sized\", \"connected\", \"optical\", \"giant\", \"serial\", \"object\", \"alone\", \"virtual\", \"centralized\", \"generation\", \"wearable\", \"source\", \"distant\", \"expensive\", \"end\", \"hypothetical\", \"supervisory\"];\r",
-					"        const nouns = [\"computer\", \"laptop\", \"desktop\", \"phone\"];\r",
-					"        const lastAdjectives = [\"aided\", \"interaction\", \"based\", \"assisted\", \"mediated\", \"interface\", \"supported\", \"communication\", \"system\", \"integrated\", \"human\", \"simulation\", \"communications\", \"science\", \"design\", \"controlled\", \"generated\", \"software\", \"dialogue\", \"control\", \"related\", \"dialogues\", \"output\", \"industry\", \"program\", \"user\", \"technology\", \"programs\", \"network\", \"research\", \"symbiosis\", \"graphics\", \"age\", \"oriented\", \"market\", \"vision\", \"users\", \"exchange\", \"era\", \"training\", \"managed\", \"links\", \"link\", \"eased\", \"plate\", \"processing\", \"games\", \"programming\", \"telephone\", \"hardware\", \"setup\", \"memory\", \"chip\", \"animation\", \"enhanced\", \"ratio\", \"specialists\", \"instruction\", \"dialog\", \"transmission\", \"scientists\", \"automated\", \"cooperation\", \"handbook\", \"classroom\", \"produced\", \"literacy\", \"input\", \"engineering\", \"diagram\", \"transfer\", \"architecture\"];\r",
+					"        const firstNames = [\"John\", \"Emma\", \"Michael\", \"Sophia\", \"James\", \"Olivia\", \"William\", \"Ava\", \"David\", \"Isabella\", \"Joseph\", \"Mia\", \"Daniel\", \"Charlotte\", \"Jacob\", \"Amelia\", \"Matthew\", \"Evelyn\", \"Samuel\", \"Abigail\"];\r",
+					"        const lastNames = [\"Smith\", \"Johnson\", \"Williams\", \"Brown\", \"Jones\", \"Garcia\", \"Miller\", \"Davis\", \"Rodriguez\", \"Martinez\", \"Hernandez\", \"Lopez\", \"Gonzalez\", \"Wilson\", \"Anderson\", \"Thomas\", \"Taylor\", \"Moore\", \"Jackson\", \"Martin\"];\r",
 					"\r",
-					"        const randomFirstIndex = Math.floor(Math.random() * firstAdjectives.length);\r",
-					"        const randomNounIndex = Math.floor(Math.random() * nouns.length);\r",
-					"        const randomLastIndex = Math.floor(Math.random() * lastAdjectives.length);\r",
+					"        const randomFirstNameIndex = Math.floor(Math.random() * firstNames.length);\r",
+					"        const randomLastNameIndex = Math.floor(Math.random() * lastNames.length);\r",
 					"\r",
-					"        const randomFirstAdjective = firstAdjectives[randomFirstIndex];\r",
-					"        const randomNoun = nouns[randomNounIndex];\r",
-					"        const randomLastAdjective = lastAdjectives[randomLastIndex];\r",
+					"        const randomFirstName = firstNames[randomFirstNameIndex];\r",
+					"        const randomLastName = lastNames[randomLastNameIndex];\r",
 					"\r",
-					"        return `${randomFirstAdjective} ${randomNoun} ${randomLastAdjective}`;\r",
+					"        return `${randomFirstName} ${randomLastName}`;\r",
 					"    },\r",
 					"\r",
 					"    generateProductNumber: () => {\r",
@@ -421,8 +418,7 @@
 					"        // Generate a random number for the image ID\r",
 					"        const imageId = Math.floor(Math.random() * 1000) + 1;\r",
 					"        // Construct the URL using the generated ID and fixed width and height\r",
-					"        //return `https://kotlin.koalas/id/${imageId}/${width}/${height}`;\r",
-					"        return \"fpqz3.jpg\"\r",
+					"        return `https://kotlin.koalas/id/${imageId}/${width}/${height}`;\r",
 					"    },\r",
 					"\r",
 					"    generateColor: () => {\r",
@@ -449,8 +445,7 @@
 					"    },\r",
 					"\r",
 					"    generateElectricConsumption: () => {\r",
-					"        let consumption = Math.random() * 100;\r",
-					"        return `${consumption}`\r",
+					"        return Math.random() * 100;\r",
 					"    },\r",
 					"\r",
 					"    generateBrand: () => {\r",
