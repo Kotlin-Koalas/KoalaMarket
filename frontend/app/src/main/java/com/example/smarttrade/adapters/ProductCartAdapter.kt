@@ -1,8 +1,6 @@
 package com.example.smarttrade.adapters
 
-import android.content.Context
 import android.graphics.Bitmap
-import android.graphics.Canvas
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -10,10 +8,9 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.compose.material3.MediumTopAppBar
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.smarttrade.R
-import com.example.smarttrade.mediador.Mediador
+import com.example.smarttrade.mediador.MediatorShoppingCart
 import com.example.smarttrade.models.PersonBuyer
 import com.example.smarttrade.volleyRequestClasses.ImageURLtoBitmapConverter
 import com.example.smarttrade.models.product_representation_cart
@@ -79,7 +76,7 @@ class ProductCartAdapter(
                 Log.i("ShoppingCart", PersonBuyer.getShoppingCart().toString())
                 Log.i("ShoppingCartSize", PersonBuyer.getShoppingCart().size.toString())
                 Log.i("Selected", position.toString())
-                Mediador.notifyItemSelected(PersonBuyer.getShoppingCart()[position])
+                MediatorShoppingCart.notifyItemSelected(PersonBuyer.getShoppingCart()[position])
                 Log.i("Selected", PersonBuyer.getShoppingCart()[position].toString())
                 Log.i("SelectedPosition", position.toString())
                 Log.i("representedProduct quant", currentStock.toString())
@@ -88,7 +85,7 @@ class ProductCartAdapter(
                 selectedImageView.setImageResource(R.drawable.ellipse_5)
                 selectedImageView.tag = R.drawable.ellipse_5
                 Log.i("CartBeforeUnSelected",PersonBuyer.getShoppingCart().toString())
-                Mediador.notifyItemUnselected(PersonBuyer.getShoppingCart()[position])
+                MediatorShoppingCart.notifyItemUnselected(PersonBuyer.getShoppingCart()[position])
                 Log.i("CartAfterUnSelected",PersonBuyer.getShoppingCart().toString())
             }
         }
@@ -104,7 +101,7 @@ class ProductCartAdapter(
             if(currentStock < stock){
                 currentStock++
                 stockText.text = currentStock.toString()
-                Mediador.notifyItemQuantityIncreased(PersonBuyer.getShoppingCart()[position],view,currentStock)
+                MediatorShoppingCart.notifyItemQuantityIncreased(PersonBuyer.getShoppingCart()[position],view,currentStock)
             }
         }
 
@@ -113,10 +110,10 @@ class ProductCartAdapter(
             if(currentStock > 1){
                 currentStock--
                 stockText.text = currentStock.toString()
-                Mediador.notifyItemQuantityDecreased(PersonBuyer.getShoppingCart()[position],view,currentStock)
+                MediatorShoppingCart.notifyItemQuantityDecreased(PersonBuyer.getShoppingCart()[position],view,currentStock)
                 Log.i("Views",views.toString())
             } else{
-                Mediador.notifyItemDeleted(PersonBuyer.getShoppingCart()[position],view,position)
+                MediatorShoppingCart.notifyItemDeleted(PersonBuyer.getShoppingCart()[position],view,position)
                 Log.i("Views",views.toString())
             }
         }
@@ -142,7 +139,7 @@ class ProductCartAdapter(
                 selectedImageView.setImageResource(R.drawable.cart_selected)
                 selectedImageView.tag = R.drawable.cart_selected
             }
-            Mediador.notifyAllItemsSelected()
+            MediatorShoppingCart.notifyAllItemsSelected()
             Log.i("Views",views.toString())
         }
         fun setAllUnselected(){
@@ -151,7 +148,7 @@ class ProductCartAdapter(
                 selectedImageView.setImageResource(R.drawable.ellipse_5)
                 selectedImageView.tag = R.drawable.ellipse_5
             }
-            Mediador.notifyAllItemsUnselected()
+            MediatorShoppingCart.notifyAllItemsUnselected()
             Log.i("Views",views.toString())
         }
 

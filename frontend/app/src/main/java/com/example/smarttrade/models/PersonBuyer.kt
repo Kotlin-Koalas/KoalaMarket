@@ -101,7 +101,9 @@ object PersonBuyer {
     }
 
     fun addProductToCart(product: product_representation_cart) {
+        Log.i("Entra dentro del método", "Toma")
         shoppingCart.add(product)
+        Log.i("Producto añadido", product.toString())
     }
     fun getShoppingCart(): MutableList<product_representation_cart> {
         return shoppingCart
