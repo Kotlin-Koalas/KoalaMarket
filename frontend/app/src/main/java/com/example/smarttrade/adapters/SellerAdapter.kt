@@ -14,6 +14,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import com.example.smarttrade.R
+import com.example.smarttrade.mediador.MediatorShoppingCart
 import com.example.smarttrade.models.PersonBuyer
 import com.example.smarttrade.models.clothes_representation_cart
 import com.example.smarttrade.models.clothes_representation_seller
@@ -21,6 +22,7 @@ import com.example.smarttrade.models.food_representation_cart
 import com.example.smarttrade.models.food_representation_seller
 import com.example.smarttrade.models.product_representation
 import com.example.smarttrade.models.seller_representation
+import com.example.smarttrade.models.technology_representation_cart
 import com.example.smarttrade.models.technology_representation_seller
 import com.example.smarttrade.models.toy_representation_cart
 import com.example.smarttrade.models.toy_representation_seller
@@ -110,25 +112,25 @@ class SellerAdapter(
                  "toy" ->{
                      val toy = sellerList[position] as toy_representation_seller
                      val productToy = toy_representation_cart(toy.name, toy.price, toy.image, toy.stock.toInt(), toy.description, leafColor, toy.productNumber, 1, toy.vendorName, toy.material, toy.age)
-                     PersonBuyer.addProductToCart(productToy)
+                     MediatorShoppingCart.notifyItemAdded(productToy)
                      showCustomDialogBoxSuccess("Producto añadido al carrito correctamente")
                  }
                     "food" ->{
                         val food = sellerList[position] as food_representation_seller
                         val productFood = food_representation_cart(food.name, food.price, food.image, food.stock.toInt(), food.description, leafColor, food.productNumber, 1, food.vendorName, food.calories, food.macros)
-                        PersonBuyer.addProductToCart(productFood)
+                        MediatorShoppingCart.notifyItemAdded(productFood)
                         showCustomDialogBoxSuccess("Producto añadido al carrito correctamente")
                     }
                     "technology" ->{
                         val tech = sellerList[position] as technology_representation_seller
-                        val productTech = food_representation_cart(tech.name, tech.price, tech.image, tech.stock.toInt(), tech.description, leafColor, tech.productNumber, 1, tech.vendorName, tech.brand, tech.electricConsumption)
-                        PersonBuyer.addProductToCart(productTech)
+                        val productTech = technology_representation_cart(tech.name, tech.price, tech.image, tech.stock.toInt(), tech.description, leafColor, tech.productNumber, 1, tech.vendorName, tech.brand, tech.electricConsumption)
+                        MediatorShoppingCart.notifyItemAdded(productTech)
                         showCustomDialogBoxSuccess("Producto añadido al carrito correctamente")
                     }
                     "clothes" ->{
                         val clothes = sellerList[position] as clothes_representation_seller
                         val productClothes = clothes_representation_cart(clothes.name, clothes.price, clothes.image, clothes.stock.toInt(), clothes.description, leafColor, clothes.productNumber, 1, clothes.vendorName, clothes.size, clothes.color)
-                        PersonBuyer.addProductToCart(productClothes)
+                        MediatorShoppingCart.notifyItemAdded(productClothes)
                         showCustomDialogBoxSuccess("Producto añadido al carrito correctamente")
                     }
 

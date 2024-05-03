@@ -66,6 +66,20 @@ object MediatorShoppingCart {
         PersonBuyer.setSelectedItemsInCart(PersonBuyer.getShoppingCart())
     }
 
+    fun notifyItemAdded(product: product_representation_cart){
+        if(ShoppingCartRequests.checkIfExistsProductInCart(product)){
+            val productExisting = ShoppingCartRequests.getProductInCart(product.PN)
+            val quantity = productExisting.quantity + product.quantity
+            val newStock = product_representation_cart(product.category,product.name,product.price,product.image,product.stock,product.description,product.leafColor,product.PN,quantity,product.seller)
+            ShoppingCartRequests.editProductInCart(newStock)
+        }
+        else{
+            PersonBuyer.addProductToCart(product)
+            ShoppingCartRequests.addProductToCart(product)
+            Log.i("ProductAdded", product.toString())
+        }
+
+    }
     fun notifyAllItemsUnselected(){
         val view = ShoppingCartFragment.getCurrView()
         val totalPriceView = view.findViewById<TextView>(R.id.textViewPrecioTotal)
