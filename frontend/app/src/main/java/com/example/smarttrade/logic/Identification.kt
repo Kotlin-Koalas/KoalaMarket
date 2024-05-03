@@ -27,7 +27,7 @@ import org.json.JSONObject
 object Identification {
 
     private const val myIP = BuildConfig.MY_IP
-    private val url = "http://$myIP:8080"
+    private val url = "https://$myIP"
 
     var isBuyer = false
 

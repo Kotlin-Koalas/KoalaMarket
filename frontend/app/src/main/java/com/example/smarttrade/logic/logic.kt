@@ -36,7 +36,7 @@ import kotlin.math.log
 
 private const val host = BuildConfig.DB_LINK
 private const val myIP = BuildConfig.MY_IP
-private val url = "http://$myIP:8080"
+private val url = "https://$myIP"
 
 
 object logic {
