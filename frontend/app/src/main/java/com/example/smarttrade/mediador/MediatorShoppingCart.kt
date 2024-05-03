@@ -1,6 +1,5 @@
 package com.example.smarttrade.mediador
 
-import android.app.Person
 import android.util.Log
 import android.view.View
 import android.widget.ImageView
@@ -11,7 +10,7 @@ import com.example.smarttrade.mainBuyerFragments.ShoppingCartFragment
 import com.example.smarttrade.models.PersonBuyer
 import com.example.smarttrade.models.product_representation_cart
 
-object Mediador {
+object MediatorShoppingCart {
 
     var totalPrice = 0.0
     fun notifyItemSelected(product: product_representation_cart){
