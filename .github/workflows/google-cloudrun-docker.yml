@@ -46,7 +46,7 @@ name: Build and Deploy to Cloud Run
 
 on:
   workflow_run:
-    workflows: [build]
+    workflows: [Build Backend]
     types: [completed]
   push:
     branches: [ "main" ]
