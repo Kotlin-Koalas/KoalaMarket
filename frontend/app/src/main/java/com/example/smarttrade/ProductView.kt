@@ -25,6 +25,7 @@ import com.example.smarttrade.models.PersonBuyer
 import androidx.recyclerview.widget.RecyclerView
 import com.example.smarttrade.adapters.SellerAdapter
 import com.example.smarttrade.logic.logic
+import com.example.smarttrade.mediador.MediatorShoppingCart
 import com.example.smarttrade.models.clothes_representation
 import com.example.smarttrade.models.clothes_representation_cart
 import com.example.smarttrade.models.clothes_representation_seller
@@ -195,7 +196,7 @@ class ProductView : AppCompatActivity() {
                     sellerToy!!.age
                 )
                 Log.i("Product Toy", productToy.toString())
-                PersonBuyer.addProductToCart(productToy)
+                MediatorShoppingCart.notifyItemAdded(productToy)
                 Log.i("Producto añadido", "Patricio mi dios")
                 showCustomDialogBoxSuccess("Producto añadido al carrito correctamente")
 
@@ -216,7 +217,7 @@ class ProductView : AppCompatActivity() {
                     sellerClothes!!.color
                 )
                 Log.i("Product Clothes", productClothes.toString())
-                PersonBuyer.addProductToCart(productClothes)
+                MediatorShoppingCart.notifyItemAdded(productClothes)
                 Log.i("Producto añadido", "Patricio mi dios")
                 showCustomDialogBoxSuccess("Producto añadido al carrito correctamente")
 
@@ -241,9 +242,11 @@ class ProductView : AppCompatActivity() {
                     sellerFood!!.macros
                 )
                 Log.i("Product Food", productFood.toString())
-                PersonBuyer.addProductToCart(productFood)
+
                 Log.i("Producto añadido", "Patricio mi dios")
+                MediatorShoppingCart.notifyItemAdded(productFood)
                 showCustomDialogBoxSuccess("Producto añadido al carrito correctamente")
+
 
 
 
@@ -265,7 +268,7 @@ class ProductView : AppCompatActivity() {
                     sellerTech!!.electricConsumption
                 )
                 Log.i("Product Tech", productTech.toString())
-                PersonBuyer.addProductToCart(productTech)
+                MediatorShoppingCart.notifyItemAdded(productTech)
                 Log.i("Producto añadido", "Patricio mi dios")
                 showCustomDialogBoxSuccess("Producto añadido al carrito correctamente")
 

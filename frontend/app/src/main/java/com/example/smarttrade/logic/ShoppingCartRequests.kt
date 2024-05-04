@@ -13,6 +13,7 @@ import com.example.smarttrade.mainBuyerFragments.ShoppingCartFragment
 import com.example.smarttrade.models.PersonBuyer
 import com.example.smarttrade.models.clothes_representation_cart
 import com.example.smarttrade.models.food_representation_cart
+import com.example.smarttrade.models.product_representation
 import com.example.smarttrade.models.product_representation_cart
 import com.example.smarttrade.models.technology_representation_cart
 import com.example.smarttrade.models.toy_representation_cart
@@ -135,5 +136,76 @@ object ShoppingCartRequests {
             })
         Log.i("jsonDELETEREQUE",jsonRequest.body.toString())
         cartVolleyQueue.add(jsonRequest)
+    }
+
+    fun checkIfExistsProductInCart(product: product_representation_cart): Boolean{
+
+        if(!isCartQueue) {
+            cartVolleyQueue = Volley.newRequestQueue(MainActivity.getContext())
+            isCartQueue = true
+        }
+       var res : Boolean = false
+        val request = StringRequest(
+            Request.Method.GET,"$url/buyers/${PersonBuyer.getDNI()}/cart/${product.PN}/${product.seller}",
+            {response ->
+                Log.i("ProductExists", response)
+                if(response == "true"){
+                    res = true
+                }
+            },
+            {error ->
+                Log.i("ErrorCheckingProduct", error.message.toString())
+            })
+        return res
+
+
+    }
+    fun getProductInCart(PN: String): product_representation_cart{
+        if (!isCartQueue){
+            cartVolleyQueue = Volley.newRequestQueue(MainActivity.getContext())
+            isCartQueue = true
+        }
+        var product : product_representation_cart = product_representation_cart("","","","",0,"","", "",0,"")
+        val request = StringRequest(
+            Request.Method.GET,"$url/buyers/${PersonBuyer.getDNI()}/cart/$PN",
+            {response ->
+                val productJson = JSONObject(response)
+                when(productJson.getString("category")){
+                    "toy" ->{
+                        product = toy_representation_cart(productJson.getString("name"), productJson.getDouble("price").toString(), productJson.getString("image"), productJson.getInt("stock"), productJson.getString("description"), productJson.getString("ecology"), productJson.getString("productNumber"), productJson.getInt("quantity"),productJson.getString("cif"), productJson.getString("material"), productJson.getString("age"))
+                        Log.i("Product", product.PN)
+                    }
+                    "food" ->{
+                        product = food_representation_cart(productJson.getString("name"), productJson.getDouble("price").toString(), productJson.getString("image"), productJson.getInt("stock"), productJson.getString("description"), productJson.getString("ecology"), productJson.getString("productNumber"), productJson.getInt("quantity"),productJson.getString("cif"), productJson.getInt("calories").toString(), productJson.getString("macros"))
+                        Log.i("Product", product.PN)
+
+                    }
+                    "technology" ->{
+                        product = technology_representation_cart(productJson.getString("name"), productJson.getDouble("price").toString(), productJson.getString("image"), productJson.getInt("stock"), productJson.getString("description"), productJson.getString("ecology"), productJson.getString("productNumber"), productJson.getInt("quantity"),productJson.getString("cif"), productJson.getString("brand"), productJson.getString("electricConsumption"))
+                        Log.i("Product", product.PN)
+
+                    }
+                    "clothes" ->{
+
+                        product = clothes_representation_cart(productJson.getString("name"), productJson.getDouble("price").toString(), productJson.getString("image"), productJson.getInt("stock"), productJson.getString("description"), productJson.getString("ecology"), productJson.getString("productNumber"), productJson.getInt("quantity"),productJson.getString("cif"), productJson.getString("size"), productJson.getString("color"))
+                        Log.i("Product", product.PN)
+
+                    }
+                    else -> null
+                }
+            },
+            {error ->
+                Log.i("ErrorGettingProduct", error.message.toString())
+            })
+
+        cartVolleyQueue.add(request)
+
+        return product
+
+
+
+
+
+
     }
 }
