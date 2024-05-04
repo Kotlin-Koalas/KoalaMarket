@@ -8,13 +8,13 @@
     app:cardElevation="5dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/layout"
+        android:id="@+id/layoutWish"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#ebebeb">
 
         <ImageView
-            android:id="@+id/imageViewCat"
+            android:id="@+id/imageViewProd"
             android:layout_width="163dp"
             android:layout_height="163dp"
             android:layout_margin="10dp"
@@ -27,7 +27,7 @@
             app:srcCompat="@drawable/no_photo" />
 
         <TextView
-            android:id="@+id/textViewTitulo"
+            android:id="@+id/textViewNameWish"
             android:layout_width="163dp"
             android:layout_height="18dp"
             android:layout_marginTop="15dp"
@@ -42,7 +42,7 @@
             app:layout_constraintVertical_bias="0.763" />
 
         <TextView
-            android:id="@+id/textViewPrice"
+            android:id="@+id/textViewPriceWish"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="19dp"
@@ -58,7 +58,7 @@
             app:layout_constraintVertical_bias="0.86" />
 
         <ImageView
-            android:id="@+id/imageViewLeaf"
+            android:id="@+id/imageViewLeafWish"
             android:layout_width="31dp"
             android:layout_height="37dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -74,6 +74,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="2dp"
+            android:layout_marginEnd="152dp"
             android:fontFamily="@font/karla"
             android:gravity="center"
             android:text="€"
@@ -82,7 +83,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/textViewPrice"
+            app:layout_constraintStart_toEndOf="@+id/textViewPriceWish"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.866" />
 
@@ -98,21 +99,21 @@
             android:textColor="@color/black"
             android:textSize="14sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewPrice" />
+            app:layout_constraintTop_toBottomOf="@+id/textViewNameWish" />
 
         <ImageView
             android:id="@+id/imageViewHeartWish"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:layout_marginEnd="11dp"
+            android:layout_marginEnd="36dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/imageView11"
+            app:layout_constraintEnd_toStartOf="@+id/imageViewCartWish"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.972"
             app:srcCompat="@drawable/heart_icon" />
 
         <ImageView
-            android:id="@+id/imageView11"
+            android:id="@+id/imageViewCartWish"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginEnd="16dp"
