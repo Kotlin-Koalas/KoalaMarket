@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity() {
         }
         val forgotPassword = findViewById<TextView>(R.id.editTextText3)
         forgotPassword.setOnClickListener {
-            val IntentS = Intent(this,SellerMain::class.java)
+            val IntentS = Intent(this,WishList::class.java)
             startActivity(IntentS)
 
         }

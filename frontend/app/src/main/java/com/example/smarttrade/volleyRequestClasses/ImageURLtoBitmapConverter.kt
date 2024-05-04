@@ -13,6 +13,7 @@ import com.example.smarttrade.ProductView
 import com.example.smarttrade.adapters.ProductAdapter
 import com.example.smarttrade.adapters.ProductAdapterSeller
 import com.example.smarttrade.adapters.ProductCartAdapter
+import com.example.smarttrade.adapters.ProductWishAdapter
 
 object  ImageURLtoBitmapConverter {
     val host = BuildConfig.DB_LINK
@@ -140,4 +141,32 @@ object  ImageURLtoBitmapConverter {
         requestQueue.add(imageRequest)
         return bitmap
     }
+
+    fun downloadImageWishList(url: String, view : View): Bitmap? {
+        val urlC = "$host:5000/" + url
+        val requestQueue = Volley.newRequestQueue(MainActivity.getContext())
+        var bitmap: Bitmap? = null
+
+        val imageRequest = ImageRequest(
+            urlC,
+            { response ->
+                bitmap = response
+                Log.i("imageBitmap", bitmap.toString())
+                ProductWishAdapter.setImage(bitmap, view)
+            },
+            163,
+            163,
+            ImageView.ScaleType.CENTER_CROP,
+            Bitmap.Config.RGB_565,
+            { error ->
+                Log.e("ImageLoadError", "Error listener: $error")
+                ProductWishAdapter.setImage(null, view)
+            }
+        )
+
+        requestQueue.add(imageRequest)
+
+        return bitmap
+    }
+
 }

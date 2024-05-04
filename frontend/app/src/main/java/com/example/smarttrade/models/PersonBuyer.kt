@@ -2,43 +2,46 @@ package com.example.smarttrade.models
 
 import android.util.Log
 import com.example.smarttrade.adapters.ProductCartAdapter
+import com.example.smarttrade.adapters.ProductWishAdapter
 
 object PersonBuyer {
-    private var name:String = ""
-    private var surnames:String = ""
-    private var email:String = ""
-    private var userID:String = ""
-    private var password:String = ""
-    private var shippingAddresses:MutableList<String> = mutableListOf()
-    private var DNI:String = ""
-    private var factAddresses:MutableList<String> = mutableListOf()
-    private var bizum:String = ""
-    private var paypal:String = ""
-    private var creditCards:MutableList<CreditCard> = mutableListOf()
-    private var shoppingCart:MutableList<product_representation_cart> = mutableListOf()
-    private var selectedItemsCart:MutableList<product_representation_cart> = mutableListOf()
+    private var name: String = ""
+    private var surnames: String = ""
+    private var email: String = ""
+    private var userID: String = ""
+    private var password: String = ""
+    private var shippingAddresses: MutableList<String> = mutableListOf()
+    private var DNI: String = ""
+    private var factAddresses: MutableList<String> = mutableListOf()
+    private var bizum: String = ""
+    private var paypal: String = ""
+    private var creditCards: MutableList<CreditCard> = mutableListOf()
+    private var shoppingCart: MutableList<product_representation_cart> = mutableListOf()
+    private var selectedItemsCart: MutableList<product_representation_cart> = mutableListOf()
+    private var wishList: MutableList<product_representation_cart> = mutableListOf()
+    private var selectedItemsWish: MutableList<product_representation_cart> = mutableListOf()
 
 
-
-    fun setName(name:String){
+    fun setName(name: String) {
         this.name = name
     }
 
-    fun setSurname(surname:String){
+    fun setSurname(surname: String) {
         surnames = surname
     }
 
-    fun setEmail(email:String){
+    fun setEmail(email: String) {
         this.email = email
     }
 
-    fun setUserId(uID:String) {
+    fun setUserId(uID: String) {
         userID = uID
     }
 
-    fun setPassword(pass:String) {
+    fun setPassword(pass: String) {
         password = pass
     }
+
     fun getName(): String {
         return name
     }
@@ -59,43 +62,50 @@ object PersonBuyer {
         return password
     }
 
-    fun addShippingAddress(address:String) {
+    fun addShippingAddress(address: String) {
         shippingAddresses.add(address)
     }
+
     fun getShippingAddresses(): MutableList<String> {
         return shippingAddresses
     }
 
-    fun setDNI(DNI:String) {
+    fun setDNI(DNI: String) {
         this.DNI = DNI
     }
+
     fun getDNI(): String {
         return DNI
     }
 
-    fun addFacturacionAddress(address:String) {
+    fun addFacturacionAddress(address: String) {
         factAddresses.add(address)
     }
+
     fun getFacturationAddresses(): MutableList<String> {
         return factAddresses
     }
 
-    fun setBizum(Bizum:String) {
+    fun setBizum(Bizum: String) {
         this.bizum = Bizum
     }
+
     fun getBizum(): String {
         return bizum
     }
 
-    fun setPaypal(Paypal:String) {
+    fun setPaypal(Paypal: String) {
         this.paypal = Paypal
     }
+
     fun getPaypal(): String {
         return paypal
     }
+
     fun addCreditCard(creditCard: CreditCard) {
         creditCards.add(creditCard)
     }
+
     fun getCreditCards(): MutableList<CreditCard> {
         return creditCards
     }
@@ -105,9 +115,11 @@ object PersonBuyer {
         shoppingCart.add(product)
         Log.i("Producto añadido", product.toString())
     }
+
     fun getShoppingCart(): MutableList<product_representation_cart> {
         return shoppingCart
     }
+
     fun removeProductFromCart(product: product_representation_cart) {
         shoppingCart.remove(product)
     }
@@ -116,7 +128,7 @@ object PersonBuyer {
         shoppingCart.clear()
     }
 
-    fun removeProductFromCart(position: Int){
+    fun removeProductFromCart(position: Int) {
         Log.i("Delete Product Position", position.toString())
         Log.i("Delete Product", shoppingCart.toString())
         shoppingCart.removeAt(position)
@@ -146,23 +158,61 @@ object PersonBuyer {
         selectedItemsCart.remove(product)
     }
 
-    fun modifySelectedItemInCart(product: product_representation_cart, quantity: Int): product_representation_cart {
+    fun modifySelectedItemInCart(
+        product: product_representation_cart,
+        quantity: Int
+    ): product_representation_cart {
         for (p in selectedItemsCart) {
             if (p == product) {
                 p.quantity = quantity
                 return p
             }
         }
-        return product_representation_cart("","","","",0,"","","",0,"")
+        return product_representation_cart("", "", "", "", 0, "", "", "", 0, "")
     }
 
-    fun modifyProductInCart(product: product_representation_cart, quantity: Int): product_representation_cart {
+    fun modifyProductInCart(
+        product: product_representation_cart,
+        quantity: Int
+    ): product_representation_cart {
         for (p in shoppingCart) {
             if (p == product) {
                 p.quantity = quantity
                 return p
             }
         }
-        return product_representation_cart("","","","",0,"","","",0,"")
+        return product_representation_cart("", "", "", "", 0, "", "", "", 0, "")
     }
+
+
+    fun getWishList(): MutableList<product_representation_cart> {
+        return wishList
+    }
+
+    fun removeProductFromWish(position: Int) {
+        Log.i("Delete Product Position", position.toString())
+        Log.i("Delete Product", wishList.toString())
+        wishList.removeAt(position)
+        ProductWishAdapter.updateProducts()
+    }
+
+    fun removeProductFromWish(product: product_representation_cart) {
+        wishList.remove(product)
+    }
+
+    fun removeSelectedItemFromWish(product: product_representation_cart) {
+        selectedItemsWish.remove(product)
+    }
+
+    fun addProductToWish(product: product_representation_cart) {
+        Log.i("Entra dentro del método", "Toma")
+        wishList.add(product)
+        Log.i("Producto añadido", product.toString())
+    }
+
+    fun clearWishList() {
+        wishList.clear()
+    }
+
+
 }

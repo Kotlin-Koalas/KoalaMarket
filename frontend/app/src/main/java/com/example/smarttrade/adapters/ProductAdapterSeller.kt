@@ -110,10 +110,13 @@ class ProductAdapterSeller(
         val productRepresentation = view.findViewById<ConstraintLayout>(R.id.layoutProductSeller)
 
 
-        //TODO cambiar parámetros a enviar
+
         deleteProduct.setOnClickListener {
             sellerFragment.showAlertDeleteProductBox("¿Estás seguro de que quieres borrar este producto?",
                                                     pNProduct,)
+            views.clear()
+            notifyDataSetChanged()
+
 
         }
         //currentPrice != popularProducts[position].price &&
@@ -123,6 +126,8 @@ class ProductAdapterSeller(
             if(currentPrice != "" &&  patternPrice.containsMatchIn(currentPrice) && currentStock != "" && currentStock != popularProducts[position].stock.toString()){
                 sellerFragment.showAlertChangePriceProductBox("¿Estás seguro de que quieres cambiar el precio y stock de este producto?"
                     , pNProduct, currentPrice, currentStock)
+                //views.clear()
+                notifyDataSetChanged()
             }
 
         }
@@ -135,6 +140,7 @@ class ProductAdapterSeller(
 
 
     companion object{
+        val views = mutableListOf<View>()
         fun setImage(image: Bitmap?, view: View){
             val imageView = view.findViewById<ImageView>(R.id.imageView9)
             if (image != null) {
