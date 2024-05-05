@@ -7,8 +7,6 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
 import android.view.Window
 import android.widget.Button
 import android.widget.GridView
@@ -17,31 +15,23 @@ import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.example.smarttrade.adapters.ProductCartAdapter
-import com.example.smarttrade.models.PersonBuyer
-import androidx.recyclerview.widget.RecyclerView
 import com.example.smarttrade.adapters.SellerAdapter
+import com.example.smarttrade.logic.ListWishRequests
 import com.example.smarttrade.logic.logic
-import com.example.smarttrade.models.clothes_representation
+import com.example.smarttrade.models.PersonBuyer
 import com.example.smarttrade.models.clothes_representation_cart
 import com.example.smarttrade.models.clothes_representation_seller
-import com.example.smarttrade.models.food_representation
 import com.example.smarttrade.models.food_representation_cart
 import com.example.smarttrade.models.food_representation_seller
 import com.example.smarttrade.models.product_representation
-import com.example.smarttrade.models.product_representation_cart
 import com.example.smarttrade.models.seller_representation
-import com.example.smarttrade.models.technology_representation
 import com.example.smarttrade.models.technology_representation_cart
 import com.example.smarttrade.models.technology_representation_seller
-import com.example.smarttrade.models.toy_representation
 import com.example.smarttrade.models.toy_representation_cart
 import com.example.smarttrade.models.toy_representation_seller
 import com.example.smarttrade.volleyRequestClasses.ImageURLtoBitmapConverter
-import com.google.android.material.internal.ViewUtils.getContentView
 
 class ProductView : AppCompatActivity() {
 
@@ -283,7 +273,115 @@ class ProductView : AppCompatActivity() {
 
 
 
+
         }
+
+        val addWishList = findViewById<ImageView>(R.id.imageViewAddWish)
+        addWishList.setOnClickListener(){
+            if(sellerToy != null){
+                val productToy = toy_representation_cart(
+                    sellerToy!!.name,
+                    sellerToy!!.price,
+                    sellerToy!!.image,
+                    sellerToy!!.stock.toInt(),
+                    sellerToy!!.description,
+                    product.leafColor,
+                    sellerToy!!.productNumber,
+                    currentStock,
+                    sellerToy!!.cif,
+                    sellerToy!!.material,
+                    sellerToy!!.age
+                )
+                Log.i("Product Toy", productToy.toString())
+                PersonBuyer.addProductToWish(productToy)
+                ListWishRequests.addProductToWish(productToy)
+                Log.i("Producto añadido", "Patricio mi dios")
+                showCustomDialogBoxSuccess("Producto añadido a lista de deseos correctamente")
+
+
+            }
+            else if (sellerClothes != null){
+                val productClothes = clothes_representation_cart(
+                    sellerClothes!!.name,
+                    sellerClothes!!.price,
+                    sellerClothes!!.image,
+                    sellerClothes!!.stock.toInt(),
+                    sellerClothes!!.description,
+                    product.leafColor,
+                    sellerClothes!!.productNumber,
+                    currentStock,
+                    sellerClothes!!.cif,
+                    sellerClothes!!.size,
+                    sellerClothes!!.color
+                )
+                Log.i("Product Clothes", productClothes.toString())
+                PersonBuyer.addProductToWish(productClothes)
+                ListWishRequests.addProductToWish(productClothes)
+                Log.i("Producto añadido", "Patricio mi dios")
+                showCustomDialogBoxSuccess("Producto añadido a lista de deseos correctamente")
+
+
+
+
+
+            }
+
+            else if(sellerFood != null){
+                val productFood = food_representation_cart(
+                    sellerFood!!.name,
+                    sellerFood!!.price,
+                    sellerFood!!.image,
+                    sellerFood!!.stock.toInt(),
+                    sellerFood!!.description,
+                    product.leafColor,
+                    sellerFood!!.productNumber,
+                    currentStock,
+                    sellerFood!!.cif,
+                    sellerFood!!.calories,
+                    sellerFood!!.macros
+                )
+                Log.i("Product Food", productFood.toString())
+                PersonBuyer.addProductToWish(productFood)
+                ListWishRequests.addProductToWish(productFood)
+                Log.i("Producto añadido", "Patricio mi dios")
+                showCustomDialogBoxSuccess("Producto añadido a lista de deseos correctamente")
+
+
+
+
+
+            }
+            else if(sellerTech != null){
+                val productTech = technology_representation_cart(
+                    sellerTech!!.name,
+                    sellerTech!!.price,
+                    sellerTech!!.image,
+                    currentStock,
+                    sellerTech!!.description,
+                    product.leafColor,
+                    sellerTech!!.productNumber,
+                    currentStock,
+                    sellerTech!!.cif,
+                    sellerTech!!.brand,
+                    sellerTech!!.electricConsumption
+                )
+                Log.i("Product Tech", productTech.toString())
+               PersonBuyer.addProductToWish(productTech)
+                ListWishRequests.addProductToWish(productTech)
+                Log.i("Producto añadido", "Patricio mi dios")
+                showCustomDialogBoxSuccess("Producto añadido a lista de deseos correctamente")
+
+
+
+
+            }
+            else{
+
+                Log.i("Locura colectiva", "No se ha podido añadir")
+
+            }
+        }
+
 
 
 

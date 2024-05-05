@@ -12,28 +12,33 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.smarttrade.ProductView
 import com.example.smarttrade.R
-import com.example.smarttrade.WishList
 import com.example.smarttrade.logic.ListWishRequests
 import com.example.smarttrade.models.PersonBuyer
+import com.example.smarttrade.models.product_representation
 import com.example.smarttrade.models.product_representation_cart
 import com.example.smarttrade.volleyRequestClasses.ImageURLtoBitmapConverter
 
 
 class ProductWishAdapter(
-    private val context : Context
+    private val context : Context,
+
 ) : BaseAdapter() {
 
     override fun getCount(): Int {
         return PersonBuyer.getWishList().count()
+
+
     }
 
     override fun getItem(position: Int): Any {
         return PersonBuyer.getWishList().get(position)
+
     }
 
     override fun getItemId(position: Int): Long {
         return position.toLong()
     }
+
 
     fun removeProduct(position: Int){
         PersonBuyer.removeProductFromWish(position)
@@ -47,10 +52,15 @@ class ProductWishAdapter(
         notifyDataSetChanged()
     }
 
-    fun updateProducts() {
-        views.clear()
+    fun addAllProducts(productList: MutableList<product_representation_cart>) {
+
+    }
+
+    fun updateProducts(){
+        //views.clear()
         notifyDataSetChanged()
     }
+
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         val view = convertView ?: LayoutInflater.from(parent?.context)
@@ -76,31 +86,35 @@ class ProductWishAdapter(
         val productRep = view.findViewById<ConstraintLayout>(R.id.layoutWish)
         productRep.setOnClickListener{
             val i = Intent(context, ProductView::class.java)
-            i.putExtra("product", PersonBuyer.getWishList()[position])
+            val ProducCart =PersonBuyer.getWishList()[position]
+            val product = product_representation(
+                type = ProducCart.category,
+                name = ProducCart.name,
+                price = ProducCart.price,
+                image = ProducCart.image,
+                stock = ProducCart.stock,
+                description = ProducCart.description,
+                leafColor = ProducCart.leafColor,
+                PN = ProducCart.PN
+            )
+            i.putExtra("product",product)
             context.startActivity(i)
 
         }
-
         val imageViewProd = view.findViewById<ImageView>(R.id.imageViewProd)
 
         val currentStock = PersonBuyer.getWishList()[position].stock //TODO añadir stock
 
 
-        imageViewHeart.setOnClickListener{//TODO CHANGE
+        imageViewHeart.setOnClickListener{
+
             ListWishRequests.deleteProductWish(PersonBuyer.getWishList()[position])
-            PersonBuyer.removeProductFromWish(position)
-            views.clear()
-            notifyDataSetChanged()
+            removeProduct(position)
+
         }
 
         imageViewCart.setOnClickListener{//TODO CHANGE
 
-            //ShoppingCartRequests.addProductToCart(PersonBuyer.getWishList()[position])
-            //ListWishRequests.deleteProductWish(PersonBuyer.getWishList()[position])
-            PersonBuyer.addProductToCart(PersonBuyer.getWishList()[position])
-            views.clear()
-            notifyDataSetChanged()
-            WishList.productAddedCart()
         }
 
         views.add(view)
@@ -111,7 +125,7 @@ class ProductWishAdapter(
 
 
 
-    //TODO CAMBIAR FUNCION VIEW IMAGE
+
     companion object{
         val views = mutableListOf<View>()
         lateinit var who: ProductWishAdapter
@@ -127,6 +141,10 @@ class ProductWishAdapter(
         fun updateProducts(){
             who.updateProducts()
         }
+
+
+
+
 
     }
 

@@ -8,7 +8,6 @@ import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.example.smarttrade.BuildConfig
 import com.example.smarttrade.MainActivity
-import com.example.smarttrade.adapters.ProductCartAdapter
 import com.example.smarttrade.mainBuyerFragments.ShoppingCartFragment
 import com.example.smarttrade.models.PersonBuyer
 import com.example.smarttrade.models.clothes_representation_cart
@@ -16,7 +15,6 @@ import com.example.smarttrade.models.food_representation_cart
 import com.example.smarttrade.models.product_representation_cart
 import com.example.smarttrade.models.technology_representation_cart
 import com.example.smarttrade.models.toy_representation_cart
-import org.json.JSONArray
 import org.json.JSONObject
 
 object ShoppingCartRequests {
