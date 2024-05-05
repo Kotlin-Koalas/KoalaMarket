@@ -2,9 +2,8 @@ package com.example.smarttrade.models
 
 import android.util.Log
 import com.example.smarttrade.adapters.ProductCartAdapter
-import com.example.smarttrade.adapters.ProductWishAdapter
 
-object PersonBuyer {
+object  PersonBuyer {
     private var name: String = ""
     private var surnames: String = ""
     private var email: String = ""
@@ -193,7 +192,7 @@ object PersonBuyer {
         Log.i("Delete Product Position", position.toString())
         Log.i("Delete Product", wishList.toString())
         wishList.removeAt(position)
-        ProductWishAdapter.updateProducts()
+        //ProductWishAdapter.updateProducts()
     }
 
     fun removeProductFromWish(product: product_representation_cart) {

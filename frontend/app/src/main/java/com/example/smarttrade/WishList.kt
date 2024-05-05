@@ -32,11 +32,12 @@ class WishList : AppCompatActivity() {
         actContext = this
 
 
-        adapterP = ProductWishAdapter(actContext)
+        adapterP = ProductWishAdapter(actContext )
         gridProducts = findViewById(R.id.gridViewWishList)
         gridProducts.adapter = adapterP
 
         ListWishRequests.getWishList()
+
 /*
         for (i in 0 until 10){
             adapterWL.addProduct(product_representation_cart(
@@ -90,6 +91,7 @@ class WishList : AppCompatActivity() {
         lateinit var adapterP : ProductWishAdapter
 
 
+
         fun getContext(): Context {
             return actContext
         }
@@ -101,6 +103,8 @@ class WishList : AppCompatActivity() {
         fun productAddedCart(){
             actContext.showCustomDialogBoxSuccess("Producto añadido al carrito")
         }
+
+
 
     }
 
