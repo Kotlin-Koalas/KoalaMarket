@@ -1,4 +1,4 @@
-package com.example.smarttrade
+package com.example.smarttrade.mainSellerFragments
 
 import android.app.Activity
 import android.app.Dialog
@@ -27,12 +27,11 @@ import androidx.activity.result.contract.ActivityResultContracts.PickVisualMedia
 import androidx.core.graphics.drawable.toBitmap
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
+import com.example.smarttrade.R
 import com.example.smarttrade.logic.logic
-import com.example.smarttrade.models.product_representation
 import com.example.smarttrade.volleyRequestClasses.ImageURLtoBitmapConverter
 import java.io.ByteArrayOutputStream
 import java.io.File
-import java.io.FileInputStream
 import java.io.FileOutputStream
 import java.io.InputStream
 
@@ -51,8 +50,8 @@ class AddProduct :Fragment() {
     var buscarFoto = false
     lateinit var imageURI: Uri
     private lateinit var currview : View
-    private lateinit var productImage : product_representation
-
+    private lateinit var ProductValidator : ProductValidator
+    private lateinit var productNumber : EditText
 
 
 
@@ -60,26 +59,16 @@ class AddProduct :Fragment() {
         super.onCreate(savedInstanceState)
 
     }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?): View? {
 
         currview = inflater.inflate(R.layout.activity_add_product, container, false)
-
-
-        //val scrollViewAddP = currview.findViewById<ScrollView>(R.id.scrollView2)
-        //scrollViewAddP.overScrollMode = View.OVER_SCROLL_ALWAYS
-
-
         actContext = this
-
 
         imageCertificate = currview.findViewById<ImageView>(R.id.imageViewOkcertificate)
         uploadImageButton = currview.findViewById<ImageView>(R.id.uploadImageButton)
-
-
 
         uploadCertificateButton = currview.findViewById(R.id.buttonUploadCertificate)
         uploadCertificateButton.setOnClickListener {
@@ -89,53 +78,27 @@ class AddProduct :Fragment() {
             startActivityForResult(intentU, PICK_FILE_REQUEST_CODE)
         }
 
-        val acceptButton = currview.findViewById<Button>(R.id.acceptAddButton)
-        val cancelButton = currview.findViewById<Button>(R.id.cancelAddButton)
+         productNumber = (currview.findViewById<EditText>(R.id.editTextProductNumber))
+        productNumber.addTextChangedListener {
 
-        /*
-        cancelButton.setOnClickListener{//TODO QUITAR
-            val IntentS = Intent(this, MainActivity::class.java)
-            startActivity(IntentS)
-        }
-        */
-        val prod = (currview.findViewById<EditText>(R.id.editTextProductNumber))
-        //prod.addTextChangedListener(MyTextWatcher(uploadImageButton))
-
-
-        uploadImageButton.setOnClickListener {
-            if (buscarFoto) {
-
-            }
-        }
-
-
-        prod.addTextChangedListener {
-
-            if (prod.length() == 12) {
-                //TODO comprobar si funciona
-
-                logic.existProduct(prod.text.toString()){productExist ->
-
+            if (productNumber.length() == 12) {
+                logic.existProduct(productNumber.text.toString()){productExist ->
                     if (productExist) {
-
-
-                            Log.i("Product", imagePNExist)
-
-
-                        //encodedImageString = imagePNExist
                         uploadImageButton.isClickable = false
                         buscarFoto = false
                         ImageURLtoBitmapConverter.downloadImageAddProduct(imagePNExist, currview)
-                        Log.i("LLEGO", imagePNExist)
                         isUploadImage = 1
-
 
                     } else {
                         uploadImageButton.isClickable = true
                         buscarFoto = true
                         imagePNExist = ""
-                        pickmedia.launch(PickVisualMediaRequest(PickVisualMedia.ImageOnly))
 
+                        uploadImageButton.setOnClickListener {
+                            if(buscarFoto) {
+                                pickmedia.launch(PickVisualMediaRequest(PickVisualMedia.ImageOnly))
+                            }
+                        }
                     }
                 }
 
@@ -148,16 +111,11 @@ class AddProduct :Fragment() {
 
                 val defaultImage = resources.getDrawable(R.drawable.add_item)
                 val defaultBitmap = (defaultImage as VectorDrawable).toBitmap()
-                val defaultImageUri =
-                    Uri.parse("android.resource://${requireActivity().packageName}/${R.drawable.add_item}")
                 uploadImageButton.setImageBitmap(defaultBitmap)
                 imagePNExist = ""
                 isUploadImage = -1
             }
         }
-
-
-
 
         editTextCat1 = (currview.findViewById<EditText>(R.id.editTextCategoria1))
         editTextCat2 = (currview.findViewById<EditText>(R.id.editTextCategoria2))
@@ -166,11 +124,10 @@ class AddProduct :Fragment() {
         val categoriesArray = resources.getStringArray(R.array.categoriesApp)
         val categories = categoriesArray.toMutableList()
 
-        val spinnerEcology = (currview.findViewById<Spinner>(R.id.spinnerEcology))
+
         val spinnerCategory =(currview.findViewById<Spinner>(R.id.spinnerCategory))
         val spinnerAdapter = ArrayAdapter<String>(actContext.requireContext(), android.R.layout.simple_spinner_dropdown_item, categories)
         spinnerCategory.adapter = spinnerAdapter
-
         spinnerCategory.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 val selectedCategory = spinnerAdapter.getItem(position) ?: ""
@@ -182,6 +139,7 @@ class AddProduct :Fragment() {
             }
         }
 
+        val spinnerEcology = (currview.findViewById<Spinner>(R.id.spinnerEcology))
         spinnerEcology.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 val selectedItem = spinnerEcology.selectedItem
@@ -210,62 +168,52 @@ class AddProduct :Fragment() {
         }
 
 
-
+        val acceptButton = currview.findViewById<Button>(R.id.acceptAddButton)
         acceptButton.setOnClickListener {
-
-
-            val patterOnlyLettNum = "^[a-zA-Z0-9]{12}".toRegex()
+            ProductValidator = ProductValidator()
 
             var error = false
             var msgErrror = ""
 
 
-            prodNum = (prod.text).toString()
-            if (!patterOnlyLettNum.containsMatchIn(prodNum)) {
+            prodNum = (productNumber.text).toString()
+            if (!ProductValidator.validateProductNumber(prodNum)) {
                 error = true
                 msgErrror += "- El número del producto tiene 12 caracteres  solamente números y letras\n"
 
             }
 
             currName = (currview.findViewById<EditText>(R.id.editTextNameProduct).text).toString()
-            val patterName = "^[a-zA-Z0-9\\s\\.,:;\\-\\(\\)\\/áéíóúñ\\$%&#@]{1,30}$".toRegex()
-            if (!patterName.containsMatchIn(currName)) {
+
+            if (!ProductValidator.validateProducName(currName)) {
                 error = true
                 msgErrror += "- El nombre del producto no puede contener más de 30 carácteres ni carácteres especiales\n"
             }
 
-            val currPrice =
-                (currview.findViewById<EditText>(R.id.editTextNumberDecimalPrice).text).toString()
-            val patternPrice = "^[-+]?[0-9]+([.][0-9]{1,2})?$".toRegex()
-            if (!patternPrice.containsMatchIn(currPrice)) {
+            val currPrice = (currview.findViewById<EditText>(R.id.editTextNumberDecimalPrice).text).toString()
+
+            if (!ProductValidator.validatePrice(currPrice)) {
                 error = true
                 msgErrror += "-El precio solo puede tener 2 decimales\n"
             }
 
-            currDescription =
-                (currview.findViewById<EditText>(R.id.editTextDescription).text).toString()
-            val patterDescription =
-                "^[a-zA-Z0-9\\s\\.,:;\\-\\(\\)\\/áéíóúñ\\$%&#@]{1,150}$".toRegex()
-            if (!patterDescription.containsMatchIn(currDescription)) {
+            currDescription = (currview.findViewById<EditText>(R.id.editTextDescription).text).toString()
+            if (!ProductValidator.validateDescrption(currDescription)) {
                 error = true
                 msgErrror += "-La descripción no puede tener más de 150 carácteres\n"
             }
 
             val currQuantity = (currview.findViewById<EditText>(R.id.editTextQuantity).text).toString()
-            val patternQuantity = "^(?!0)[0-9]{1,3}$".toRegex()
-            if (!patternQuantity.containsMatchIn(currQuantity)) {
+            if (!ProductValidator.validateQuantity(currQuantity)) {
                 error = true
                 msgErrror += "-Cantidad mínima 1 y máxima son 999\n"
             }
-
 
             cat1 = (editTextCat1.text).toString()
             cat2 = (editTextCat2.text).toString()
             when (categorSelected) {
                 "Tecnología" -> {
-                    val patternCon = "^[-+]?[0-9]+([.][0-9]{1,2})?$".toRegex()
-                    val patternTech = "^[a-zA-Z0-9 ]+$".toRegex()
-                    if (!patternCon.containsMatchIn(cat1) || !patternTech.containsMatchIn(cat2)) {
+                    if (!ProductValidator.validateCategories(categorSelected, cat1, cat2)) {
                         error = true
                         msgErrror += "-Tecnología: Consumo solo números como máximo 2 decimales (12.50) y marca solo pueden tener letras y números \n"
                     }
@@ -273,51 +221,30 @@ class AddProduct :Fragment() {
                 }
 
                 "Juguete" -> {
-                    val patternEdadRec = "^[0-9]{1,2}$".toRegex() // Números de 0 a 18
-                    val patternMaterial = "^[a-zA-Z]+$".toRegex() // Letras
-                    if (!patternEdadRec.containsMatchIn(cat1) || !patternMaterial.containsMatchIn(
-                            cat2
-                        )
-                    ) {
+                    if (!ProductValidator.validateCategories(categorSelected, cat1, cat2))
+                     {
                         error = true
                         msgErrror += "-Juguete: Edad Recomendada solo pueden ser números de 0 a 99, Material puede tener solo letras\n"
                     }
                 }
-
                 "Ropa" -> {
-                    val patternTalla =
-                        "^[SMLX]{1,3}$|^([2][0-9]|[3][0-9]|[4][0-5])$".toRegex() //TODO habría que arreglarlo
-                    val patternColor = "^[a-zA-Z]+$".toRegex() // Letras
-
-                    if (!patternTalla.containsMatchIn(cat1) || !patternColor.containsMatchIn(
-                            cat2
-                        )
-                    ) {
+                    if (!ProductValidator.validateCategories(categorSelected, cat1, cat2))
+                     {
                         error = true
                         msgErrror += "-Ropa: Talla solo puede ser XS, S, M, L, XL, XXL o números de 30 a 50, Color solo puede tener letras\n"
                     }
                 }
 
                 "Alimentación" -> {
-                    val patternMac = "^[a-zA-Z0-9 ]+$".toRegex()
-                    val patternCalorias = "^[0-9]{1,5}$".toRegex() // Número de 1 a 5 cifras
-
-                    if (!patternMac.containsMatchIn(cat1) || !patternCalorias.containsMatchIn(
-                            cat2
-                        )
-                    ) {
+                    if (!ProductValidator.validateCategories(categorSelected, cat1, cat2)) {
                         error = true
                         msgErrror += "-Alimentación:Macros solo puede tener letras y números, Calorias solo puede ser un número de 1 a 5 cifras\n"
                     }
                 }
-
                 else -> {
-
 
                 }
             }
-
-
 
             if (isUploadImage == -1) {
                 error = true
@@ -330,16 +257,17 @@ class AddProduct :Fragment() {
             }
 
 
-            if (prodNum.isEmpty() || currName.isEmpty() || currPrice.isEmpty() || currDescription.isEmpty() || currQuantity.isEmpty() || cat1.isEmpty() || cat2.isEmpty()) {
+            val fields = listOf(prodNum, currName, currPrice, currDescription, currQuantity, cat1, cat2)
+
+            if (!ProductValidator.validateNotEmptyFields(fields)) {
                 error = true
                 msgErrror = "-Todos los campos deben estar rellenados\n" + msgErrror
             }
 
-
             if (error) {
                 showCustomDialogBox(msgErrror)
 
-            } else {//TODO LOGIC
+            } else {
                 uploadImageButton.isDrawingCacheEnabled = true
                 uploadImageButton.buildDrawingCache()
                 val bitmap = uploadImageButton.drawingCache
@@ -353,6 +281,10 @@ class AddProduct :Fragment() {
             }
         }
 
+        val cancelButton = currview.findViewById<Button>(R.id.cancelAddButton)
+        cancelButton.setOnClickListener {
+            resetValues()
+        }
 
         return currview
     }
@@ -407,7 +339,6 @@ class AddProduct :Fragment() {
     }
 
     private fun updateCategoryText(selectedCategory: String) {
-        val layoutInflater = LayoutInflater.from(actContext.requireContext())
 
         when (selectedCategory) {
             "Ropa" -> {
@@ -468,105 +399,39 @@ class AddProduct :Fragment() {
 
     }
 
-    fun convertImageToByteArray(imageFile: File): ByteArray {
-        val fis = FileInputStream(imageFile)
-        val byteArray = ByteArray(imageFile.length().toInt())
-        fis.read(byteArray)
-        fis.close()
-        return byteArray
-    }
-
-/*
-    private val pickmedia = registerForActivityResult(PickVisualMedia()) { uri ->
-        if (uri != null) {
-            when (uri.scheme) {
-                "file" -> {
-
-                    val ImagenUri = uri
-
-                    if (archivoImagen.exists()) {
-
-
-
-                        //uploadImageButton.setImageURI(uri)
-                        isUploadImage = 1
-                    } else {
-                        Log.e("AddProduct", "Archivo no encontrado: $archivoImagen")
-                    }
-                }
-                "content" -> {
-                    try {
-                        val flujoEntrada = contentResolver.openInputStream(uri)
-                        if (flujoEntrada != null) {
-
-                            runBlocking { val archivoTemporal = crearArchivoTemporalImagen().await()
-
-
-                            // val x = logic.getImage(archivoTemporal)
-
-
-
-                            val flujoSalida = FileOutputStream(archivoTemporal)
-                            flujoSalida.write(flujoEntrada.readBytes())
-                            flujoSalida.close()
-                            flujoEntrada.close()
-
-                            val arregloBytesImagen = convertImageToByteArray(archivoTemporal)
-                            encodedImageString = Base64.encodeToString(arregloBytesImagen, Base64.DEFAULT)
-
-                            uploadImageButton.setImage
-                            isUploadImage = 1
-                            }
-                        }
-                    } catch (e: Exception) {
-                        Log.e("AddProduct", "Error al obtener los datos de la imagen: $e")
-                    }
-                }
-                else -> { // URL remota o esquema no compatible
-                    Log.w("AddProduct", "Esquema URI no compatible: ${uri.scheme}")
-                }
-            }
-        } else {
-            Log.i("aris", "No seleccionado")
-        }
-
-    }*/
-
-    /*
-    fun backButtonClick(view: View) { //TODO QUITAR
-        val backPage = Intent(this, MainActivity::class.java)
-        startActivity(backPage)
-    }
-*/
-
-    /*
-    private suspend fun crearArchivoTemporalImagen():Deferred< File>{//TODO QUITAR
-        return GlobalScope.async {
-            val nombreTemporal = "imagen_temporal_${System.currentTimeMillis()}.jpg"
-            val directorioCache = applicationContext.cacheDir
-            return@async File(directorioCache, nombreTemporal)
-        }
-
-    }*/
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == PICK_FILE_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             val uri = data?.data
-
             isUploadCertificate = 1
             imageCertificate.visibility = View.VISIBLE
 
             val fileName = uri?.pathSegments?.last()
-
         }
-
     }
 
-
+    private fun resetValues(){
+        productNumber.text.clear()
+        currview.findViewById<EditText>(R.id.editTextNameProduct).text.clear()
+        currview.findViewById<EditText>(R.id.editTextNumberDecimalPrice).text.clear()
+        currview.findViewById<EditText>(R.id.editTextDescription).text.clear()
+        currview.findViewById<EditText>(R.id.editTextQuantity).text.clear()
+        editTextCat1.text.clear()
+        editTextCat2.text.clear()
+        prodNum = ""
+        currName = ""
+        doublePrice = ""
+        currDescription = ""
+        cat1 = ""
+        cat2 = ""
+        uploadImageButton.setImageResource(R.drawable.add_item)
+        imageCertificate.visibility = View.INVISIBLE
+        isUploadImage = -1
+        isUploadCertificate = -1
+    }
 
     companion object {
-        private lateinit var actContext:AddProduct
+        private lateinit var actContext: AddProduct
         private lateinit var encodedImageString :String
         private lateinit var categorSelected : String
         private lateinit var leafColor: String
@@ -577,9 +442,6 @@ class AddProduct :Fragment() {
         private lateinit var prodNum: String
         private lateinit var cat1: String
         private lateinit var cat2: String
-        private lateinit var currview : View
-        private lateinit var productImage : product_representation
-        private var existProduct : Boolean = false
         private var imagePNExist = ""
 
         fun getContext(): Context {
@@ -602,27 +464,17 @@ class AddProduct :Fragment() {
 
         }
 
-        fun setExistProduct(bool: Boolean){
-            existProduct = bool
-        }
-
-
         fun productAded(){
             actContext.showCustomDialogBoxSuccess("Producto añadido correctamente")
         }
         fun setEncodedImageString(encodedImageString: String){
-            this.encodedImageString = encodedImageString
-            Log.i("imagen", encodedImageString)
-            Log.i("imagen", this.encodedImageString)
+            Companion.encodedImageString = encodedImageString
             when (categorSelected) {
 
                 "Tecnología" -> {
-                    Log.i("doublePrice value and type", doublePrice.toString() + " " + doublePrice::class.simpleName)
-                    Log.i("IMAGEN", Companion.encodedImageString)
                     try {
                         logic.addTechnology(
-                            currName,
-                            doublePrice,
+                            currName, doublePrice,
                             encodedImageString,
                             intStock,
                             currDescription,
@@ -666,9 +518,7 @@ class AddProduct :Fragment() {
                         cat2,
                         cat1
                     )
-
                 }
-
                 "Alimentación" -> {
                     logic.addFood(
                         currName,
@@ -681,23 +531,11 @@ class AddProduct :Fragment() {
                         cat2,
                         cat1
                     )
-
                 }
-
                 else -> {
                     Log.e("ERROR", "ERROR")
-
                 }
             }
-
         }
-
-        fun getCurrView(): View{
-            return currview
-        }
-
     }
 }
-
-
-

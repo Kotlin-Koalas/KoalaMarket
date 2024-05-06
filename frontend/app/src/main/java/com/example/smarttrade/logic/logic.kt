@@ -8,15 +8,15 @@ import com.android.volley.RequestQueue
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
-import com.example.smarttrade.AddProduct
 import com.example.smarttrade.BrowseProductsFiltered
 import com.example.smarttrade.BuildConfig
 import com.example.smarttrade.BuyerMainScreen
 import com.example.smarttrade.MainActivity
-import com.example.smarttrade.SellerFragment
 import com.example.smarttrade.SellerMain
 import com.example.smarttrade.adapters.SellerAdapter
 import com.example.smarttrade.mainBuyerFragments.HomeFragment
+import com.example.smarttrade.mainSellerFragments.AddProduct
+import com.example.smarttrade.mainSellerFragments.SellerFragment
 import com.example.smarttrade.models.PersonSeller
 import com.example.smarttrade.models.clothes_representation
 import com.example.smarttrade.models.clothes_representation_seller
@@ -29,10 +29,8 @@ import com.example.smarttrade.models.technology_representation_seller
 import com.example.smarttrade.models.toy_representation
 import com.example.smarttrade.models.toy_representation_seller
 import com.example.smarttrade.volleyRequestClasses.VolleyMultipartRequest
-import kotlinx.coroutines.flow.callbackFlow
 import org.json.JSONArray
 import org.json.JSONObject
-import kotlin.math.log
 
 private const val host = BuildConfig.DB_LINK
 private const val myIP = BuildConfig.MY_IP
@@ -496,10 +494,6 @@ object logic {
             })
         productSellerQueue.add(stringRequest)
     }
-
-
-
-
 
     fun getAllProductsSeller(sellerCif : String){
         if(!isPSQueue) {
