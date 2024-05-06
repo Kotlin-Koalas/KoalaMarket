@@ -1,4 +1,4 @@
-package com.example.smarttrade
+package com.example.smarttrade.mainSellerFragments
 
 import android.app.Dialog
 import android.content.Context
@@ -13,6 +13,7 @@ import android.widget.Button
 import android.widget.GridView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import com.example.smarttrade.R
 import com.example.smarttrade.adapters.ProductAdapterSeller
 import com.example.smarttrade.logic.logic
 import com.example.smarttrade.models.PersonSeller
@@ -59,14 +60,8 @@ class SellerFragment : Fragment() {
 
 
 
-        logic.getAllProductsSeller(sellerCIF)//TODO cambiar coger todos los productos del vendedor
+        logic.getAllProductsSeller(sellerCIF)
 
-        /*
-        //TODO temporal productos cambiar por coger los productos
-        for(i in 0..10){
-            adapterP.addProductToList(product_representation("Tipo$i","Producto $i", "33", "Precio $i", i, "Categoria $i", "Imagen $i","PN $i"))
-        }
-*/
         return viewS
 
     }
