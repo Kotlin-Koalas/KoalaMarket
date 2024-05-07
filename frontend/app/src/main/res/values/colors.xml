@@ -8,4 +8,5 @@
     <color name="blancoFlecha">#D9D9D9</color>
     <color name="verdeClaro">#71D3AA</color>
     <color name="amarilloAlerta">#ffd100</color>
+    <color name="rojoAlerta">#952F2F</color>
 </resources>
