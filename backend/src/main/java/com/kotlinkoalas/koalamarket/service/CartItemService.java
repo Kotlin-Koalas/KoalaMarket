@@ -6,6 +6,7 @@ import com.kotlinkoalas.koalamarket.model.products.Food;
 import com.kotlinkoalas.koalamarket.model.products.Technology;
 import com.kotlinkoalas.koalamarket.model.products.Toy;
 import com.kotlinkoalas.koalamarket.repo.CartItemRepository;
+import com.kotlinkoalas.koalamarket.repo.ClientRepository;
 import com.kotlinkoalas.koalamarket.service.products.ClothesService;
 import com.kotlinkoalas.koalamarket.service.products.FoodService;
 import com.kotlinkoalas.koalamarket.service.products.TechnologyService;
@@ -31,12 +32,15 @@ public class CartItemService {
 
     private final ToyService toyService;
 
-    public CartItemService(CartItemRepository repository, ClothesService clothesService, FoodService foodService, TechnologyService technologyService, ToyService toyService) {
+    private final ClientRepository clientRepository;
+
+    public CartItemService(CartItemRepository repository, ClothesService clothesService, FoodService foodService, TechnologyService technologyService, ToyService toyService, ClientRepository clientRepository) {
         this.repository = repository;
         this.clothesService = clothesService;
         this.foodService = foodService;
         this.technologyService = technologyService;
         this.toyService = toyService;
+        this.clientRepository = clientRepository;
     }
 
     public ResponseEntity<Map<String,Object>> getAllItemsInCart(String clientId){
@@ -106,6 +110,7 @@ public class CartItemService {
                     break;
             }
             itemDetails.put("quantity", quantity);
+            itemDetails.put("vendorName", clientRepository.findByDni(cif).getName());
             itemsList.add(itemDetails);
         }
         response.put("items", itemsList);
