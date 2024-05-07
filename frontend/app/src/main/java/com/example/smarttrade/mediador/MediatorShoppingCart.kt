@@ -90,6 +90,10 @@ object MediatorShoppingCart {
         PersonBuyer.setSelectedItemsInCart(mutableListOf())
     }
 
+    private fun roundToTwoDecimals(number: Double): Double {
+        return round(number*100.0)/100.0
+    }
+
     private fun addPriceToTotal(price: Double, quantity: Int){
         val view = ShoppingCartFragment.getCurrView()
         val totalPriceView = view.findViewById<TextView>(R.id.textViewPrecioTotal)
@@ -97,7 +101,7 @@ object MediatorShoppingCart {
         Log.i("quantity",quantity.toString())
         Log.i("price",price.toString())
         totalPrice += (price*quantity)
-        totalPrice = roundToTwoDecimalPlaces(totalPrice)
+        totalPrice = roundToTwoDecimals(totalPrice)
         totalPriceView.text = totalPrice.toString()
         Log.i("totalPriceAferSelect", totalPrice.toString())
     }
@@ -109,14 +113,11 @@ object MediatorShoppingCart {
         Log.i("quantity",quantity.toString())
         Log.i("price",price.toString())
         totalPrice -= (price*quantity)
-        totalPrice = roundToTwoDecimalPlaces(totalPrice)
+        totalPrice = roundToTwoDecimals(totalPrice)
         Log.i("totalPriceAferUnselect", totalPrice.toString())
         totalPriceView.text = totalPrice.toString()
     }
 
-    fun roundToTwoDecimalPlaces(number: Double): Double {
-        return round(number * 100) / 100
-    }
     public fun setPriceToCero(){
         totalPrice = 0.0
     }
