@@ -9,13 +9,12 @@ import com.example.smarttrade.logic.ShoppingCartRequests
 import com.example.smarttrade.mainBuyerFragments.ShoppingCartFragment
 import com.example.smarttrade.models.PersonBuyer
 import com.example.smarttrade.models.product_representation_cart
+import kotlin.math.round
 
 object MediatorShoppingCart {
 
     var totalPrice = 0.0
     fun notifyItemSelected(product: product_representation_cart){
-        Log.i("AddPrice", product.quantity.toString())
-        Log.i("AddPrice", product_representation_cart::class.java.toString())
         addPriceToTotal(product.price.toDouble(),product.quantity)
         PersonBuyer.addSelectedItemFromCart(product)
     }
@@ -94,16 +93,32 @@ object MediatorShoppingCart {
     private fun addPriceToTotal(price: Double, quantity: Int){
         val view = ShoppingCartFragment.getCurrView()
         val totalPriceView = view.findViewById<TextView>(R.id.textViewPrecioTotal)
+        Log.i("totalPrice",totalPrice.toString())
+        Log.i("quantity",quantity.toString())
+        Log.i("price",price.toString())
         totalPrice += (price*quantity)
+        totalPrice = roundToTwoDecimalPlaces(totalPrice)
         totalPriceView.text = totalPrice.toString()
+        Log.i("totalPriceAferSelect", totalPrice.toString())
     }
 
     private fun removePriceFromTotal(price: Double, quantity: Int){
         val view = ShoppingCartFragment.getCurrView()
         val totalPriceView = view.findViewById<TextView>(R.id.textViewPrecioTotal)
+        Log.i("totalPrice",totalPrice.toString())
+        Log.i("quantity",quantity.toString())
+        Log.i("price",price.toString())
         totalPrice -= (price*quantity)
+        totalPrice = roundToTwoDecimalPlaces(totalPrice)
+        Log.i("totalPriceAferUnselect", totalPrice.toString())
         totalPriceView.text = totalPrice.toString()
     }
 
+    fun roundToTwoDecimalPlaces(number: Double): Double {
+        return round(number * 100) / 100
+    }
+    public fun setPriceToCero(){
+        totalPrice = 0.0
+    }
 }
 
