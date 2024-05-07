@@ -167,7 +167,7 @@ object  PersonBuyer {
                 return p
             }
         }
-        return product_representation_cart("", "", "", "", 0, "", "", "", 0, "")
+        return product_representation_cart("","", "", "", "", 0, "", "", "", 0, "")
     }
 
     fun modifyProductInCart(
@@ -180,7 +180,7 @@ object  PersonBuyer {
                 return p
             }
         }
-        return product_representation_cart("", "", "", "", 0, "", "", "", 0, "")
+        return product_representation_cart("","", "", "", "", 0, "", "", "", 0, "")
     }
 
 

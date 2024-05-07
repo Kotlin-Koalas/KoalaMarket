@@ -14,6 +14,7 @@ import androidx.fragment.app.add
 import com.example.smarttrade.adapters.ProductAdapter
 import com.example.smarttrade.mainBuyerFragments.HomeFragment
 import com.example.smarttrade.mainBuyerFragments.ShoppingCartFragment
+import com.example.smarttrade.mediador.MediatorShoppingCart
 
 class BuyerMainScreen : AppCompatActivity() {
 
@@ -45,6 +46,7 @@ class BuyerMainScreen : AppCompatActivity() {
                 add<ShoppingCartFragment>(R.id.fragment_container_view)
             }
             ProductAdapter.deleteListeners()
+            MediatorShoppingCart.setPriceToCero()
         }
 
         account.setOnClickListener{

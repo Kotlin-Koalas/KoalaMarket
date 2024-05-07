@@ -6,7 +6,7 @@ import android.view.View
 import android.widget.ImageView
 import com.android.volley.toolbox.ImageRequest
 import com.android.volley.toolbox.Volley
-import com.example.smarttrade.AddProduct
+import com.example.smarttrade.mainSellerFragments.AddProduct
 import com.example.smarttrade.BuildConfig
 import com.example.smarttrade.MainActivity
 import com.example.smarttrade.ProductView

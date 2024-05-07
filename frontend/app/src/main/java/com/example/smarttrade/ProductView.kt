@@ -174,6 +174,7 @@ class ProductView : AppCompatActivity() {
         addProduct.setOnClickListener {
             if(sellerToy != null){
                 val productToy = toy_representation_cart(
+                    sellerToy!!.cif,
                     sellerToy!!.name,
                     sellerToy!!.price,
                     sellerToy!!.image,
@@ -195,6 +196,7 @@ class ProductView : AppCompatActivity() {
             }
             else if (sellerClothes != null){
                 val productClothes = clothes_representation_cart(
+                    sellerClothes!!.cif,
                     sellerClothes!!.name,
                     sellerClothes!!.price,
                     sellerClothes!!.image,
@@ -220,6 +222,7 @@ class ProductView : AppCompatActivity() {
 
             else if(sellerFood != null){
                 val productFood = food_representation_cart(
+                    sellerFood!!.cif,
                     sellerFood!!.name,
                     sellerFood!!.price,
                     sellerFood!!.image,
@@ -246,6 +249,7 @@ class ProductView : AppCompatActivity() {
             }
             else if(sellerTech != null){
                 val productTech = technology_representation_cart(
+                    sellerTech!!.cif,
                     sellerTech!!.name,
                     sellerTech!!.price,
                     sellerTech!!.image,
@@ -284,6 +288,7 @@ class ProductView : AppCompatActivity() {
         addWishList.setOnClickListener(){
             if(sellerToy != null){
                 val productToy = toy_representation_cart(
+                    sellerToy!!.cif,
                     sellerToy!!.name,
                     sellerToy!!.price,
                     sellerToy!!.image,
@@ -306,6 +311,7 @@ class ProductView : AppCompatActivity() {
             }
             else if (sellerClothes != null){
                 val productClothes = clothes_representation_cart(
+                    sellerClothes!!.cif,
                     sellerClothes!!.name,
                     sellerClothes!!.price,
                     sellerClothes!!.image,
@@ -332,6 +338,7 @@ class ProductView : AppCompatActivity() {
 
             else if(sellerFood != null){
                 val productFood = food_representation_cart(
+                    sellerFood!!.cif,
                     sellerFood!!.name,
                     sellerFood!!.price,
                     sellerFood!!.image,
@@ -357,6 +364,7 @@ class ProductView : AppCompatActivity() {
             }
             else if(sellerTech != null){
                 val productTech = technology_representation_cart(
+                    sellerTech!!.cif,
                     sellerTech!!.name,
                     sellerTech!!.price,
                     sellerTech!!.image,

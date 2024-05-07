@@ -3,6 +3,7 @@ package com.example.smarttrade.models
 import java.io.Serializable
 
 open class product_representation_cart (
+    open val cif: String,
     open val category: String,
     open val name: String,
     open val price: String,
@@ -16,6 +17,7 @@ open class product_representation_cart (
 ):Serializable
 
 data class technology_representation_cart (
+    override val cif: String,
     override val name: String,
     override val price: String,
     override val image: String,
@@ -27,9 +29,10 @@ data class technology_representation_cart (
     override var seller: String,
     val brand: String,
     val electricConsumption: String,
-    ) : product_representation_cart("technology", name, price, image, stock, description, leafColor, PN, quantity, seller)
+    ) : product_representation_cart(cif,"technology", name, price, image, stock, description, leafColor, PN, quantity, seller)
 
 data class clothes_representation_cart(
+    override val cif: String,
     override val name: String,
     override val price: String,
     override val image: String,
@@ -41,9 +44,10 @@ data class clothes_representation_cart(
     override var seller: String,
     val size: String,
     val color : String
-) : product_representation_cart("clothes", name, price, image, stock, description, leafColor, PN,quantity, seller)
+) : product_representation_cart(cif,"clothes", name, price, image, stock, description, leafColor, PN,quantity, seller)
 
 data class food_representation_cart(
+    override val cif: String,
     override val name: String,
     override val price: String,
     override val image: String,
@@ -55,9 +59,10 @@ data class food_representation_cart(
     override var seller: String,
     val calories: String,
     val macros: String
-) : product_representation_cart("food", name, price, image, stock, description, leafColor, PN,quantity, seller)
+) : product_representation_cart(cif,"food", name, price, image, stock, description, leafColor, PN,quantity, seller)
 
 data class toy_representation_cart(
+    override val cif: String,
     override val name: String,
     override val price: String,
     override val image: String,
@@ -69,7 +74,7 @@ data class toy_representation_cart(
     override var seller: String,
     val material :String,
     val age : String
-) : product_representation_cart("toy", name, price, image, stock, description, leafColor, PN,quantity, seller)
+) : product_representation_cart(cif,"toy", name, price, image, stock, description, leafColor, PN,quantity, seller)
 
 
 

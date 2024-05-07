@@ -8,10 +8,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.add
 import androidx.fragment.app.commit
+import com.example.smarttrade.mainSellerFragments.AddProduct
+import com.example.smarttrade.mainSellerFragments.SellerFragment
 
 class SellerMain: AppCompatActivity() {
-
-    //TODO cambiar SellerFragment
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
