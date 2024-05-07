@@ -44,10 +44,10 @@ object ShoppingCartRequests {
                 for (i in 0 until products.length()) {
                     val p = products.getJSONObject(i)
                     when(p.getString("category")){
-                        "toy" -> PersonBuyer.addProductToCart(toy_representation_cart(p.getString("name"), p.getDouble("price").toString(), p.getString("image"), p.getInt("stock"), p.getString("description"), p.getString("ecology"), p.getString("productNumber"), p.getInt("quantity"),p.getString("cif"), p.getString("material"), p.getString("age")))
-                        "food" -> PersonBuyer.addProductToCart(food_representation_cart(p.getString("name"), p.getDouble("price").toString(), p.getString("image"), p.getInt("stock"), p.getString("description"), p.getString("ecology"), p.getString("productNumber"), p.getInt("quantity"),p.getString("cif"), p.getInt("calories").toString(), p.getString("macros")))
-                        "technology" -> PersonBuyer.addProductToCart(technology_representation_cart(p.getString("name"), p.getDouble("price").toString(), p.getString("image"), p.getInt("stock"), p.getString("description"), p.getString("ecology"), p.getString("productNumber"), p.getInt("quantity"),p.getString("cif"), p.getString("brand"), p.getString("electricConsumption")))
-                        "clothes" -> PersonBuyer.addProductToCart(clothes_representation_cart(p.getString("name"), p.getDouble("price").toString(), p.getString("image"), p.getInt("stock"), p.getString("description"), p.getString("ecology"), p.getString("productNumber"), p.getInt("quantity"),p.getString("cif"), p.getString("size"), p.getString("color")))
+                        "toy" -> PersonBuyer.addProductToCart(toy_representation_cart(p.getString("cif"),p.getString("name"), p.getDouble("price").toString(), p.getString("image"), p.getInt("stock"), p.getString("description"), p.getString("ecology"), p.getString("productNumber"), p.getInt("quantity"),p.getString("cif"), p.getString("material"), p.getString("age")))
+                        "food" -> PersonBuyer.addProductToCart(food_representation_cart(p.getString("cif"),p.getString("name"), p.getDouble("price").toString(), p.getString("image"), p.getInt("stock"), p.getString("description"), p.getString("ecology"), p.getString("productNumber"), p.getInt("quantity"),p.getString("cif"), p.getInt("calories").toString(), p.getString("macros")))
+                        "technology" -> PersonBuyer.addProductToCart(technology_representation_cart(p.getString("cif"),p.getString("name"), p.getDouble("price").toString(), p.getString("image"), p.getInt("stock"), p.getString("description"), p.getString("ecology"), p.getString("productNumber"), p.getInt("quantity"),p.getString("cif"), p.getString("brand"), p.getString("electricConsumption")))
+                        "clothes" -> PersonBuyer.addProductToCart(clothes_representation_cart(p.getString("cif"),p.getString("name"), p.getDouble("price").toString(), p.getString("image"), p.getInt("stock"), p.getString("description"), p.getString("ecology"), p.getString("productNumber"), p.getInt("quantity"),p.getString("cif"), p.getString("size"), p.getString("color")))
                     }
                 }
                 Log.i("ShoppingCartList", PersonBuyer.getShoppingCart().toString())
@@ -66,7 +66,7 @@ object ShoppingCartRequests {
 
         val json = JSONObject()
         json.put("productNumber", product.PN)
-        json.put("cif",product.seller)
+        json.put("cif",product.cif)
         json.put("category", product.category)
         json.put("quantity", product.quantity)
 
@@ -163,29 +163,29 @@ object ShoppingCartRequests {
             cartVolleyQueue = Volley.newRequestQueue(MainActivity.getContext())
             isCartQueue = true
         }
-        var product : product_representation_cart = product_representation_cart("","","","",0,"","", "",0,"")
+        var product : product_representation_cart = product_representation_cart("","","","","",0,"","", "",0,"")
         val request = StringRequest(
             Request.Method.GET,"$url/buyers/${PersonBuyer.getDNI()}/cart/$PN",
             {response ->
                 val productJson = JSONObject(response)
                 when(productJson.getString("category")){
                     "toy" ->{
-                        product = toy_representation_cart(productJson.getString("name"), productJson.getDouble("price").toString(), productJson.getString("image"), productJson.getInt("stock"), productJson.getString("description"), productJson.getString("ecology"), productJson.getString("productNumber"), productJson.getInt("quantity"),productJson.getString("cif"), productJson.getString("material"), productJson.getString("age"))
+                        product = toy_representation_cart(productJson.getString("cif"),productJson.getString("name"), productJson.getDouble("price").toString(), productJson.getString("image"), productJson.getInt("stock"), productJson.getString("description"), productJson.getString("ecology"), productJson.getString("productNumber"), productJson.getInt("quantity"),productJson.getString("cif"), productJson.getString("material"), productJson.getString("age"))
                         Log.i("Product", product.PN)
                     }
                     "food" ->{
-                        product = food_representation_cart(productJson.getString("name"), productJson.getDouble("price").toString(), productJson.getString("image"), productJson.getInt("stock"), productJson.getString("description"), productJson.getString("ecology"), productJson.getString("productNumber"), productJson.getInt("quantity"),productJson.getString("cif"), productJson.getInt("calories").toString(), productJson.getString("macros"))
+                        product = food_representation_cart(productJson.getString("cif"),productJson.getString("name"), productJson.getDouble("price").toString(), productJson.getString("image"), productJson.getInt("stock"), productJson.getString("description"), productJson.getString("ecology"), productJson.getString("productNumber"), productJson.getInt("quantity"),productJson.getString("cif"), productJson.getInt("calories").toString(), productJson.getString("macros"))
                         Log.i("Product", product.PN)
 
                     }
                     "technology" ->{
-                        product = technology_representation_cart(productJson.getString("name"), productJson.getDouble("price").toString(), productJson.getString("image"), productJson.getInt("stock"), productJson.getString("description"), productJson.getString("ecology"), productJson.getString("productNumber"), productJson.getInt("quantity"),productJson.getString("cif"), productJson.getString("brand"), productJson.getString("electricConsumption"))
+                        product = technology_representation_cart(productJson.getString("cif"),productJson.getString("name"), productJson.getDouble("price").toString(), productJson.getString("image"), productJson.getInt("stock"), productJson.getString("description"), productJson.getString("ecology"), productJson.getString("productNumber"), productJson.getInt("quantity"),productJson.getString("cif"), productJson.getString("brand"), productJson.getString("electricConsumption"))
                         Log.i("Product", product.PN)
 
                     }
                     "clothes" ->{
 
-                        product = clothes_representation_cart(productJson.getString("name"), productJson.getDouble("price").toString(), productJson.getString("image"), productJson.getInt("stock"), productJson.getString("description"), productJson.getString("ecology"), productJson.getString("productNumber"), productJson.getInt("quantity"),productJson.getString("cif"), productJson.getString("size"), productJson.getString("color"))
+                        product = clothes_representation_cart(productJson.getString("cif"),productJson.getString("name"), productJson.getDouble("price").toString(), productJson.getString("image"), productJson.getInt("stock"), productJson.getString("description"), productJson.getString("ecology"), productJson.getString("productNumber"), productJson.getInt("quantity"),productJson.getString("cif"), productJson.getString("size"), productJson.getString("color"))
                         Log.i("Product", product.PN)
 
                     }

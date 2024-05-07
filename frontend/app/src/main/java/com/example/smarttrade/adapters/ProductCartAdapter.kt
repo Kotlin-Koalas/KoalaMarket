@@ -73,20 +73,11 @@ class ProductCartAdapter(
             if (selectedImageView.tag == R.drawable.ellipse_5) {
                 selectedImageView.setImageResource(R.drawable.cart_selected)
                 selectedImageView.tag = R.drawable.cart_selected
-                Log.i("ShoppingCart", PersonBuyer.getShoppingCart().toString())
-                Log.i("ShoppingCartSize", PersonBuyer.getShoppingCart().size.toString())
-                Log.i("Selected", position.toString())
                 MediatorShoppingCart.notifyItemSelected(PersonBuyer.getShoppingCart()[position])
-                Log.i("Selected", PersonBuyer.getShoppingCart()[position].toString())
-                Log.i("SelectedPosition", position.toString())
-                Log.i("representedProduct quant", currentStock.toString())
-                Log.i("Posicion en carrito", PersonBuyer.getShoppingCart().indexOf(PersonBuyer.getShoppingCart()[position]).toString())
             } else {
                 selectedImageView.setImageResource(R.drawable.ellipse_5)
                 selectedImageView.tag = R.drawable.ellipse_5
-                Log.i("CartBeforeUnSelected",PersonBuyer.getShoppingCart().toString())
                 MediatorShoppingCart.notifyItemUnselected(PersonBuyer.getShoppingCart()[position])
-                Log.i("CartAfterUnSelected",PersonBuyer.getShoppingCart().toString())
             }
         }
 
@@ -133,14 +124,12 @@ class ProductCartAdapter(
             }
         }
         fun setAllSelected(){
-            Log.i("CartWhenAllSelected",PersonBuyer.getShoppingCart().toString())
             for (v in views){
                 val selectedImageView = v.findViewById<ImageView>(R.id.imageViewSelected)
                 selectedImageView.setImageResource(R.drawable.cart_selected)
                 selectedImageView.tag = R.drawable.cart_selected
             }
             MediatorShoppingCart.notifyAllItemsSelected()
-            Log.i("Views",views.toString())
         }
         fun setAllUnselected(){
             for (v in views){

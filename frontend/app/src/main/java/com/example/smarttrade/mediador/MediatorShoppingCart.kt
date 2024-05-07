@@ -32,6 +32,7 @@ object MediatorShoppingCart {
         }
         val p = PersonBuyer.modifyProductInCart(product,quantity)
         ShoppingCartRequests.editProductInCart(p)
+        Log.i("CartWhenMore", PersonBuyer.getShoppingCart().toString())
     }
 
     fun notifyItemQuantityDecreased(product: product_representation_cart,view: View, quantity: Int){
@@ -42,6 +43,7 @@ object MediatorShoppingCart {
         }
         val p = PersonBuyer.modifyProductInCart(product,quantity)
         ShoppingCartRequests.editProductInCart(p)
+        Log.i("CartWhenLess", PersonBuyer.getShoppingCart().toString())
     }
 
     fun notifyItemDeleted(product: product_representation_cart, view: View, pos:Int){
@@ -52,6 +54,7 @@ object MediatorShoppingCart {
         }
         PersonBuyer.removeProductFromCart(pos)
         ShoppingCartRequests.deleteProductInCart(product)
+        Log.i("CartWhenDeleted", PersonBuyer.getShoppingCart().toString())
     }
 
     fun notifyAllItemsSelected(){
@@ -70,7 +73,7 @@ object MediatorShoppingCart {
         if(ShoppingCartRequests.checkIfExistsProductInCart(product)){
             val productExisting = ShoppingCartRequests.getProductInCart(product.PN)
             val quantity = productExisting.quantity + product.quantity
-            val newStock = product_representation_cart(product.category,product.name,product.price,product.image,product.stock,product.description,product.leafColor,product.PN,quantity,product.seller)
+            val newStock = product_representation_cart(product.cif,product.category,product.name,product.price,product.image,product.stock,product.description,product.leafColor,product.PN,quantity,product.seller)
             ShoppingCartRequests.editProductInCart(newStock)
         }
         else{
