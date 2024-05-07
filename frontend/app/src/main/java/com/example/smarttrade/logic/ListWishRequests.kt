@@ -39,9 +39,10 @@ object ListWishRequests {
         val stringRequest = StringRequest(
             Request.Method.GET,"$url/buyers/$id/wishlist",
             {response ->
-                    PersonBuyer.clearWishList()
+                    //PersonBuyer.clearWishList()
                     val objects = JSONObject(response)
                 Log.i("LOL", "LOL")
+                try{
                     val products = objects.getJSONArray("items")
                     for (i in 0 until products.length()) {
                         val p = products.getJSONObject(i)
@@ -54,6 +55,10 @@ object ListWishRequests {
                             else -> Log.i("UnknownCategory", "Unknown product category: ${p.getString("category")}")
                         }
                     }
+                }catch (e: Exception){
+                    Log.i("No Items", e.message.toString())
+                }
+
                 Log.i("ShoppingCartList", PersonBuyer.getShoppingCart().toString())
                 WishList.setProducts()
             },
@@ -83,8 +88,8 @@ object ListWishRequests {
         val jsonRequest = JsonObjectRequest(
             Request.Method.POST,"$url/buyers/$id/wishlist",json,
             {response ->
-
-                Log.i("ProductAdded", response.toString())
+                val objetct = JSONObject(response.toString())
+                Log.i("ProductAdded", objetct.toString())
             },
             {error ->
                 Log.i("ProductAddError", error.message.toString())
