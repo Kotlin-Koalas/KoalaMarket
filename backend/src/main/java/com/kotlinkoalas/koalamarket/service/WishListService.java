@@ -5,6 +5,7 @@ import com.kotlinkoalas.koalamarket.model.products.Clothes;
 import com.kotlinkoalas.koalamarket.model.products.Food;
 import com.kotlinkoalas.koalamarket.model.products.Technology;
 import com.kotlinkoalas.koalamarket.model.products.Toy;
+import com.kotlinkoalas.koalamarket.repo.ClientRepository;
 import com.kotlinkoalas.koalamarket.repo.WishListRepository;
 import com.kotlinkoalas.koalamarket.service.products.ClothesService;
 import com.kotlinkoalas.koalamarket.service.products.FoodService;
@@ -30,12 +31,15 @@ public class WishListService {
 
     private final ToyService toyService;
 
-    public WishListService(WishListRepository wishListRepository, ClothesService clothesService, FoodService foodService, TechnologyService technologyService, ToyService toyService) {
+    private final ClientRepository clientRepository;
+
+    public WishListService(WishListRepository wishListRepository, ClothesService clothesService, FoodService foodService, TechnologyService technologyService, ToyService toyService, ClientRepository clientRepository) {
         this.repository = wishListRepository;
         this.clothesService = clothesService;
         this.foodService = foodService;
         this.technologyService = technologyService;
         this.toyService = toyService;
+        this.clientRepository = clientRepository;
     }
 
     public ResponseEntity<Map<String, Object>> getAllItemsInWishList(String clientId) {
@@ -53,6 +57,7 @@ public class WishListService {
             String cif = item.getCif();
             String category = item.getCategory();
             Map<String, Object> itemDetails = new HashMap<>();
+
             switch (category) {
                 case "clothes":
                     Clothes clothes = clothesService.getClothesByProductNumber(productNumber, cif);
@@ -103,6 +108,9 @@ public class WishListService {
                     itemDetails.put("category", toy.getCategory());
                     break;
             }
+            itemDetails.put("productNumber", productNumber);
+            itemDetails.put("cif", cif);
+            itemDetails.put("vendorName", clientRepository.findByDni(cif).getName());
             itemsList.add(itemDetails);
         }
         response.put("items", itemsList);
