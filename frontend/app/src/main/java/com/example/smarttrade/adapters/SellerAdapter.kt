@@ -14,6 +14,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import com.example.smarttrade.R
+import com.example.smarttrade.logic.ShoppingCartRequests
 import com.example.smarttrade.mediador.MediatorShoppingCart
 import com.example.smarttrade.models.PersonBuyer
 import com.example.smarttrade.models.clothes_representation_cart
@@ -112,26 +113,30 @@ class SellerAdapter(
                  "toy" ->{
                      val toy = sellerList[position] as toy_representation_seller
                      val productToy = toy_representation_cart(toy.cif,toy.name, toy.price, toy.image, toy.stock.toInt(), toy.description, leafColor, toy.productNumber, 1, toy.vendorName, toy.material, toy.age)
-                     MediatorShoppingCart.notifyItemAdded(productToy)
                      showCustomDialogBoxSuccess("Producto añadido al carrito correctamente")
+                     ShoppingCartRequests.getProductInCart(productToy.PN, productToy.cif, productToy.seller, productToy)
+
                  }
                     "food" ->{
                         val food = sellerList[position] as food_representation_seller
                         val productFood = food_representation_cart(food.cif,food.name, food.price, food.image, food.stock.toInt(), food.description, leafColor, food.productNumber, 1, food.vendorName, food.calories, food.macros)
-                        MediatorShoppingCart.notifyItemAdded(productFood)
                         showCustomDialogBoxSuccess("Producto añadido al carrito correctamente")
+                        ShoppingCartRequests.getProductInCart(productFood.PN, productFood.cif, productFood.seller, productFood)
+
                     }
                     "technology" ->{
                         val tech = sellerList[position] as technology_representation_seller
                         val productTech = technology_representation_cart(tech.cif,tech.name, tech.price, tech.image, tech.stock.toInt(), tech.description, leafColor, tech.productNumber, 1, tech.vendorName, tech.brand, tech.electricConsumption)
-                        MediatorShoppingCart.notifyItemAdded(productTech)
                         showCustomDialogBoxSuccess("Producto añadido al carrito correctamente")
+                        ShoppingCartRequests.getProductInCart(productTech.PN, productTech.cif, productTech.seller, productTech)
+
                     }
                     "clothes" ->{
                         val clothes = sellerList[position] as clothes_representation_seller
                         val productClothes = clothes_representation_cart(clothes.cif,clothes.name, clothes.price, clothes.image, clothes.stock.toInt(), clothes.description, leafColor, clothes.productNumber, 1, clothes.vendorName, clothes.size, clothes.color)
-                        MediatorShoppingCart.notifyItemAdded(productClothes)
                         showCustomDialogBoxSuccess("Producto añadido al carrito correctamente")
+                        ShoppingCartRequests.getProductInCart(productClothes.PN, productClothes.cif, productClothes.seller, productClothes)
+
                     }
 
 

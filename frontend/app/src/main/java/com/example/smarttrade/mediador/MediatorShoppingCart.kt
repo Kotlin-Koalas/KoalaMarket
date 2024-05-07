@@ -4,6 +4,7 @@ import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import com.example.smarttrade.ProductView
 import com.example.smarttrade.R
 import com.example.smarttrade.logic.ShoppingCartRequests
 import com.example.smarttrade.mainBuyerFragments.ShoppingCartFragment
@@ -68,17 +69,18 @@ object MediatorShoppingCart {
         PersonBuyer.setSelectedItemsInCart(PersonBuyer.getShoppingCart())
     }
 
-    fun notifyItemAdded(product: product_representation_cart){
-        if(ShoppingCartRequests.checkIfExistsProductInCart(product)){
-            val productExisting = ShoppingCartRequests.getProductInCart(product.PN)
+    fun notifyItemAdded(productExisting: product_representation_cart, product: product_representation_cart){
+        Log.i("productExisting",productExisting.toString())
+        if(productExisting.seller != ""){
             val quantity = productExisting.quantity + product.quantity
-            val newStock = product_representation_cart(product.cif,product.category,product.name,product.price,product.image,product.stock,product.description,product.leafColor,product.PN,quantity,product.seller)
-            ShoppingCartRequests.editProductInCart(newStock)
+            Log.i("quantity",quantity.toString())
+            val p = product_representation_cart(productExisting.cif,productExisting.category,productExisting.name,productExisting.price,productExisting.image,productExisting.stock,productExisting.description,productExisting.leafColor,productExisting.PN,quantity, productExisting.seller)
+            ShoppingCartRequests.editProductInCart(p)
+
         }
         else{
             PersonBuyer.addProductToCart(product)
             ShoppingCartRequests.addProductToCart(product)
-            Log.i("ProductAdded", product.toString())
         }
 
     }
