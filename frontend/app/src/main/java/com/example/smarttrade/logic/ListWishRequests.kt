@@ -39,7 +39,7 @@ object ListWishRequests {
         val stringRequest = StringRequest(
             Request.Method.GET,"$url/buyers/$id/wishlist",
             {response ->
-                    //PersonBuyer.clearWishList()
+                    PersonBuyer.clearWishList()
                     val objects = JSONObject(response)
                 Log.i("LOL", "LOL")
                 try{
@@ -47,11 +47,10 @@ object ListWishRequests {
                     for (i in 0 until products.length()) {
                         val p = products.getJSONObject(i)
                         when(p.getString("category")){
-                            "toy" -> PersonBuyer.addProductToWish(toy_representation_cart(p.getString("cif"),p.getString("name"), p.getDouble("price").toString(), p.getString("image"), p.getInt("stock"), p.getString("description"), p.getString("ecology"), p.getString("productNumber"), p.getInt("quantity"),p.getString("cif"), p.getString("material"), p.getString("age")))
-                            "food" -> PersonBuyer.addProductToWish(food_representation_cart(p.getString("cif"),p.getString("name"), p.getDouble("price").toString(), p.getString("image"), p.getInt("stock"), p.getString("description"), p.getString("ecology"), p.getString("productNumber"), p.getInt("quantity"),p.getString("cif"), p.getInt("calories").toString(), p.getString("macros")))
-                            "technology" -> PersonBuyer.addProductToWish(
-                                technology_representation_cart(p.getString("cif"),p.getString("name"), p.getDouble("price").toString(), p.getString("image"), p.getInt("stock"), p.getString("description"), p.getString("ecology"), p.getString("productNumber"), p.getInt("quantity"),p.getString("cif"), p.getString("brand"), p.getString("electricConsumption")))
-                            "clothes" -> PersonBuyer.addProductToWish(clothes_representation_cart(p.getString("cif"),p.getString("name"), p.getDouble("price").toString(), p.getString("image"), p.getInt("stock"), p.getString("description"), p.getString("ecology"), p.getString("productNumber"), p.getInt("quantity"),p.getString("cif"), p.getString("size"), p.getString("color")))
+                            "toy" -> PersonBuyer.addProductToWish(toy_representation_cart(p.getString("cif"),p.getString("name"), p.getDouble("price").toString(), p.getString("image"), p.getInt("stock"), p.getString("description"), p.getString("ecology"), p.getString("productNumber"), p.getInt("stock"),p.getString("vendorName"), p.getString("material"), p.getString("age")))
+                            "food" -> PersonBuyer.addProductToWish(food_representation_cart(p.getString("cif"),p.getString("name"), p.getDouble("price").toString(), p.getString("image"), p.getInt("stock"), p.getString("description"), p.getString("ecology"), p.getString("productNumber"), p.getInt("stock"),p.getString("vendorName"), p.getInt("calories").toString(), p.getString("macros")))
+                            "technology" -> PersonBuyer.addProductToWish(technology_representation_cart(p.getString("cif"),p.getString("name"), p.getDouble("price").toString(), p.getString("image"), p.getInt("stock"), p.getString("description"), p.getString("ecology"), p.getString("productNumber"), p.getInt("stock"),p.getString("vendorName"), p.getString("brand"), p.getString("electricConsumption")))
+                            "clothes" -> PersonBuyer.addProductToWish(clothes_representation_cart(p.getString("cif"),p.getString("name"), p.getDouble("price").toString(), p.getString("image"), p.getInt("stock"), p.getString("description"), p.getString("ecology"), p.getString("productNumber"), p.getInt("stcok"),p.getString("vendorName"), p.getString("size"), p.getString("color")))
                             else -> Log.i("UnknownCategory", "Unknown product category: ${p.getString("category")}")
                         }
                     }
@@ -108,7 +107,7 @@ object ListWishRequests {
 
         val json = JSONObject()
         json.put("productNumber", product.PN)
-        json.put("cif",product.seller)
+        json.put("cif",product.cif)
         json.put("category", product.category)
 
 
