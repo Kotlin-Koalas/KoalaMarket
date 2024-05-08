@@ -1,6 +1,7 @@
 package com.example.smarttrade
 
 import android.app.Dialog
+import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Color
@@ -19,6 +20,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.smarttrade.adapters.SellerAdapter
 import com.example.smarttrade.logic.ListWishRequests
+import com.example.smarttrade.logic.ShoppingCartRequests
 import com.example.smarttrade.logic.logic
 import com.example.smarttrade.models.PersonBuyer
 import com.example.smarttrade.mediador.MediatorShoppingCart
@@ -50,7 +52,7 @@ class ProductView : AppCompatActivity() {
             insets
         }
 
-
+        productContext = this
 
         val recyclerView = findViewById<GridView>(R.id.recycledViewSellers)
         sellerList  = mutableListOf()
@@ -93,9 +95,7 @@ class ProductView : AppCompatActivity() {
         var sellerFood : food_representation_seller? = null
         logic.getSpecificSeller(productNumber, price, stock) { sellerResult ->
             if (sellerResult != null) {
-                Log.i("Seller encontrado", "YUPI")
                 if (seller != null) {
-                    Log.i("seller asignado", "YUPI")
                     seller.cif = sellerResult.cif
                     seller.vendorName = sellerResult.vendorName
                     Log.i("seller cif", seller.cif)
@@ -104,30 +104,20 @@ class ProductView : AppCompatActivity() {
                     when (sellerResult) {
                         is technology_representation_seller -> {
                             sellerTech = sellerResult as technology_representation_seller
-                            // Resto del código...
-                            Log.i("HA ENTRADO", "MILAGRO")
                         }
                         is toy_representation_seller -> {
                             sellerToy = sellerResult as toy_representation_seller
-                            // Resto del código...
-                            Log.i("HA ENTRADO", "MILAGRO")
 
                         }
                         is clothes_representation_seller -> {
                             sellerClothes = sellerResult as clothes_representation_seller
-                            // Resto del código...
-                            Log.i("HA ENTRADO", "MILAGRO")
 
                         }
                         is food_representation_seller -> {
                             sellerFood = sellerResult as food_representation_seller
-                            // Resto del código...
-                            Log.i("HA ENTRADO", "MILAGRO")
 
                         }
                         else -> {
-                            // Manejar el caso en que seller no es una instancia de ninguno de los tipos esperados...
-                            Log.i("No ha entrado", "oh no")
                         }
                     }
                 }
@@ -188,9 +178,10 @@ class ProductView : AppCompatActivity() {
                     sellerToy!!.age
                 )
                 Log.i("Product Toy", productToy.toString())
-                MediatorShoppingCart.notifyItemAdded(productToy)
-                Log.i("Producto añadido", "Patricio mi dios")
-                showCustomDialogBoxSuccess("Producto añadido al carrito correctamente")
+                Log.i("Producto añadido", "")
+                val productExisting = ShoppingCartRequests.getProductInCart(productToy.PN, productToy.cif, productToy.seller, productToy)
+
+               // showCustomDialogBoxSuccess("Producto añadido al carrito correctamente")
 
 
             }
@@ -210,9 +201,10 @@ class ProductView : AppCompatActivity() {
                     sellerClothes!!.color
                 )
                 Log.i("Product Clothes", productClothes.toString())
-                MediatorShoppingCart.notifyItemAdded(productClothes)
                 Log.i("Producto añadido", "Patricio mi dios")
-                showCustomDialogBoxSuccess("Producto añadido al carrito correctamente")
+                ShoppingCartRequests.getProductInCart(product.PN, productClothes.cif, productClothes.seller,productClothes )
+
+                // showCustomDialogBoxSuccess("Producto añadido al carrito correctamente")
 
 
 
@@ -237,9 +229,9 @@ class ProductView : AppCompatActivity() {
                 )
                 Log.i("Product Food", productFood.toString())
 
-                Log.i("Producto añadido", "Patricio mi dios")
-                MediatorShoppingCart.notifyItemAdded(productFood)
-                showCustomDialogBoxSuccess("Producto añadido al carrito correctamente")
+                ShoppingCartRequests.getProductInCart(productFood.PN, productFood.cif, productFood.seller, productFood)
+
+              //  showCustomDialogBoxSuccess("Producto añadido al carrito correctamente")
 
 
 
@@ -263,9 +255,9 @@ class ProductView : AppCompatActivity() {
                     sellerTech!!.electricConsumption
                 )
                 Log.i("Product Tech", productTech.toString())
-                MediatorShoppingCart.notifyItemAdded(productTech)
-                Log.i("Producto añadido", "Patricio mi dios")
-                showCustomDialogBoxSuccess("Producto añadido al carrito correctamente")
+                ShoppingCartRequests.getProductInCart(productTech.PN, productTech.cif, productTech.seller, productTech)
+
+               // showCustomDialogBoxSuccess("Producto añadido al carrito correctamente")
 
 
 
@@ -273,7 +265,6 @@ class ProductView : AppCompatActivity() {
             }
             else{
 
-                Log.i("Locura colectiva", "No se ha podido añadir")
 
             }
 
@@ -304,7 +295,6 @@ class ProductView : AppCompatActivity() {
                 Log.i("Product Toy", productToy.toString())
                 PersonBuyer.addProductToWish(productToy)
                 ListWishRequests.addProductToWish(productToy)
-                Log.i("Producto añadido", "Patricio mi dios")
                 showCustomDialogBoxSuccess("Producto añadido a lista de deseos correctamente")
 
 
@@ -327,7 +317,6 @@ class ProductView : AppCompatActivity() {
                 Log.i("Product Clothes", productClothes.toString())
                 PersonBuyer.addProductToWish(productClothes)
                 ListWishRequests.addProductToWish(productClothes)
-                Log.i("Producto añadido", "Patricio mi dios")
                 showCustomDialogBoxSuccess("Producto añadido a lista de deseos correctamente")
 
 
@@ -427,12 +416,20 @@ class ProductView : AppCompatActivity() {
 
 
     companion object{
+
+        private lateinit var productContext: Context
         fun setImageViewProduct(image: Bitmap?, view:ImageView){
             Log.i("Image View value", "{$view}")
             if (image != null) {
                 view.setImageBitmap(image)
             }
         }
+
+        fun getContext(): Context {
+            return productContext
+        }
+
+
 
 
 
