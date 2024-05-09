@@ -93,4 +93,5 @@ dependencies {
     debugImplementation(libs.androidx.ui.test.manifest)
     implementation("io.ktor:ktor-client-core:$ktor_version")
     implementation("io.ktor:ktor-client-cio:$ktor_version")
+    implementation ("com.airbnb.android:lottie:4.2.0")
 }

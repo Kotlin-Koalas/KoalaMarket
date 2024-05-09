@@ -1,18 +1,21 @@
 package com.example.smarttrade.mainBuyerFragments
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.GridView
 import android.widget.ImageView
 import android.widget.ScrollView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.smarttrade.BuyerMainScreen
 import com.example.smarttrade.R
+import com.example.smarttrade.Shipment
 import com.example.smarttrade.adapters.ProductAdapter
 import com.example.smarttrade.adapters.ProductCartAdapter
 import com.example.smarttrade.logic.ShoppingCartRequests
@@ -48,6 +51,8 @@ class ShoppingCartFragment : Fragment() {
 
         adapterPC =  ProductCartAdapter()
 
+        val buttonComprar = currView.findViewById<Button>(R.id.buttonComprar)
+
         val productsLayout = currView.findViewById<GridView>(R.id.VerticalGridViewProductsCart)
         productsLayout.adapter = adapterPC
 
@@ -67,6 +72,11 @@ class ShoppingCartFragment : Fragment() {
             }
         }
 
+        buttonComprar.setOnClickListener {
+            val i = Intent(currView.context,Shipment::class.java)
+            startActivity(i)
+
+        }
         return currView
     }
 

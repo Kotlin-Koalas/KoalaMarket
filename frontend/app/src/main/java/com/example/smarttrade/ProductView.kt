@@ -18,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.airbnb.lottie.LottieAnimationView
 import com.example.smarttrade.adapters.SellerAdapter
 import com.example.smarttrade.logic.ListWishRequests
 import com.example.smarttrade.logic.ShoppingCartRequests
@@ -87,6 +88,61 @@ class ProductView : AppCompatActivity() {
         val addProduct = findViewById<Button>(R.id.buttonSignUp)
         val layoutSum = findViewById<ConstraintLayout>(R.id.layoutSum)
         val layoutSubstract = findViewById<ConstraintLayout>(R.id.layoutSubstract)
+
+        val star1 = findViewById<LottieAnimationView>(R.id.star1)
+        val star2 = findViewById<LottieAnimationView>(R.id.star2)
+        val star3 = findViewById<LottieAnimationView>(R.id.star3)
+        val star4 = findViewById<LottieAnimationView>(R.id.star4)
+        val star5 = findViewById<LottieAnimationView>(R.id.star5)
+        val rateText = findViewById<TextView>(R.id.rateText)
+
+        star1.setOnClickListener{
+            likeAnimation(star1,R.raw.rate_animation, true)
+            likeAnimation(star2,R.raw.rate_animation, false)
+            likeAnimation(star3,R.raw.rate_animation, false)
+            likeAnimation(star4,R.raw.rate_animation, false)
+            likeAnimation(star5,R.raw.rate_animation, false)
+            rateText.text = "1/5"
+
+
+        }
+
+        star2.setOnClickListener {
+            likeAnimation(star1,R.raw.rate_animation, true)
+            likeAnimation(star2,R.raw.rate_animation, true)
+            likeAnimation(star3,R.raw.rate_animation, false)
+            likeAnimation(star4,R.raw.rate_animation, false)
+            likeAnimation(star5,R.raw.rate_animation, false)
+            rateText.text = "2/5"
+        }
+
+        star3.setOnClickListener {
+            likeAnimation(star1,R.raw.rate_animation, true)
+            likeAnimation(star2,R.raw.rate_animation, true)
+            likeAnimation(star3,R.raw.rate_animation, true)
+            likeAnimation(star4,R.raw.rate_animation, false)
+            likeAnimation(star5,R.raw.rate_animation, false)
+            rateText.text = "3/5"
+        }
+
+        star4.setOnClickListener {
+            likeAnimation(star1,R.raw.rate_animation, true)
+            likeAnimation(star2,R.raw.rate_animation, true)
+            likeAnimation(star3,R.raw.rate_animation, true)
+            likeAnimation(star4,R.raw.rate_animation, true)
+            likeAnimation(star5,R.raw.rate_animation, false)
+            rateText.text = "4/5"
+        }
+
+        star5.setOnClickListener {
+            likeAnimation(star1,R.raw.rate_animation, true)
+            likeAnimation(star2,R.raw.rate_animation, true)
+            likeAnimation(star3,R.raw.rate_animation, true)
+            likeAnimation(star4,R.raw.rate_animation, true)
+            likeAnimation(star5,R.raw.rate_animation, true)
+            rateText.text = "5/5"
+        }
+
 
         var seller : seller_representation? = seller_representation("",image,product.leafColor,price,name,description,productNumber,category,stock.toString(),"")
         var sellerTech : technology_representation_seller? = null
@@ -412,6 +468,18 @@ class ProductView : AppCompatActivity() {
         messageBox.text = msgSuccess
 
         dialog.show()
+    }
+
+    fun likeAnimation(imageView: LottieAnimationView, animation : Int, like: Boolean) : Boolean{
+        if(like){
+            imageView.setAnimation(animation)
+            imageView.playAnimation()
+        }
+        else{
+            imageView.setImageResource(R.drawable.star_24dp_fill0_wght400_grad0_opsz24)
+        }
+
+        return !like
     }
 
 
