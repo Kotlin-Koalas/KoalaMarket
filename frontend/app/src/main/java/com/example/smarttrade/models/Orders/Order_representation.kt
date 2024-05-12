@@ -16,7 +16,7 @@ class Order_representation () {
         returned = OrderReturned(this)
     }
 
-    fun setState(state:OrderState){
+    fun setStates(state:OrderState){
         this.state = state
         //TODO: set the image of the new state and state name
     }

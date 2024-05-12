@@ -9,6 +9,6 @@ class OrderShipped(order:Order_representation) : OrderState {
 
     var order:Order_representation = order
     override fun nextState() {
-        order.setState(order.delivered)
+        order.setStates(order.delivered)
     }
 }

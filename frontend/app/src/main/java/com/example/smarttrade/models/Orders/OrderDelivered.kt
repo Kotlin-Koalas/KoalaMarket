@@ -10,6 +10,6 @@ class OrderDelivered(order:Order_representation) : OrderState {
     var order:Order_representation = order
 
     override fun nextState() {
-        order.setState(order.returned)
+        order.setStates(order.returned)
     }
 }
