@@ -89,11 +89,21 @@ class AddProduct :Fragment() {
                         ImageURLtoBitmapConverter.downloadImageAddProduct(imagePNExist, currview)
                         isUploadImage = 1
 
+                        actContext.currview.findViewById<Spinner>(R.id.spinnerCategory).isEnabled = false
+                        actContext.currview.findViewById<EditText>(R.id.editTextNameProduct).isEnabled = false
+                        actContext.currview.findViewById<EditText>(R.id.editTextDescription).isEnabled = false
+
+
+
                     } else {
                         uploadImageButton.isClickable = true
                         buscarFoto = true
                         imagePNExist = ""
+                        actContext.currview.findViewById<Spinner>(R.id.editTextProductNumber).isEnabled = true
+                        ViewsClickables()
 
+                        actContext.currview.findViewById<EditText>(R.id.editTextNameProduct).text.clear()
+                        actContext.currview.findViewById<EditText>(R.id.editTextDescription).text.clear()
                         uploadImageButton.setOnClickListener {
                             if(buscarFoto) {
                                 pickmedia.launch(PickVisualMediaRequest(PickVisualMedia.ImageOnly))
@@ -108,7 +118,9 @@ class AddProduct :Fragment() {
                 uploadImageButton.setImageURI(null)
                 uploadImageButton.isClickable = false
                 buscarFoto = false
-
+                ViewsClickables()
+                actContext.currview.findViewById<EditText>(R.id.editTextNameProduct).text.clear()
+                actContext.currview.findViewById<EditText>(R.id.editTextDescription).text.clear()
                 val defaultImage = resources.getDrawable(R.drawable.add_item)
                 val defaultBitmap = (defaultImage as VectorDrawable).toBitmap()
                 uploadImageButton.setImageBitmap(defaultBitmap)
@@ -410,8 +422,8 @@ class AddProduct :Fragment() {
         }
     }
 
-    private fun resetValues(){
-        productNumber.text.clear()
+     fun resetValues(){
+        currview.findViewById<EditText>(R.id.editTextProductNumber).text.clear()
         currview.findViewById<EditText>(R.id.editTextNameProduct).text.clear()
         currview.findViewById<EditText>(R.id.editTextNumberDecimalPrice).text.clear()
         currview.findViewById<EditText>(R.id.editTextDescription).text.clear()
@@ -463,6 +475,41 @@ class AddProduct :Fragment() {
             imagePNExist = image
 
         }
+        fun productValuesExist(ArrayValues:Array<String>){
+
+            var categoryValue = ArrayValues[0]
+            when(categoryValue){
+                "technology" ->{
+                    actContext.currview.findViewById<Spinner>(R.id.spinnerEcology).setSelection(0)
+                }
+                "toy" ->{
+                    actContext.currview.findViewById<Spinner>(R.id.spinnerEcology).setSelection(1)
+                }
+                "food" ->{
+                    actContext.currview.findViewById<Spinner>(R.id.spinnerEcology).setSelection(2)
+                }
+                "clothes" ->{
+                    actContext.currview.findViewById<Spinner>(R.id.spinnerEcology).setSelection(3)
+                }
+                else ->{
+                    Log.e("Error", "Ecologia desconocida")
+                }
+            }
+
+            actContext.currview.findViewById<EditText>(R.id.editTextNameProduct).setText(ArrayValues[1])
+            actContext.currview.findViewById<EditText>(R.id.editTextDescription).setText(ArrayValues[2])
+
+
+        }
+
+        fun ViewsClickables(){
+            actContext.currview.findViewById<Spinner>(R.id.spinnerCategory).isEnabled = true
+            actContext.currview.findViewById<EditText>(R.id.editTextNameProduct).isEnabled = true
+            actContext.currview.findViewById<EditText>(R.id.editTextDescription).isEnabled = true
+
+
+        }
+
 
         fun productAded(){
             actContext.showCustomDialogBoxSuccess("Producto añadido correctamente")
