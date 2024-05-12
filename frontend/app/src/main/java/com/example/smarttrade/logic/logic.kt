@@ -417,9 +417,11 @@ object logic {
                         val product = objects.getJSONArray("items")
                         val p = product.getJSONObject(0)
                         val res = p.getString("image")
+                        val arrayRes = arrayOf(p.getString("category"),p.getString("name"),p.getString("description"))
                         Log.i("TRUE","PRODUCTO EXISTE")
                         Log.i("IMAGEN",res.toString())
                         AddProduct.newImage(res)
+                        AddProduct.productValuesExist(arrayRes)
                         callback(true)
                  }catch (e: Exception){
                      Log.i("FALSE","PRODUCTO NO EXISTE")

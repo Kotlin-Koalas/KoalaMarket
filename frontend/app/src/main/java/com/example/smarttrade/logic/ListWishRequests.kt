@@ -1,6 +1,7 @@
 package com.example.smarttrade.logic
 
 import android.util.Log
+import android.widget.Toast
 import com.android.volley.Request
 import com.android.volley.RequestQueue
 import com.android.volley.toolbox.JsonObjectRequest
@@ -114,12 +115,11 @@ object ListWishRequests {
         val jsonRequest = JsonObjectRequest(
             Request.Method.DELETE,"$url/buyers/$id/wishlist",json,
             {response ->
-                Log.i("ProductDeleted", response.toString())
+                Toast.makeText(WishList.getContext(), "Producto eliminado de lista Deseos", Toast.LENGTH_SHORT).show()
             },
             {error ->
                 Log.i("ProductDeleteError", error.message.toString())
             })
-        Log.i("jsonDELETEREQUE",jsonRequest.body.toString())
         wishVolleyQueue.add(jsonRequest)
 
     }
