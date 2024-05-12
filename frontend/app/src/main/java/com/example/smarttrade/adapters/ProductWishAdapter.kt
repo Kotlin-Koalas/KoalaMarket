@@ -3,6 +3,7 @@ package com.example.smarttrade.adapters
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,7 +13,9 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.smarttrade.ProductView
 import com.example.smarttrade.R
+import com.example.smarttrade.WishList
 import com.example.smarttrade.logic.ListWishRequests
+import com.example.smarttrade.logic.ShoppingCartRequests
 import com.example.smarttrade.models.PersonBuyer
 import com.example.smarttrade.models.product_representation
 import com.example.smarttrade.models.product_representation_cart
@@ -113,7 +116,21 @@ class ProductWishAdapter(
 
         }
 
-        imageViewCart.setOnClickListener{//TODO CHANGE
+        imageViewCart.setOnClickListener{
+        Log.i("QUE SALe", PersonBuyer.getWishList()[position].toString())
+
+            ShoppingCartRequests.addProductToCart(PersonBuyer.getWishList()[position])
+            PersonBuyer.addProductToCart(PersonBuyer.getWishList()[position])
+
+            ListWishRequests.deleteProductWish(PersonBuyer.getWishList()[position])
+            removeProduct(position)
+            WishList.productAddedCart()
+
+
+
+
+
+
 
         }
 

@@ -1,8 +1,5 @@
 package com.example.smarttrade.models.Orders
 
-import android.graphics.Bitmap
-import android.graphics.drawable.BitmapDrawable
-import com.example.smarttrade.MainActivity
 import com.example.smarttrade.R
 
 class OrderPreparing(order:Order_representation) : OrderState{
@@ -12,6 +9,6 @@ class OrderPreparing(order:Order_representation) : OrderState{
 
     var order:Order_representation = order
     override fun nextState() {
-        order.setState(order.shipped)
+        order.setStates(order.shipped)
     }
 }
