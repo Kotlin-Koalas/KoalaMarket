@@ -384,10 +384,10 @@
                                 android:fontFamily="@font/karla"
                                 android:text="Cancelar"
                                 android:textAllCaps="false"
-                                android:textColor="@color/greyLetter"
+                                android:textColor="@color/black"
                                 android:textSize="20sp"
                                 app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent"
                                 app:layout_constraintVertical_bias="0.0" />
 
@@ -402,7 +402,7 @@
                                 android:textColor="@color/white"
                                 android:textSize="20sp"
                                 app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintTop_toTopOf="parent"
                                 app:layout_constraintVertical_bias="0.0" />
 
