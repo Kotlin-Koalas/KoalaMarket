@@ -5,7 +5,16 @@ import android.widget.TextView
 import com.example.smarttrade.models.PaymentMethods.PaymentMethod
 import com.example.smarttrade.models.product_representation_cart
 
-class Order_representation (products:MutableList<product_representation_cart>,shippingAddress:String,billingAddress:String,paymentMethod: PaymentMethod,orderID:String,name:String,surname:String){
+class Order_representation (val  products:MutableList<product_representation_cart>,
+                            val vashippingAddress:String,
+                            val billingAddress:String,
+                            val paymentMethod: PaymentMethod,
+                            val orderID:String,
+                            val name:String,
+                            val surname:String,
+                            val dni:String,
+                            val totalPrice: String,
+                            val estimatedDate: String){
 
     lateinit var imageView:ImageView
     lateinit var textView:TextView
@@ -48,4 +57,8 @@ class Order_representation (products:MutableList<product_representation_cart>,sh
         imageView.setImageResource(state.imageResource)
         textView.text = state.stateName
     }
+}
+
+fun getDni(){
+
 }

@@ -8,11 +8,12 @@ import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
 import com.example.smarttrade.R
-import com.example.smarttrade.models.order_representation
+import com.example.smarttrade.models.Orders.Order_representation
+
 
 class OrderAdapter(
     private val context : Context,
-    private val orderList : MutableList<order_representation>
+    private val orderList : MutableList<Order_representation>
 ) : BaseAdapter() {
 
     override fun getCount(): Int {
@@ -27,12 +28,12 @@ class OrderAdapter(
         return position.toLong()
     }
 
-    fun addOrder(order: order_representation) {
+    fun addOrder(order: Order_representation) {
         orderList.add(order)
         notifyDataSetChanged()
     }
 
-    fun addAllOrders(orderList: MutableList<order_representation>) {
+    fun addAllOrders(orderList: MutableList<Order_representation>) {
         for (order in orderList) {
             this.orderList.add(order)
         }
@@ -44,11 +45,11 @@ class OrderAdapter(
         notifyDataSetChanged()
     }
 
-    fun notifyAddedOrder(order: order_representation) {
+    fun notifyAddedOrder(order: Order_representation) {
         notifyDataSetChanged()
     }
 
-    fun updateOrders(updateOrderList: MutableList<order_representation>) {
+    fun updateOrders(updateOrderList: MutableList<Order_representation>) {
         orderList.clear()
         orderList.addAll(updateOrderList)
         notifyDataSetChanged()
@@ -66,13 +67,13 @@ class OrderAdapter(
         val imageState = view.findViewById<ImageView>(R.id.imageState)
 
         val dni = orderList[position].dni
-        textNumber.text = orderList[position].orderNumber
+        textNumber.text = orderList[position].orderID
         totalPrice.text = orderList[position].totalPrice
         estimatedDate.text = orderList[position].estimatedDate
-        status.text = orderList[position].status
+        status.text = orderList[position].state.stateName
 
 
-        when (orderList[position].status) {
+        when (orderList[position].state.stateName) {
             "Preparando" -> {
                 imageState.setImageResource(R.drawable.order_preparing)
             }
