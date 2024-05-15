@@ -9,9 +9,17 @@ import android.widget.TextView
 import com.example.smarttrade.R
 
 class PaymentMethodPaypal(PayPalEmail:String):PaymentMethod {
+
     override val customMessage: String = "Estas a punto de pagar con PayPal, usando la siguiente cuenta: $PayPalEmail"
+
+    val paypalEmail = PayPalEmail
+
     override fun showMessage(context: Context) {
         showCustomDialogBox(context)
+    }
+
+    override fun getID(): String {
+        return paypalEmail
     }
 
     private fun showCustomDialogBox(context: Context){

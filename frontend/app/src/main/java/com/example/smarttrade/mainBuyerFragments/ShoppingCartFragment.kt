@@ -73,8 +73,10 @@ class ShoppingCartFragment : Fragment() {
         }
 
         buttonComprar.setOnClickListener {
-            val i = Intent(currView.context,Shipment::class.java)
-            startActivity(i)
+            if(!PersonBuyer.getSelectedItemsCart().isEmpty()) {
+                val i = Intent(currView.context, Shipment::class.java)
+                startActivity(i)
+            }
 
         }
         return currView

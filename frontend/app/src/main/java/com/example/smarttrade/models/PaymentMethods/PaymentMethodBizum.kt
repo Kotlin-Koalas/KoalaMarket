@@ -9,9 +9,17 @@ import android.widget.TextView
 import com.example.smarttrade.R
 
 class PaymentMethodBizum(bizumNumber:String): PaymentMethod{
+
     override val customMessage: String = "Estas a punto de pagar con Bizum, usando el siguiente número: $bizumNumber"
+
+    val bizumNumber = bizumNumber
+
     override fun showMessage(context: Context) {
         showCustomDialogBox(context)
+    }
+
+    override fun getID(): String {
+        return bizumNumber
     }
 
     private fun showCustomDialogBox(context: Context){

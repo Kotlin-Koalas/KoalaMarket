@@ -16,6 +16,7 @@ import com.example.smarttrade.mainBuyerFragments.HomeFragment
 import com.example.smarttrade.mainBuyerFragments.ProfileBuyerFragment
 import com.example.smarttrade.mainBuyerFragments.ShoppingCartFragment
 import com.example.smarttrade.mediador.MediatorShoppingCart
+import com.example.smarttrade.models.PersonBuyer
 
 class BuyerMainScreen : AppCompatActivity() {
 
@@ -51,6 +52,7 @@ class BuyerMainScreen : AppCompatActivity() {
         }
 
         account.setOnClickListener{
+            PersonBuyer.clearSelectedItems()
             account.setBackgroundResource(R.drawable.bottom_selected_background)
             shoppingCart.setBackgroundResource(R.color.verdeOscuro)
             home.setBackgroundResource(R.color.verdeOscuro)
@@ -61,6 +63,7 @@ class BuyerMainScreen : AppCompatActivity() {
         }
 
         home.setOnClickListener{
+            PersonBuyer.clearSelectedItems()
             home.setBackgroundResource(R.drawable.bottom_selected_background)
             account.setBackgroundResource(R.color.verdeOscuro)
             shoppingCart.setBackgroundResource(R.color.verdeOscuro)

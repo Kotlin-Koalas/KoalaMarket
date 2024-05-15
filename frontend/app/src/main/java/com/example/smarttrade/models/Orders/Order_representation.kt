@@ -24,14 +24,15 @@ class Order_representation (val  products:MutableList<product_representation_car
     lateinit var preparing:OrderState
     lateinit var returned:OrderState
 
-    var state:OrderState = preparing
-
     init{
         shipped = OrderShipped(this)
         delivered = OrderDelivered(this)
         preparing = OrderPreparing(this)
         returned = OrderReturned(this)
     }
+
+    var state:OrderState = preparing
+
 
     //Metodo para setear la imagen y el texto del estado, llamar antes que nextState().
     fun setIView(imageView: ImageView){

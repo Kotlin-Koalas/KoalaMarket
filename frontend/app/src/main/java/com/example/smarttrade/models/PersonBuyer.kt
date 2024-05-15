@@ -157,6 +157,14 @@ object  PersonBuyer {
         selectedItemsCart.remove(product)
     }
 
+    fun getTotalPrice(): Double {
+        var total = 0.0
+        for (p in selectedItemsCart) {
+            total += p.price.toDouble() * p.quantity
+        }
+        return total
+    }
+
     fun modifySelectedItemInCart(
         product: product_representation_cart,
         quantity: Int
@@ -168,6 +176,10 @@ object  PersonBuyer {
             }
         }
         return product_representation_cart("","", "", "", "", 0, "", "", "", 0, "")
+    }
+
+    fun clearSelectedItems(){
+        selectedItemsCart.clear()
     }
 
     fun modifyProductInCart(
@@ -182,7 +194,6 @@ object  PersonBuyer {
         }
         return product_representation_cart("","", "", "", "", 0, "", "", "", 0, "")
     }
-
 
     fun getWishList(): MutableList<product_representation_cart> {
         return wishList

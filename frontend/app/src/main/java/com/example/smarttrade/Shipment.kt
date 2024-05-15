@@ -1,9 +1,13 @@
 package com.example.smarttrade
 
 import android.app.Dialog
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.util.Log
+import android.view.View
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.Spinner
@@ -12,12 +16,28 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.example.smarttrade.models.Orders.Order_representation
+import com.example.smarttrade.models.PaymentMethods.PaymentMethod
+import com.example.smarttrade.models.PaymentMethods.PaymentMethodBizum
+import com.example.smarttrade.models.PaymentMethods.PaymentMethodCreditCard
+import com.example.smarttrade.models.PaymentMethods.PaymentMethodPaypal
 import com.example.smarttrade.models.PersonBuyer
+import java.time.LocalDate
+import java.time.temporal.ChronoUnit
+import kotlin.random.Random
 
 class Shipment : AppCompatActivity() {
 
+    lateinit var selectedPaymentMethod:PaymentMethod
+    lateinit var selectedShippingAddress:String
+    lateinit var selectedBillingAddress:String
+    lateinit var createdOrder: Order_representation
+
     var popUpErrorOrNot = false
     var popUpText = ""
+    var paymentMethods = mutableListOf<PaymentMethod>()
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -31,47 +51,134 @@ class Shipment : AppCompatActivity() {
 
         val paymentSpinner = findViewById<Spinner>(R.id.spinnerSPM)
 
-        val items = arrayOf<String>()
+        var itemsPayments = arrayOf<String>()
 
         if(!PersonBuyer.getCreditCards().isEmpty())
         {
             for(c in PersonBuyer.getCreditCards()) {
-                items.plus(c.number)
+                if(c.number != "") {
+                    itemsPayments = itemsPayments.plus(c.number)
+                    paymentMethods.add(PaymentMethodCreditCard(c))
+                }
             }
         }
 
         if(PersonBuyer.getPaypal() != "")
         {
-            items.plus(PersonBuyer.getPaypal())
+            itemsPayments = itemsPayments.plus(PersonBuyer.getPaypal())
+            paymentMethods.add(PaymentMethodPaypal(PersonBuyer.getPaypal()))
         }
 
         if(PersonBuyer.getBizum() != "")
         {
-            items.plus(PersonBuyer.getBizum())
+            itemsPayments = itemsPayments.plus(PersonBuyer.getBizum())
+            paymentMethods.add(PaymentMethodBizum(PersonBuyer.getBizum()))
         }
 
-        val adapter = ArrayAdapter<String>(this, R.layout.spinner_item_pago, items)
-        paymentSpinner.adapter = adapter
+        val adapterPM = ArrayAdapter<String>(this, R.layout.spinner_item_pago, itemsPayments)
+        paymentSpinner.adapter = adapterPM
+
+        paymentSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long){
+                val selectedItem = parent.getItemAtPosition(position) as String
+                for(p in paymentMethods){
+                    if(p.getID() == selectedItem)
+                    {
+                        selectedPaymentMethod = p
+                    }
+                }
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                //nothing
+            }
+        }
+
+        val shippingAddressSpinner = findViewById<Spinner>(R.id.spinnerEntrega)
+
+        var itemsShippingAddress = arrayOf<String>()
+
+        for(a in PersonBuyer.getShippingAddresses()) {
+            itemsShippingAddress = itemsShippingAddress.plus(a)
+        }
+
+        val adapterSA = ArrayAdapter<String>(this, R.layout.spinner_item_pago, itemsShippingAddress)
+        shippingAddressSpinner.adapter = adapterSA
+
+        shippingAddressSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long){
+                val selectedItem = parent.getItemAtPosition(position) as String
+                selectedShippingAddress = selectedItem
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                //nothing
+            }
+        }
+
+        val billingAddressSpinner = findViewById<Spinner>(R.id.spinnerFacturacion)
+
+        var itemsBillingAddress = arrayOf<String>()
+
+        for(a in PersonBuyer.getFacturationAddresses()) {
+            itemsBillingAddress = itemsBillingAddress.plus(a)
+        }
+
+        val adapterBA = ArrayAdapter<String>(this, R.layout.spinner_item_pago, itemsBillingAddress)
+        billingAddressSpinner.adapter = adapterBA
+
+        billingAddressSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long){
+                val selectedItem = parent.getItemAtPosition(position) as String
+                selectedBillingAddress = selectedItem
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                //nothing
+            }
+        }
 
         val backButton = findViewById<Button>(R.id.buttonCancel)
 
         backButton.setOnClickListener {
-            //TODO: Implementar la lógica de volver a la pantalla anterior
+            PersonBuyer.clearSelectedItems()
+            val IntentS = Intent(this,BuyerMainScreen::class.java)
+            this.startActivity(IntentS)
         }
 
         val confirmButton = findViewById<Button>(R.id.buttonSignUp)
 
         confirmButton.setOnClickListener {
+
             if (nameTextView.text.isEmpty()) {
                 popUpText += "El campo nombre no puede estar vacío"
                 popUpErrorOrNot = true
             }
+
             if (surnameTextView.text.isEmpty()) {
                 popUpText += "El campo apellido no puede estar vacío"
                 popUpErrorOrNot = true
             }
+
             if (popUpErrorOrNot) {
                 showCustomDialogBox(popUpText)
+            }
+            else
+            {
+                createdOrder = Order_representation(
+                    PersonBuyer.getSelectedItemsCart(),
+                    selectedShippingAddress,
+                    selectedBillingAddress,
+                    selectedPaymentMethod,
+                    "order"+ Random.nextInt(10000, 99999),
+                    nameTextView.text.toString(),
+                    surnameTextView.text.toString(),
+                    PersonBuyer.getDNI(),
+                    PersonBuyer.getTotalPrice().toString(),
+                    generateRandomFutureDate().toString()
+                    )
+                Log.i("OrderCreated", createdOrder.toString())
+                //TODO crear pedido en la API
             }
         }
     }
@@ -93,5 +200,10 @@ class Shipment : AppCompatActivity() {
 
         dialog.show()
 
+    }
+    fun generateRandomFutureDate(): LocalDate {
+        val today = LocalDate.now()
+        val randomDaysToAdd = Random.nextInt(3, 9) // upper bound is exclusive
+        return today.plus(randomDaysToAdd.toLong(), ChronoUnit.DAYS)
     }
 }

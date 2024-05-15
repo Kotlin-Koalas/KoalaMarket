@@ -6,5 +6,7 @@ interface PaymentMethod {
 
     val customMessage:String
 
+    fun getID():String
+
     fun showMessage(context: Context)
 }
