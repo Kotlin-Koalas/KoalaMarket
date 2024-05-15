@@ -26,6 +26,8 @@ public class ProductService {
 
     private final ToyService toyService;
 
+    private final SatisfactionService satisfactionService;
+
     public ProductService(ProductRepository repository, ClientRepository clientRepository, ClothesService clothesService, FoodService foodService, TechnologyService technologyService, ToyService toyService) {
         this.repository = repository;
         this.clientRepository = clientRepository;
@@ -33,6 +35,7 @@ public class ProductService {
         this.foodService = foodService;
         this.technologyService = technologyService;
         this.toyService = toyService;
+        this.satisfactionService = satisfactionService;
     }
 
     public ResponseEntity<Map<String,Object>> getProduct(String productNumber) {
@@ -103,6 +106,7 @@ public class ProductService {
             itemsList.add(itemDetails);
         }
         response.put("items",itemsList);
+        response.put("grade",satisfactionService.getSatisfactionMean(productNumber));
         return ResponseEntity.ok(response);
     }
 

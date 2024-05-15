@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.proxy.HibernateProxy;
 
+import java.util.List;
 import java.util.Objects;
 
 @Getter
@@ -39,6 +40,8 @@ public abstract class Product {
 
     @Column(name = "category", nullable = false)
     private String category;
+
+    private float gradeSatisfactionMean;
 
     @Id
     @Column(name = "cif", length = 30, nullable = false)
