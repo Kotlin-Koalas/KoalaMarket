@@ -14,7 +14,7 @@ public class SatisfactionService {
         this.repository = repository;
     }
 
-    public void addSatisfaction(String productNumber, String dni, float satisfaction) {
+    public void addSatisfaction(String productNumber, String dni, double satisfaction) {
         SatisfactionUser newSatisfaction = new SatisfactionUser();
         newSatisfaction.setProductNumber(productNumber);
         newSatisfaction.setDni(dni);
@@ -22,7 +22,7 @@ public class SatisfactionService {
         repository.save(newSatisfaction);
     }
 
-    public void updateSatisfaction(String productNumber, String dni, float satisfaction) {
+    public void updateSatisfaction(String productNumber, String dni, double satisfaction) {
         SatisfactionUser currentSatisfaction = repository.findByProductNumberAndDni(productNumber, dni);
         currentSatisfaction.setGradeSatisfaction(satisfaction);
         repository.save(currentSatisfaction);
@@ -30,6 +30,9 @@ public class SatisfactionService {
 
     public float getSatisfactionMean(String productNumber){
         List<SatisfactionUser> satisfactions = repository.findAllByProductNumber(productNumber);
+        if (satisfactions.isEmpty()){
+            return 0;
+        }
         float sum = 0;
         for(SatisfactionUser satisfaction : satisfactions){
             sum += satisfaction.getGradeSatisfaction();

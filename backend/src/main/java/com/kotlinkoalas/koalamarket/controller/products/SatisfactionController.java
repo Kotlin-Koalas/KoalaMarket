@@ -17,14 +17,14 @@ public class SatisfactionController {
     @PostMapping("/products/{productNumber}/satisfaction")
     public void addSatisfaction(@PathVariable String productNumber, @RequestBody Map<String, Object> payload) {
         String dni = (String) payload.get("dni");
-        float satisfaction = (float) payload.get("satisfaction");
+        double satisfaction = (double) payload.get("satisfaction");
         repository.addSatisfaction(productNumber, dni, satisfaction);
     }
 
     @PutMapping("/products/{productNumber}/satisfaction")
     public void updateSatisfaction(@PathVariable String productNumber, @RequestBody Map<String, Object> payload) {
         String dni = (String) payload.get("dni");
-        float satisfaction = (float) payload.get("satisfaction");
+        double satisfaction = (double) payload.get("satisfaction");
         repository.updateSatisfaction(productNumber, dni, satisfaction);
     }
 }
