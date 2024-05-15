@@ -8,7 +8,10 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.view.Window
+import android.view.animation.Animation
+import android.view.animation.ScaleAnimation
 import android.widget.Button
 import android.widget.GridView
 import android.widget.ImageView
@@ -19,13 +22,12 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.airbnb.lottie.LottieAnimationView
+import com.example.smarttrade.adapters.OrderAdapter.Companion.view
 import com.example.smarttrade.adapters.SellerAdapter
 import com.example.smarttrade.logic.ListWishRequests
 import com.example.smarttrade.logic.ShoppingCartRequests
 import com.example.smarttrade.logic.logic
 import com.example.smarttrade.models.PersonBuyer
-import com.example.smarttrade.mediador.MediatorShoppingCart
-import com.example.smarttrade.models.clothes_representation
 import com.example.smarttrade.models.clothes_representation_cart
 import com.example.smarttrade.models.clothes_representation_seller
 import com.example.smarttrade.models.food_representation_cart
@@ -43,6 +45,7 @@ class ProductView : AppCompatActivity() {
     var currentStock  = 1
     lateinit var adapterS : SellerAdapter
     lateinit var sellerList : MutableList<seller_representation>
+    var like = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -97,49 +100,49 @@ class ProductView : AppCompatActivity() {
         val rateText = findViewById<TextView>(R.id.rateText)
 
         star1.setOnClickListener{
-            likeAnimation(star1,R.raw.rate_animation, true)
-            likeAnimation(star2,R.raw.rate_animation, false)
-            likeAnimation(star3,R.raw.rate_animation, false)
-            likeAnimation(star4,R.raw.rate_animation, false)
-            likeAnimation(star5,R.raw.rate_animation, false)
+            rateAnimation(star1,R.raw.rate_animation, true)
+            rateAnimation(star2,R.raw.rate_animation, false)
+            rateAnimation(star3,R.raw.rate_animation, false)
+            rateAnimation(star4,R.raw.rate_animation, false)
+            rateAnimation(star5,R.raw.rate_animation, false)
             rateText.text = "1/5"
 
 
         }
 
         star2.setOnClickListener {
-            likeAnimation(star1,R.raw.rate_animation, true)
-            likeAnimation(star2,R.raw.rate_animation, true)
-            likeAnimation(star3,R.raw.rate_animation, false)
-            likeAnimation(star4,R.raw.rate_animation, false)
-            likeAnimation(star5,R.raw.rate_animation, false)
+            rateAnimation(star1,R.raw.rate_animation, true)
+            rateAnimation(star2,R.raw.rate_animation, true)
+            rateAnimation(star3,R.raw.rate_animation, false)
+            rateAnimation(star4,R.raw.rate_animation, false)
+            rateAnimation(star5,R.raw.rate_animation, false)
             rateText.text = "2/5"
         }
 
         star3.setOnClickListener {
-            likeAnimation(star1,R.raw.rate_animation, true)
-            likeAnimation(star2,R.raw.rate_animation, true)
-            likeAnimation(star3,R.raw.rate_animation, true)
-            likeAnimation(star4,R.raw.rate_animation, false)
-            likeAnimation(star5,R.raw.rate_animation, false)
+            rateAnimation(star1,R.raw.rate_animation, true)
+            rateAnimation(star2,R.raw.rate_animation, true)
+            rateAnimation(star3,R.raw.rate_animation, true)
+            rateAnimation(star4,R.raw.rate_animation, false)
+            rateAnimation(star5,R.raw.rate_animation, false)
             rateText.text = "3/5"
         }
 
         star4.setOnClickListener {
-            likeAnimation(star1,R.raw.rate_animation, true)
-            likeAnimation(star2,R.raw.rate_animation, true)
-            likeAnimation(star3,R.raw.rate_animation, true)
-            likeAnimation(star4,R.raw.rate_animation, true)
-            likeAnimation(star5,R.raw.rate_animation, false)
+            rateAnimation(star1,R.raw.rate_animation, true)
+            rateAnimation(star2,R.raw.rate_animation, true)
+            rateAnimation(star3,R.raw.rate_animation, true)
+            rateAnimation(star4,R.raw.rate_animation, true)
+            rateAnimation(star5,R.raw.rate_animation, false)
             rateText.text = "4/5"
         }
 
         star5.setOnClickListener {
-            likeAnimation(star1,R.raw.rate_animation, true)
-            likeAnimation(star2,R.raw.rate_animation, true)
-            likeAnimation(star3,R.raw.rate_animation, true)
-            likeAnimation(star4,R.raw.rate_animation, true)
-            likeAnimation(star5,R.raw.rate_animation, true)
+            rateAnimation(star1,R.raw.rate_animation, true)
+            rateAnimation(star2,R.raw.rate_animation, true)
+            rateAnimation(star3,R.raw.rate_animation, true)
+            rateAnimation(star4,R.raw.rate_animation, true)
+            rateAnimation(star5,R.raw.rate_animation, true)
             rateText.text = "5/5"
         }
 
@@ -179,7 +182,6 @@ class ProductView : AppCompatActivity() {
                 }
 
             } else {
-                Log.i("Seller no encontrado", "NO")
             }
         }
 
@@ -331,8 +333,9 @@ class ProductView : AppCompatActivity() {
 
         }
 
-        val addWishList = findViewById<ImageView>(R.id.imageViewAddWish)
+        val addWishList = findViewById<LottieAnimationView>(R.id.imageViewAddWish)
         addWishList.setOnClickListener(){
+           like =  likeAnimation(addWishList,R.raw.like_animation, like)
             if(sellerToy != null){
                 val productToy = toy_representation_cart(
                     sellerToy!!.cif,
@@ -425,7 +428,6 @@ class ProductView : AppCompatActivity() {
                 Log.i("Product Tech", productTech.toString())
                PersonBuyer.addProductToWish(productTech)
                 ListWishRequests.addProductToWish(productTech)
-                Log.i("Producto añadido", "Patricio mi dios")
                 showCustomDialogBoxSuccess("Producto añadido a lista de deseos correctamente")
 
 
@@ -434,7 +436,6 @@ class ProductView : AppCompatActivity() {
             }
             else{
 
-                Log.i("Locura colectiva", "No se ha podido añadir")
 
             }
         }
@@ -470,7 +471,7 @@ class ProductView : AppCompatActivity() {
         dialog.show()
     }
 
-    fun likeAnimation(imageView: LottieAnimationView, animation : Int, like: Boolean) : Boolean{
+    fun rateAnimation(imageView: LottieAnimationView, animation : Int, like: Boolean) : Boolean{
         if(like){
             imageView.setAnimation(animation)
             imageView.playAnimation()
@@ -480,6 +481,33 @@ class ProductView : AppCompatActivity() {
         }
 
         return !like
+    }
+
+    fun likeAnimation(imageView: LottieAnimationView, animation : Int, like: Boolean) : Boolean{
+        if(!like){
+            scaleView(imageView, 2f, 3f)
+            imageView.setAnimation(animation)
+            imageView.playAnimation()
+        }
+        else{
+            imageView.setImageResource(R.drawable.heart_white)
+            scaleView(imageView, 1f, 1f)
+
+        }
+
+        return !like
+    }
+
+    fun scaleView(view: View, startScale: Float, endScale: Float) {
+        val anim = ScaleAnimation(
+            1f, 1f, // Start and end values for the X axis scaling
+            startScale, endScale, // Start and end values for the Y axis scaling
+            Animation.RELATIVE_TO_SELF, 0.5f, // Pivot point of X scaling
+            Animation.RELATIVE_TO_SELF, 0.5f // Pivot point of Y scaling
+        )
+        anim.fillAfter = true // Needed to keep the result of the animation
+        anim.duration = 500
+        view.startAnimation(anim)
     }
 
 
