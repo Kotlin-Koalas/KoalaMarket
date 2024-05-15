@@ -10,11 +10,11 @@ import java.util.List;
 public class SatisfactionService {
     private final SatisfactionRepository repository;
 
-    public SatisfactionService(SatisfactionRepository repository, ProductService productService) {
+    public SatisfactionService(SatisfactionRepository repository) {
         this.repository = repository;
     }
 
-    public void addSatisfaction(String productNumber, String dni, float satisfaction) {
+    public void addSatisfaction(String productNumber, String dni, double satisfaction) {
         SatisfactionUser newSatisfaction = new SatisfactionUser();
         newSatisfaction.setProductNumber(productNumber);
         newSatisfaction.setDni(dni);
@@ -22,15 +22,18 @@ public class SatisfactionService {
         repository.save(newSatisfaction);
     }
 
-    public void updateSatisfaction(String productNumber, String dni, float satisfaction) {
+    public void updateSatisfaction(String productNumber, String dni, double satisfaction) {
         SatisfactionUser currentSatisfaction = repository.findByProductNumberAndDni(productNumber, dni);
         currentSatisfaction.setGradeSatisfaction(satisfaction);
         repository.save(currentSatisfaction);
     }
 
-    public float getSatisfactionMean(String productNumber){
+    public double getSatisfactionMean(String productNumber){
         List<SatisfactionUser> satisfactions = repository.findAllByProductNumber(productNumber);
-        float sum = 0;
+        if (satisfactions.isEmpty()){
+            return 0;
+        }
+        double sum = 0;
         for(SatisfactionUser satisfaction : satisfactions){
             sum += satisfaction.getGradeSatisfaction();
         }

@@ -1,5 +1,6 @@
 package com.kotlinkoalas.koalamarket.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.google.gson.annotations.Expose;
 import jakarta.persistence.*;
 import lombok.*;
@@ -29,16 +30,22 @@ public class Buyer extends Client{
     @Column(name = "paypal")
     private String paypal;
 
-    @OneToMany(mappedBy = "buyer")
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "buyer_id")
     @ToString.Exclude
+    @JsonManagedReference
     private List<Address> shippingAddresses;
 
-    @OneToMany(mappedBy = "buyer")
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "buyer_id")
     @ToString.Exclude
+    @JsonManagedReference
     private List<Address> billingAddresses;
 
-    @OneToMany(mappedBy = "buyer")
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "buyer_id")
     @ToString.Exclude
+    @JsonManagedReference
     private List<CreditCard> creditCards;
 
     public Buyer(){

@@ -18,6 +18,6 @@ public class SatisfactionUser {
 
     private String dni;
 
-    private float gradeSatisfaction;
+    private double gradeSatisfaction;
 
 }

@@ -28,7 +28,7 @@ public class ProductService {
 
     private final SatisfactionService satisfactionService;
 
-    public ProductService(ProductRepository repository, ClientRepository clientRepository, ClothesService clothesService, FoodService foodService, TechnologyService technologyService, ToyService toyService) {
+    public ProductService(ProductRepository repository, ClientRepository clientRepository, ClothesService clothesService, FoodService foodService, TechnologyService technologyService, ToyService toyService, SatisfactionService satisfactionService) {
         this.repository = repository;
         this.clientRepository = clientRepository;
         this.clothesService = clothesService;

@@ -41,8 +41,6 @@ public abstract class Product {
     @Column(name = "category", nullable = false)
     private String category;
 
-    private float gradeSatisfactionMean;
-
     @Id
     @Column(name = "cif", length = 30, nullable = false)
     private String cif;
