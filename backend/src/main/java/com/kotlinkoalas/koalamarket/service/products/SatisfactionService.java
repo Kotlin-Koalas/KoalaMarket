@@ -10,7 +10,7 @@ import java.util.List;
 public class SatisfactionService {
     private final SatisfactionRepository repository;
 
-    public SatisfactionService(SatisfactionRepository repository, ProductService productService) {
+    public SatisfactionService(SatisfactionRepository repository) {
         this.repository = repository;
     }
 

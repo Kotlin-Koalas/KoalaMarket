@@ -71,8 +71,8 @@ public class BuyerController {
         String cardNumber = (String) payload.get("cardNumber");
         String expirationDate = (String) payload.get("expirationDate");
 
-        String shippingAddress = (String) payload.get("shippingAddress");
-        String billingAddress = (String) payload.get("billingAddress");
+//        String shippingAddress = ;
+//        String billingAddress = ;
 
         String bizum = (String) payload.get("bizum");
         String paypal = (String) payload.get("paypal");
@@ -86,18 +86,23 @@ public class BuyerController {
         buyer.setEmail(email);
         buyer.setPassword(password);
 
-        List<Address> shippingAddresses = new ArrayList<>();
-        shippingAddresses.add(new Address(shippingAddress));
+        List<Address> shippingAddresses = buyer.getShippingAddresses();
+        Address newShippingAddress = new Address((String) payload.get("shippingAddress"));
+        newShippingAddress.setBuyer(buyer);
+        shippingAddresses.add(newShippingAddress);
         buyer.setShippingAddresses(shippingAddresses);
 
-        List<Address> billingAddresses = new ArrayList<>();
-        billingAddresses.add(new Address(billingAddress));
+        List<Address> billingAddresses = buyer.getBillingAddresses();
+        Address newBillingAddress = new Address((String) payload.get("billingAddress"));
+        newBillingAddress.setBuyer(buyer);
+        billingAddresses.add(newBillingAddress);
         buyer.setBillingAddresses(billingAddresses);
 
 
         if (cardNumber != null && !cardNumber.isEmpty() && expirationDate != null && !expirationDate.isEmpty() && CVC != null && !CVC.isEmpty()){
             CreditCard creditCard = new CreditCard(CVC, cardNumber, expirationDate);
             List<CreditCard> creditCards = new ArrayList<>();
+            creditCard.setBuyer(buyer);
             creditCards.add(creditCard);
             buyer.setCreditCards(creditCards);
         }

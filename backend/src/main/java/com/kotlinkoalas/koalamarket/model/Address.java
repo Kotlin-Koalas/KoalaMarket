@@ -1,5 +1,7 @@
 package com.kotlinkoalas.koalamarket.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -9,17 +11,17 @@ import lombok.*;
 @RequiredArgsConstructor
 @Entity
 public class Address {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonIgnore
     private Long id;
 
     @Column(name = "address", nullable = false)
     private String address;
 
+    @JsonBackReference
     @ManyToOne
-    @JoinColumn(name = "buyer_id", nullable = false)
-    private Buyer buyer;
+    private transient Buyer buyer;
 
     public Address(String address) {
         this.address = address;
