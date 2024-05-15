@@ -237,26 +237,21 @@
                             android:layout_marginLeft="8dp"
                             android:background="#bababa"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toStartOf="@+id/editTextAddress"
                             app:layout_constraintStart_toEndOf="@+id/imageViewAddress1"
                             app:layout_constraintTop_toTopOf="parent" />
 
-                        <EditText
-                            android:id="@+id/editTextAddress"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
+                        <Spinner
+                            android:id="@+id/spinnerEntrega"
+                            android:layout_width="256dp"
+                            android:layout_height="41dp"
                             android:layout_gravity="right"
-                            android:layout_marginLeft="8dp"
-                            android:background="@android:color/transparent"
-                            android:ems="8"
-                            android:fontFamily="@font/karla"
-                            android:gravity="center_vertical"
-                            android:hint="Ejemplo, 12"
-                            android:inputType="text"
-                            android:textColor="@color/black"
-                            android:textColorHint="#808080"
+                            android:dropDownSelector="@drawable/dropdown_arrow"
+                            android:gravity="bottom"
+                            app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toEndOf="@+id/imageViewAddress2" />
+                            app:layout_constraintStart_toEndOf="@+id/imageViewAddress1"
+                            app:layout_constraintTop_toTopOf="parent" />
+
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <TextView
@@ -295,26 +290,20 @@
                             android:layout_marginLeft="8dp"
                             android:background="#bababa"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toStartOf="@+id/editTextFAddress"
                             app:layout_constraintStart_toEndOf="@+id/imageViewFAddress1"
                             app:layout_constraintTop_toTopOf="parent" />
 
-                        <EditText
-                            android:id="@+id/editTextFAddress"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
+                        <Spinner
+                            android:id="@+id/spinnerFacturacion"
+                            android:layout_width="260dp"
+                            android:layout_height="49dp"
                             android:layout_gravity="right"
-                            android:layout_marginLeft="8dp"
-                            android:background="@android:color/transparent"
-                            android:ems="8"
-                            android:fontFamily="@font/karla"
-                            android:gravity="center_vertical"
-                            android:hint="Ejemplo, 12"
-                            android:inputType="text"
-                            android:textColor="@color/black"
-                            android:textColorHint="#808080"
+                            android:layout_marginTop="0dp"
+                            android:dropDownSelector="@drawable/dropdown_arrow"
+                            android:gravity="bottom"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toEndOf="@+id/imageViewFAddress2" />
+                            app:layout_constraintTop_toTopOf="parent" />
+
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <TextView
