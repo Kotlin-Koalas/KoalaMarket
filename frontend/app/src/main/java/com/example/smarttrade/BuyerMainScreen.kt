@@ -7,12 +7,13 @@ import android.view.MotionEvent
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import androidx.activity.enableEdgeToEdge
-import androidx.fragment.app.commit
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.add
+import androidx.fragment.app.commit
 import com.example.smarttrade.adapters.ProductAdapter
 import com.example.smarttrade.mainBuyerFragments.HomeFragment
+import com.example.smarttrade.mainBuyerFragments.ProfileBuyerFragment
 import com.example.smarttrade.mainBuyerFragments.ShoppingCartFragment
 import com.example.smarttrade.mediador.MediatorShoppingCart
 
@@ -50,7 +51,13 @@ class BuyerMainScreen : AppCompatActivity() {
         }
 
         account.setOnClickListener{
-            //TODO ir a la ventana de la cuenta
+            account.setBackgroundResource(R.drawable.bottom_selected_background)
+            shoppingCart.setBackgroundResource(R.color.verdeOscuro)
+            home.setBackgroundResource(R.color.verdeOscuro)
+            supportFragmentManager.commit {
+                setReorderingAllowed(true)
+                add<ProfileBuyerFragment>(R.id.fragment_container_view)
+            }
         }
 
         home.setOnClickListener{

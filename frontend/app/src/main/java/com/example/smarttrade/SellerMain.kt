@@ -9,6 +9,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.add
 import androidx.fragment.app.commit
 import com.example.smarttrade.mainSellerFragments.AddProduct
+import com.example.smarttrade.mainSellerFragments.ProfileSellerFragment
 import com.example.smarttrade.mainSellerFragments.SellerFragment
 
 class SellerMain: AppCompatActivity() {
@@ -53,7 +54,14 @@ class SellerMain: AppCompatActivity() {
 
 
             accountSeller.setOnClickListener {
-                //TODO ir a la ventana de la cuenta
+                accountSeller.setBackgroundResource(R.drawable.bottom_selected_background)
+                addProduct.setBackgroundResource(R.color.verdeOscuro)
+                homeSeller.setBackgroundResource(R.color.verdeOscuro)
+                val fragment = ProfileSellerFragment()
+                supportFragmentManager.commit {
+                    setReorderingAllowed(true)
+                    replace(R.id.seller_container_view, fragment)
+                }
             }
 
 
