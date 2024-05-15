@@ -28,12 +28,12 @@ public class SatisfactionService {
         repository.save(currentSatisfaction);
     }
 
-    public float getSatisfactionMean(String productNumber){
+    public double getSatisfactionMean(String productNumber){
         List<SatisfactionUser> satisfactions = repository.findAllByProductNumber(productNumber);
         if (satisfactions.isEmpty()){
             return 0;
         }
-        float sum = 0;
+        double sum = 0;
         for(SatisfactionUser satisfaction : satisfactions){
             sum += satisfaction.getGradeSatisfaction();
         }
