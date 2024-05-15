@@ -76,7 +76,6 @@ object ShoppingCartRequests {
         val jsonRequest = JsonObjectRequest(
             Request.Method.POST,"$url/buyers/$id/cart",json,
             {response ->
-                //TODO handle response
                 Log.i("ProductAdded", response.toString())
             },
             {error ->
@@ -127,7 +126,6 @@ object ShoppingCartRequests {
         val jsonRequest = JsonObjectRequest(
             Request.Method.PUT,"$url/buyers/$id/cart",json,
             {response ->
-                //TODO handle response
                 Log.i("ProductAdded", response.toString())
             },
             {error ->

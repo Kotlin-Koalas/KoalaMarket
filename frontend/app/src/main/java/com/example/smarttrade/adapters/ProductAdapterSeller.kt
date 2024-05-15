@@ -76,7 +76,6 @@ class ProductAdapterSeller(
         textViewName.text = popularProducts[position].name
         textPrice.hint = popularProducts[position].price
         stockProduct.hint = popularProducts[position].stock.toString()
-        //TODO añadir posible stock
 
 
         stockProduct.addTextChangedListener(object : TextWatcher{

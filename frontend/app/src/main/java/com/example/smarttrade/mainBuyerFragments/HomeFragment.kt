@@ -126,7 +126,6 @@ class HomeFragment : Fragment() {
 
         val fav = view.findViewById<ImageView>(R.id.imageViewHeart)
         fav.setOnClickListener{
-            //TODO abrir la lista de deseos
             val Intent = Intent(instance.context, WishList::class.java)
             startActivity(Intent)
         }

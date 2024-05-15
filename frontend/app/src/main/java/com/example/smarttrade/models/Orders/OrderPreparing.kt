@@ -10,6 +10,7 @@ class OrderPreparing(order:Order_representation) : OrderState{
     var order:Order_representation = order
     override fun nextState() {
         order.setStates(order.shipped)
+        //TODO peticion a la API de pasar al siguiente estado
     }
 
     override fun stateAction() {

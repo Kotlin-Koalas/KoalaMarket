@@ -106,7 +106,7 @@ class ProductWishAdapter(
         }
         val imageViewProd = view.findViewById<ImageView>(R.id.imageViewProd)
 
-        val currentStock = PersonBuyer.getWishList()[position].stock //TODO añadir stock
+        val currentStock = PersonBuyer.getWishList()[position].stock
 
 
         imageViewHeart.setOnClickListener{

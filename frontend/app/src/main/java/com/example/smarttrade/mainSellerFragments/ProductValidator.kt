@@ -46,7 +46,7 @@ class ProductValidator {
                 return patternEdadRec.matches(prodCat1) && patternMaterial.matches(prodCat2)
            }
            "Ropa" ->{
-               val patternTalla = "^[SMLX]{1,3}$|^([2][0-9]|[3][0-9]|[4][0-5])$".toRegex() //TODO habría que arreglarlo
+               val patternTalla = "^[SMLX]{1,3}$|^([2][0-9]|[3][0-9]|[4][0-5])$".toRegex()
                val patternColor = "^[a-zA-Z]+$".toRegex()
                 return patternTalla.matches(prodCat1) && patternColor.matches(prodCat2)
 

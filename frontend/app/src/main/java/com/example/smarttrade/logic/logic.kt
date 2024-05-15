@@ -193,11 +193,6 @@ object logic {
         productVolleyQueue.add(jsonRequest)
     }
 
-
-
-
-    //TODO preparar recepcion de distintos tipos de productos, casteando a product_representation
-
     fun getAllProducts() {
         if(!isPQueue) {
             productVolleyQueue = Volley.newRequestQueue(BuyerMainScreen.getContext())
@@ -440,7 +435,7 @@ object logic {
     }
 
     /*
-    fun getProduct(PN: String, cb: (String) -> Unit){//TODO AQUI NO ENTRA
+    fun getProduct(PN: String, cb: (String) -> Unit){
         productVolleyQueue = Volley.newRequestQueue(AddProduct.getContext())
 
         val stringRequest = StringRequest(
