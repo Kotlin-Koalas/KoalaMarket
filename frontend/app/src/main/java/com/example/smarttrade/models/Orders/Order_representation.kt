@@ -25,11 +25,11 @@ class Order_representation (products:MutableList<product_representation_cart>,sh
     }
 
     //Metodo para setear la imagen y el texto del estado, llamar antes que nextState().
-    fun setImageView(imageView: ImageView){
+    fun setIView(imageView: ImageView){
         this.imageView = imageView
     }
 
-    fun setTextView(textView: TextView){
+    fun setTView(textView: TextView){
         this.textView = textView
     }
 
