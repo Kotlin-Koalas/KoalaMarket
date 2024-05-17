@@ -73,24 +73,6 @@ class OrderAdapter(
         status.text = orderList[position].state.stateName
 
 
-        when (orderList[position].state.stateName) {
-            "Preparando" -> {
-                imageState.setImageResource(R.drawable.order_preparing)
-            }
-            "En camino" -> {
-                imageState.setImageResource(R.drawable.order_shipped)
-            }
-            "Entregado" -> {
-                imageState.setImageResource(R.drawable.order_delivery)
-            }
-            "Devolución" -> {
-                imageState.setImageResource(R.drawable.order_returned)
-            }
-            else -> {
-                imageState.setImageResource(R.drawable.addition)
-            }
-        }
-
         return view
     }
 

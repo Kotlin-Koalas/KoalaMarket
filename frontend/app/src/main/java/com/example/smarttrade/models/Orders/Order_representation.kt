@@ -14,7 +14,7 @@ class Order_representation (val  products:MutableList<product_representation_car
                             val surname:String,
                             val dni:String,
                             val totalPrice: String,
-                            val estimatedDate: String){
+                            val estimatedDate: String, ){
 
     lateinit var imageView:ImageView
     lateinit var textView:TextView
@@ -59,6 +59,3 @@ class Order_representation (val  products:MutableList<product_representation_car
     }
 }
 
-fun getDni(){
-
-}
