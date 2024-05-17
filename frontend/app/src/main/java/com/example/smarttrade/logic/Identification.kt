@@ -63,7 +63,7 @@ object Identification {
                 val factAddresses = jsonRes.getJSONArray("billingAddresses")
 
                 if(nameRes != "") {
-                    isBuyer =true
+                    isBuyer = true
                     val buyer = PersonBuyer
                     buyer.setName(nameRes)
                     buyer.setSurname(surnameRes)
@@ -71,8 +71,14 @@ object Identification {
                     buyer.setUserId(userID)
                     buyer.setDNI(DNI)
                     buyer.setPassword(passwordRes)
-                    buyer.addShippingAddress(shippingAddresses.toString())
-                    buyer.addFacturacionAddress(factAddresses.toString())
+                    for (i in 0 until shippingAddresses.length()) {
+                        val p = shippingAddresses.getJSONObject(i)
+                        buyer.addShippingAddress(p.getString("address"))
+                    }
+                    for (i in 0 until factAddresses.length()) {
+                        val p = factAddresses.getJSONObject(i)
+                        buyer.addFacturacionAddress(p.getString("address"))
+                    }
                     buyer.setBizum(bizum)
                     buyer.setPaypal(paypal)
                     for (i in 0 until creditCards.length()) {

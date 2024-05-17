@@ -5,6 +5,7 @@ import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import com.example.smarttrade.R
 import com.example.smarttrade.models.CreditCard
@@ -12,11 +13,16 @@ import com.example.smarttrade.models.CreditCard
 class PaymentMethodCreditCard(creditCard:CreditCard): PaymentMethod{
 
     override val customMessage: String = "Estas a punto de pagar con la tarjeta de crédito con el siguiente número: ${creditCard.number}, con fecha de expiración: ${creditCard.expirationDate} y cvc: ${creditCard.cvc}"
+    override val image: Int = R.drawable.credit_card_icon
 
     val creditCard = creditCard
 
     override fun showMessage(context: Context) {
         showCustomDialogBox(context)
+    }
+
+    override fun setPayImage(imageView: ImageView) {
+        imageView.setImageResource(image)
     }
 
     override fun getID(): String {
@@ -35,7 +41,7 @@ class PaymentMethodCreditCard(creditCard:CreditCard): PaymentMethod{
         val btnCancel = dialog.findViewById<Button>(R.id.buttonCancelPopUp)
 
         btnOk.setOnClickListener{
-            //TODO: Implementar la lógica de crear pedido
+            //TODO: Implementar la lógica de crear pedido con la API
         }
 
         btnCancel.setOnClickListener{

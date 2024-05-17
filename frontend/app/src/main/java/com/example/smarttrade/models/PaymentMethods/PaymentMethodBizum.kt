@@ -5,17 +5,23 @@ import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import com.example.smarttrade.R
 
 class PaymentMethodBizum(bizumNumber:String): PaymentMethod{
 
     override val customMessage: String = "Estas a punto de pagar con Bizum, usando el siguiente número: $bizumNumber"
+    override val image: Int = R.drawable.phone
 
     val bizumNumber = bizumNumber
 
     override fun showMessage(context: Context) {
         showCustomDialogBox(context)
+    }
+
+    override fun setPayImage(imageView: ImageView) {
+        imageView.setImageResource(image)
     }
 
     override fun getID(): String {
@@ -34,7 +40,7 @@ class PaymentMethodBizum(bizumNumber:String): PaymentMethod{
         val btnCancel = dialog.findViewById<Button>(R.id.buttonCancelPopUp)
 
         btnOk.setOnClickListener{
-            //TODO: Implementar la lógica de crear pedido
+            //TODO: Implementar la lógica de crear pedido con la API
         }
 
         btnCancel.setOnClickListener{

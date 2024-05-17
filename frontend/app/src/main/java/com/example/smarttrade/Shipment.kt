@@ -85,6 +85,7 @@ class Shipment : AppCompatActivity() {
                     if(p.getID() == selectedItem)
                     {
                         selectedPaymentMethod = p
+                        selectedPaymentMethod.setPayImage(findViewById(R.id.imageViewSPM1))
                     }
                 }
             }
@@ -178,7 +179,7 @@ class Shipment : AppCompatActivity() {
                     generateRandomFutureDate().toString()
                     )
                 Log.i("OrderCreated", createdOrder.toString())
-                //TODO crear pedido en la API
+                selectedPaymentMethod.showMessage(this)
             }
         }
     }
