@@ -15,5 +15,4 @@ interface PaymentMethod {
 
     fun showMessage(context: Context)
 
-    //TODO settear imagen que toca en funcion del metodo de pago en el fragmento de texto
 }
