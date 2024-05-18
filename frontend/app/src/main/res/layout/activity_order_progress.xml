@@ -12,6 +12,7 @@
         android:layout_height="100dp"
         android:background="@color/green4"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -19,26 +20,39 @@
             android:id="@+id/Title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="64dp"
             android:fontFamily="@font/karla"
             android:text="Envios"
             android:textColor="@color/white"
-            android:textSize="17dp"
+            android:textSize="20dp"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.506" />
+            app:layout_constraintVertical_bias="0.789" />
 
         <ImageView
             android:id="@+id/imageCart"
             android:layout_width="32dp"
             android:layout_height="35dp"
-            android:layout_marginEnd="20dp"
+            android:layout_marginEnd="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.507"
+            app:layout_constraintVertical_bias="0.753"
             app:srcCompat="@drawable/shopping_cart" />
+
+        <ImageView
+            android:id="@+id/imageViewBackArrow"
+            android:layout_width="37dp"
+            android:layout_height="37dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/Title"
+            app:layout_constraintHorizontal_bias="0.4"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.777"
+            app:srcCompat="@drawable/back_white_arrow" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
