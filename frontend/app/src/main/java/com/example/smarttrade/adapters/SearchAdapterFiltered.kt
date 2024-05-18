@@ -30,6 +30,11 @@ class SearchAdapterFiltered(
         )
     }
 
+    fun addSearch(search:String){
+        prevSearch.add(0,search_representation(search))
+        notifyDataSetChanged()
+    }
+
     fun addAllCategories(list:MutableList<search_representation>){
         for(s in list){
             prevSearch.add(s)

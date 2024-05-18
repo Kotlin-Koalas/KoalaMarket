@@ -33,11 +33,9 @@ object Identification {
 
     var isBQueue = false
     var isSQueue = false
-    var isCartQueue = false
 
     lateinit var buyerVolleyQueue: RequestQueue
     lateinit var sellerVolleyQueue: RequestQueue
-    lateinit var cartVolleyQueue: RequestQueue
     fun logIn(email:String, password:String){
         val json = JSONObject()
         json.put("email", email)
@@ -64,6 +62,8 @@ object Identification {
 
                 if(nameRes != "") {
                     isBuyer = true
+                    PersonBuyer.clearFacturationAddresses()
+                    PersonBuyer.clearShippingAddresses()
                     val buyer = PersonBuyer
                     buyer.setName(nameRes)
                     buyer.setSurname(surnameRes)

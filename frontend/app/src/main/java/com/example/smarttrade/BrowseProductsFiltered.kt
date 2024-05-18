@@ -19,8 +19,11 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.smarttrade.adapters.ProductAdapter
+import com.example.smarttrade.adapters.SearchAdapter
 import com.example.smarttrade.adapters.SearchAdapterFiltered
+import com.example.smarttrade.logic.Searches
 import com.example.smarttrade.logic.logic
+import com.example.smarttrade.mainBuyerFragments.HomeFragment
 
 //import com.example.smarttrade.models.LeafColor
 
@@ -31,17 +34,11 @@ import com.example.smarttrade.models.search_representation
 class BrowseProductsFiltered : AppCompatActivity() {
 
 
-    private lateinit var searchBar : EditText
     private lateinit var searchButton : ImageButton
-    private lateinit var adapterS: SearchAdapterFiltered
     private lateinit var backButton : ImageButton
     private lateinit var categoryName : TextView
     private lateinit var recommendationLayout: ConstraintLayout
-    private lateinit var recommendationRV: RecyclerView
-    //private var productsShown: MutableList<product_representation> = mutableListOf()
     private var productsFiltered : MutableList<product_representation> = mutableListOf()
-    private var prevSearchesShown: MutableList<search_representation> = mutableListOf()
-
 
     override fun onCreate(savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)
@@ -63,14 +60,9 @@ class BrowseProductsFiltered : AppCompatActivity() {
 
         recommendationRV = findViewById<RecyclerView>(R.id.recyclerViewSearches)
 
-        //Temporal
-        prevSearchesShown.add(search_representation("search de prueba"))
-        prevSearchesShown.add(search_representation("search de prueba 2"))
-
-        adapterS = SearchAdapterFiltered(prevSearchesShown)
-
-        recommendationRV.adapter = adapterS
         recommendationRV.layoutManager = LinearLayoutManager(this)
+
+        Searches.getFilteredSearches()
 
         backButton.setOnClickListener{
             val IntentS = Intent(this, BuyerMainScreen::class.java)
@@ -80,9 +72,6 @@ class BrowseProductsFiltered : AppCompatActivity() {
         val gridLayout =findViewById<GridView>(R.id.gridViewCategories)
         adapterP = ProductAdapter(this, mutableListOf())
         gridLayout.adapter = adapterP
-
-
-        //TODO conseguir los datos que pertenezcan a la categoría que se haya clickado (productShown tmb)
 
         when(nameCategory.toString()){
             "toys" -> {
@@ -111,14 +100,12 @@ class BrowseProductsFiltered : AppCompatActivity() {
 
         }
 
-        //adapterP.addAllProducts(productsShown)
-
-
         searchBar = findViewById(R.id.SearchBarFiltered)
 
         searchButton = findViewById<ImageButton>(R.id.imageButtonSearch)
         searchButton.setOnClickListener{
             val searchItem = searchBar.text.toString().lowercase().trim()
+            addSearch(searchItem)
             filterProduct(searchItem)
         }
 
@@ -180,6 +167,11 @@ class BrowseProductsFiltered : AppCompatActivity() {
         adapterP.updateProducts(productsFiltered)
     }
 
+    fun addSearch(searchItem: String){
+        Searches.addSearch(searchItem)
+        adapterS.addSearch(searchItem)
+    }
+
 
 
 
@@ -187,6 +179,11 @@ class BrowseProductsFiltered : AppCompatActivity() {
         private lateinit var actContextBPF:BrowseProductsFiltered
         private lateinit var productsShown: MutableList<product_representation>
         private lateinit var adapterP: ProductAdapter
+        private lateinit var searchBar: EditText
+        private lateinit var adapterS: SearchAdapterFiltered
+        private lateinit var recommendationRV: RecyclerView
+
+        private var prevSearchesShown: MutableList<search_representation> = mutableListOf()
         fun updateSearch(text:String) {
             actContextBPF.updateSearch(text)
         }
@@ -196,6 +193,15 @@ class BrowseProductsFiltered : AppCompatActivity() {
         }
         fun getContext(): Context {
             return actContextBPF
+        }
+
+        fun setInitialSearches(searchItems:MutableList<search_representation>){
+            prevSearchesShown.clear()
+            for(s in searchItems) {
+                prevSearchesShown.add(0,s)
+            }
+            adapterS = SearchAdapterFiltered(prevSearchesShown)
+            recommendationRV.adapter = adapterS
         }
     }
 
