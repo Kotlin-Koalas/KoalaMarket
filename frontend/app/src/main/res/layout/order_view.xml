@@ -29,7 +29,7 @@
             android:id="@+id/textViewOrder"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Pedido "
+            android:text="Pedido : "
             app:layout_constraintStart_toEndOf="@+id/imageState"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -68,7 +68,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
             android:layout_marginTop="12dp"
-            android:text="Fecha Estimada:"
+            android:text="Fecha Estimada :"
             app:layout_constraintStart_toEndOf="@+id/imageState"
             app:layout_constraintTop_toBottomOf="@+id/textTotalPrice" />
 
@@ -78,7 +78,7 @@
             android:layout_marginTop="12dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="31 de septiembre"
+            android:text=" 31 de septiembre"
             app:layout_constraintStart_toEndOf="@+id/textView18"
             app:layout_constraintTop_toBottomOf="@+id/textTotalPrice" />
 
@@ -102,7 +102,7 @@
             android:id="@+id/textViewEstado"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
+            android:layout_marginStart="16dp"
             android:text="Preparando"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"

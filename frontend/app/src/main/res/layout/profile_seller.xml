@@ -9,8 +9,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/topLayout"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:background="@color/white"
+        android:layout_height="105dp"
+        android:background="@color/green4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -20,15 +20,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="18dp"
-            android:layout_marginStart="16dp"
-            android:text="Mi perfil"
+            android:layout_marginStart="24dp"
             android:fontFamily="@font/karla"
-            android:textColor="@color/black"
+            android:text="Mi perfil"
+            android:textColor="@color/white"
             android:textSize="20dp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.802" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -126,16 +127,42 @@
                 android:textSize="14dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/imageView10" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayoutNextOrder"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_marginTop="30dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/LayoutEmail">
+
+            <TextView
+                android:id="@+id/textViewNextState"
+                android:layout_width="232dp"
+                android:layout_height="63dp"
+                android:background="@drawable/circular_button_green"
+                android:fontFamily="@font/karla"
+                android:gravity="center"
+                android:text="Siguiente Estado"
+                android:textColor="@color/white"
+                android:textSize="25dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/LayoutLogOut"
-            android:layout_marginTop="30dp"
             android:layout_width="match_parent"
             android:layout_height="70dp"
+            android:layout_marginTop="30dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/LayoutEmail">
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayoutNextOrder">
 
             <TextView
                 android:id="@+id/textViewLogOutSeller"
@@ -151,6 +178,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

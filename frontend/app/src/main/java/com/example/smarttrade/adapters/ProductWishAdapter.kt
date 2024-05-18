@@ -119,9 +119,12 @@ class ProductWishAdapter(
         imageViewCart.setOnClickListener{
         Log.i("QUE SALe", PersonBuyer.getWishList()[position].toString())
 
-            ShoppingCartRequests.addProductToCart(PersonBuyer.getWishList()[position])
-            PersonBuyer.addProductToCart(PersonBuyer.getWishList()[position])
+            var productWithOneStock = PersonBuyer.getWishList()[position]
 
+            productWithOneStock.quantity = 1
+
+            ShoppingCartRequests.addProductToCart(productWithOneStock)
+            //PersonBuyer.addProductToCart(PersonBuyer.getWishList()[position])
             ListWishRequests.deleteProductWish(PersonBuyer.getWishList()[position])
             removeProduct(position)
             WishList.productAddedCart()

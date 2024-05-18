@@ -4,24 +4,20 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.GridView
 import android.widget.ImageView
-import android.widget.ScrollView
-import androidx.recyclerview.widget.RecyclerView
+import androidx.fragment.app.Fragment
 import com.example.smarttrade.BuyerMainScreen
 import com.example.smarttrade.R
 import com.example.smarttrade.Shipment
-import com.example.smarttrade.adapters.ProductAdapter
+import com.example.smarttrade.WishList
 import com.example.smarttrade.adapters.ProductCartAdapter
 import com.example.smarttrade.logic.ShoppingCartRequests
 import com.example.smarttrade.models.PersonBuyer
-import com.example.smarttrade.models.product_representation
-import com.example.smarttrade.models.product_representation_cart
 
 
 class ShoppingCartFragment : Fragment() {
@@ -79,6 +75,13 @@ class ShoppingCartFragment : Fragment() {
             }
 
         }
+
+        val fav = currView.findViewById<ImageView>(R.id.imageViewHeart)
+        fav.setOnClickListener{
+            val Intent = Intent(currView.context, WishList::class.java)
+            startActivity(Intent)
+        }
+
         return currView
     }
 
