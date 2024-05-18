@@ -116,7 +116,6 @@ class BrowseProductsFiltered : AppCompatActivity() {
 
         searchBar.setOnFocusChangeListener { v, hasFocus ->
             if (hasFocus && prevSearchesShown.size > 0) {
-                //TODO poner de nuevo las busquedas a la lista, añadirlas con el metodo del adaptador y meterlas a la BD
                 recommendationLayout.visibility = View.VISIBLE
                 searchBar.background = AppCompatResources.getDrawable(
                     this,

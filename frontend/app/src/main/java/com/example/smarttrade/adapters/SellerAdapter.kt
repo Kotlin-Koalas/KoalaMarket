@@ -104,10 +104,6 @@ class SellerAdapter(
 
 
 
-
-
-
-
          cart.setOnClickListener {
              when(category){
                  "toy" ->{

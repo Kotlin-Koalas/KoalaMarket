@@ -37,7 +37,6 @@ class ProductAdapter(
     override fun getItemId(position: Int): Long {
         return position.toLong()
     }
-
     fun addProductToList(product: product_representation) {
         popularProducts.add(product)
     }

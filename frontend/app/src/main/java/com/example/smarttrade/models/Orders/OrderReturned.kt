@@ -14,6 +14,6 @@ class OrderReturned(order:Order_representation) : OrderState {
     }
 
     override fun stateAction() {
-        TODO("Not yet implemented")
+        //se acabó no hay más cosas que hacer
     }
 }

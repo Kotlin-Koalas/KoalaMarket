@@ -179,7 +179,7 @@ class Shipment : AppCompatActivity() {
                     generateRandomFutureDate().toString()
                     )
                 Log.i("OrderCreated", createdOrder.toString())
-                selectedPaymentMethod.showMessage(this)
+                selectedPaymentMethod.showMessage(this, createdOrder)
             }
         }
     }

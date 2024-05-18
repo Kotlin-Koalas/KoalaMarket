@@ -157,7 +157,7 @@ class SignUpVendedor : AppCompatActivity() {
         fun getContext(): Context {
             return actContextVendor
         }
-        fun loadSeller(){//TODO cambiar a SellerMain
+        fun loadSeller(){
             val IntentS = Intent(actContextVendor,SellerMain::class.java)
             actContextVendor.startActivity(IntentS)
         }
