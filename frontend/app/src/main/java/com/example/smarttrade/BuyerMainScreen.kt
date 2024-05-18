@@ -73,7 +73,6 @@ class BuyerMainScreen : AppCompatActivity() {
             }
         }
     }
-
     override fun dispatchTouchEvent(event: MotionEvent): Boolean {
         if (event.action == MotionEvent.ACTION_DOWN) {
             val v = currentFocus

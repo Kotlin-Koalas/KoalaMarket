@@ -64,6 +64,10 @@ object OrderRequests {
         orderVolleyQueue.add(stringRequest)
         }
 
+    fun addOrder(order: Order_representation){
+        //TODO implementar logica crear order con API
+    }
+
 
     }
 

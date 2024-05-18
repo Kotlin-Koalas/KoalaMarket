@@ -23,7 +23,6 @@ class ProductAdapterSeller(
     override fun getCount(): Int {
         return popularProducts.count()
     }
-
     override fun getItem(position: Int): Any {
         return popularProducts.get(position)
     }

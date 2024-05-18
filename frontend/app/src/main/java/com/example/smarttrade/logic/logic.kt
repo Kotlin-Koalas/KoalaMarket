@@ -179,7 +179,6 @@ object logic {
         json.put("macros",macros)
 
         val jsonString = json.toString()
-
         val jsonRequest = JsonObjectRequest(
             Request.Method.POST,"$url/products/foods",json,
             {response ->

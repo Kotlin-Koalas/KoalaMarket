@@ -8,6 +8,8 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import com.example.smarttrade.R
+import com.example.smarttrade.logic.OrderRequests
+import com.example.smarttrade.models.Orders.Order_representation
 
 class PaymentMethodBizum(bizumNumber:String): PaymentMethod{
 
@@ -16,8 +18,8 @@ class PaymentMethodBizum(bizumNumber:String): PaymentMethod{
 
     val bizumNumber = bizumNumber
 
-    override fun showMessage(context: Context) {
-        showCustomDialogBox(context)
+    override fun showMessage(context: Context,order:Order_representation) {
+        showCustomDialogBox(context,order)
     }
 
     override fun setPayImage(imageView: ImageView) {
@@ -28,7 +30,7 @@ class PaymentMethodBizum(bizumNumber:String): PaymentMethod{
         return bizumNumber
     }
 
-    private fun showCustomDialogBox(context: Context){
+    private fun showCustomDialogBox(context: Context,order:Order_representation){
         val dialog = Dialog(context)
         dialog.setTitle("CONFIRMATION")
         dialog.setCancelable(false)
@@ -40,7 +42,7 @@ class PaymentMethodBizum(bizumNumber:String): PaymentMethod{
         val btnCancel = dialog.findViewById<Button>(R.id.buttonCancelPopUp)
 
         btnOk.setOnClickListener{
-            //TODO: Implementar la lógica de crear pedido con la API
+            OrderRequests.addOrder(order)
         }
 
         btnCancel.setOnClickListener{
