@@ -65,6 +65,10 @@ object  PersonBuyer {
         shippingAddresses.add(address)
     }
 
+    fun clearShippingAddresses() {
+        shippingAddresses.clear()
+    }
+
     fun getShippingAddresses(): MutableList<String> {
         return shippingAddresses
     }
@@ -79,6 +83,10 @@ object  PersonBuyer {
 
     fun addFacturacionAddress(address: String) {
         factAddresses.add(address)
+    }
+
+    fun clearFacturationAddresses() {
+        factAddresses.clear()
     }
 
     fun getFacturationAddresses(): MutableList<String> {
