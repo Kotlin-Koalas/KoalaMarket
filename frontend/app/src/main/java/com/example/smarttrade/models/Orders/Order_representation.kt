@@ -2,7 +2,10 @@ package com.example.smarttrade.models.Orders
 
 import android.widget.ImageView
 import android.widget.TextView
+import com.example.smarttrade.models.CreditCard
 import com.example.smarttrade.models.PaymentMethods.PaymentMethod
+import com.example.smarttrade.models.PaymentMethods.PaymentMethodCreditCard
+import com.example.smarttrade.models.PaymentMethods.PaymentMethodPaypal
 import com.example.smarttrade.models.product_representation_cart
 
 class Order_representation (val  products:MutableList<product_representation_cart>,
@@ -58,5 +61,20 @@ class Order_representation (val  products:MutableList<product_representation_car
         imageView.setImageResource(state.imageResource)
         textView.text = state.stateName
     }
+
+
+
+
+    companion object{
+        fun getPayMethod(method: String) : PaymentMethod{
+            return when(method){
+                "Paypal" -> PaymentMethodPaypal("")
+                "CreditCard" -> PaymentMethodCreditCard(CreditCard("","",""))
+                "Bizum" -> PaymentMethodPaypal("")
+                else -> throw IllegalArgumentException("Unknown payment method: $method")
+            }
+        }
+    }
+
 }
 

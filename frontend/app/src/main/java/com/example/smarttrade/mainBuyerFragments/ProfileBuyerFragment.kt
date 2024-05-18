@@ -12,6 +12,7 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.example.smarttrade.MainActivity
+import com.example.smarttrade.OrderProgress
 import com.example.smarttrade.R
 import com.example.smarttrade.models.PersonBuyer
 
@@ -41,7 +42,9 @@ class ProfileBuyerFragment : Fragment(){
 
             val myOrders = viewB.findViewById<TextView>(R.id.textViewMyOrders)
             myOrders.setOnClickListener{
-                //TODO go to my orders
+                val intent = Intent(contextFragment.requireContext(), OrderProgress::class.java)
+                startActivity(intent)
+
             }
 
             val logOut = viewB.findViewById<TextView>(R.id.textViewLogOut)
@@ -85,7 +88,7 @@ class ProfileBuyerFragment : Fragment(){
 
         companion object{
             lateinit var contextFragment: ProfileBuyerFragment
-            lateinit var sellerCIF: String
+            lateinit var buyerCIF: String
 
             fun getContext(): ProfileBuyerFragment {
                 return contextFragment
