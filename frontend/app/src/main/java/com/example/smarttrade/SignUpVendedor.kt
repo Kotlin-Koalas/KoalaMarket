@@ -31,6 +31,13 @@ class SignUpVendedor : AppCompatActivity() {
         actContextVendor = this
         val scrollView = findViewById<ScrollView>(R.id.scrollView)
         scrollView.overScrollMode = View.OVER_SCROLL_ALWAYS
+
+        val goBackButton = findViewById<ImageView>(R.id.backArrow)
+        goBackButton.setOnClickListener{
+            val IntentS = Intent(this,MainActivity::class.java)
+            startActivity(IntentS)
+        }
+
         val cancelButton = findViewById<Button>(R.id.buttonCancel)
         val signUpButton = findViewById<Button>(R.id.buttonSignUp)
         cancelButton.setOnClickListener{

@@ -23,6 +23,7 @@
         app:layout_constraintTop_toTopOf="@id/guideline"
         app:layout_constraintStart_toStartOf="parent"
         android:background="@drawable/basic_white_rectangle">
+
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guidelineCL"
             android:layout_width="wrap_content"
@@ -36,42 +37,44 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/guidelineCL"
             app:layout_constraintStart_toStartOf="parent">
+
             <ScrollView
                 android:id="@+id/scrollView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:layout_constraintTop_toTopOf="parent"
                 android:layout_marginStart="50dp"
                 android:layout_marginEnd="50dp"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent">
+                app:layout_constraintTop_toTopOf="parent">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical" >
+                    android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/textViewTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="#FFFFFF"
-                        android:textColor="@color/black"
-                        android:textStyle="bold"
                         android:fontFamily="@font/karla"
                         android:text="Rellena todos los campos mostrados a continuación:"
-                        android:textSize="20sp" />
+                        android:textColor="@color/black"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
                     <TextView
                         android:id="@+id/textViewID1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="7dp"
-                        android:layout_marginBottom="3dp"
                         android:layout_marginTop="30dp"
+                        android:layout_marginBottom="3dp"
                         android:background="#ffffff"
-                        android:textColor="@color/black"
                         android:fontFamily="@font/karla"
                         android:text="ID de Usuario:"
+                        android:textColor="@color/black"
                         android:textSize="17sp" />
 
                     <androidx.constraintlayout.widget.ConstraintLayout
@@ -119,17 +122,18 @@
                             app:layout_constraintStart_toEndOf="@+id/imageViewID2"
                             tools:layout_editor_absoluteY="341dp" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
+
                     <TextView
                         android:id="@+id/textViewName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="7dp"
-                        android:layout_marginBottom="3dp"
                         android:layout_marginTop="10dp"
+                        android:layout_marginBottom="3dp"
                         android:background="#ffffff"
-                        android:textColor="@color/black"
                         android:fontFamily="@font/karla"
                         android:text="Nombre:"
+                        android:textColor="@color/black"
                         android:textSize="17sp" />
 
                     <androidx.constraintlayout.widget.ConstraintLayout
@@ -182,13 +186,13 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="7dp"
-                        android:layout_marginBottom="3dp"
                         android:layout_marginTop="10dp"
+                        android:layout_marginBottom="3dp"
                         android:background="#ffffff"
-                        android:textColor="@color/black"
                         android:fontFamily="@font/karla"
                         android:text="Apellidos:"
-                        android:textSize="17sp"/>
+                        android:textColor="@color/black"
+                        android:textSize="17sp" />
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/frameLayoutSurname"
@@ -240,13 +244,13 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="7dp"
-                        android:layout_marginBottom="3dp"
                         android:layout_marginTop="10dp"
+                        android:layout_marginBottom="3dp"
                         android:background="#ffffff"
-                        android:textColor="@color/black"
                         android:fontFamily="@font/karla"
                         android:text="Email:"
-                        android:textSize="17sp"/>
+                        android:textColor="@color/black"
+                        android:textSize="17sp" />
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/frameLayoutEmail"
@@ -298,13 +302,13 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="7dp"
-                        android:layout_marginBottom="3dp"
                         android:layout_marginTop="10dp"
+                        android:layout_marginBottom="3dp"
                         android:background="#ffffff"
-                        android:textColor="@color/black"
                         android:fontFamily="@font/karla"
                         android:text="Contraseña:"
-                        android:textSize="17sp"/>
+                        android:textColor="@color/black"
+                        android:textSize="17sp" />
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/frameLayoutPassword"
@@ -341,11 +345,11 @@
                             android:layout_marginLeft="8dp"
                             android:background="@android:color/transparent"
                             android:ems="8"
-                            android:maxLength="20"
                             android:fontFamily="@font/karla"
                             android:gravity="center_vertical"
                             android:hint="Ejemplo123"
                             android:inputType="textPassword"
+                            android:maxLength="20"
                             android:textColor="@color/black"
                             android:textColorHint="#808080"
                             app:layout_constraintEnd_toEndOf="@id/imageViewOjo1"
@@ -357,24 +361,25 @@
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="8dp"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintStart_toEndOf="@id/editTextPassword"
                             app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/editTextPassword"
+                            app:layout_constraintTop_toTopOf="parent"
                             app:srcCompat="@drawable/eye_open_icon"
                             tools:layout_editor_absoluteX="194dp" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
+
                     <TextView
                         android:id="@+id/textViewRPassword"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="7dp"
-                        android:layout_marginBottom="3dp"
                         android:layout_marginTop="10dp"
+                        android:layout_marginBottom="3dp"
                         android:background="#ffffff"
-                        android:textColor="@color/black"
                         android:fontFamily="@font/karla"
                         android:text="Repetir Contraseña:"
-                        android:textSize="17sp"/>
+                        android:textColor="@color/black"
+                        android:textSize="17sp" />
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/frameLayoutRPassword"
@@ -383,25 +388,25 @@
                         android:background="@drawable/basic_grey_shape"
                         android:padding="2dp">
 
-                    <ImageView
-                        android:id="@+id/imageViewRPassword1"
-                        android:layout_width="27dp"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="8dp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:srcCompat="@drawable/password_icon" />
+                        <ImageView
+                            android:id="@+id/imageViewRPassword1"
+                            android:layout_width="27dp"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="8dp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:srcCompat="@drawable/password_icon" />
 
-                    <ImageView
-                        android:id="@+id/imageViewRPassword2"
-                        android:layout_width="1.5dp"
-                        android:layout_height="30dp"
-                        android:layout_marginLeft="8dp"
-                        android:background="#bababa"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@+id/editTextRPassword"
-                        app:layout_constraintStart_toEndOf="@+id/imageViewRPassword1"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        <ImageView
+                            android:id="@+id/imageViewRPassword2"
+                            android:layout_width="1.5dp"
+                            android:layout_height="30dp"
+                            android:layout_marginLeft="8dp"
+                            android:background="#bababa"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/editTextRPassword"
+                            app:layout_constraintStart_toEndOf="@+id/imageViewRPassword1"
+                            app:layout_constraintTop_toTopOf="parent" />
 
                         <EditText
                             android:id="@+id/editTextRPassword"
@@ -411,11 +416,11 @@
                             android:layout_marginLeft="8dp"
                             android:background="@android:color/transparent"
                             android:ems="8"
-                            android:maxLength="20"
                             android:fontFamily="@font/karla"
                             android:gravity="center_vertical"
                             android:hint="Ejemplo123"
                             android:inputType="textPassword"
+                            android:maxLength="20"
                             android:textColor="@color/black"
                             android:textColorHint="#808080"
                             app:layout_constraintEnd_toEndOf="@id/imageViewOjo2"
@@ -427,9 +432,9 @@
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="8dp"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintStart_toEndOf="@id/editTextRPassword"
                             app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/editTextRPassword"
+                            app:layout_constraintTop_toTopOf="parent"
                             app:srcCompat="@drawable/eye_open_icon"
                             tools:layout_editor_absoluteX="194dp" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -439,12 +444,12 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="7dp"
-                        android:layout_marginBottom="3dp"
                         android:layout_marginTop="10dp"
+                        android:layout_marginBottom="3dp"
                         android:background="#ffffff"
-                        android:textColor="@color/black"
                         android:fontFamily="@font/karla"
                         android:text="NIF:"
+                        android:textColor="@color/black"
                         android:textSize="17sp" />
 
                     <androidx.constraintlayout.widget.ConstraintLayout
@@ -498,12 +503,12 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="7dp"
-                        android:layout_marginBottom="3dp"
                         android:layout_marginTop="10dp"
+                        android:layout_marginBottom="3dp"
                         android:background="#ffffff"
-                        android:textColor="@color/black"
                         android:fontFamily="@font/karla"
                         android:text="IBAN:"
+                        android:textColor="@color/black"
                         android:textSize="17sp" />
 
                     <androidx.constraintlayout.widget.ConstraintLayout
@@ -556,35 +561,35 @@
                         android:id="@+id/frameLayoutB"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:layout_marginTop="30dp"
-                        android:padding="2dp"
-                        android:layout_gravity="center">
+                        android:padding="2dp">
 
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:id="@+id/frameLayoutBInside"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_gravity="center"
                             android:layout_marginBottom="50dp"
                             android:padding="5dp"
-                            app:layout_constraintTop_toTopOf="parent"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            android:layout_gravity="center"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
                             tools:layout_editor_absoluteY="2dp">
 
                             <Button
                                 android:id="@+id/buttonCancel"
                                 android:layout_width="130dp"
                                 android:layout_height="43dp"
+                                android:background="@drawable/rounded_button_cancel"
+                                android:fontFamily="@font/karla"
                                 android:text="Cancelar"
                                 android:textAllCaps="false"
-                                android:textSize="20sp"
-                                app:layout_constraintEnd_toStartOf="@id/buttonSignUp"
                                 android:textColor="@color/black"
-                                android:fontFamily="@font/karla"
-                                android:background="@drawable/rounded_button_cancel"
+                                android:textSize="20sp"
                                 app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toStartOf="@id/buttonSignUp"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -593,14 +598,14 @@
                                 android:layout_width="130dp"
                                 android:layout_height="43dp"
                                 android:layout_marginStart="30dp"
+                                android:background="@drawable/rounded_button_signup"
+                                android:fontFamily="@font/karla"
                                 android:text="Sign Up"
-                                android:textSize="20sp"
                                 android:textAllCaps="false"
                                 android:textColor="@color/white"
-                                android:fontFamily="@font/karla"
+                                android:textSize="20sp"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
-                                android:background="@drawable/rounded_button_signup"
                                 app:layout_constraintStart_toEndOf="@+id/buttonCancel"
                                 app:layout_constraintTop_toTopOf="parent"
                                 app:layout_constraintVertical_bias="0.0" />
@@ -610,6 +615,14 @@
 
                 </LinearLayout>
             </ScrollView>
+
+            <ImageView
+                android:id="@+id/backArrow"
+                android:layout_width="40dp"
+                android:layout_height="50dp"
+                app:layout_constraintEnd_toStartOf="@+id/scrollView"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/back_grey_arrow" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
