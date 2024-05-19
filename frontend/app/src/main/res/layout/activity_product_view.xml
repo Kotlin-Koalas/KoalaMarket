@@ -24,13 +24,46 @@
             android:orientation="vertical"
             app:layout_constraintTop_toTopOf="parent">
 
-
-            <ImageView
-                android:id="@+id/backArrow"
-                android:layout_width="40dp"
-                android:layout_height="50dp"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="24sp"
-                app:srcCompat="@drawable/back_grey_arrow" />
+                android:id="@+id/backArrow">
+
+                <ImageView
+                    android:id="@+id/backArrowImage"
+                    android:layout_width="40dp"
+                    android:layout_height="50dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/back_grey_arrow" />
+
+                <TextView
+                    android:id="@+id/migasPanPorDefecto"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/karla"
+                    android:text="CatálogoProductos."
+                    android:textColor="#d9d9d9"
+                    android:textSize="17sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/backArrowImage"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.517" />
+                <TextView
+                    android:id="@+id/migasPan"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/karla"
+                    android:text="prueba"
+                    android:textColor="#d9d9d9"
+                    android:textSize="17sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/migasPanPorDefecto"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.517" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <ImageView
                 android:id="@+id/imageProduct"

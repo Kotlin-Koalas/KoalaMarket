@@ -17,11 +17,11 @@
         android:text="Número de tarjeta:"
         android:textColor="@color/black"
         android:textSize="17sp"
-        app:layout_constraintStart_toStartOf="@+id/frameLayoutEmail"
+        app:layout_constraintStart_toStartOf="@+id/frameLayoutNumTarj"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/frameLayoutEmail"
+        android:id="@+id/frameLayoutNumTarj"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@drawable/basic_grey_shape"
@@ -82,7 +82,7 @@
         android:textColor="@color/black"
         android:textSize="17sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/frameLayoutEmail" />
+        app:layout_constraintTop_toBottomOf="@id/frameLayoutNumTarj" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/frameLayoutExpirationDate"
