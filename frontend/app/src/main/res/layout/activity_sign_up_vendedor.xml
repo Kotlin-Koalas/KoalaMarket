@@ -448,7 +448,7 @@
                         android:layout_marginBottom="3dp"
                         android:background="#ffffff"
                         android:fontFamily="@font/karla"
-                        android:text="NIF:"
+                        android:text="CIF:"
                         android:textColor="@color/black"
                         android:textSize="17sp" />
 

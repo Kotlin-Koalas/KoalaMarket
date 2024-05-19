@@ -58,6 +58,10 @@ class ProductView : AppCompatActivity() {
 
         productContext = this
 
+        val migasCatProd = findViewById<TextView>(R.id.migasPanPorDefecto)
+
+        val migasProd = findViewById<TextView>(R.id.migasPan)
+
         val recyclerView = findViewById<GridView>(R.id.recycledViewSellers)
         sellerList  = mutableListOf()
         adapterS = SellerAdapter(this,sellerList)
@@ -73,6 +77,8 @@ class ProductView : AppCompatActivity() {
         val productNumber = product.PN
         val category = product.type
 
+        migasProd.text = name
+
         adapterS.setLeafColor(product.leafColor)
 
 
@@ -82,7 +88,7 @@ class ProductView : AppCompatActivity() {
         logic.getAllSellers(productNumber)
 
 
-        val backMainScreen = findViewById<ImageView>(R.id.backArrow)
+        val backMainScreen = findViewById<ConstraintLayout>(R.id.backArrow)
         val nameText = findViewById<TextView>(R.id.nameProduct)
         val priceText = findViewById<TextView>(R.id.price)
         val stockText = findViewById<TextView>(R.id.stock)

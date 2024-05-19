@@ -32,6 +32,23 @@ class SignUpComprador : AppCompatActivity() {
     private lateinit var linearLayout:LinearLayout
     private var indexBefore = 0
     private var currentTypeOfPayment = -1
+
+    private var isID = false
+    private var isName = false
+    private var isSurname = false
+    private var isDNI = false
+    private var isEmail = false
+    private var isPassword = false
+    private var isRPassword = false
+    private var isSA = false
+    private var isFA = false
+    private var isPayPal = false
+    private var isBizum = false
+    private var isNumTarj = false
+    private var isExpM = false
+    private var isExpY = false
+    private var isCVC = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -117,6 +134,21 @@ class SignUpComprador : AppCompatActivity() {
         signUpButton.setOnClickListener{
             var popUpOrNot = false
             var popUpText = ""
+            isID = false
+            isName = false
+            isSurname = false
+            isDNI = false
+            isEmail = false
+            isPassword = false
+            isRPassword = false
+            isSA = false
+            isFA = false
+            isPayPal = false
+            isBizum = false
+            isNumTarj = false
+            isExpM = false
+            isExpY = false
+            isCVC = false
 
             val firstPassword = firstPasswordField.text.toString()
             val secondPassword = secondPasswordField.text.toString()
@@ -124,12 +156,14 @@ class SignUpComprador : AppCompatActivity() {
             if(notEqual){
                 popUpOrNot = true
                 popUpText += "- Las contraseñas no coinciden, por favor, asegurate de que sean iguales.\n"
+                isRPassword = true
             }
 
             val patternPassword = "^(?=.{4,})(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]+\$".toRegex()
             if( !patternPassword.containsMatchIn(firstPassword) || !patternPassword.containsMatchIn(secondPassword)){
                 popUpOrNot = true
                 popUpText += "- La contraseña debe contener mínimo un número, una letra mayúscula, y una letra minúscula. Además no debe contener caracteres especiales, solo letras (mayúsculas y minúsculas), números y tener una logitud mínima de 4 caracteres.\n"
+                isPassword = true
             }
 
             if(currentTypeOfPayment == R.layout.activity_calendar_view) {
@@ -144,6 +178,7 @@ class SignUpComprador : AppCompatActivity() {
                 if(monthValue > 12 || monthValue < 1){
                     popUpOrNot = true
                     popUpText += "- Inserte un valor para el mes válido (1-12).\n"
+                    isExpM = true
                 }
                 val currentYearFull = LocalDate.now().year.toString()
                 var currentYearString = currentYearFull.substring(currentYearFull.length - 2)
@@ -154,10 +189,12 @@ class SignUpComprador : AppCompatActivity() {
                 if(currentYear > yearValue){
                     popUpOrNot = true
                     popUpText += "- Inserte una fecha de cacucidad de la tarjeta a futuro.\n"
+                    isExpY = true
                 } else  if (currentYear == yearValue && monthValue < currentMonth) {
                     popUpOrNot = true
                     popUpText += "- Inserte una fecha de cacucidad de la tarjeta a futuro.\n"
-
+                    isExpY = true
+                    isExpM = true
                 }
             }
 
@@ -168,9 +205,20 @@ class SignUpComprador : AppCompatActivity() {
             val currIdField = findViewById<EditText>(R.id.editTextID).text
             val currId = currIdField.toString()
             val patternOnlyLetters = "^[a-zA-Z]*$".toRegex()
-            if(!patternOnlyLetters.containsMatchIn(currName) || !patternOnlyLetters.containsMatchIn(currSurname) || !patternOnlyLetters.containsMatchIn(currId)){
+            if(!patternOnlyLetters.containsMatchIn(currName)){
                 popUpOrNot = true
-                popUpText += "- En los campos de ID de Usuario, Nombre y Apellido solo deben haber letras.\n"
+                popUpText += "- En el campo del Nombre solo deben hacer letras\n"
+                isName = true
+            }
+            if (!patternOnlyLetters.containsMatchIn(currSurname)){
+                popUpOrNot = true
+                popUpText += "- En el campo del Apellidos solo deben haber letras.\n"
+                isSurname = true
+            }
+            if(!patternOnlyLetters.containsMatchIn(currId)){
+                popUpOrNot = true
+                popUpText += "- En el campo del ID de Usuario solo deben haber letras.\n"
+                isID = true
             }
 
             val patternDNI = "[0-9]{8}[a-zA-Z]".toRegex()
@@ -178,6 +226,7 @@ class SignUpComprador : AppCompatActivity() {
             if(!patternDNI.containsMatchIn(currDNI)){
                 popUpOrNot = true
                 popUpText += "- Inserte un DNI válido, con 8 números y una letra al final.\n"
+                isDNI = true
             } else{
                 val numbers = currDNI.substring(0, currDNI.length - 1) // Extract numbers
                 val letter = currDNI.last().uppercaseChar() // Get last character and convert to uppercase
@@ -189,6 +238,7 @@ class SignUpComprador : AppCompatActivity() {
             if(!patternCorreo.containsMatchIn(currCorreo)){
                 popUpOrNot = true
                 popUpText += "- Proporcione una dirección de correo válida siguiendo el formato standard.\n"
+                isEmail = true
             }
 
             if(currentTypeOfPayment == R.layout.paypal_option) {
@@ -196,39 +246,63 @@ class SignUpComprador : AppCompatActivity() {
                 if(!patternCorreo.containsMatchIn(currPayPalCorreo)){
                     popUpOrNot = true
                     popUpText += "- Proporcione una dirección de correo de la cuenta de PayPal válida siguiendo el formato standard.\n"
+                    isPayPal = true
                 }
             }
 
             val currSA = findViewById<EditText>(R.id.editTextAddress).text.toString()
             val currFA = findViewById<EditText>(R.id.editTextFAddress).text.toString()
-            if(currId.isEmpty() || currName.isEmpty() || currSurname.isEmpty() || currCorreo.isEmpty() || firstPassword.isEmpty() || secondPassword.isEmpty() || currDNI.isEmpty() || currSA.isEmpty() || currFA.isEmpty()){
+            if(currSA.isEmpty()){
+                popUpOrNot = true
+                popUpText += "- Debe rellenar el campo de Dirección de Envio.\n"
+                isSA = true
+            }
+            if(currFA.isEmpty()){
+                popUpOrNot = true
+                popUpText += "- Debe rellenar el campo de Dirección de Facturación.\n"
+                isFA = true
+            }
+            if(currId.isEmpty() || currName.isEmpty() || currSurname.isEmpty() || currCorreo.isEmpty() || firstPassword.isEmpty() || secondPassword.isEmpty() || currDNI.isEmpty()){
                 popUpOrNot = true
                 popUpText += "- Todos los campos deben estar rellenados.\n"
             } else if(currentTypeOfPayment == R.layout.paypal_option){
                 val currPayPalCorreo = findViewById<EditText>(R.id.editTextEmailPayPal).text.toString()
                 if(currPayPalCorreo.isEmpty()){
                     popUpOrNot = true
-                    popUpText += "- Todos los campos deben estar rellenados.\n"
+                    popUpText += "- Debe rellenar el campo del Correo de Paypal.\n"
+                    isPayPal = true
                 }
             } else if(currentTypeOfPayment == R.layout.bizum_option) {
                 val currBizumNum = findViewById<EditText>(R.id.editTextBizumNumber).text.toString()
                 if (currBizumNum.isEmpty()) {
                     popUpOrNot = true
-                    popUpText += "- Todos los campos deben estar rellenados.\n"
+                    popUpText += "- Debe rellenar el campo del número de telefono de Bizum.\n"
+                    isBizum = true
                 }
             } else if(currentTypeOfPayment == R.layout.activity_calendar_view) {
                 val currNumTarj = findViewById<EditText>(R.id.editTextnumTarj).text.toString()
                 val currExpM = findViewById<EditText>(R.id.editTextCad).text.toString()
                 val currExpY = findViewById<EditText>(R.id.editTextCad2).text.toString()
                 val currCVC = findViewById<EditText>(R.id.editTextCVC).text.toString()
-                if (currNumTarj.isEmpty() || currExpM.isEmpty() || currExpY.isEmpty() || currCVC.isEmpty()) {
+                if (currNumTarj.isEmpty()){
                     popUpOrNot = true
-                    popUpText += "- Todos los campos deben estar rellenados.\n"
+                    popUpText += "- Debe rellenar el campo del Número de tarjeta.\n"
+                    isNumTarj = true
+                }
+                if(currCVC.isEmpty()){
+                    popUpOrNot = true
+                    popUpText += "- Debe rellenar el campo de CVC.\n"
+                    isCVC = true
+                }
+                if (currExpM.isEmpty() || currExpY.isEmpty()) {
+                    popUpOrNot = true
+                    popUpText += "- Debe rellenar el campo de Caducidad.\n"
                 }
             }
 
             if(popUpOrNot){
                 showCustomDialogBox(popUpText)
+                checkErrors()
             } else  {
                 if(currentTypeOfPayment == R.layout.activity_calendar_view) {
                     val currNumTarj = findViewById<EditText>(R.id.editTextnumTarj).text.toString()
@@ -327,6 +401,99 @@ class SignUpComprador : AppCompatActivity() {
         }
         */
         linearLayout.removeViewAt(indexBefore + 1)
+    }
+
+    private fun checkErrors(){
+        if(isID || findViewById<EditText>(R.id.editTextID).text.isEmpty()){
+            findViewById<ConstraintLayout>(R.id.frameLayoutID).setBackgroundResource(R.drawable.red_border)
+        } else {
+            findViewById<ConstraintLayout>(R.id.frameLayoutID).setBackgroundResource(R.drawable.basic_grey_shape)
+        }
+        if(isName || findViewById<EditText>(R.id.editTextName).text.isEmpty()){
+            findViewById<ConstraintLayout>(R.id.frameLayoutName).setBackgroundResource(R.drawable.red_border)
+        } else {
+            findViewById<ConstraintLayout>(R.id.frameLayoutName).setBackgroundResource(R.drawable.basic_grey_shape)
+        }
+        if(isSurname || findViewById<EditText>(R.id.editTextSurname).text.isEmpty()){
+            findViewById<ConstraintLayout>(R.id.frameLayoutSurname).setBackgroundResource(R.drawable.red_border)
+        } else {
+            findViewById<ConstraintLayout>(R.id.frameLayoutSurname).setBackgroundResource(R.drawable.basic_grey_shape)
+        }
+        if(isDNI){
+            findViewById<ConstraintLayout>(R.id.frameLayoutDNI).setBackgroundResource(R.drawable.red_border)
+        } else {
+            findViewById<ConstraintLayout>(R.id.frameLayoutDNI).setBackgroundResource(R.drawable.basic_grey_shape)
+        }
+        if(isEmail){
+            findViewById<ConstraintLayout>(R.id.frameLayoutEmail).setBackgroundResource(R.drawable.red_border)
+        } else {
+            findViewById<ConstraintLayout>(R.id.frameLayoutEmail).setBackgroundResource(R.drawable.basic_grey_shape)
+        }
+        if(isPassword){
+            findViewById<ConstraintLayout>(R.id.frameLayoutPassword).setBackgroundResource(R.drawable.red_border)
+        } else {
+            findViewById<ConstraintLayout>(R.id.frameLayoutPassword).setBackgroundResource(R.drawable.basic_grey_shape)
+        }
+        if(isRPassword || findViewById<EditText>(R.id.editTextRPassword).text.isEmpty()){
+            findViewById<ConstraintLayout>(R.id.frameLayoutRPassword).setBackgroundResource(R.drawable.red_border)
+        } else {
+            findViewById<ConstraintLayout>(R.id.frameLayoutRPassword).setBackgroundResource(R.drawable.basic_grey_shape)
+        }
+        if(isSA){
+            findViewById<ConstraintLayout>(R.id.frameLayoutAddress).setBackgroundResource(R.drawable.red_border)
+        } else {
+            findViewById<ConstraintLayout>(R.id.frameLayoutAddress).setBackgroundResource(R.drawable.basic_grey_shape)
+        }
+        if(isFA){
+            findViewById<ConstraintLayout>(R.id.frameLayoutFAddress).setBackgroundResource(R.drawable.red_border)
+        } else {
+            findViewById<ConstraintLayout>(R.id.frameLayoutFAddress).setBackgroundResource(R.drawable.basic_grey_shape)
+        }
+        if(currentTypeOfPayment == R.layout.paypal_option) {
+            if (isPayPal) {
+                findViewById<ConstraintLayout>(R.id.frameLayoutEmailPaypal).setBackgroundResource(R.drawable.red_border)
+            } else {
+                findViewById<ConstraintLayout>(R.id.frameLayoutEmailPaypal).setBackgroundResource(R.drawable.basic_grey_shape)
+            }
+        }
+        if(currentTypeOfPayment == R.layout.bizum_option) {
+            if (isBizum || findViewById<EditText>(R.id.editTextBizumNumber).text.isEmpty()) {
+                findViewById<ConstraintLayout>(R.id.frameLayoutBizumNumber).setBackgroundResource(R.drawable.red_border)
+            } else {
+                findViewById<ConstraintLayout>(R.id.frameLayoutBizumNumber).setBackgroundResource(R.drawable.basic_grey_shape)
+            }
+        }
+        if(currentTypeOfPayment == R.layout.activity_calendar_view) {
+            if (isNumTarj || findViewById<EditText>(R.id.editTextnumTarj).text.isEmpty()) {
+                findViewById<ConstraintLayout>(R.id.frameLayoutNumTarj).setBackgroundResource(R.drawable.red_border)
+            } else {
+                findViewById<ConstraintLayout>(R.id.frameLayoutNumTarj).setBackgroundResource(R.drawable.basic_grey_shape)
+            }
+            if (isExpM) {
+                findViewById<ConstraintLayout>(R.id.frameLayoutExpirationDate).setBackgroundResource(
+                    R.drawable.red_border
+                )
+            } else {
+                findViewById<ConstraintLayout>(R.id.frameLayoutExpirationDate).setBackgroundResource(
+                    R.drawable.basic_grey_shape
+                )
+            }
+            if (isExpY) {
+                findViewById<ConstraintLayout>(R.id.frameLayoutExpirationDate).setBackgroundResource(
+                    R.drawable.red_border
+                )
+            } else {
+                findViewById<ConstraintLayout>(R.id.frameLayoutExpirationDate).setBackgroundResource(
+                    R.drawable.basic_grey_shape
+                )
+            }
+            if (isCVC || findViewById<EditText>(R.id.editTextCVC).text.isEmpty()) {
+                findViewById<ConstraintLayout>(R.id.frameLayoutCVC).setBackgroundResource(R.drawable.red_border)
+            } else {
+                findViewById<ConstraintLayout>(R.id.frameLayoutCVC).setBackgroundResource(R.drawable.basic_grey_shape)
+            }
+        }
+
     }
 
     companion object {
