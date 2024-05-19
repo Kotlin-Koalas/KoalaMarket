@@ -5,6 +5,7 @@ import com.kotlinkoalas.koalamarket.repo.products.SatisfactionRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Locale;
 
 @Service
 public class SatisfactionService {
@@ -37,6 +38,6 @@ public class SatisfactionService {
         for(SatisfactionUser satisfaction : satisfactions){
             sum += satisfaction.getGradeSatisfaction();
         }
-        return sum/satisfactions.size();
+        return Double.parseDouble(String.format(Locale.US ,"%.1f", sum / satisfactions.size()));
     }
 }

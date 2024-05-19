@@ -1,7 +1,5 @@
 package com.kotlinkoalas.koalamarket.model;
 
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -14,13 +12,27 @@ import lombok.ToString;
 @Setter
 @ToString
 @Entity
-public class Search {
+public class Shipment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JsonIgnore
     private Long id;
 
-    private String search;
-
     private String dni;
+
+    private String name;
+
+    private String surname;
+
+    private String shippingAddress;
+
+    private String billingAddress;
+
+    private String estimatedDate;
+
+    private String totalPrice;
+
+    private String paymentMethod;
+
+    private String status;
+
 }
