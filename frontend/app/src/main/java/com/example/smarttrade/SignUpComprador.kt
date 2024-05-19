@@ -77,6 +77,12 @@ class SignUpComprador : AppCompatActivity() {
             startActivity(IntentS)
         }
 
+        val goBackButton = findViewById<ImageView>(R.id.backArrow)
+        goBackButton.setOnClickListener{
+            val IntentS = Intent(this,MainActivity::class.java)
+            startActivity(IntentS)
+        }
+
         val cancelButton = findViewById<Button>(R.id.buttonCancel)
         val signUpButton = findViewById<Button>(R.id.buttonSignUp)
         cancelButton.setOnClickListener{
