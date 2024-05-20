@@ -16,6 +16,7 @@ class PaymentMethodCreditCard(creditCard:CreditCard): PaymentMethod{
 
     override val customMessage: String = "Estas a punto de pagar con la tarjeta de crédito con el siguiente número: ${creditCard.number}, con fecha de expiración: ${creditCard.expirationDate} y cvc: ${creditCard.cvc}"
     override val image: Int = R.drawable.credit_card_icon
+    override val type : String = "Credit Card"
 
     val creditCard = creditCard
 

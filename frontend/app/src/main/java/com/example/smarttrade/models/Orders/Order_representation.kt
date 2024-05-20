@@ -6,16 +6,14 @@ import com.example.smarttrade.models.CreditCard
 import com.example.smarttrade.models.PaymentMethods.PaymentMethod
 import com.example.smarttrade.models.PaymentMethods.PaymentMethodCreditCard
 import com.example.smarttrade.models.PaymentMethods.PaymentMethodPaypal
-import com.example.smarttrade.models.product_representation_cart
 
-class Order_representation (val  products:MutableList<product_representation_cart>,
-                            val vashippingAddress:String,
+class Order_representation (//val  products:MutableList<product_representation_cart>,
+                            val shippingAddress:String,
                             val billingAddress:String,
-                            val paymentMethod: PaymentMethod,
+                            val paymentMethod: String,
                             val orderID:String,
                             val name:String,
                             val surname:String,
-                            val dni:String,
                             val totalPrice: String,
                             val estimatedDate: String, ){
 

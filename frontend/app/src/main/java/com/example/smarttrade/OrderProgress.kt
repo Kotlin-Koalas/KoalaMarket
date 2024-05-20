@@ -8,9 +8,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.smarttrade.adapters.OrderAdapter
 import com.example.smarttrade.logic.OrderRequests
 import com.example.smarttrade.models.Orders.Order_representation
-import com.example.smarttrade.models.PaymentMethods.PaymentMethodPaypal
-import com.example.smarttrade.models.PersonBuyer
-import com.example.smarttrade.models.product_representation_cart
 
 class OrderProgress :AppCompatActivity() {
 
@@ -30,21 +27,17 @@ class OrderProgress :AppCompatActivity() {
 
         orderList = mutableListOf()
 
-        OrderRequests.getOrders(PersonBuyer.getDNI())
+        OrderRequests.getOrders()
 
         //TODO eliminar ES EJEMPLO
-        val product = product_representation_cart(cif = "cifExample", category = "categoryExample", name = "nameExample", price = "priceExample", image = "imageExample", stock = 10, description = "descriptionExample", leafColor = "leafColorExample", PN = "PNExample", quantity = 1, seller = "sellerExample")
-        val paymentMethod = PaymentMethodPaypal("details1")
         for (i in 1..7) {
             val order = Order_representation(
-                mutableListOf(product),
                 "vashippingAddress$i",
                 "billingAddress$i",
-                paymentMethod,
+                "paymentMethod$i",
                 "orderID$i",
                 "name$i",
                 "surname$i",
-                "dni$i",
                 "totalPrice$i",
                 "estimatedDate$i"
             )
