@@ -2,6 +2,7 @@ package com.example.smarttrade.models.Orders
 
 import android.widget.ImageView
 import android.widget.TextView
+import com.example.smarttrade.logic.OrderRequests
 import com.example.smarttrade.models.CreditCard
 import com.example.smarttrade.models.PaymentMethods.PaymentMethod
 import com.example.smarttrade.models.PaymentMethods.PaymentMethodCreditCard
@@ -60,6 +61,9 @@ class Order_representation (//val  products:MutableList<product_representation_c
         textView.text = state.stateName
     }
 
+    fun updateStateBD(){
+        OrderRequests.updateState(orderID, state.stateName)
+    }
 
 
 
