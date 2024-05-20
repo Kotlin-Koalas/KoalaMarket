@@ -1,6 +1,7 @@
 package com.kotlinkoalas.koalamarket.controller;
 
 import com.kotlinkoalas.koalamarket.service.SearchService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,8 +22,8 @@ public class SearchController {
     }
 
     @PostMapping("/buyers/{dni}/search")
-    public void addSearch(@PathVariable String dni, @RequestBody Map<String, Object> payload) {
+    public ResponseEntity<String> addSearch(@PathVariable String dni, @RequestBody Map<String, Object> payload) {
         String search = (String) payload.get("search");
-        searchService.addSearch(dni, search);
+        return searchService.addSearch(dni, search);
     }
 }

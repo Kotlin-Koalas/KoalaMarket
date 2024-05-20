@@ -1,6 +1,7 @@
 package com.kotlinkoalas.koalamarket.controller.products;
 
 import com.kotlinkoalas.koalamarket.service.products.SatisfactionService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -15,16 +16,16 @@ public class SatisfactionController {
     }
 
     @PostMapping("/products/{productNumber}/satisfaction")
-    public void addSatisfaction(@PathVariable String productNumber, @RequestBody Map<String, Object> payload) {
+    public ResponseEntity<String> addSatisfaction(@PathVariable String productNumber, @RequestBody Map<String, Object> payload) {
         String dni = (String) payload.get("dni");
         double satisfaction = (double) payload.get("satisfaction");
-        repository.addSatisfaction(productNumber, dni, satisfaction);
+        return repository.addSatisfaction(productNumber, dni, satisfaction);
     }
 
     @PutMapping("/products/{productNumber}/satisfaction")
-    public void updateSatisfaction(@PathVariable String productNumber, @RequestBody Map<String, Object> payload) {
+    public ResponseEntity<String> updateSatisfaction(@PathVariable String productNumber, @RequestBody Map<String, Object> payload) {
         String dni = (String) payload.get("dni");
         double satisfaction = (double) payload.get("satisfaction");
-        repository.updateSatisfaction(productNumber, dni, satisfaction);
+        return repository.updateSatisfaction(productNumber, dni, satisfaction);
     }
 }

@@ -2,6 +2,7 @@ package com.kotlinkoalas.koalamarket.service;
 
 import com.kotlinkoalas.koalamarket.model.Search;
 import com.kotlinkoalas.koalamarket.repo.SearchRepository;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -24,11 +25,12 @@ public class SearchService {
         return response;
     }
 
-    public void addSearch(String dni, String search) {
+    public ResponseEntity<String> addSearch(String dni, String search) {
         Search newSearch = new Search();
         newSearch.setDni(dni);
         newSearch.setSearch(search);
         repository.save(newSearch);
+        return ResponseEntity.ok().contentType(org.springframework.http.MediaType.APPLICATION_JSON).body("Search added to user");
     }
 }
 

@@ -2,6 +2,7 @@ package com.kotlinkoalas.koalamarket.service.products;
 
 import com.kotlinkoalas.koalamarket.model.products.SatisfactionUser;
 import com.kotlinkoalas.koalamarket.repo.products.SatisfactionRepository;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,18 +16,21 @@ public class SatisfactionService {
         this.repository = repository;
     }
 
-    public void addSatisfaction(String productNumber, String dni, double satisfaction) {
+    public ResponseEntity<String> addSatisfaction(String productNumber, String dni, double satisfaction) {
         SatisfactionUser newSatisfaction = new SatisfactionUser();
         newSatisfaction.setProductNumber(productNumber);
         newSatisfaction.setDni(dni);
         newSatisfaction.setGradeSatisfaction(satisfaction);
         repository.save(newSatisfaction);
+        return ResponseEntity.ok().contentType(org.springframework.http.MediaType.APPLICATION_JSON).body("Satisfaction added successfully");
+
     }
 
-    public void updateSatisfaction(String productNumber, String dni, double satisfaction) {
+    public ResponseEntity<String> updateSatisfaction(String productNumber, String dni, double satisfaction) {
         SatisfactionUser currentSatisfaction = repository.findByProductNumberAndDni(productNumber, dni);
         currentSatisfaction.setGradeSatisfaction(satisfaction);
         repository.save(currentSatisfaction);
+        return ResponseEntity.ok().contentType(org.springframework.http.MediaType.APPLICATION_JSON).body("Satisfaction updated successfully");
     }
 
     public double getSatisfactionMean(String productNumber){

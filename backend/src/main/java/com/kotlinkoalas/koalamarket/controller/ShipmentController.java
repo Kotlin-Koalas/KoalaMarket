@@ -1,6 +1,7 @@
 package com.kotlinkoalas.koalamarket.controller;
 
 import com.kotlinkoalas.koalamarket.service.ShipmentService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,7 +19,7 @@ public class ShipmentController {
     }
 
     @PostMapping("/buyers/{dni}/shipments")
-    public void addShipment(@PathVariable String dni, @RequestBody Map<String, Object> payload) {
+    public ResponseEntity<String> addShipment(@PathVariable String dni, @RequestBody Map<String, Object> payload) {
         String name = (String) payload.get("name");
         String surname = (String) payload.get("surname");
         String shippingAddress = (String) payload.get("shippingAddress");
@@ -27,12 +28,12 @@ public class ShipmentController {
         String totalPrice = (String) payload.get("totalPrice");
         String paymentMethod = (String) payload.get("paymentMethod");
         String status = (String) payload.get("status");
-        shipmentService.addShipment(dni, name, surname, shippingAddress, billingAddress, estimatedDate, totalPrice, paymentMethod, status);
+        return shipmentService.addShipment(dni, name, surname, shippingAddress, billingAddress, estimatedDate, totalPrice, paymentMethod, status);
     }
 
     @PostMapping("/buyers/{dni}/shipments/{id}/status")
-    public void updateShipmentStatus(@PathVariable String dni, @PathVariable Long id, @RequestBody Map<String, Object> payload) {
+    public ResponseEntity<String> updateShipmentStatus(@PathVariable String dni, @PathVariable Long id, @RequestBody Map<String, Object> payload) {
         String status = (String) payload.get("status");
-        shipmentService.updateShipmentStatus(id, status);
+        return shipmentService.updateShipmentStatus(id, status);
     }
 }
