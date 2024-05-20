@@ -15,6 +15,6 @@ class OrderShipped(order:Order_representation) : OrderState {
     }
 
     override fun stateAction() {
-        TODO("Not yet implemented")
+        //no hay acción
     }
 }

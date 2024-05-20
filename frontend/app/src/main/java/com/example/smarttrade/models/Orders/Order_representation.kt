@@ -25,12 +25,14 @@ class Order_representation (//val  products:MutableList<product_representation_c
     lateinit var delivered:OrderState
     lateinit var preparing:OrderState
     lateinit var returned:OrderState
+    lateinit var canceled:OrderState
 
     init{
         shipped = OrderShipped(this)
         delivered = OrderDelivered(this)
         preparing = OrderPreparing(this)
         returned = OrderReturned(this)
+        canceled = OrderCanceled(this)
     }
 
     var state:OrderState = preparing
