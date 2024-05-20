@@ -1,6 +1,7 @@
 package com.example.smarttrade.models.Orders
 
 import com.example.smarttrade.R
+import com.example.smarttrade.logic.OrderRequests
 
 class OrderShipped(order:Order_representation) : OrderState {
 
@@ -10,7 +11,7 @@ class OrderShipped(order:Order_representation) : OrderState {
     var order:Order_representation = order
     override fun nextState() {
         order.setStates(order.delivered)
-        //TODO peticion a la API de pasar al siguiente estado
+        order.updateStateBD()
     }
 
     override fun stateAction() {
