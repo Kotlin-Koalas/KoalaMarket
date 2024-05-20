@@ -28,21 +28,6 @@ class OrderProgress :AppCompatActivity() {
         orderList = mutableListOf()
 
         OrderRequests.getOrders()
-
-        //TODO eliminar ES EJEMPLO
-        for (i in 1..7) {
-            val order = Order_representation(
-                "vashippingAddress$i",
-                "billingAddress$i",
-                "paymentMethod$i",
-                "orderID$i",
-                "name$i",
-                "surname$i",
-                "totalPrice$i",
-                "estimatedDate$i"
-            )
-            orderList.add(order)
-        }
         setOrders(orderList)
 
         val backButton = findViewById<ImageView>(R.id.imageViewBackArrow)

@@ -45,6 +45,7 @@ class PaymentMethodPaypal(PayPalEmail:String):PaymentMethod {
 
         btnOk.setOnClickListener{
             OrderRequests.addOrder(order)
+            dialog.dismiss()
         }
 
         btnCancel.setOnClickListener{
