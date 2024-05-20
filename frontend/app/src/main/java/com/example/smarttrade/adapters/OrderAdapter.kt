@@ -66,7 +66,7 @@ class OrderAdapter(
 
         val imageState = view.findViewById<ImageView>(R.id.imageState)
 
-        val dni = orderList[position].dni
+
         textNumber.text = orderList[position].orderID
         totalPrice.text = orderList[position].totalPrice
         estimatedDate.text = orderList[position].estimatedDate

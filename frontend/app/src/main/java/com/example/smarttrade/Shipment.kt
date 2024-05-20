@@ -14,8 +14,6 @@ import android.widget.Spinner
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.example.smarttrade.models.Orders.Order_representation
 import com.example.smarttrade.models.PaymentMethods.PaymentMethod
 import com.example.smarttrade.models.PaymentMethods.PaymentMethodBizum
@@ -167,14 +165,13 @@ class Shipment : AppCompatActivity() {
             else
             {
                 createdOrder = Order_representation(
-                    PersonBuyer.getSelectedItemsCart(),
+                    //PersonBuyer.getSelectedItemsCart(),
                     selectedShippingAddress,
                     selectedBillingAddress,
-                    selectedPaymentMethod,
+                    selectedPaymentMethod.type,
                     "order"+ Random.nextInt(10000, 99999),
                     nameTextView.text.toString(),
                     surnameTextView.text.toString(),
-                    PersonBuyer.getDNI(),
                     PersonBuyer.getTotalPrice().toString(),
                     generateRandomFutureDate().toString()
                     )

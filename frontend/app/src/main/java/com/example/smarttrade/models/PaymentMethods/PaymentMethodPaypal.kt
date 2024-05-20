@@ -13,8 +13,10 @@ import com.example.smarttrade.models.Orders.Order_representation
 
 class PaymentMethodPaypal(PayPalEmail:String):PaymentMethod {
 
+
     override val customMessage: String = "Estas a punto de pagar con PayPal, usando la siguiente cuenta: $PayPalEmail"
     override val image: Int = R.drawable.email_icon
+    override val type : String = "PayPal"
 
     val paypalEmail = PayPalEmail
 

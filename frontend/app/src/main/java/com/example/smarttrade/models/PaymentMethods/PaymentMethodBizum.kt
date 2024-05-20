@@ -15,6 +15,7 @@ class PaymentMethodBizum(bizumNumber:String): PaymentMethod{
 
     override val customMessage: String = "Estas a punto de pagar con Bizum, usando el siguiente número: $bizumNumber"
     override val image: Int = R.drawable.phone
+    override val type : String = "Bizum"
 
     val bizumNumber = bizumNumber
 
