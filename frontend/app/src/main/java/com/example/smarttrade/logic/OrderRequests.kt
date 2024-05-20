@@ -87,6 +87,27 @@ object OrderRequests {
 
     }
 
+    fun updateState(orderID: String, state: String){
+        if(!isOrderQueue) {
+            orderVolleyQueue = Volley.newRequestQueue(MainActivity.getContext())
+            isOrderQueue = true
+        }
 
+        val dni = PersonBuyer.getDNI()
+
+        val json = JSONObject()
+        json.put("status", state)
+
+        val jsonRequest = JsonObjectRequest(
+            Request.Method.POST,"$url/buyers/$dni/shipments/$orderID/status", json,
+            {response ->
+                Log.i("OrderUpdated", "State updated successfully to: $state")
+            },
+            {error ->
+                Log.i("ErrorActualizandoPedido", error.message.toString())
+            })
+        orderVolleyQueue.add(jsonRequest)
     }
+
+}
 
