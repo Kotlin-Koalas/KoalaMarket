@@ -5,6 +5,8 @@ import com.kotlinkoalas.koalamarket.repo.ShipmentRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ShipmentService {
 
@@ -35,5 +37,9 @@ public class ShipmentService {
         currentShipment.setStatus(status);
         repository.save(currentShipment);
         return ResponseEntity.ok().contentType(org.springframework.http.MediaType.APPLICATION_JSON).body("Shipment status updated successfully.");
+    }
+
+    public List<Shipment> getShipmentsByDni(String dni) {
+        return repository.findAllByDni(dni);
     }
 }
