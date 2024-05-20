@@ -15,6 +15,7 @@ class OrderDelivered(order:Order_representation) : OrderState {
     }
 
     override fun stateAction() {
-        TODO("Not yet implemented")
+        order.setStates(order.returned)
+        order.updateStateBD()
     }
 }
