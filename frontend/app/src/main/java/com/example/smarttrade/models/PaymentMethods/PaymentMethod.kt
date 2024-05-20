@@ -10,10 +10,14 @@ interface PaymentMethod {
 
     val image:Int
 
+    val type: String
+
     fun setPayImage(imageView: ImageView)
 
     fun getID():String
 
     fun showMessage(context: Context,order: Order_representation)
+
+
 
 }
