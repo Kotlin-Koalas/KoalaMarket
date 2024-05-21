@@ -92,17 +92,30 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <com.airbnb.lottie.LottieAnimationView
-                    android:id="@+id/imageViewAddWish"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_marginTop="32dp"
-                    app:lottie_scale="2.0"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/heart"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:foregroundGravity="center"
+                    android:layout_marginTop="10sp"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.49"
-                    app:layout_constraintStart_toEndOf="@+id/nameProduct"
+                    app:layout_constraintHorizontal_bias="0.91"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/heart_white" />
+                    >
+
+                    <ImageView
+                        android:id="@+id/imageViewAddWish"
+                        android:layout_width="37dp"
+                        android:layout_height="34dp"
+                        android:foregroundGravity="center"
+                        android:visibility="visible"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.0"
+                        app:srcCompat="@drawable/heart_white" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <LinearLayout
                     android:id="@+id/hola"
@@ -311,14 +324,15 @@
                         android:fontFamily="@font/karla"
                         android:text="0/5"
                         android:textColor="@color/white"
+                        android:maxLength= "6"
                         android:textSize="24dp" />
                 </LinearLayout>
 
                 <TextView
                     android:id="@+id/sellers"
                     android:layout_width="240dp"
-                    android:layout_marginTop="15dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
                     android:fontFamily="@font/karla"
                     android:text="Otros vendedores"
                     android:textColor="@color/white"
@@ -333,13 +347,12 @@
                     android:layout_width="283dp"
                     android:layout_height="279dp"
                     android:layout_marginTop="24dp"
+                    android:verticalSpacing="10sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/sellers"
-                    app:layout_constraintVertical_bias="0.118"
-                    android:verticalSpacing = "10sp"/>
-
+                    app:layout_constraintVertical_bias="0.118" />
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>

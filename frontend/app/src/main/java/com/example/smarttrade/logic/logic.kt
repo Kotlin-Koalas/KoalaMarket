@@ -12,6 +12,7 @@ import com.example.smarttrade.BrowseProductsFiltered
 import com.example.smarttrade.BuildConfig
 import com.example.smarttrade.BuyerMainScreen
 import com.example.smarttrade.MainActivity
+import com.example.smarttrade.ProductView
 import com.example.smarttrade.SellerMain
 import com.example.smarttrade.adapters.SellerAdapter
 import com.example.smarttrade.mainBuyerFragments.HomeFragment
@@ -433,28 +434,75 @@ object logic {
          productVolleyQueue.add(stringRequest)
     }
 
-    /*
-    fun getProduct(PN: String, cb: (String) -> Unit){
-        productVolleyQueue = Volley.newRequestQueue(AddProduct.getContext())
 
+    fun getProduct(PN: String, callback: (Double) -> Unit){
+        productVolleyQueue = Volley.newRequestQueue(ProductView.getContext())
+
+        var r = 0.0
         val stringRequest = StringRequest(
             Request.Method.GET,"$url/products/$PN",
             {response ->
-                val p = JSONObject(response)
-                var res = p.getString("image")
-                Log.i("VA,",res.toString())
-                cb("VA")
+
+                try {
+                    val objects = JSONObject(response)
+                    val product = objects.getJSONArray("items")
+                    var satisfaction = objects.getDouble("grade")
+                    Log.i("RATE",satisfaction.toString())
+                    callback(satisfaction)
+                }
+                catch (e: Exception){
+                    Log.i("ERROR Grade","$e")
+                    callback(0.0)
+                }
 
             },
             {error ->
                   var res = "error"
                 Log.i("NO VA,",res)
-                cb("NO VA")
 
             })
         productVolleyQueue.add(stringRequest)
     }
-*/
+
+    fun addSatisfaction(PN: String, satisfaction: Double, dni : String){
+        productVolleyQueue = Volley.newRequestQueue(ProductView.getContext())
+        val json = JSONObject()
+        json.put("dni", dni)
+        json.put("satisfaction", satisfaction)
+        json.put("productNumber", PN)
+
+        val stringRequest = JsonObjectRequest(
+            Request.Method.POST,"$url/products/$PN/satisfaction",json,
+            {response ->
+                Toast.makeText(ProductView.getContext(), "Grado de satisfacción con éxito", Toast.LENGTH_SHORT).show()
+            },
+            {error ->
+                Toast.makeText(ProductView.getContext(), "Error: $error", Toast.LENGTH_SHORT)
+                    .show()
+                Log.i ("ERROR","$error")
+            })
+        productVolleyQueue.add(stringRequest)
+    }
+
+    fun editSatifaction(PN: String, satisfaction: Double, dni : String){
+        productVolleyQueue = Volley.newRequestQueue(ProductView.getContext())
+        val json = JSONObject()
+        json.put("satisfaction", satisfaction)
+        json.put("dni", dni)
+
+        val stringRequest = JsonObjectRequest(
+            Request.Method.PUT,"$url/products/$PN/satisfaction",json,
+            {response ->
+                Toast.makeText(ProductView.getContext(), "Grado de satisfacción con éxito", Toast.LENGTH_SHORT).show()
+            },
+            {error ->
+                Toast.makeText(ProductView.getContext(), "Error: $error", Toast.LENGTH_SHORT)
+                    .show()
+                Log.i ("ERROR","$error")
+            })
+        productVolleyQueue.add(stringRequest)
+    }
+
 
 
     fun deleteProduct(PN: String, CIF: String){

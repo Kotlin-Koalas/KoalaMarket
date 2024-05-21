@@ -39,13 +39,16 @@ import com.example.smarttrade.models.technology_representation_seller
 import com.example.smarttrade.models.toy_representation_cart
 import com.example.smarttrade.models.toy_representation_seller
 import com.example.smarttrade.volleyRequestClasses.ImageURLtoBitmapConverter
+import java.text.DecimalFormat
 
 class ProductView : AppCompatActivity() {
 
     var currentStock  = 1
     lateinit var adapterS : SellerAdapter
     lateinit var sellerList : MutableList<seller_representation>
+    lateinit var layoutHeart : ConstraintLayout
     var like = false
+    var rated = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -79,6 +82,7 @@ class ProductView : AppCompatActivity() {
 
         migasProd.text = name
 
+        val dni = PersonBuyer.getDNI()
         adapterS.setLeafColor(product.leafColor)
 
 
@@ -89,6 +93,9 @@ class ProductView : AppCompatActivity() {
 
 
         val backMainScreen = findViewById<ConstraintLayout>(R.id.backArrow)
+        var rate : Double = 0.0
+        layoutHeart = findViewById<ConstraintLayout>(R.id.heart)
+        val backMainScreen = findViewById<ImageView>(R.id.backArrow)
         val nameText = findViewById<TextView>(R.id.nameProduct)
         val priceText = findViewById<TextView>(R.id.price)
         val stockText = findViewById<TextView>(R.id.stock)
@@ -105,14 +112,31 @@ class ProductView : AppCompatActivity() {
         val star5 = findViewById<LottieAnimationView>(R.id.star5)
         val rateText = findViewById<TextView>(R.id.rateText)
 
+        logic.getProduct(productNumber) { rateResult ->
+            if (rateResult != null) {
+                rate = rateResult
+                rateText.text = roundToTwoDecimals(rate).toString() +"/5"
+            }
+        }
+
         star1.setOnClickListener{
             rateAnimation(star1,R.raw.rate_animation, true)
             rateAnimation(star2,R.raw.rate_animation, false)
             rateAnimation(star3,R.raw.rate_animation, false)
             rateAnimation(star4,R.raw.rate_animation, false)
             rateAnimation(star5,R.raw.rate_animation, false)
-            rateText.text = "1/5"
-
+            if(rated){
+                logic.editSatifaction(productNumber, 1.0, dni)
+                rated = true
+            }else{
+                logic.addSatisfaction(productNumber, 1.0, dni)
+            }
+            logic.getProduct(productNumber) { updatedRate ->
+                if (updatedRate != null) {
+                    rate = updatedRate
+                    rateText.text = roundToTwoDecimals(rate) +"/5"
+                }
+            }
 
         }
 
@@ -122,7 +146,18 @@ class ProductView : AppCompatActivity() {
             rateAnimation(star3,R.raw.rate_animation, false)
             rateAnimation(star4,R.raw.rate_animation, false)
             rateAnimation(star5,R.raw.rate_animation, false)
-            rateText.text = "2/5"
+            if(rated){
+                logic.editSatifaction(productNumber, 2.0, dni)
+                rated = true
+            }else{
+                logic.addSatisfaction(productNumber, 2.0, dni)
+            }
+            logic.getProduct(productNumber) { updatedRate ->
+                if (updatedRate != null) {
+                    rate = updatedRate
+                    rateText.text = roundToTwoDecimals(rate) +"/5"
+                }
+            }
         }
 
         star3.setOnClickListener {
@@ -131,7 +166,18 @@ class ProductView : AppCompatActivity() {
             rateAnimation(star3,R.raw.rate_animation, true)
             rateAnimation(star4,R.raw.rate_animation, false)
             rateAnimation(star5,R.raw.rate_animation, false)
-            rateText.text = "3/5"
+            if(rated){
+                logic.editSatifaction(productNumber, 3.0, dni)
+                rated = true
+            }else{
+                logic.addSatisfaction(productNumber, 3.0, dni)
+            }
+            logic.getProduct(productNumber) { updatedRate ->
+                if (updatedRate != null) {
+                    rate = updatedRate
+                    rateText.text = roundToTwoDecimals(rate) +"/5"
+                }
+            }
         }
 
         star4.setOnClickListener {
@@ -140,7 +186,18 @@ class ProductView : AppCompatActivity() {
             rateAnimation(star3,R.raw.rate_animation, true)
             rateAnimation(star4,R.raw.rate_animation, true)
             rateAnimation(star5,R.raw.rate_animation, false)
-            rateText.text = "4/5"
+            if(rated){
+                logic.editSatifaction(productNumber, 4.0, dni)
+                rated = true
+            }else{
+                logic.addSatisfaction(productNumber, 4.0, dni)
+            }
+            logic.getProduct(productNumber) { updatedRate ->
+                if (updatedRate != null) {
+                    rate = updatedRate
+                    rateText.text = roundToTwoDecimals(rate) +"/5"
+                }
+            }
         }
 
         star5.setOnClickListener {
@@ -149,7 +206,18 @@ class ProductView : AppCompatActivity() {
             rateAnimation(star3,R.raw.rate_animation, true)
             rateAnimation(star4,R.raw.rate_animation, true)
             rateAnimation(star5,R.raw.rate_animation, true)
-            rateText.text = "5/5"
+            if(rated){
+                logic.editSatifaction(productNumber, 5.0, dni)
+                rated = true
+            }else{
+                logic.addSatisfaction(productNumber, 5.0, dni)
+            }
+            logic.getProduct(productNumber) { updatedRate ->
+                if (updatedRate != null) {
+                    rate = updatedRate
+                    rateText.text = roundToTwoDecimals(rate) +"/5"
+                }
+            }
         }
 
 
@@ -339,111 +407,110 @@ class ProductView : AppCompatActivity() {
 
         }
 
-        val addWishList = findViewById<LottieAnimationView>(R.id.imageViewAddWish)
-        addWishList.setOnClickListener(){
-           like =  likeAnimation(addWishList,R.raw.like_animation, like)
-            if(sellerToy != null){
-                val productToy = toy_representation_cart(
-                    sellerToy!!.cif,
-                    sellerToy!!.name,
-                    sellerToy!!.price,
-                    sellerToy!!.image,
-                    sellerToy!!.stock.toInt(),
-                    sellerToy!!.description,
-                    product.leafColor,
-                    sellerToy!!.productNumber,
-                    currentStock,
-                    sellerToy!!.cif,
-                    sellerToy!!.material,
-                    sellerToy!!.age
-                )
-                Log.i("Product Toy", productToy.toString())
-                PersonBuyer.addProductToWish(productToy)
-                ListWishRequests.addProductToWish(productToy)
-                showCustomDialogBoxSuccess("Producto añadido a lista de deseos correctamente")
+        val addWishList = findViewById<ImageView>(R.id.imageViewAddWish)
+        addWishList.setOnClickListener{
+           like =  likeSelected(addWishList,like)
+                if(like){
+                    if(sellerToy != null){
+                        val productToy = toy_representation_cart(
+                            sellerToy!!.cif,
+                            sellerToy!!.name,
+                            sellerToy!!.price,
+                            sellerToy!!.image,
+                            sellerToy!!.stock.toInt(),
+                            sellerToy!!.description,
+                            product.leafColor,
+                            sellerToy!!.productNumber,
+                            currentStock,
+                            sellerToy!!.cif,
+                            sellerToy!!.material,
+                            sellerToy!!.age
+                        )
+                        Log.i("Product Toy", productToy.toString())
+                        PersonBuyer.addProductToWish(productToy)
+                        ListWishRequests.addProductToWish(productToy)
+                        showCustomDialogBoxSuccess("Producto añadido a lista de deseos correctamente")
 
 
-            }
-            else if (sellerClothes != null){
-                val productClothes = clothes_representation_cart(
-                    sellerClothes!!.cif,
-                    sellerClothes!!.name,
-                    sellerClothes!!.price,
-                    sellerClothes!!.image,
-                    sellerClothes!!.stock.toInt(),
-                    sellerClothes!!.description,
-                    product.leafColor,
-                    sellerClothes!!.productNumber,
-                    currentStock,
-                    sellerClothes!!.cif,
-                    sellerClothes!!.size,
-                    sellerClothes!!.color
-                )
-                Log.i("Product Clothes", productClothes.toString())
-                PersonBuyer.addProductToWish(productClothes)
-                ListWishRequests.addProductToWish(productClothes)
-                showCustomDialogBoxSuccess("Producto añadido a lista de deseos correctamente")
-
-
-
-
-
-            }
-
-            else if(sellerFood != null){
-                val productFood = food_representation_cart(
-                    sellerFood!!.cif,
-                    sellerFood!!.name,
-                    sellerFood!!.price,
-                    sellerFood!!.image,
-                    sellerFood!!.stock.toInt(),
-                    sellerFood!!.description,
-                    product.leafColor,
-                    sellerFood!!.productNumber,
-                    currentStock,
-                    sellerFood!!.cif,
-                    sellerFood!!.calories,
-                    sellerFood!!.macros
-                )
-                Log.i("Product Food", productFood.toString())
-                PersonBuyer.addProductToWish(productFood)
-                ListWishRequests.addProductToWish(productFood)
-                Log.i("Producto añadido", "Patricio mi dios")
-                showCustomDialogBoxSuccess("Producto añadido a lista de deseos correctamente")
+                    }
+                    else if (sellerClothes != null){
+                        val productClothes = clothes_representation_cart(
+                            sellerClothes!!.cif,
+                            sellerClothes!!.name,
+                            sellerClothes!!.price,
+                            sellerClothes!!.image,
+                            sellerClothes!!.stock.toInt(),
+                            sellerClothes!!.description,
+                            product.leafColor,
+                            sellerClothes!!.productNumber,
+                            currentStock,
+                            sellerClothes!!.cif,
+                            sellerClothes!!.size,
+                            sellerClothes!!.color
+                        )
+                        Log.i("Product Clothes", productClothes.toString())
+                        PersonBuyer.addProductToWish(productClothes)
+                        ListWishRequests.addProductToWish(productClothes)
+                        showCustomDialogBoxSuccess("Producto añadido a lista de deseos correctamente")
 
 
 
 
 
-            }
-            else if(sellerTech != null){
-                val productTech = technology_representation_cart(
-                    sellerTech!!.cif,
-                    sellerTech!!.name,
-                    sellerTech!!.price,
-                    sellerTech!!.image,
-                    currentStock,
-                    sellerTech!!.description,
-                    product.leafColor,
-                    sellerTech!!.productNumber,
-                    currentStock,
-                    sellerTech!!.cif,
-                    sellerTech!!.brand,
-                    sellerTech!!.electricConsumption
-                )
-                Log.i("Product Tech", productTech.toString())
-               PersonBuyer.addProductToWish(productTech)
-                ListWishRequests.addProductToWish(productTech)
-                showCustomDialogBoxSuccess("Producto añadido a lista de deseos correctamente")
+                    }
+
+                    else if(sellerFood != null){
+                        val productFood = food_representation_cart(
+                            sellerFood!!.cif,
+                            sellerFood!!.name,
+                            sellerFood!!.price,
+                            sellerFood!!.image,
+                            sellerFood!!.stock.toInt(),
+                            sellerFood!!.description,
+                            product.leafColor,
+                            sellerFood!!.productNumber,
+                            currentStock,
+                            sellerFood!!.cif,
+                            sellerFood!!.calories,
+                            sellerFood!!.macros
+                        )
+                        Log.i("Product Food", productFood.toString())
+                        PersonBuyer.addProductToWish(productFood)
+                        ListWishRequests.addProductToWish(productFood)
+                        Log.i("Producto añadido", "Patricio mi dios")
+                        showCustomDialogBoxSuccess("Producto añadido a lista de deseos correctamente")
 
 
 
 
-            }
-            else{
+
+                    }
+                    else if(sellerTech != null){
+                        val productTech = technology_representation_cart(
+                            sellerTech!!.cif,
+                            sellerTech!!.name,
+                            sellerTech!!.price,
+                            sellerTech!!.image,
+                            currentStock,
+                            sellerTech!!.description,
+                            product.leafColor,
+                            sellerTech!!.productNumber,
+                            currentStock,
+                            sellerTech!!.cif,
+                            sellerTech!!.brand,
+                            sellerTech!!.electricConsumption
+                        )
+                        Log.i("Product Tech", productTech.toString())
+                        PersonBuyer.addProductToWish(productTech)
+                        ListWishRequests.addProductToWish(productTech)
+                        showCustomDialogBoxSuccess("Producto añadido a lista de deseos correctamente")
 
 
-            }
+
+
+                    }
+
+                }
         }
 
 
@@ -455,6 +522,21 @@ class ProductView : AppCompatActivity() {
     fun setSellersShown(list: MutableList<seller_representation>){
         sellerList = list
         adapterS.setSellerListForInstance(adapterS, sellerList)
+
+    }
+
+    fun likeSelected(view: View, like: Boolean): Boolean{
+        if(like){
+            view.setBackgroundResource(R.drawable.heart)
+        }
+        else{
+            view.setBackgroundResource(R.drawable.heart_icon)
+        }
+        return !like
+    }
+
+    fun roundToTwoDecimals(number: Double): String {
+        return String.format("%.2f", number)
 
     }
 
@@ -489,20 +571,7 @@ class ProductView : AppCompatActivity() {
         return !like
     }
 
-    fun likeAnimation(imageView: LottieAnimationView, animation : Int, like: Boolean) : Boolean{
-        if(!like){
-            scaleView(imageView, 2f, 3f)
-            imageView.setAnimation(animation)
-            imageView.playAnimation()
-        }
-        else{
-            imageView.setImageResource(R.drawable.heart_white)
-            scaleView(imageView, 1f, 1f)
 
-        }
-
-        return !like
-    }
 
     fun scaleView(view: View, startScale: Float, endScale: Float) {
         val anim = ScaleAnimation(
