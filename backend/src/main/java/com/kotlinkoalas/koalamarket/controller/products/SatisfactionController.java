@@ -18,7 +18,8 @@ public class SatisfactionController {
     @PostMapping("/products/{productNumber}/satisfaction")
     public ResponseEntity<String> addSatisfaction(@PathVariable String productNumber, @RequestBody Map<String, Object> payload) {
         String dni = (String) payload.get("dni");
-        double satisfaction = (double) payload.get("satisfaction");
+        int aux = (int) payload.get("satisfaction");
+        double satisfaction = (double) aux;
         return repository.addSatisfaction(productNumber, dni, satisfaction);
     }
 
