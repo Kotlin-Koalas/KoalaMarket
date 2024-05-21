@@ -165,7 +165,6 @@ class Shipment : AppCompatActivity() {
             else
             {
                 createdOrder = Order_representation(
-                    //PersonBuyer.getSelectedItemsCart(),
                     selectedShippingAddress,
                     selectedBillingAddress,
                     selectedPaymentMethod.type,
@@ -173,7 +172,8 @@ class Shipment : AppCompatActivity() {
                     nameTextView.text.toString(),
                     surnameTextView.text.toString(),
                     PersonBuyer.getTotalPrice().toString(),
-                    generateRandomFutureDate().toString()
+                    generateRandomFutureDate().toString(),
+                    PersonBuyer.getSelectedItemsCart().first().cif
                     )
                 Log.i("OrderCreated", createdOrder.toString())
                 selectedPaymentMethod.showMessage(this, createdOrder)

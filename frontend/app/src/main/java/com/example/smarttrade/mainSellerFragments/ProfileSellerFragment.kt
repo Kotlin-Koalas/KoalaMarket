@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import com.example.smarttrade.ChangeOrderState
 import com.example.smarttrade.MainActivity
 import com.example.smarttrade.R
 import com.example.smarttrade.mainBuyerFragments.ProfileBuyerFragment
@@ -43,7 +44,10 @@ class ProfileSellerFragment : Fragment() {
 
         val nextState = viewS.findViewById<TextView>(R.id.textViewNextState)
         nextState.setOnClickListener{
-            //TODO go to next state
+            val intent = Intent(contextFragment.requireContext(), ChangeOrderState::class.java)
+            startActivity(intent)
+
+
         }
 
         val logOut = viewS.findViewById<TextView>(R.id.textViewLogOutSeller)

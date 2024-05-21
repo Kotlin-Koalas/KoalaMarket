@@ -10,8 +10,7 @@ import android.widget.TextView
 import com.example.smarttrade.R
 import com.example.smarttrade.models.Orders.Order_representation
 
-
-class OrderAdapter(
+class ChangeOrderStateAdapter(
     private val context : Context,
     private val orderList : MutableList<Order_representation>
 ) : BaseAdapter() {
@@ -55,17 +54,18 @@ class OrderAdapter(
         notifyDataSetChanged()
     }
 
+
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         val view = convertView ?: LayoutInflater.from(parent?.context)
-            .inflate(R.layout.order_view, parent, false)
+            .inflate(R.layout.order_view_next_state, parent, false)
 
-        val textNumber = view.findViewById<TextView>(R.id.textViewNumerOrder)
-        val totalPrice = view.findViewById<TextView>(R.id.textTotalPrice)
-        val estimatedDate = view.findViewById<TextView>(R.id.textViewEstimateDate)
-        val status = view.findViewById<TextView>(R.id.textViewEstado)
-
-        val imageState = view.findViewById<ImageView>(R.id.imageState)
-
+        val textNumber = view.findViewById<TextView>(R.id.textViewNumerOrder_nextState)
+        val totalPrice = view.findViewById<TextView>(R.id.textTotalPrice_nextState)
+        val estimatedDate = view.findViewById<TextView>(R.id.textViewEstimateDate_nextState)
+        val status = view.findViewById<TextView>(R.id.textViewEstado_nextState)
+        val stateAction = view.findViewById<TextView>(R.id.textViewStateAction)
+        val nextState = view.findViewById<TextView>(R.id.textViewNextStates)
+        val imageState = view.findViewById<ImageView>(R.id.imagenextState)
 
         textNumber.text = orderList[position].orderID
         totalPrice.text = orderList[position].totalPrice
@@ -73,12 +73,21 @@ class OrderAdapter(
         status.text = orderList[position].state.stateName
         imageState.setImageResource(orderList[position].state.imageResource)
 
+        stateAction.setOnClickListener {
+            orderList[position].stateAction()
+
+        }
+        nextState.setOnClickListener {
+
+            orderList[position].setIView(imageState)
+            orderList[position].setTView(status)
+            orderList[position].nextState()
+
+        }
+
+
         return view
     }
 
-
-    companion object {
-        var view = mutableListOf<View>()
-    }
 
 }
