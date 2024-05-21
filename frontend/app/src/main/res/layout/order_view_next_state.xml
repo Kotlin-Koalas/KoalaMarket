@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="350dp"
+    android:layout_height="160dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="15dp"
+    android:elevation="5dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layoutOrder"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#ebebeb">
+
+        <ImageView
+            android:id="@+id/imagenextState"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginLeft="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/order_preparing" />
+
+        <TextView
+            android:id="@+id/textViewOrder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="40dp"
+            android:text="Pedido : "
+            app:layout_constraintStart_toEndOf="@+id/imagenextState"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textTotalPrice_nextState"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
+            android:text="33"
+            app:layout_constraintStart_toEndOf="@+id/imagenextState"
+            app:layout_constraintTop_toBottomOf="@+id/textViewOrder" />
+
+        <TextView
+            android:id="@+id/textViewNumerOrder_nextState"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="4dp"
+            android:layout_marginTop="40dp"
+            android:text="1111111"
+            app:layout_constraintStart_toEndOf="@+id/textViewOrder"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView17"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text=" €"
+            app:layout_constraintStart_toEndOf="@+id/textTotalPrice_nextState"
+            app:layout_constraintTop_toBottomOf="@+id/textViewOrder" />
+
+        <TextView
+            android:id="@+id/textView18"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="4dp"
+            android:text="Fecha Estimada :"
+            app:layout_constraintStart_toEndOf="@+id/imagenextState"
+            app:layout_constraintTop_toBottomOf="@+id/textTotalPrice_nextState" />
+
+        <TextView
+            android:id="@+id/textViewEstimateDate_nextState"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
+            android:text=" 31 de septiembre"
+            app:layout_constraintStart_toEndOf="@+id/textView18"
+            app:layout_constraintTop_toBottomOf="@+id/textTotalPrice_nextState" />
+
+        <TextView
+            android:id="@+id/textViewEstado_nextState"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="Preparando"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imagenextState"
+            app:layout_constraintVertical_bias="0.181" />
+
+        <TextView
+            android:id="@+id/textViewStateAction"
+            android:layout_width="91dp"
+            android:layout_height="32dp"
+            android:background="@drawable/circular_button_grey"
+            android:fontFamily="@font/karla"
+            android:gravity="center"
+            android:text="Acción de Estado"
+            android:textColor="@color/black"
+            android:textSize="12dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/textViewNextStates"
+            app:layout_constraintStart_toEndOf="@+id/textViewEstado_nextState"
+            app:layout_constraintTop_toBottomOf="@+id/textView18" />
+
+        <TextView
+            android:id="@+id/textViewNextStates"
+            android:layout_width="91dp"
+            android:layout_height="32dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/circular_button_green"
+            android:fontFamily="@font/karla"
+            android:gravity="center"
+            android:text="Siguiente Estado"
+            android:textColor="@color/white"
+            android:textSize="12dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewEstimateDate_nextState"
+            app:layout_constraintVertical_bias="0.571" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

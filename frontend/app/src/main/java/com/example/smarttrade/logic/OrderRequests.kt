@@ -45,7 +45,8 @@ object OrderRequests {
                         o.getString("name"),
                         o.getString("surname"),
                         o.getString("totalPrice"),
-                        o.getString("estimatedDate")
+                        o.getString("estimatedDate"),
+                        o.getString("cif")
                     )
                     res.add(order)
                 }
@@ -77,6 +78,7 @@ object OrderRequests {
         json.put("totalPrice", order.totalPrice)
         json.put("paymentMethod", order.paymentMethod)
         json.put("status", order.state.stateName)
+        json.put("cif", order.cif)
 
         val jsonRequest = JsonObjectRequest(
             Request.Method.POST,"$url/buyers/$dni/shipments", json,
