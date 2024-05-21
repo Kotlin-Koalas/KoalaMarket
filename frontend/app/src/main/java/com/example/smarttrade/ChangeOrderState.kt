@@ -6,6 +6,7 @@ import android.widget.ImageView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import com.example.smarttrade.adapters.ChangeOrderStateAdapter
+import com.example.smarttrade.logic.OrderRequests
 import com.example.smarttrade.models.Orders.Order_representation
 
 class ChangeOrderState : AppCompatActivity() {
@@ -25,7 +26,8 @@ class ChangeOrderState : AppCompatActivity() {
 
         orderList = mutableListOf()
 
-        //OrderRequests.getOrdersSeller()//TODO implementar metodo
+        OrderRequests.getOrdersSeller()
+        setOrders(orderList)
 
 
         val backButton = findViewById<ImageView>(R.id.imageViewBackArrowState)

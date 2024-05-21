@@ -17,6 +17,7 @@ class Order_representation (
                             val surname:String,
                             val totalPrice: String,
                             val estimatedDate: String,
+                            val dni : String,
                             val cif : String,){
 
     lateinit var imageView:ImageView
@@ -65,7 +66,7 @@ class Order_representation (
     }
 
     fun updateStateBD(){
-        OrderRequests.updateState(orderID, state.stateName)
+        OrderRequests.updateState(orderID, state.stateName, dni)
     }
 
 

@@ -7,10 +7,12 @@ import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.example.smarttrade.BuildConfig
+import com.example.smarttrade.ChangeOrderState
 import com.example.smarttrade.MainActivity
 import com.example.smarttrade.OrderProgress
 import com.example.smarttrade.models.Orders.Order_representation
 import com.example.smarttrade.models.PersonBuyer
+import com.example.smarttrade.models.PersonSeller
 import org.json.JSONArray
 import org.json.JSONObject
 
@@ -46,6 +48,7 @@ object OrderRequests {
                         o.getString("surname"),
                         o.getString("totalPrice"),
                         o.getString("estimatedDate"),
+                        o.getString("dni"),
                         o.getString("cif")
                     )
                     res.add(order)
@@ -59,7 +62,48 @@ object OrderRequests {
         orderVolleyQueue.add(stringRequest)
 
 
+    }
+
+    fun getOrdersSeller(){
+        if(!isOrderQueue) {
+            orderVolleyQueue = Volley.newRequestQueue(MainActivity.getContext())
+            isOrderQueue = true
         }
+
+        val cif = PersonSeller.getCIF()
+        val res = mutableListOf<Order_representation>()
+        val stringRequest = StringRequest (
+            Request.Method.GET,"$url/vendors/$cif/shipments",
+            {response ->
+                val orders = JSONArray(response)
+                for (i in 0 until orders.length()) {
+                    val o = orders.getJSONObject(i)
+                    val order = Order_representation(
+                        o.getString("shippingAddress"),
+                        o.getString("billingAddress"),
+                        o.getString("paymentMethod"),
+                        o.getString("id"),
+                        o.getString("name"),
+                        o.getString("surname"),
+                        o.getString("totalPrice"),
+                        o.getString("estimatedDate"),
+                        o.getString("dni"),
+                        o.getString("cif")
+                    )
+                    res.add(order)
+                }
+                Log.i("MIS PADRES ME ABANDONARON A LAS 7 años", res.toString())
+                ChangeOrderState.setOrders(res)
+            },
+            {error ->
+                Log.i("ErrorGettingOrders", error.message.toString())
+            })
+        orderVolleyQueue.add(stringRequest)
+
+
+    }
+
+
 
     fun addOrder(order: Order_representation){
         if(!isOrderQueue) {
@@ -78,6 +122,7 @@ object OrderRequests {
         json.put("totalPrice", order.totalPrice)
         json.put("paymentMethod", order.paymentMethod)
         json.put("status", order.state.stateName)
+        json.put("dni", order.dni)
         json.put("cif", order.cif)
 
         val jsonRequest = JsonObjectRequest(
@@ -93,13 +138,13 @@ object OrderRequests {
 
     }
 
-    fun updateState(orderID: String, state: String){
+    fun updateState(orderID: String, state: String, dni: String){
         if(!isOrderQueue) {
             orderVolleyQueue = Volley.newRequestQueue(MainActivity.getContext())
             isOrderQueue = true
         }
 
-        val dni = PersonBuyer.getDNI()
+
 
         val json = JSONObject()
         json.put("status", state)

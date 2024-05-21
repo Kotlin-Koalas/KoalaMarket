@@ -1,12 +1,14 @@
 package com.example.smarttrade.adapters
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.view.isVisible
 import com.example.smarttrade.R
 import com.example.smarttrade.models.Orders.Order_representation
 
@@ -73,15 +75,52 @@ class ChangeOrderStateAdapter(
         status.text = orderList[position].state.stateName
         imageState.setImageResource(orderList[position].state.imageResource)
 
+
+        when (orderList[position].state.stateName) {
+            "Preparando pedido" -> {
+                nextState.text = "Enviar pedido"
+                stateAction.text = "Cancelar pedido"
+
+            }
+            "Pedido enviado" -> {
+                nextState.text = "Entregar pedido"
+                stateAction.isVisible = false
+
+
+            }
+            "Pedido entregado" -> {
+                nextState.text = "Devolver pedido"
+                stateAction.isVisible = false
+
+            }
+            "Pedido devuelto" -> {
+                nextState.isVisible = false
+                stateAction.isVisible = false
+
+            }
+            "Pedido cancelado" -> {
+                nextState.text = "AAAAAAAAA"
+               // nextState.isVisible = false
+                stateAction.isVisible = false
+
+
+            }
+            else ->{
+                Log.i("No se ha encontrado el estado", "No se ha encontrado el estado")
+            }
+        }
+
+
         stateAction.setOnClickListener {
             orderList[position].stateAction()
 
         }
         nextState.setOnClickListener {
-
             orderList[position].setIView(imageState)
             orderList[position].setTView(status)
             orderList[position].nextState()
+            notifyDataSetChanged()
+
 
         }
 
