@@ -173,6 +173,7 @@ class Shipment : AppCompatActivity() {
                     surnameTextView.text.toString(),
                     PersonBuyer.getTotalPrice().toString(),
                     generateRandomFutureDate().toString(),
+                    PersonBuyer.getDNI(),
                     PersonBuyer.getSelectedItemsCart().first().cif
                     )
                 Log.i("OrderCreated", createdOrder.toString())

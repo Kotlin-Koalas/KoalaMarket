@@ -22,7 +22,6 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.airbnb.lottie.LottieAnimationView
-import com.example.smarttrade.adapters.OrderAdapter.Companion.view
 import com.example.smarttrade.adapters.SellerAdapter
 import com.example.smarttrade.logic.ListWishRequests
 import com.example.smarttrade.logic.ShoppingCartRequests
@@ -39,7 +38,6 @@ import com.example.smarttrade.models.technology_representation_seller
 import com.example.smarttrade.models.toy_representation_cart
 import com.example.smarttrade.models.toy_representation_seller
 import com.example.smarttrade.volleyRequestClasses.ImageURLtoBitmapConverter
-import java.text.DecimalFormat
 
 class ProductView : AppCompatActivity() {
 
@@ -92,7 +90,7 @@ class ProductView : AppCompatActivity() {
         logic.getAllSellers(productNumber)
 
 
-        val backMainScreen = findViewById<ConstraintLayout>(R.id.backArrow)
+        //val backMainScreen = findViewById<ConstraintLayout>(R.id.backArrow)
         var rate : Double = 0.0
         layoutHeart = findViewById<ConstraintLayout>(R.id.heart)
         val backMainScreen = findViewById<ImageView>(R.id.backArrow)
