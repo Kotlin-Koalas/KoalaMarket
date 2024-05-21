@@ -11,10 +11,11 @@ class OrderDelivered(order:Order_representation) : OrderState {
 
     override fun nextState() {
         order.setStates(order.returned)
-        //TODO peticion a la API de pasar al siguiente estado
+        order.updateStateBD()
     }
 
     override fun stateAction() {
-        TODO("Not yet implemented")
+        order.setStates(order.returned)
+        order.updateStateBD()
     }
 }

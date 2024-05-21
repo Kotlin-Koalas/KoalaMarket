@@ -1,12 +1,11 @@
 package com.kotlinkoalas.koalamarket.controller;
 
+import com.kotlinkoalas.koalamarket.model.Shipment;
 import com.kotlinkoalas.koalamarket.service.ShipmentService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -35,5 +34,10 @@ public class ShipmentController {
     public ResponseEntity<String> updateShipmentStatus(@PathVariable String dni, @PathVariable Long id, @RequestBody Map<String, Object> payload) {
         String status = (String) payload.get("status");
         return shipmentService.updateShipmentStatus(id, status);
+    }
+
+    @GetMapping("/buyers/{dni}/shipments")
+    public List<Shipment> getShipmentsByDni(@PathVariable String dni) {
+        return shipmentService.getShipmentsByDni(dni);
     }
 }
