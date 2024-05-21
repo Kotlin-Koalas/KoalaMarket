@@ -35,4 +35,5 @@ public class Shipment {
 
     private String status;
 
+    private String cif;
 }

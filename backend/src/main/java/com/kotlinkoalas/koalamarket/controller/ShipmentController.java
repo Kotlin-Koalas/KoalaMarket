@@ -27,11 +27,12 @@ public class ShipmentController {
         String totalPrice = (String) payload.get("totalPrice");
         String paymentMethod = (String) payload.get("paymentMethod");
         String status = (String) payload.get("status");
-        return shipmentService.addShipment(dni, name, surname, shippingAddress, billingAddress, estimatedDate, totalPrice, paymentMethod, status);
+        String cif = (String) payload.get("cif");
+        return shipmentService.addShipment(dni, name, surname, shippingAddress, billingAddress, estimatedDate, totalPrice, paymentMethod, status, cif);
     }
 
-    @PostMapping("/buyers/{dni}/shipments/{id}/status")
-    public ResponseEntity<String> updateShipmentStatus(@PathVariable String dni, @PathVariable Long id, @RequestBody Map<String, Object> payload) {
+    @PostMapping("/shipments/{id}/status")
+    public ResponseEntity<String> updateShipmentStatus(@PathVariable Long id, @RequestBody Map<String, Object> payload) {
         String status = (String) payload.get("status");
         return shipmentService.updateShipmentStatus(id, status);
     }
@@ -39,5 +40,10 @@ public class ShipmentController {
     @GetMapping("/buyers/{dni}/shipments")
     public List<Shipment> getShipmentsByDni(@PathVariable String dni) {
         return shipmentService.getShipmentsByDni(dni);
+    }
+
+    @GetMapping("/vendors/{cif}/shipments")
+    public List<Shipment> getShipmentsByCif(@PathVariable String cif) {
+        return shipmentService.getShipmentsByCif(cif);
     }
 }

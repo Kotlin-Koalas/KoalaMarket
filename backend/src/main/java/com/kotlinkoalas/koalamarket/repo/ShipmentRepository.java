@@ -8,5 +8,6 @@ import java.util.List;
 
 @RepositoryRestController
 public interface ShipmentRepository extends JpaRepository<Shipment, Long>{
-    List<Shipment> findAllByDni(String orderNumber);
+    List<Shipment> findAllByDni(String dni);
+    List<Shipment> findAllByCif(String cif);
 }

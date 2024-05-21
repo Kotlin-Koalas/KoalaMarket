@@ -16,7 +16,7 @@ public class ShipmentService {
         this.repository = repository;
     }
 
-    public ResponseEntity<String> addShipment(String dni, String name, String surname, String shippingAddress, String billingAddress, String estimatedDate, String totalPrice, String paymentMethod, String status) {
+    public ResponseEntity<String> addShipment(String dni, String name, String surname, String shippingAddress, String billingAddress, String estimatedDate, String totalPrice, String paymentMethod, String status, String cif) {
         Shipment newShipment = new Shipment();
         newShipment.setDni(dni);
         newShipment.setName(name);
@@ -27,6 +27,7 @@ public class ShipmentService {
         newShipment.setTotalPrice(totalPrice);
         newShipment.setPaymentMethod(paymentMethod);
         newShipment.setStatus(status);
+        newShipment.setCif(cif);
         repository.save(newShipment);
         return ResponseEntity.ok().contentType(org.springframework.http.MediaType.APPLICATION_JSON).body("Shipment created successfully.");
 
@@ -41,5 +42,9 @@ public class ShipmentService {
 
     public List<Shipment> getShipmentsByDni(String dni) {
         return repository.findAllByDni(dni);
+    }
+
+    public List<Shipment> getShipmentsByCif(String cif) {
+        return repository.findAllByCif(cif);
     }
 }
