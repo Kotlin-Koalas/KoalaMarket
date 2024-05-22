@@ -1,7 +1,6 @@
 package com.example.smarttrade.models.Orders
 
 import com.example.smarttrade.R
-import com.example.smarttrade.logic.OrderRequests
 
 class OrderPreparing(order:Order_representation) : OrderState{
 
@@ -12,10 +11,12 @@ class OrderPreparing(order:Order_representation) : OrderState{
     override fun nextState() {
         order.setStates(order.shipped)
         order.updateStateBD()
+        order.status = "Pedido enviado"
     }
 
     override fun stateAction() {
         order.setStates(order.canceled)
         order.updateStateBD()
+        order.status = "Pedido cancelado"
     }
 }

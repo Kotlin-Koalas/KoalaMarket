@@ -49,7 +49,8 @@ object OrderRequests {
                         o.getString("totalPrice"),
                         o.getString("estimatedDate"),
                         o.getString("dni"),
-                        o.getString("cif")
+                        o.getString("cif"),
+                        o.getString("status")
                     )
                     res.add(order)
                 }
@@ -88,7 +89,8 @@ object OrderRequests {
                         o.getString("totalPrice"),
                         o.getString("estimatedDate"),
                         o.getString("dni"),
-                        o.getString("cif")
+                        o.getString("cif"),
+                        o.getString("status")
                     )
                     res.add(order)
                 }
@@ -150,7 +152,7 @@ object OrderRequests {
         json.put("status", state)
 
         val jsonRequest = JsonObjectRequest(
-            Request.Method.POST,"$url/buyers/$dni/shipments/$orderID/status", json,
+            Request.Method.POST,"$url/shipments/$orderID/status", json,
             {response ->
                 Log.i("OrderUpdated", "State updated successfully to: $state")
             },

@@ -18,7 +18,8 @@ class Order_representation (
                             val totalPrice: String,
                             val estimatedDate: String,
                             val dni : String,
-                            val cif : String,){
+                            val cif : String,
+                            var status: String){
 
     lateinit var imageView:ImageView
     lateinit var textView:TextView

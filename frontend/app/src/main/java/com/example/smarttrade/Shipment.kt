@@ -174,8 +174,8 @@ class Shipment : AppCompatActivity() {
                     PersonBuyer.getTotalPrice().toString(),
                     generateRandomFutureDate().toString(),
                     PersonBuyer.getDNI(),
-                    PersonBuyer.getSelectedItemsCart().first().cif
-                    )
+                    PersonBuyer.getSelectedItemsCart().first().cif,
+                    "Preparando Pedido")
                 Log.i("OrderCreated", createdOrder.toString())
                 selectedPaymentMethod.showMessage(this, createdOrder)
             }
