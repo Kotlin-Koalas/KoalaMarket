@@ -10,6 +10,11 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.view.isVisible
 import com.example.smarttrade.R
+import com.example.smarttrade.models.Orders.OrderCanceled
+import com.example.smarttrade.models.Orders.OrderDelivered
+import com.example.smarttrade.models.Orders.OrderPreparing
+import com.example.smarttrade.models.Orders.OrderReturned
+import com.example.smarttrade.models.Orders.OrderShipped
 import com.example.smarttrade.models.Orders.Order_representation
 
 class ChangeOrderStateAdapter(
@@ -72,36 +77,49 @@ class ChangeOrderStateAdapter(
         textNumber.text = orderList[position].orderID
         totalPrice.text = orderList[position].totalPrice
         estimatedDate.text = orderList[position].estimatedDate
-        status.text = orderList[position].state.stateName
-        imageState.setImageResource(orderList[position].state.imageResource)
 
 
-        when (orderList[position].state.stateName) {
+
+        when (orderList[position].status) {
             "Preparando pedido" -> {
                 nextState.text = "Enviar pedido"
                 stateAction.text = "Cancelar pedido"
+                status.text = OrderPreparing(orderList[position]).stateName
+                imageState.setImageResource(OrderPreparing(orderList[position]).imageResource)
+
 
             }
             "Pedido enviado" -> {
                 nextState.text = "Entregar pedido"
                 stateAction.isVisible = false
+                status.text = OrderShipped(orderList[position]).stateName
+                imageState.setImageResource(OrderShipped(orderList[position]).imageResource)
+
 
 
             }
             "Pedido entregado" -> {
                 nextState.text = "Devolver pedido"
                 stateAction.isVisible = false
+                status.text = OrderDelivered(orderList[position]).stateName
+                imageState.setImageResource(OrderDelivered(orderList[position]).imageResource)
+
 
             }
             "Pedido devuelto" -> {
                 nextState.isVisible = false
                 stateAction.isVisible = false
+                status.text = OrderReturned(orderList[position]).stateName
+                imageState.setImageResource(OrderReturned(orderList[position]).imageResource)
+
+
 
             }
             "Pedido cancelado" -> {
-                nextState.text = "AAAAAAAAA"
-               // nextState.isVisible = false
+                nextState.isVisible = false
                 stateAction.isVisible = false
+                status.text = OrderCanceled(orderList[position]).stateName
+                imageState.setImageResource(OrderCanceled(orderList[position]).imageResource)
 
 
             }
@@ -112,7 +130,10 @@ class ChangeOrderStateAdapter(
 
 
         stateAction.setOnClickListener {
+            orderList[position].setIView(imageState)
+            orderList[position].setTView(status)
             orderList[position].stateAction()
+            notifyDataSetChanged()
 
         }
         nextState.setOnClickListener {
@@ -120,6 +141,7 @@ class ChangeOrderStateAdapter(
             orderList[position].setTView(status)
             orderList[position].nextState()
             notifyDataSetChanged()
+
 
 
         }
