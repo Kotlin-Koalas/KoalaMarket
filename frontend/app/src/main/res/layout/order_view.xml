@@ -24,6 +24,7 @@
             app:srcCompat="@drawable/order_preparing" />
 
         <TextView
+            android:textColor="@color/black"
             android:layout_marginTop="40dp"
             android:layout_marginLeft="8dp"
             android:id="@+id/textViewOrder"
@@ -34,6 +35,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
+            android:textColor="@color/black"
             android:layout_marginTop="8dp"
             android:layout_marginLeft="8dp"
             android:id="@+id/textTotalPrice"
@@ -44,6 +46,7 @@
             app:layout_constraintTop_toBottomOf="@+id/textViewOrder" />
 
         <TextView
+            android:textColor="@color/black"
             android:layout_marginTop="40dp"
             android:layout_marginLeft="4dp"
             android:id="@+id/textViewNumerOrder"
@@ -54,6 +57,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
+            android:textColor="@color/black"
             android:layout_marginTop="8dp"
             android:id="@+id/textView17"
             android:layout_width="wrap_content"
@@ -63,6 +67,7 @@
             app:layout_constraintTop_toBottomOf="@+id/textViewOrder" />
 
         <TextView
+            android:textColor="@color/black"
             android:id="@+id/textView18"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -73,6 +78,7 @@
             app:layout_constraintTop_toBottomOf="@+id/textTotalPrice" />
 
         <TextView
+            android:textColor="@color/black"
             android:id="@+id/textViewEstimateDate"
             android:layout_marginLeft="4dp"
             android:layout_marginTop="12dp"
@@ -99,6 +105,7 @@
             app:layout_constraintVertical_bias="0.571" />
 
         <TextView
+            android:textColor="@color/black"
             android:id="@+id/textViewEstado"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

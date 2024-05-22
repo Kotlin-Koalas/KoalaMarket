@@ -194,6 +194,7 @@ class Shipment : AppCompatActivity() {
 
         btnOk.setOnClickListener{
             dialog.dismiss()
+
         }
         messageBox.text = popUpText
 

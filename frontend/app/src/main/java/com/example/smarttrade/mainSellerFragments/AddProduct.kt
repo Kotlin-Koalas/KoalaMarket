@@ -99,7 +99,7 @@ class AddProduct :Fragment() {
                         uploadImageButton.isClickable = true
                         buscarFoto = true
                         imagePNExist = ""
-                        actContext.currview.findViewById<Spinner>(R.id.editTextProductNumber).isEnabled = true
+                        actContext.currview.findViewById<Spinner>(R.id.spinnerCategory).isEnabled = true
                         ViewsClickables()
 
                         actContext.currview.findViewById<EditText>(R.id.editTextNameProduct).text.clear()

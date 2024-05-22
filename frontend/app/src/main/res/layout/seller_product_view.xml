@@ -32,7 +32,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-
+            android:textColor="@color/black"
             android:fontFamily="@font/karla"
             android:text="Name Example Product"
             app:layout_constraintEnd_toEndOf="parent"
@@ -46,13 +46,16 @@
             android:layout_height="47dp"
             android:layout_marginTop="12dp"
             android:fontFamily="@font/karla"
+            android:textColor="@color/black"
             android:hint="55.22 "
             android:inputType="numberDecimal"
             android:maxLength="8"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.08"
             app:layout_constraintStart_toEndOf="@+id/imageView9"
-            app:layout_constraintTop_toBottomOf="@+id/textViewNameProduct" />
+            app:layout_constraintTop_toBottomOf="@+id/textViewNameProduct"
+            android:textColorHint="#919191"
+            android:backgroundTint="@color/black"/>
 
         <ImageView
             android:id="@+id/imageViewDeleteProduct"
@@ -85,6 +88,7 @@
             android:layout_marginTop="80dp"
             android:layout_marginBottom="8dp"
             android:fontFamily="@font/karla"
+            android:textColor="@color/black"
             android:hint="100 "
             android:inputType="number"
             android:maxLength="3"
@@ -92,7 +96,9 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.099"
             app:layout_constraintStart_toEndOf="@+id/imageView9"
-            app:layout_constraintTop_toBottomOf="@+id/textViewNameProduct" />
+            app:layout_constraintTop_toBottomOf="@+id/textViewNameProduct"
+            android:textColorHint="#919191"
+            android:backgroundTint="@color/black"/>
 
         <TextView
             android:id="@+id/textView14"
@@ -101,6 +107,7 @@
             android:layout_marginStart="4dp"
             android:layout_marginBottom="16dp"
             android:fontFamily="@font/karla"
+            android:textColor="@color/black"
             android:text="uds"
             android:textSize="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -114,6 +121,7 @@
             android:textSize="16dp"
             android:layout_marginStart="4dp"
             android:layout_marginTop="28dp"
+            android:textColor="@color/black"
             android:text="€"
             app:layout_constraintStart_toEndOf="@+id/editTextPriceProduct"
             app:layout_constraintTop_toBottomOf="@+id/textViewNameProduct" />

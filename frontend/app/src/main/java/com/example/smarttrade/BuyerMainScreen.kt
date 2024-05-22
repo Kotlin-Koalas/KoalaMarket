@@ -1,11 +1,17 @@
 package com.example.smarttrade
 
+import android.app.Dialog
 import android.content.Context
+import android.graphics.Color
 import android.graphics.Rect
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.util.Log
 import android.view.MotionEvent
 import android.view.inputmethod.InputMethodManager
+import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -96,6 +102,25 @@ class BuyerMainScreen : AppCompatActivity() {
         private lateinit var actContextBP:BuyerMainScreen
         fun getContext(): Context {
             return actContextBP
+        }
+
+        fun showCustomDialogBoxSeller(popUpText: String) {
+            val dialog = Dialog(actContextBP)
+            dialog.setTitle("ÉXITO")
+            Log.i("Entra dentro del dialog","Entra")
+            dialog.setCancelable(false)
+            dialog.setContentView(R.layout.pop_up_alert_success)
+            dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            val messageBox = dialog.findViewById<TextView>(R.id.textViewErrorText)
+            val btnOk = dialog.findViewById<Button>(R.id.buttonOkPopUp)
+
+            btnOk.setOnClickListener{
+                dialog.dismiss()
+            }
+            messageBox.text = popUpText
+
+            dialog.show()
+
         }
     }
 }

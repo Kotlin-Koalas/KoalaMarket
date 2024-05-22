@@ -469,7 +469,6 @@ object logic {
         val json = JSONObject()
         json.put("dni", dni)
         json.put("satisfaction", satisfaction)
-        json.put("productNumber", PN)
 
         val stringRequest = JsonObjectRequest(
             Request.Method.POST,"$url/products/$PN/satisfaction",json,
@@ -477,9 +476,7 @@ object logic {
                 Toast.makeText(ProductView.getContext(), "Grado de satisfacción con éxito", Toast.LENGTH_SHORT).show()
             },
             {error ->
-                Toast.makeText(ProductView.getContext(), "Error: $error", Toast.LENGTH_SHORT)
-                    .show()
-                Log.i ("ERROR","$error")
+
             })
         productVolleyQueue.add(stringRequest)
     }
@@ -496,9 +493,7 @@ object logic {
                 Toast.makeText(ProductView.getContext(), "Grado de satisfacción con éxito", Toast.LENGTH_SHORT).show()
             },
             {error ->
-                Toast.makeText(ProductView.getContext(), "Error: $error", Toast.LENGTH_SHORT)
-                    .show()
-                Log.i ("ERROR","$error")
+
             })
         productVolleyQueue.add(stringRequest)
     }

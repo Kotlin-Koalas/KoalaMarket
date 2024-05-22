@@ -43,6 +43,10 @@ class ProductCartAdapter(
         notifyDataSetChanged()
     }
 
+
+
+
+
     fun updateProducts() {
         views.clear()
         notifyDataSetChanged()
@@ -144,6 +148,8 @@ class ProductCartAdapter(
         fun updateProducts(){
             who.updateProducts()
         }
+
+
 
     }
 

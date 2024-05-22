@@ -90,10 +90,8 @@ class ProductView : AppCompatActivity() {
         logic.getAllSellers(productNumber)
 
 
-        //val backMainScreen = findViewById<ConstraintLayout>(R.id.backArrow)
+        val backMainScreen = findViewById<ConstraintLayout>(R.id.backArrow)
         var rate : Double = 0.0
-        layoutHeart = findViewById<ConstraintLayout>(R.id.heart)
-        val backMainScreen = findViewById<ImageView>(R.id.backArrow)
         val nameText = findViewById<TextView>(R.id.nameProduct)
         val priceText = findViewById<TextView>(R.id.price)
         val stockText = findViewById<TextView>(R.id.stock)
@@ -128,6 +126,7 @@ class ProductView : AppCompatActivity() {
                 rated = true
             }else{
                 logic.addSatisfaction(productNumber, 1.0, dni)
+                rated = true
             }
             logic.getProduct(productNumber) { updatedRate ->
                 if (updatedRate != null) {
@@ -146,9 +145,9 @@ class ProductView : AppCompatActivity() {
             rateAnimation(star5,R.raw.rate_animation, false)
             if(rated){
                 logic.editSatifaction(productNumber, 2.0, dni)
-                rated = true
             }else{
                 logic.addSatisfaction(productNumber, 2.0, dni)
+                rated = true
             }
             logic.getProduct(productNumber) { updatedRate ->
                 if (updatedRate != null) {
@@ -166,9 +165,10 @@ class ProductView : AppCompatActivity() {
             rateAnimation(star5,R.raw.rate_animation, false)
             if(rated){
                 logic.editSatifaction(productNumber, 3.0, dni)
-                rated = true
             }else{
                 logic.addSatisfaction(productNumber, 3.0, dni)
+                rated = true
+
             }
             logic.getProduct(productNumber) { updatedRate ->
                 if (updatedRate != null) {
@@ -186,9 +186,10 @@ class ProductView : AppCompatActivity() {
             rateAnimation(star5,R.raw.rate_animation, false)
             if(rated){
                 logic.editSatifaction(productNumber, 4.0, dni)
-                rated = true
             }else{
                 logic.addSatisfaction(productNumber, 4.0, dni)
+                rated = true
+
             }
             logic.getProduct(productNumber) { updatedRate ->
                 if (updatedRate != null) {
@@ -206,9 +207,10 @@ class ProductView : AppCompatActivity() {
             rateAnimation(star5,R.raw.rate_animation, true)
             if(rated){
                 logic.editSatifaction(productNumber, 5.0, dni)
-                rated = true
             }else{
                 logic.addSatisfaction(productNumber, 5.0, dni)
+                rated = true
+
             }
             logic.getProduct(productNumber) { updatedRate ->
                 if (updatedRate != null) {

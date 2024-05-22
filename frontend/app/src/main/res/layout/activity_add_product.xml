@@ -87,7 +87,6 @@
                         android:layout_gravity="center"
                         android:defaultFocusHighlightEnabled="false"
                         android:focusable="false"
-                        android:onClick="uploadImageButton"
                         android:saveEnabled="false"
                         android:scaleType="centerCrop"
                         android:src="@drawable/add_item"
