@@ -34,7 +34,7 @@
             android:layout_marginStart="16dp"
             android:fontFamily="@font/karla"
             android:textColor="@color/black"
-            android:textSize="18dp"
+            android:textSize="30sp"
             android:text="Lista de deseos"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/imageBack"

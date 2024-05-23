@@ -9,11 +9,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.example.smarttrade.MainActivity
 import com.example.smarttrade.OrderProgress
 import com.example.smarttrade.R
+import com.example.smarttrade.WishList
 import com.example.smarttrade.models.PersonBuyer
 
 class ProfileBuyerFragment : Fragment(){
@@ -52,6 +54,15 @@ class ProfileBuyerFragment : Fragment(){
                 showExistMessage("¿Estás seguro de que deseas cerrar sesión?")
             }
 
+
+            val heartIcon = viewB.findViewById<ImageView>(R.id.imageViewHeartProfile)
+
+            heartIcon.setOnClickListener{
+                val Intent = Intent(contextFragment.requireContext(), WishList::class.java)
+                startActivity(Intent)
+            }
+
+
             return viewB
         }
 
@@ -67,6 +78,9 @@ class ProfileBuyerFragment : Fragment(){
         val messageBox = dialog.findViewById<TextView>(R.id.textSellerErrorText)
         val btnOk = dialog.findViewById<Button>(R.id.buttonAcceptChanges)
         val btnCancel = dialog.findViewById<Button>(R.id.buttonCancelChanges)
+
+
+
 
         btnOk.setOnClickListener{
             //TODO logica salir sesion
@@ -84,6 +98,9 @@ class ProfileBuyerFragment : Fragment(){
         dialog.show()
 
     }
+
+
+
 
 
         companion object{

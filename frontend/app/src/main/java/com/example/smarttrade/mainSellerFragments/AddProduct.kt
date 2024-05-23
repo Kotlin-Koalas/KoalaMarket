@@ -354,8 +354,8 @@ class AddProduct :Fragment() {
 
         when (selectedCategory) {
             "Ropa" -> {
-                textCat1.setText("Talla")
-                textCat2.setText("Color")
+                textCat1.setText("Talla:")
+                textCat2.setText("Color:")
                 editTextCat1.setHint("42")
                 editTextCat2.setHint("Verde")
                 editTextCat1.setText(null)
@@ -364,9 +364,9 @@ class AddProduct :Fragment() {
 
             }
             "Tecnología" -> {
-                textCat1.setText("Consumo electrónico")
-                textCat2.setText("Marca")
-                editTextCat1.setHint("270 kWh")
+                textCat1.setText("Consumo electrónico (kWh):")
+                textCat2.setText("Marca:")
+                editTextCat1.setHint("270 ")
                 editTextCat2.setHint("Samsung")
                 editTextCat1.setText(null)
                 editTextCat2.setText(null)
@@ -375,17 +375,17 @@ class AddProduct :Fragment() {
 
             }
             "Juguete" -> {
-                textCat1.setText("Edad Recomendada ")
-                textCat2.setText("Material")
-                editTextCat1.setHint("3 años")
+                textCat1.setText("Edad Recomendada (años):")
+                textCat2.setText("Material:")
+                editTextCat1.setHint("3 ")
                 editTextCat2.setHint("Plástico")
                 categorSelected = selectedCategory
                 editTextCat1.setText(null)
                 editTextCat2.setText(null)
             }
             "Alimentación" -> {
-                textCat1.setText("Macros")
-                textCat2.setText("Calorias")
+                textCat1.setText("Macros:")
+                textCat2.setText("Calorias Totales:")
                 editTextCat1.setHint("15g proteina, 10g grasas, 15g carb")
                 editTextCat2.setHint("155")
                 categorSelected = selectedCategory
