@@ -19,17 +19,28 @@
             android:id="@+id/textView16"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="18dp"
-            android:layout_marginStart="24dp"
+            android:layout_margin="16dp"
+            android:layout_marginStart="16dp"
             android:fontFamily="@font/karla"
             android:text="Mi perfil"
             android:textColor="@color/white"
-            android:textSize="20dp"
-            android:textStyle="bold"
+            android:textSize="30sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.802" />
+
+        <ImageView
+            android:id="@+id/imageViewHeartProfile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="18dp"
+            android:layout_marginBottom="6dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.78"
+            app:srcCompat="@drawable/favorite_fill0_wght400_grad0_opsz24_1" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
