@@ -37,38 +37,5 @@ class PaymentMethodBizum(bizumNumber:String): PaymentMethod() {
     override fun getID(): String {
         return bizumNumber
     }
-
-    override fun showCustomDialogBox(context: Context,order:Order_representation,message: String){
-        val dialog = Dialog(context)
-        dialog.setTitle("CONFIRMATION")
-        dialog.setCancelable(false)
-        dialog.setContentView(R.layout.pop_up_warning)
-        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-
-        val messageBox = dialog.findViewById<TextView>(R.id.textViewErrorText)
-        val btnOk = dialog.findViewById<Button>(R.id.buttonOkPopUp)
-        val btnCancel = dialog.findViewById<Button>(R.id.buttonCancelPopUp)
-
-        btnOk.setOnClickListener{
-            OrderRequests.addOrder(order)
-            for(item in PersonBuyer.getSelectedItemsCart()){
-                Log.i("Item",item.toString())
-                ShoppingCartRequests.deleteProductInCart(item)
-            }
-            for(item in PersonBuyer.getSelectedItemsCart()){
-                PersonBuyer.removeProductFromCart(item)
-            }
-            PersonBuyer.clearSelectedItems()
-            dialog.dismiss()
-        }
-
-        btnCancel.setOnClickListener{
-            dialog.dismiss()
-        }
-
-        messageBox.text = message
-
-        dialog.show()
-
-    }
+    
 }
