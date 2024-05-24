@@ -19,27 +19,27 @@ import com.example.smarttrade.models.CreditCard
 import com.example.smarttrade.models.Orders.Order_representation
 import com.example.smarttrade.models.PersonBuyer
 
-class PaymentMethodCreditCard(creditCard:CreditCard): PaymentMethod{
+class PaymentMethodCreditCard(creditCard:CreditCard): PaymentMethod(){
 
-    override val customMessage: String = "Estas a punto de pagar con la tarjeta de crédito con el siguiente número: ${creditCard.number}, con fecha de expiración: ${creditCard.expirationDate} y cvc: ${creditCard.cvc}"
+    val customMessage: String = "Estas a punto de pagar con la tarjeta de crédito con el siguiente número: ${creditCard.number}, con fecha de expiración: ${creditCard.expirationDate} y cvc: ${creditCard.cvc}"
     override val image: Int = R.drawable.credit_card_icon
     override val type : String = "Credit Card"
-
-    val creditCard = creditCard
-
-    override fun showMessage(context: Context,order: Order_representation) {
-        showCustomDialogBox(context,order)
+    override fun getPaymentMessage(): String {
+        return customMessage
     }
 
+    init {
+        cCard = creditCard
+    }
     override fun setPayImage(imageView: ImageView) {
         imageView.setImageResource(image)
     }
 
     override fun getID(): String {
-        return creditCard.number
+        return cCard.number
     }
 
-    private fun showCustomDialogBox(context: Context,order:Order_representation){
+    override fun showCustomDialogBox(context: Context,order:Order_representation){
         val dialog = Dialog(context)
         dialog.setTitle("CONFIRMATION")
         dialog.setCancelable(false)
@@ -77,5 +77,11 @@ class PaymentMethodCreditCard(creditCard:CreditCard): PaymentMethod{
 
         dialog.show()
 
+    }
+    companion object{
+        lateinit var cCard:CreditCard
+        fun getCreditCard():CreditCard{
+            return cCard
+        }
     }
 }
