@@ -21,11 +21,11 @@ import com.example.smarttrade.models.PersonBuyer
 
 class PaymentMethodCreditCard(creditCard:CreditCard): PaymentMethod(){
 
-    val customMessage: String = "Estas a punto de pagar con la tarjeta de crédito con el siguiente número: ${creditCard.number}, con fecha de expiración: ${creditCard.expirationDate} y cvc: ${creditCard.cvc}"
+    val creditCard = creditCard
     override val image: Int = R.drawable.credit_card_icon
     override val type : String = "Credit Card"
     override fun getPaymentMessage(): String {
-        return customMessage
+        return "Estas a punto de pagar con la tarjeta de crédito con el siguiente número: ${creditCard.number}, con fecha de expiración: ${creditCard.expirationDate} y cvc: ${creditCard.cvc}"
     }
 
     init {
@@ -39,7 +39,7 @@ class PaymentMethodCreditCard(creditCard:CreditCard): PaymentMethod(){
         return cCard.number
     }
 
-    override fun showCustomDialogBox(context: Context,order:Order_representation){
+    override fun showCustomDialogBox(context: Context,order:Order_representation,message:String){
         val dialog = Dialog(context)
         dialog.setTitle("CONFIRMATION")
         dialog.setCancelable(false)
@@ -60,20 +60,14 @@ class PaymentMethodCreditCard(creditCard:CreditCard): PaymentMethod(){
                 PersonBuyer.removeProductFromCart(item)
             }
             PersonBuyer.clearSelectedItems()
-            val i = Intent(context, BuyerMainScreen::class.java)
-            context.startActivity(i)
             dialog.dismiss()
-
-            Handler(Looper.getMainLooper()).postDelayed({
-                BuyerMainScreen.showCustomDialogBoxSeller("Pedido realizado con éxito")
-            }, 1000)
         }
 
         btnCancel.setOnClickListener{
             dialog.dismiss()
         }
 
-        messageBox.text = customMessage
+        messageBox.text = message
 
         dialog.show()
 

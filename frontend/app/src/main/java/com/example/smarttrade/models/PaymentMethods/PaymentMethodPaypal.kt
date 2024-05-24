@@ -21,16 +21,16 @@ import com.example.smarttrade.models.PersonBuyer
 
 class PaymentMethodPaypal(PayPalEmail:String):PaymentMethod() {
 
+    val PayPalEmail = PayPalEmail
 
-    val customMessage: String = "Estas a punto de pagar con PayPal, usando la siguiente cuenta: $PayPalEmail"
     override val image: Int = R.drawable.email_icon
     override val type : String = "PayPal"
-    override fun getPaymentMessage(): String {
-        return customMessage
-    }
 
     val paypalEmail = PayPalEmail
 
+    override fun getPaymentMessage(): String {
+        return "Estas a punto de pagar con PayPal, usando la siguiente cuenta: $PayPalEmail"
+    }
 
     override fun setPayImage(imageView: ImageView) {
         imageView.setImageResource(image)
@@ -40,7 +40,7 @@ class PaymentMethodPaypal(PayPalEmail:String):PaymentMethod() {
         return paypalEmail
     }
 
-    override fun showCustomDialogBox(context: Context,order:Order_representation){
+    override fun showCustomDialogBox(context: Context,order:Order_representation,message:String){
         val dialog = Dialog(context)
         dialog.setTitle("CONFIRMATION")
         dialog.setCancelable(false)
@@ -61,20 +61,14 @@ class PaymentMethodPaypal(PayPalEmail:String):PaymentMethod() {
                 PersonBuyer.removeProductFromCart(item)
             }
             PersonBuyer.clearSelectedItems()
-            val i = Intent(context, BuyerMainScreen::class.java)
-            context.startActivity(i)
             dialog.dismiss()
-
-            Handler(Looper.getMainLooper()).postDelayed({
-                BuyerMainScreen.showCustomDialogBoxSeller("Pedido realizado con éxito")
-            }, 1000)
         }
 
         btnCancel.setOnClickListener{
             dialog.dismiss()
         }
 
-        messageBox.text = customMessage
+        messageBox.text = message
 
         dialog.show()
 

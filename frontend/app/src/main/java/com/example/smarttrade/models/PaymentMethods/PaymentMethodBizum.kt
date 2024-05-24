@@ -7,6 +7,7 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Handler
 import android.os.Looper
+import android.os.Message
 import android.util.Log
 import android.widget.Button
 import android.widget.ImageView
@@ -20,14 +21,14 @@ import com.example.smarttrade.models.PersonBuyer
 
 class PaymentMethodBizum(bizumNumber:String): PaymentMethod() {
 
-    val customMessage: String = "Estas a punto de pagar con Bizum, usando el siguiente número: $bizumNumber"
     override val image: Int = R.drawable.phone
     override val type : String = "Bizum"
-    override fun getPaymentMessage(): String {
-        return customMessage
-    }
 
     val bizumNumber = bizumNumber
+
+    override fun getPaymentMessage(): String {
+        return "Estas a punto de pagar con Bizum, usando el siguiente número: $bizumNumber"
+    }
 
     override fun setPayImage(imageView: ImageView) {
         imageView.setImageResource(image)
@@ -37,7 +38,7 @@ class PaymentMethodBizum(bizumNumber:String): PaymentMethod() {
         return bizumNumber
     }
 
-    override fun showCustomDialogBox(context: Context,order:Order_representation){
+    override fun showCustomDialogBox(context: Context,order:Order_representation,message: String){
         val dialog = Dialog(context)
         dialog.setTitle("CONFIRMATION")
         dialog.setCancelable(false)
@@ -58,20 +59,14 @@ class PaymentMethodBizum(bizumNumber:String): PaymentMethod() {
                 PersonBuyer.removeProductFromCart(item)
             }
             PersonBuyer.clearSelectedItems()
-            val i = Intent(context, BuyerMainScreen::class.java)
-            context.startActivity(i)
             dialog.dismiss()
-
-            Handler(Looper.getMainLooper()).postDelayed({
-                BuyerMainScreen.showCustomDialogBoxSeller("Pedido realizado con éxito")
-            }, 1000)
         }
 
         btnCancel.setOnClickListener{
             dialog.dismiss()
         }
 
-        messageBox.text = customMessage
+        messageBox.text = message
 
         dialog.show()
 

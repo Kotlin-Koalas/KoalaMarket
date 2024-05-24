@@ -29,11 +29,19 @@ abstract class PaymentMethod {
 
     abstract fun getID():String
 
-    abstract fun showCustomDialogBox(context: Context,order:Order_representation)
+    abstract fun showCustomDialogBox(context: Context,order:Order_representation,message:String)
 
+    fun showConfirmation(context: Context){
+        val i = Intent(context, BuyerMainScreen::class.java)
+        context.startActivity(i)
+        Handler(Looper.getMainLooper()).postDelayed({
+            BuyerMainScreen.showCustomDialogBoxSeller("Pedido realizado con éxito")
+        }, 1000)
+    }
     open fun showMessage(context: Context, order: Order_representation){
-        val cMessage = Order_representation.getPayMethod().getPaymentMessage()
-        Order_representation.getPayMethod().showCustomDialogBox(context,order)
+        val cMessage = getPaymentMessage()
+        showCustomDialogBox(context,order,cMessage)
+        showConfirmation(context)
         //Aquí se cargaria la pasarela de pago correspondiente.
     }
 
