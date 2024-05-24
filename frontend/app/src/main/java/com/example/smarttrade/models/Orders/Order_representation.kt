@@ -5,8 +5,10 @@ import android.widget.TextView
 import com.example.smarttrade.logic.OrderRequests
 import com.example.smarttrade.models.CreditCard
 import com.example.smarttrade.models.PaymentMethods.PaymentMethod
+import com.example.smarttrade.models.PaymentMethods.PaymentMethodBizum
 import com.example.smarttrade.models.PaymentMethods.PaymentMethodCreditCard
 import com.example.smarttrade.models.PaymentMethods.PaymentMethodPaypal
+import com.example.smarttrade.models.PersonBuyer
 
 class Order_representation (
                             val shippingAddress:String,
@@ -36,6 +38,7 @@ class Order_representation (
         preparing = OrderPreparing(this)
         returned = OrderReturned(this)
         canceled = OrderCanceled(this)
+        pMethod = paymentMethod
     }
 
     var state:OrderState = preparing
@@ -73,12 +76,13 @@ class Order_representation (
 
 
     companion object{
-        fun getPayMethod(method: String) : PaymentMethod{
-            return when(method){
-                "Paypal" -> PaymentMethodPaypal("")
-                "CreditCard" -> PaymentMethodCreditCard(CreditCard("","",""))
-                "Bizum" -> PaymentMethodPaypal("")
-                else -> throw IllegalArgumentException("Unknown payment method: $method")
+        lateinit var pMethod:String
+        fun getPayMethod() : PaymentMethod{
+            return when(pMethod){
+                "PayPal" -> PaymentMethodPaypal(PersonBuyer.getPaypal())
+                "CreditCard" -> PaymentMethodCreditCard(PaymentMethodCreditCard.getCreditCard())
+                "Bizum" -> PaymentMethodBizum(PersonBuyer.getBizum())
+                else -> throw IllegalArgumentException("Unknown payment method: $pMethod")
             }
         }
     }

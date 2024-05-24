@@ -18,17 +18,16 @@ import com.example.smarttrade.logic.ShoppingCartRequests
 import com.example.smarttrade.models.Orders.Order_representation
 import com.example.smarttrade.models.PersonBuyer
 
-class PaymentMethodBizum(bizumNumber:String): PaymentMethod{
+class PaymentMethodBizum(bizumNumber:String): PaymentMethod() {
 
-    override val customMessage: String = "Estas a punto de pagar con Bizum, usando el siguiente número: $bizumNumber"
+    val customMessage: String = "Estas a punto de pagar con Bizum, usando el siguiente número: $bizumNumber"
     override val image: Int = R.drawable.phone
     override val type : String = "Bizum"
+    override fun getPaymentMessage(): String {
+        return customMessage
+    }
 
     val bizumNumber = bizumNumber
-
-    override fun showMessage(context: Context,order:Order_representation) {
-        showCustomDialogBox(context,order)
-    }
 
     override fun setPayImage(imageView: ImageView) {
         imageView.setImageResource(image)
@@ -38,7 +37,7 @@ class PaymentMethodBizum(bizumNumber:String): PaymentMethod{
         return bizumNumber
     }
 
-    private fun showCustomDialogBox(context: Context,order:Order_representation){
+    override fun showCustomDialogBox(context: Context,order:Order_representation){
         val dialog = Dialog(context)
         dialog.setTitle("CONFIRMATION")
         dialog.setCancelable(false)

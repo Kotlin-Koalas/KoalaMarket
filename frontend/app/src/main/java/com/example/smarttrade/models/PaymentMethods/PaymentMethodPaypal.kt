@@ -19,18 +19,18 @@ import com.example.smarttrade.logic.ShoppingCartRequests
 import com.example.smarttrade.models.Orders.Order_representation
 import com.example.smarttrade.models.PersonBuyer
 
-class PaymentMethodPaypal(PayPalEmail:String):PaymentMethod {
+class PaymentMethodPaypal(PayPalEmail:String):PaymentMethod() {
 
 
-    override val customMessage: String = "Estas a punto de pagar con PayPal, usando la siguiente cuenta: $PayPalEmail"
+    val customMessage: String = "Estas a punto de pagar con PayPal, usando la siguiente cuenta: $PayPalEmail"
     override val image: Int = R.drawable.email_icon
     override val type : String = "PayPal"
+    override fun getPaymentMessage(): String {
+        return customMessage
+    }
 
     val paypalEmail = PayPalEmail
 
-    override fun showMessage(context: Context,order: Order_representation) {
-        showCustomDialogBox(context,order)
-    }
 
     override fun setPayImage(imageView: ImageView) {
         imageView.setImageResource(image)
@@ -40,7 +40,7 @@ class PaymentMethodPaypal(PayPalEmail:String):PaymentMethod {
         return paypalEmail
     }
 
-    private fun showCustomDialogBox(context: Context,order:Order_representation){
+    override fun showCustomDialogBox(context: Context,order:Order_representation){
         val dialog = Dialog(context)
         dialog.setTitle("CONFIRMATION")
         dialog.setCancelable(false)

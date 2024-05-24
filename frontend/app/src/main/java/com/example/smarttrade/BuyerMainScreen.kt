@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.add
 import androidx.fragment.app.commit
+import com.example.smarttrade.adapters.CategoryAdapter
 import com.example.smarttrade.adapters.ProductAdapter
 import com.example.smarttrade.mainBuyerFragments.HomeFragment
 import com.example.smarttrade.mainBuyerFragments.ProfileBuyerFragment
@@ -54,6 +55,7 @@ class BuyerMainScreen : AppCompatActivity() {
                 add<ShoppingCartFragment>(R.id.fragment_container_view)
             }
             ProductAdapter.deleteListeners()
+            CategoryAdapter.deleteListeners()
             MediatorShoppingCart.setPriceToCero()
         }
 
@@ -66,6 +68,8 @@ class BuyerMainScreen : AppCompatActivity() {
                 setReorderingAllowed(true)
                 add<ProfileBuyerFragment>(R.id.fragment_container_view)
             }
+            ProductAdapter.deleteListeners()
+            CategoryAdapter.deleteListeners()
         }
 
         home.setOnClickListener{

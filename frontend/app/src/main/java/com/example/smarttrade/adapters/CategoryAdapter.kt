@@ -40,6 +40,7 @@ class CategoryAdapter(
     }
 
     override fun onBindViewHolder(holder: CategoryViewHolder, position: Int) {
+        holders.add(holder)
         val curCat = categories[position]
         val image = holder.itemView.findViewById<ImageView>(R.id.imageViewCat)
         image.setImageResource(curCat.image)
@@ -55,8 +56,16 @@ class CategoryAdapter(
             holder.itemView.context.startActivity(intentS)
 
         }
+    }
+    companion object{
+        var holders:MutableList<CategoryViewHolder> = mutableListOf()
 
-
+        fun deleteListeners(){
+            for (holder in holders){
+                val categoryRepresentation = holder.itemView.findViewById<ConstraintLayout>(R.id.layout)
+                categoryRepresentation.setOnClickListener(null)
+            }
+        }
     }
 }
 
