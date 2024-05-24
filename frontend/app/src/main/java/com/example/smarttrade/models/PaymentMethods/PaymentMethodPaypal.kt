@@ -40,6 +40,3 @@ class PaymentMethodPaypal(PayPalEmail:String):PaymentMethod() {
         return paypalEmail
     }
 }
-
-
-}

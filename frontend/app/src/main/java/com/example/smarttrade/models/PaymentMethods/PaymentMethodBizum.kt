@@ -37,5 +37,5 @@ class PaymentMethodBizum(bizumNumber:String): PaymentMethod() {
     override fun getID(): String {
         return bizumNumber
     }
-    
+
 }
