@@ -9,4 +9,5 @@ import java.util.List;
 @RepositoryRestController
 public interface WishListRepository extends JpaRepository<WishList, String> {
     List<WishList> findAllByBuyerId(String buyerId);
+    WishList findByBuyerIdAndProductNumberAndCif(String buyerId, String productNumber, String cif);
 }

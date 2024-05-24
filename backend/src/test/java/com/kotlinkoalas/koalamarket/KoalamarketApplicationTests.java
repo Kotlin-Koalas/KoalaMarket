@@ -8,6 +8,7 @@ class KoalamarketApplicationTests {
 
 	@Test
 	void contextLoads() {
+		System.out.println("test started");
 	}
 
 }

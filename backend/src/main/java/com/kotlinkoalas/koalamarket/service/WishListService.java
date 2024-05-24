@@ -125,11 +125,7 @@ public class WishListService {
     }
 
     public ResponseEntity<String> deleteItemFromWishList(String id, String productNumber, String cif, String category) {
-        repository.findAllByBuyerId(id).forEach(item -> {
-            if (item.getProductNumber().equals(productNumber) && item.getCif().equals(cif) && item.getCategory().equals(category)) {
-                repository.delete(item);
-            }
-        });
+        repository.delete(repository.findByBuyerIdAndProductNumberAndCif(id, productNumber, cif));
         return ResponseEntity.ok().contentType(org.springframework.http.MediaType.APPLICATION_JSON).body("Item deleted from cart");
     }
 
