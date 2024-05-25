@@ -31,7 +31,6 @@ public class WishListController {
     public ResponseEntity<String> deleteItemFromWishList(@PathVariable String id, @RequestBody Map<String, Object> payload) {
         String productNumber = (String) payload.get("productNumber");
         String cif = (String) payload.get("cif");
-        String category = (String) payload.get("category");
-        return wishListService.deleteItemFromWishList(id, productNumber, cif, category);
+        return wishListService.deleteItemFromWishList(id, productNumber, cif);
     }
 }

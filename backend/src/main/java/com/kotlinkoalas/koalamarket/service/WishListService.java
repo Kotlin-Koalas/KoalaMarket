@@ -124,7 +124,7 @@ public class WishListService {
         return ResponseEntity.ok().contentType(org.springframework.http.MediaType.APPLICATION_JSON).body("Item added to cart");
     }
 
-    public ResponseEntity<String> deleteItemFromWishList(String id, String productNumber, String cif, String category) {
+    public ResponseEntity<String> deleteItemFromWishList(String id, String productNumber, String cif) {
         repository.delete(repository.findByBuyerIdAndProductNumberAndCif(id, productNumber, cif));
         return ResponseEntity.ok().contentType(org.springframework.http.MediaType.APPLICATION_JSON).body("Item deleted from cart");
     }
