@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.view.isVisible
 import com.example.smarttrade.R
 import com.example.smarttrade.models.Orders.OrderCanceled
 import com.example.smarttrade.models.Orders.OrderDelivered
@@ -69,6 +70,7 @@ class OrderAdapter(
         val totalPrice = view.findViewById<TextView>(R.id.textTotalPrice)
         val estimatedDate = view.findViewById<TextView>(R.id.textViewEstimateDate)
         val status = view.findViewById<TextView>(R.id.textViewEstado)
+        val stateAction = view.findViewById<TextView>(R.id.textViewStateAction)
 
         val imageState = view.findViewById<ImageView>(R.id.imageState)
 
@@ -81,29 +83,32 @@ class OrderAdapter(
             "Preparando pedido" -> {
                 status.text = OrderPreparing(orderList[position]).stateName
                 imageState.setImageResource(OrderPreparing(orderList[position]).imageResource)
+                stateAction.text = "Cancelar pedido"
 
             }
             "Pedido enviado" -> {
                 status.text = OrderShipped(orderList[position]).stateName
                 imageState.setImageResource(OrderShipped(orderList[position]).imageResource)
-
+                stateAction.isVisible = false
 
 
             }
             "Pedido entregado" -> {
                 status.text = OrderDelivered(orderList[position]).stateName
                 imageState.setImageResource(OrderDelivered(orderList[position]).imageResource)
+                stateAction.text = "Devolver Pedido"
+
 
             }
             "Pedido devuelto" -> {
-
+                stateAction.isVisible = false
                 status.text = OrderReturned(orderList[position]).stateName
                 imageState.setImageResource(OrderReturned(orderList[position]).imageResource)
 
 
             }
             "Pedido cancelado" -> {
-
+                stateAction.isVisible = false
                 status.text = OrderCanceled(orderList[position]).stateName
                 imageState.setImageResource(OrderCanceled(orderList[position]).imageResource)
 
@@ -113,6 +118,15 @@ class OrderAdapter(
                 Log.i("No se ha encontrado el estado", "No se ha encontrado el estado")
             }
         }
+
+        stateAction.setOnClickListener {
+            orderList[position].setIView(imageState)
+            orderList[position].setTView(status)
+            orderList[position].stateAction()
+            notifyDataSetChanged()
+
+        }
+
 
         return view
     }

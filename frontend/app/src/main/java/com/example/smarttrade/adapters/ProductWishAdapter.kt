@@ -13,7 +13,6 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.smarttrade.ProductView
 import com.example.smarttrade.R
-import com.example.smarttrade.WishList
 import com.example.smarttrade.logic.ListWishRequests
 import com.example.smarttrade.logic.ShoppingCartRequests
 import com.example.smarttrade.models.PersonBuyer
@@ -119,15 +118,17 @@ class ProductWishAdapter(
         imageViewCart.setOnClickListener{
         Log.i("QUE SALe", PersonBuyer.getWishList()[position].toString())
 
+
+
             var productWithOneStock = PersonBuyer.getWishList()[position]
 
             productWithOneStock.quantity = 1
 
-            ShoppingCartRequests.addProductToCart(productWithOneStock)
-            //PersonBuyer.addProductToCart(PersonBuyer.getWishList()[position])
+
+            ShoppingCartRequests.getProductInCartWishList(productWithOneStock.PN,productWithOneStock.cif ,productWithOneStock.seller, productWithOneStock)
             ListWishRequests.deleteProductWish(PersonBuyer.getWishList()[position])
             removeProduct(position)
-            WishList.productAddedCart()
+
 
 
 

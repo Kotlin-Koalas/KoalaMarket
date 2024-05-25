@@ -70,7 +70,7 @@ class ChangeOrderStateAdapter(
         val totalPrice = view.findViewById<TextView>(R.id.textTotalPrice_nextState)
         val estimatedDate = view.findViewById<TextView>(R.id.textViewEstimateDate_nextState)
         val status = view.findViewById<TextView>(R.id.textViewEstado_nextState)
-        val stateAction = view.findViewById<TextView>(R.id.textViewStateAction)
+
         val nextState = view.findViewById<TextView>(R.id.textViewNextStates)
         val imageState = view.findViewById<ImageView>(R.id.imagenextState)
 
@@ -83,7 +83,7 @@ class ChangeOrderStateAdapter(
         when (orderList[position].status) {
             "Preparando pedido" -> {
                 nextState.text = "Enviar pedido"
-                stateAction.text = "Cancelar pedido"
+
                 status.text = OrderPreparing(orderList[position]).stateName
                 imageState.setImageResource(OrderPreparing(orderList[position]).imageResource)
 
@@ -91,7 +91,7 @@ class ChangeOrderStateAdapter(
             }
             "Pedido enviado" -> {
                 nextState.text = "Entregar pedido"
-                stateAction.isVisible = false
+
                 status.text = OrderShipped(orderList[position]).stateName
                 imageState.setImageResource(OrderShipped(orderList[position]).imageResource)
 
@@ -100,7 +100,6 @@ class ChangeOrderStateAdapter(
             }
             "Pedido entregado" -> {
                 nextState.text = "Devolver pedido"
-                stateAction.isVisible = false
                 status.text = OrderDelivered(orderList[position]).stateName
                 imageState.setImageResource(OrderDelivered(orderList[position]).imageResource)
 
@@ -108,7 +107,7 @@ class ChangeOrderStateAdapter(
             }
             "Pedido devuelto" -> {
                 nextState.isVisible = false
-                stateAction.isVisible = false
+
                 status.text = OrderReturned(orderList[position]).stateName
                 imageState.setImageResource(OrderReturned(orderList[position]).imageResource)
 
@@ -117,7 +116,6 @@ class ChangeOrderStateAdapter(
             }
             "Pedido cancelado" -> {
                 nextState.isVisible = false
-                stateAction.isVisible = false
                 status.text = OrderCanceled(orderList[position]).stateName
                 imageState.setImageResource(OrderCanceled(orderList[position]).imageResource)
 
@@ -129,13 +127,7 @@ class ChangeOrderStateAdapter(
         }
 
 
-        stateAction.setOnClickListener {
-            orderList[position].setIView(imageState)
-            orderList[position].setTView(status)
-            orderList[position].stateAction()
-            notifyDataSetChanged()
 
-        }
         nextState.setOnClickListener {
             orderList[position].setIView(imageState)
             orderList[position].setTView(status)

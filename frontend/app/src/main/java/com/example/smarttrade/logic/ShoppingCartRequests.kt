@@ -13,7 +13,6 @@ import com.example.smarttrade.mediador.MediatorShoppingCart
 import com.example.smarttrade.models.PersonBuyer
 import com.example.smarttrade.models.clothes_representation_cart
 import com.example.smarttrade.models.food_representation_cart
-import com.example.smarttrade.models.product_representation
 import com.example.smarttrade.models.product_representation_cart
 import com.example.smarttrade.models.technology_representation_cart
 import com.example.smarttrade.models.toy_representation_cart
@@ -180,6 +179,43 @@ object ShoppingCartRequests {
                     }
                 }
                 MediatorShoppingCart.notifyItemAdded(product, productStatic)
+
+            },
+            {error ->
+                Log.i("ErrorGettingShoppingCart", error.message.toString())
+            })
+
+        cartVolleyQueue.add(stringRequest)
+
+
+
+
+
+    }
+
+    fun getProductInCartWishList(PN: String, sellerCIF : String, seller : String, productStatic: product_representation_cart){
+        if(!isCartQueue) {
+            cartVolleyQueue = Volley.newRequestQueue(MainActivity.getContext())
+            isCartQueue = true
+        }
+
+        var product = product_representation_cart("","","","","",0,"","","",0,"")
+        val id = PersonBuyer.getDNI()
+
+        val stringRequest = StringRequest(
+            Request.Method.GET,"$url/buyers/$id/cart",
+            {response ->
+                val objects = JSONObject(response)
+                val products = objects.getJSONArray("items")
+                for (i in 0 until products.length()) {
+                    val p = products.getJSONObject(i)
+                    if(p.getString("productNumber") == PN  && p.getString("cif") == sellerCIF){
+
+                        Log.i("ProductFound", p.toString())
+                        product = product_representation_cart(p.getString("cif"),p.getString("category"), p.getString("name"), p.getString("price"), p.getString("image"),p.getInt("stock"), p.getString("description"), p.getString("ecology"), p.getString("productNumber"), p.getInt("quantity"), seller)
+                    }
+                }
+                MediatorShoppingCart.notifyItemAddedWishList(product, productStatic)
 
             },
             {error ->
