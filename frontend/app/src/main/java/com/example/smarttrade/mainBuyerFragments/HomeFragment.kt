@@ -69,6 +69,7 @@ class HomeFragment : Fragment() {
         productsShown = mutableListOf()
 
 
+
         categoriesShown.add(category_representation("toys",R.drawable.icon_toy))
         categoriesShown.add(category_representation("food",R.drawable.icon_food))
         categoriesShown.add(category_representation("technology",R.drawable.icon_phone))

@@ -11,12 +11,12 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.example.smarttrade.ProductView
 import com.example.smarttrade.R
+import com.example.smarttrade.WishList
 import com.example.smarttrade.logic.ShoppingCartRequests
 import com.example.smarttrade.mainBuyerFragments.ShoppingCartFragment
 import com.example.smarttrade.models.PersonBuyer
 import com.example.smarttrade.models.product_representation_cart
 import kotlin.math.round
-import kotlin.properties.Delegates
 
 object MediatorShoppingCart {
 
@@ -100,6 +100,24 @@ object MediatorShoppingCart {
         }
 
     }
+
+    fun notifyItemAddedWishList(
+        productExisting: product_representation_cart,
+        product: product_representation_cart
+    ) {
+        Log.i("Mi pan", productExisting.seller)
+        if (productExisting.seller != "") {
+            showCustomDialogBoxWarningWishList("El producto ya se encuentra en el carrito, ¿Desea agregarlo nuevamente?", productExisting, product)
+            Log.i("addProduct", addProduct.toString())
+        } else {
+            PersonBuyer.addProductToCart(product)
+            ShoppingCartRequests.addProductToCart(product)
+            showCustomDialogBoxSuccessWishList("Producto añadido al carrito correctamente")
+
+        }
+
+    }
+
 
     fun notifyAllItemsUnselected() {
         val view = ShoppingCartFragment.getCurrView()
@@ -220,6 +238,88 @@ object MediatorShoppingCart {
         dialog.show()
 
     }
+    fun showCustomDialogBoxWarningWishList(
+        msgWarning: String,
+        productExisting: product_representation_cart,
+        product: product_representation_cart
+    ) {
+        val dialog = Dialog(WishList.getContext())
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setCancelable(false)
+        dialog.setContentView(R.layout.pop_up_warning)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        val messageBox = dialog.findViewById<TextView>(R.id.textViewErrorText)
+        val btnOk = dialog.findViewById<Button>(R.id.buttonOkPopUp)
+        val btnCancel = dialog.findViewById<Button>(R.id.buttonCancelPopUp)
+
+        btnOk.setOnClickListener {
+            val quantity = productExisting.quantity + product.quantity
+            Log.i("quantity", quantity.toString())
+            val p = product_representation_cart(
+                productExisting.cif,
+                productExisting.category,
+                productExisting.name,
+                productExisting.price,
+                productExisting.image,
+                productExisting.stock,
+                productExisting.description,
+                productExisting.leafColor,
+                productExisting.PN,
+                quantity,
+                productExisting.seller
+            )
+            ShoppingCartRequests.editProductInCart(p)
+            showCustomDialogBoxSuccessWishList("Producto añadido al carrito correctamente")
+            dialog.dismiss()
+        }
+        btnCancel.setOnClickListener {
+            showCustomDialogBoxWishList("Producto no añadido")
+            dialog.dismiss()
+        }
+        messageBox.text = msgWarning
+        dialog.show()
+
+    }
+
+    fun showCustomDialogBoxSuccessWishList(msgSuccess: String) {
+        val dialog = Dialog(WishList.getContext())
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setCancelable(false)
+        dialog.setContentView(R.layout.pop_up_alert_success)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        val messageBox = dialog.findViewById<TextView>(R.id.textViewErrorText)
+        val btnOk = dialog.findViewById<Button>(R.id.buttonOkPopUp)
+
+        btnOk.setOnClickListener {
+            dialog.dismiss()
+        }
+        messageBox.text = msgSuccess
+
+        dialog.show()
+    }
+
+    fun showCustomDialogBoxWishList(popUpText: String) {
+        val dialog = Dialog(WishList.getContext())
+        dialog.setTitle("ERROR")
+        dialog.setCancelable(false)
+        dialog.setContentView(R.layout.pop_up_alert_login)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        val messageBox = dialog.findViewById<TextView>(R.id.textViewErrorText)
+        val btnOk = dialog.findViewById<Button>(R.id.buttonOkPopUp)
+
+        btnOk.setOnClickListener{
+            dialog.dismiss()
+        }
+        messageBox.text = popUpText
+
+        dialog.show()
+
+    }
+
+
 }
 
 

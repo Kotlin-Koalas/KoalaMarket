@@ -86,6 +86,10 @@ class WishList : AppCompatActivity() {
     }
 
 
+
+
+
+
     companion object {
         lateinit var actContext: WishList
         lateinit var adapterP : ProductWishAdapter
@@ -103,6 +107,8 @@ class WishList : AppCompatActivity() {
         fun productAddedCart(){
             actContext.showCustomDialogBoxSuccess("Producto añadido al carrito")
         }
+
+
 
 
 
