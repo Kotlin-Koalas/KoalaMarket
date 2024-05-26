@@ -82,6 +82,7 @@ class ChangeOrderStateAdapter(
 
         when (orderList[position].status) {
             "Preparando pedido" -> {
+                nextState.isVisible = true
                 nextState.text = "Enviar pedido"
 
                 status.text = OrderPreparing(orderList[position]).stateName
@@ -90,6 +91,7 @@ class ChangeOrderStateAdapter(
 
             }
             "Pedido enviado" -> {
+                nextState.isVisible = true
                 nextState.text = "Entregar pedido"
 
                 status.text = OrderShipped(orderList[position]).stateName
@@ -99,6 +101,7 @@ class ChangeOrderStateAdapter(
 
             }
             "Pedido entregado" -> {
+                nextState.isVisible = false
                 nextState.text = "Devolver pedido"
                 status.text = OrderDelivered(orderList[position]).stateName
                 imageState.setImageResource(OrderDelivered(orderList[position]).imageResource)

@@ -38,7 +38,7 @@ class SellerMain: AppCompatActivity() {
         val homeSeller = findViewById<ConstraintLayout>(R.id.constraintLayoutHomeSeller)
 
 
-        addProduct.setOnClickListener {
+
 
 
             addProduct.setOnClickListener {
@@ -85,7 +85,7 @@ class SellerMain: AppCompatActivity() {
             }
 
 
-        }
+
 
     }
 
