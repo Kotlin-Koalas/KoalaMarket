@@ -38,20 +38,24 @@ class SellerMain: AppCompatActivity() {
         val homeSeller = findViewById<ConstraintLayout>(R.id.constraintLayoutHomeSeller)
 
 
-        addProduct.setOnClickListener {
-            addProduct.setBackgroundResource(R.drawable.bottom_selected_background)
-            accountSeller.setBackgroundResource(R.color.verdeOscuro)
-            homeSeller.setBackgroundResource(R.color.verdeOscuro)
-            val fragment = AddProduct()
-            supportFragmentManager.commit {
-                setReorderingAllowed(true)
-                //replace(R.id.seller_container_view, fragment)
-                add<AddProduct>(R.id.seller_container_view)
-            }
 
-            ProductAdapterSeller.deleteListeners()
 
-        }
+
+
+            addProduct.setOnClickListener {
+                addProduct.setBackgroundResource(R.drawable.bottom_selected_background)
+                accountSeller.setBackgroundResource(R.color.verdeOscuro)
+                homeSeller.setBackgroundResource(R.color.verdeOscuro)
+                val fragment = AddProduct()
+                supportFragmentManager.commit {
+                    setReorderingAllowed(true)
+                    //replace(R.id.seller_container_view, fragment)
+                    add<AddProduct>(R.id.seller_container_view)
+                }
+
+                ProductAdapterSeller.deleteListeners()
+
+
 
 
 
@@ -69,6 +73,7 @@ class SellerMain: AppCompatActivity() {
         }
 
 
+
         homeSeller.setOnClickListener {
             homeSeller.setBackgroundResource(R.drawable.bottom_selected_background)
             accountSeller.setBackgroundResource(R.color.verdeOscuro)
@@ -80,6 +85,7 @@ class SellerMain: AppCompatActivity() {
                 add<SellerFragment>(R.id.seller_container_view)
             }
         }
+
 
     }
 
