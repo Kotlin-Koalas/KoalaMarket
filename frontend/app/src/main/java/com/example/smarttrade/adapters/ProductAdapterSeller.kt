@@ -9,6 +9,7 @@ import android.widget.BaseAdapter
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.smarttrade.R
 import com.example.smarttrade.mainSellerFragments.SellerFragment
@@ -145,7 +146,19 @@ class ProductAdapterSeller(
                 imageView.setImageBitmap(image)
             }
         }
+
+
+
+        fun deleteListeners(){
+            for (v in ProductAdapter.views){
+                val sellerProduct = v.findViewById<CardView>(R.id.layoutProductSeller)
+                sellerProduct.setOnClickListener(null)
+            }
+        }
     }
+
+
+
 
 }
 

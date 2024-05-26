@@ -4,7 +4,6 @@ import android.app.Dialog
 import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,13 +14,10 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.example.smarttrade.R
 import com.example.smarttrade.logic.ShoppingCartRequests
-import com.example.smarttrade.mediador.MediatorShoppingCart
-import com.example.smarttrade.models.PersonBuyer
 import com.example.smarttrade.models.clothes_representation_cart
 import com.example.smarttrade.models.clothes_representation_seller
 import com.example.smarttrade.models.food_representation_cart
 import com.example.smarttrade.models.food_representation_seller
-import com.example.smarttrade.models.product_representation
 import com.example.smarttrade.models.seller_representation
 import com.example.smarttrade.models.technology_representation_cart
 import com.example.smarttrade.models.technology_representation_seller
@@ -173,6 +169,9 @@ class SellerAdapter(
              who.sellerList.addAll(sellerList)
              who.notifyDataSetChanged()
          }
+
+
+
 
 
 

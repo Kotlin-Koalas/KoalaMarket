@@ -32,6 +32,7 @@ import com.example.smarttrade.models.clothes_representation_seller
 import com.example.smarttrade.models.food_representation_cart
 import com.example.smarttrade.models.food_representation_seller
 import com.example.smarttrade.models.product_representation
+import com.example.smarttrade.models.product_representation_cart
 import com.example.smarttrade.models.seller_representation
 import com.example.smarttrade.models.technology_representation_cart
 import com.example.smarttrade.models.technology_representation_seller
@@ -87,7 +88,13 @@ class ProductView : AppCompatActivity() {
 
 
 
-        logic.getAllSellers(productNumber)
+
+
+        if (wishL.isNotEmpty()) {
+            Log.i("Primer", wishL.get(0).PN)
+        } else {
+            println("La lista de deseos está vacía")
+        }
 
 
         val backMainScreen = findViewById<ConstraintLayout>(R.id.backArrow)
@@ -408,7 +415,21 @@ class ProductView : AppCompatActivity() {
         }
 
         val addWishList = findViewById<ImageView>(R.id.imageViewAddWish)
+        logic.getAllSellers(productNumber)
+
+        ListWishRequests.isOnWishList(productNumber) { isOnWishList ->
+            if (isOnWishList) {
+                addWishList.setBackgroundResource(R.drawable.heart_icon)
+                addWishList.isClickable = false
+            }
+            else {
+                addWishList.setBackgroundResource(R.drawable.heart)
+            }
+        }
+
+
         addWishList.setOnClickListener{
+
            like =  likeSelected(addWishList,like)
                 if(like){
                     if(sellerToy != null){
@@ -535,6 +556,15 @@ class ProductView : AppCompatActivity() {
         return !like
     }
 
+    fun isOnWishList(PN : String) : Boolean{
+        for (productInWishList in wishL){
+            if (productInWishList.PN == PN){
+                return true
+            }
+        }
+        return false
+    }
+
     fun roundToTwoDecimals(number: Double): String {
         return String.format("%.2f", number)
 
@@ -588,6 +618,8 @@ class ProductView : AppCompatActivity() {
 
     companion object{
 
+        val wishL = mutableListOf<product_representation_cart>()
+
         private lateinit var productContext: Context
         fun setImageViewProduct(image: Bitmap?, view:ImageView){
             Log.i("Image View value", "{$view}")
@@ -601,6 +633,14 @@ class ProductView : AppCompatActivity() {
         }
 
 
+
+
+        fun getWishList(list : MutableList<product_representation_cart>) {
+            wishL.clear()
+            wishL.addAll(list)
+
+
+        }
 
 
 

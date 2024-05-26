@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.add
 import androidx.fragment.app.commit
+import com.example.smarttrade.adapters.ProductAdapterSeller
 import com.example.smarttrade.mainSellerFragments.AddProduct
 import com.example.smarttrade.mainSellerFragments.ProfileSellerFragment
 import com.example.smarttrade.mainSellerFragments.SellerFragment
@@ -47,8 +48,12 @@ class SellerMain: AppCompatActivity() {
                 val fragment = AddProduct()
                 supportFragmentManager.commit {
                     setReorderingAllowed(true)
-                    replace(R.id.seller_container_view, fragment)
+                    //replace(R.id.seller_container_view, fragment)
+                    add<AddProduct>(R.id.seller_container_view)
                 }
+
+                ProductAdapterSeller.deleteListeners()
+
             }
 
 
@@ -60,8 +65,10 @@ class SellerMain: AppCompatActivity() {
                 val fragment = ProfileSellerFragment()
                 supportFragmentManager.commit {
                     setReorderingAllowed(true)
-                    replace(R.id.seller_container_view, fragment)
+                    //replace(R.id.seller_container_view, fragment)
+                    add<ProfileSellerFragment>(R.id.seller_container_view)
                 }
+                ProductAdapterSeller.deleteListeners()
             }
 
 
@@ -72,7 +79,8 @@ class SellerMain: AppCompatActivity() {
                 val fragment = SellerFragment()
                 supportFragmentManager.commit {
                     setReorderingAllowed(true)
-                    replace(R.id.seller_container_view, fragment)
+                    //replace(R.id.seller_container_view, fragment)
+                    add<SellerFragment>(R.id.seller_container_view)
                 }
             }
 
