@@ -600,7 +600,7 @@
                                 android:layout_marginStart="30dp"
                                 android:background="@drawable/rounded_button_signup"
                                 android:fontFamily="@font/karla"
-                                android:text="Sign Up"
+                                android:text="Registrarse"
                                 android:textAllCaps="false"
                                 android:textColor="@color/white"
                                 android:textSize="20sp"
