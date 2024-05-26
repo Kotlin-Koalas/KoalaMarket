@@ -96,7 +96,7 @@ class ChangeOrderStateAdapter(
 
                 status.text = OrderShipped(orderList[position]).stateName
                 imageState.setImageResource(OrderShipped(orderList[position]).imageResource)
-
+                notifyDataSetChanged()
 
 
             }
@@ -105,7 +105,7 @@ class ChangeOrderStateAdapter(
                 nextState.text = "Devolver pedido"
                 status.text = OrderDelivered(orderList[position]).stateName
                 imageState.setImageResource(OrderDelivered(orderList[position]).imageResource)
-
+                notifyDataSetChanged()
 
             }
             "Pedido devuelto" -> {
@@ -113,7 +113,7 @@ class ChangeOrderStateAdapter(
 
                 status.text = OrderReturned(orderList[position]).stateName
                 imageState.setImageResource(OrderReturned(orderList[position]).imageResource)
-
+                notifyDataSetChanged()
 
 
             }
@@ -121,7 +121,7 @@ class ChangeOrderStateAdapter(
                 nextState.isVisible = false
                 status.text = OrderCanceled(orderList[position]).stateName
                 imageState.setImageResource(OrderCanceled(orderList[position]).imageResource)
-
+                notifyDataSetChanged()
 
             }
             else ->{
