@@ -38,22 +38,7 @@ class WishList : AppCompatActivity() {
 
         ListWishRequests.getWishList()
 
-/*
-        for (i in 0 until 10){
-            adapterWL.addProduct(product_representation_cart(
-                PN = "PN$i",
-                description = "description $i",
-                image = "image_url_$i",
-                leafColor = "leafColor $i",
-                name = "name $i",
-                price = "price $i",
-                quantity = i,
-                seller = "seller $i",
-                stock = i,
-                category = "category $i"
-            ))
-        }
-*/
+
 
 
         backButton = findViewById(R.id.imageBack)

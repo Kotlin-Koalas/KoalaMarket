@@ -527,8 +527,7 @@ object logic {
                 Toast.makeText(SellerMain.getContext(), "Precio del producto actualizado con éxito", Toast.LENGTH_SHORT).show()
             },
             {error ->
-                Toast.makeText(SellerMain.getContext(), "Error: $error", Toast.LENGTH_SHORT)
-                    .show()
+                //Toast.makeText(SellerMain.getContext(), "Error: $error", Toast.LENGTH_SHORT) .show()
                 Log.i ("ERROR","$error")
             })
         productSellerQueue.add(stringRequest)

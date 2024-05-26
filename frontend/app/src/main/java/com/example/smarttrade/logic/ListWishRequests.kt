@@ -71,7 +71,62 @@ object ListWishRequests {
     }
 
 
-    fun addProductToWish(product: product_representation_cart){
+    fun isOnWishList(PN: String, callback : (Boolean) -> Unit){
+        if(!isWishQueue) {
+            wishVolleyQueue = Volley.newRequestQueue(MainActivity.getContext())
+            isWishQueue = true
+
+        }
+        val id = PersonBuyer.getDNI()
+        val res = mutableListOf<product_representation_cart>()
+
+        val stringRequest = StringRequest(
+            Request.Method.GET,"$url/buyers/$id/wishlist",
+            {response ->
+                PersonBuyer.clearWishList()
+                val objects = JSONObject(response)
+                Log.i("LOL", "LOL")
+                try{
+                    val products = objects.getJSONArray("items")
+                    for (i in 0 until products.length()) {
+                        val p = products.getJSONObject(i)
+                        when(p.getString("category")){
+                            "toy" -> res.add(toy_representation_cart(p.getString("cif"),p.getString("name"), p.getDouble("price").toString(), p.getString("image"), p.getInt("stock"), p.getString("description"), p.getString("ecology"), p.getString("productNumber"), p.getInt("stock"),p.getString("vendorName"), p.getString("material"), p.getString("age")))
+                            "food" -> res.add(food_representation_cart(p.getString("cif"),p.getString("name"), p.getDouble("price").toString(), p.getString("image"), p.getInt("stock"), p.getString("description"), p.getString("ecology"), p.getString("productNumber"), p.getInt("stock"),p.getString("vendorName"), p.getInt("calories").toString(), p.getString("macros")))
+                            "technology" -> res.add(technology_representation_cart(p.getString("cif"),p.getString("name"), p.getDouble("price").toString(), p.getString("image"), p.getInt("stock"), p.getString("description"), p.getString("ecology"), p.getString("productNumber"), p.getInt("stock"),p.getString("vendorName"), p.getString("brand"), p.getString("electricConsumption")))
+                            "clothes" -> res.add(clothes_representation_cart(p.getString("cif"),p.getString("name"), p.getDouble("price").toString(), p.getString("image"), p.getInt("stock"), p.getString("description"), p.getString("ecology"), p.getString("productNumber"), p.getInt("stcok"),p.getString("vendorName"), p.getString("size"), p.getString("color")))
+                            else -> Log.i("UnknownCategory", "Unknown product category: ${p.getString("category")}")
+                        }
+                    }
+                }catch (e: Exception){
+                    Log.i("No Items", e.message.toString())
+                }
+
+                Log.i("ShoppingCartList", PersonBuyer.getShoppingCart().toString())
+                if(res.isNotEmpty()){
+                    if(res.any { it.PN == PN }){
+                        callback(true)
+                    }
+                    else{
+                        callback(false)
+                    }
+
+                }
+                else{
+                    callback(false)
+                }
+            },
+            {error ->
+                Log.i("ErrorGettingWishList", error.message.toString())
+            })
+        wishVolleyQueue.add(stringRequest)
+
+
+    }
+
+
+
+    fun addProductToWish(product: product_representation_cart) {
         if(!isWishQueue) {
             wishVolleyQueue = Volley.newRequestQueue(MainActivity.getContext())
             isWishQueue = true
@@ -88,8 +143,8 @@ object ListWishRequests {
         val jsonRequest = JsonObjectRequest(
             Request.Method.POST,"$url/buyers/$id/wishlist",json,
             {response ->
-                val objetct = JSONObject(response.toString())
-                Log.i("ProductAdded", objetct.toString())
+                //val objetct = JSONObject(response.toString())
+               // Log.i("ProductAdded", objetct.toString())
             },
             {error ->
                 Log.i("ProductAddError", error.message.toString())
@@ -109,7 +164,7 @@ object ListWishRequests {
         val json = JSONObject()
         json.put("productNumber", product.PN)
         json.put("cif",product.cif)
-        json.put("category", product.category)
+        //json.put("category", product.category)
 
 
         val jsonRequest = JsonObjectRequest(
