@@ -39,52 +39,46 @@ class SellerMain: AppCompatActivity() {
 
 
         addProduct.setOnClickListener {
-
-
-            addProduct.setOnClickListener {
-                addProduct.setBackgroundResource(R.drawable.bottom_selected_background)
-                accountSeller.setBackgroundResource(R.color.verdeOscuro)
-                homeSeller.setBackgroundResource(R.color.verdeOscuro)
-                val fragment = AddProduct()
-                supportFragmentManager.commit {
-                    setReorderingAllowed(true)
-                    //replace(R.id.seller_container_view, fragment)
-                    add<AddProduct>(R.id.seller_container_view)
-                }
-
-                ProductAdapterSeller.deleteListeners()
-
+            addProduct.setBackgroundResource(R.drawable.bottom_selected_background)
+            accountSeller.setBackgroundResource(R.color.verdeOscuro)
+            homeSeller.setBackgroundResource(R.color.verdeOscuro)
+            val fragment = AddProduct()
+            supportFragmentManager.commit {
+                setReorderingAllowed(true)
+                //replace(R.id.seller_container_view, fragment)
+                add<AddProduct>(R.id.seller_container_view)
             }
 
+            ProductAdapterSeller.deleteListeners()
+
+        }
 
 
-            accountSeller.setOnClickListener {
-                accountSeller.setBackgroundResource(R.drawable.bottom_selected_background)
-                addProduct.setBackgroundResource(R.color.verdeOscuro)
-                homeSeller.setBackgroundResource(R.color.verdeOscuro)
-                val fragment = ProfileSellerFragment()
-                supportFragmentManager.commit {
-                    setReorderingAllowed(true)
-                    //replace(R.id.seller_container_view, fragment)
-                    add<ProfileSellerFragment>(R.id.seller_container_view)
-                }
-                ProductAdapterSeller.deleteListeners()
+
+        accountSeller.setOnClickListener {
+            accountSeller.setBackgroundResource(R.drawable.bottom_selected_background)
+            addProduct.setBackgroundResource(R.color.verdeOscuro)
+            homeSeller.setBackgroundResource(R.color.verdeOscuro)
+            val fragment = ProfileSellerFragment()
+            supportFragmentManager.commit {
+                setReorderingAllowed(true)
+                //replace(R.id.seller_container_view, fragment)
+                add<ProfileSellerFragment>(R.id.seller_container_view)
             }
+            ProductAdapterSeller.deleteListeners()
+        }
 
 
-            homeSeller.setOnClickListener {
-                homeSeller.setBackgroundResource(R.drawable.bottom_selected_background)
-                accountSeller.setBackgroundResource(R.color.verdeOscuro)
-                addProduct.setBackgroundResource(R.color.verdeOscuro)
-                val fragment = SellerFragment()
-                supportFragmentManager.commit {
-                    setReorderingAllowed(true)
-                    //replace(R.id.seller_container_view, fragment)
-                    add<SellerFragment>(R.id.seller_container_view)
-                }
+        homeSeller.setOnClickListener {
+            homeSeller.setBackgroundResource(R.drawable.bottom_selected_background)
+            accountSeller.setBackgroundResource(R.color.verdeOscuro)
+            addProduct.setBackgroundResource(R.color.verdeOscuro)
+            val fragment = SellerFragment()
+            supportFragmentManager.commit {
+                setReorderingAllowed(true)
+                //replace(R.id.seller_container_view, fragment)
+                add<SellerFragment>(R.id.seller_container_view)
             }
-
-
         }
 
     }

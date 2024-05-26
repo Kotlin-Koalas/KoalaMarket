@@ -14,7 +14,6 @@ import androidx.fragment.app.Fragment
 import com.example.smarttrade.ChangeOrderState
 import com.example.smarttrade.MainActivity
 import com.example.smarttrade.R
-import com.example.smarttrade.mainBuyerFragments.ProfileBuyerFragment
 import com.example.smarttrade.models.PersonSeller
 
 class ProfileSellerFragment : Fragment() {
@@ -75,7 +74,7 @@ class ProfileSellerFragment : Fragment() {
             //TODO logica salir sesion
 
 
-            val intent = Intent(ProfileBuyerFragment.contextFragment.requireContext(), MainActivity::class.java)
+            val intent = Intent(contextFragment.requireContext(), MainActivity::class.java)
             startActivity(intent)
         }
         btnCancel.setOnClickListener{
