@@ -11,7 +11,7 @@ class OrderShipped(order:Order_representation) : OrderState {
     override fun nextState() {
         order.setStates(order.delivered)
         order.updateStateBD()
-        order.status = "Pedido entregado "
+        order.status = "Pedido entregado"
     }
 
     override fun stateAction() {
