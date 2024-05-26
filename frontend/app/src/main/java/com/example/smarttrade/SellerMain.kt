@@ -54,6 +54,7 @@ class SellerMain: AppCompatActivity() {
             }
 
             ProductAdapterSeller.deleteListeners()
+        }
 
 
 
@@ -85,9 +86,6 @@ class SellerMain: AppCompatActivity() {
                     add<SellerFragment>(R.id.seller_container_view)
                 }
             }
-
-
-        }
     }
 
 
