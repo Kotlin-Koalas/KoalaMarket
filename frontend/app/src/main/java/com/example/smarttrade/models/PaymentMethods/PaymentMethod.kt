@@ -51,6 +51,7 @@ abstract class PaymentMethod {
             }
             PersonBuyer.clearSelectedItems()
             dialog.dismiss()
+            showConfirmation(context)
         }
 
         btnCancel.setOnClickListener{
@@ -72,7 +73,6 @@ abstract class PaymentMethod {
     open fun showMessage(context: Context, order: Order_representation){
         val cMessage = getPaymentMessage()
         showCustomDialogBox(context,order,cMessage)
-        showConfirmation(context)
         //Aquí se cargaria la pasarela de pago correspondiente.
     }
 
