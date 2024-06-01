@@ -16,7 +16,9 @@ jar {
 }
 
 test {
-	enabled = false
+	environment "DATABASE_URL", System.getenv("DATABASE_URL")
+	environment "DATABASE_USERNAME", System.getenv("DATABASE_USERNAME")
+    environment "DATABASE_PASSWORD", System.getenv("DATABASE_PASSWORD")
 }
 
 configurations {
@@ -39,10 +41,15 @@ dependencies {
 	runtimeOnly 'org.postgresql:postgresql'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.mockito:mockito-core'
+	testImplementation 'org.junit.jupiter:junit-jupiter-engine'
 }
 
 tasks.named('test') {
 	useJUnitPlatform()
+	testLogging {
+		events "passed", "skipped", "failed"
+	}
 }
 
 task getDeps(type: Copy) {
