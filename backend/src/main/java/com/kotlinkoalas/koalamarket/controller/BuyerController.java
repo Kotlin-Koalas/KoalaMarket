@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.kotlinkoalas.koalamarket.model.*;
 import com.kotlinkoalas.koalamarket.repo.BuyerRepository;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -46,6 +47,7 @@ public class BuyerController {
 
     @PostMapping("/buyers/login")
     public Buyer login(@RequestBody Map<String, Object> payload) {
+
         String email = (String) payload.get("email");
         String password = (String) payload.get("password");
 
@@ -60,6 +62,15 @@ public class BuyerController {
 
     @PostMapping("/buyers/register")
     public ResponseEntity<String> register(@RequestBody Map<String, Object> payload) {
+
+        for (Map.Entry<String, Object> entry : payload.entrySet()) {
+            if (!(entry.getValue() instanceof String)) {
+                return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY)
+                        .contentType(org.springframework.http.MediaType.APPLICATION_JSON)
+                        .body("{\"message\": \"Invalid values were sent\"}");
+            }
+        }
+
         String dni = (String) payload.get("dni");
         String name = (String) payload.get("name");
         String surname = (String) payload.get("surname");

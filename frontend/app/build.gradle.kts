@@ -62,6 +62,8 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+
+    useLibrary("org.apache.http.legacy")
 }
 
 val ktor_version: String by project
@@ -85,6 +87,8 @@ dependencies {
     implementation("androidx.fragment:fragment-ktx:1.5.4")
     implementation("com.google.firebase:firebase-crashlytics-buildtools:2.9.9")
     testImplementation(libs.junit)
+    testImplementation("org.mockito:mockito-core:3.12.4")
+    testImplementation("io.mockk:mockk:1.12.0")
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))

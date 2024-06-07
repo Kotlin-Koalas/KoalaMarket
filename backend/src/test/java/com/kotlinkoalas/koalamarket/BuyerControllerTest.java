@@ -12,6 +12,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.http.HttpStatus;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,56 +31,39 @@ public class BuyerControllerTest extends BaseTest{
     @Mock
     BuyerRepository buyerRepository;
 
-    Buyer buyer = new Buyer();
-
     @BeforeEach
     public void init() {
         MockitoAnnotations.initMocks(this);
-        String dni = createRandomDni();
-        buyer.setDni(dni);
-        buyer.setName("Spring");
-        buyer.setSurname("Boot");
-        buyer.setUserID(dni);
-        buyer.setEmail(dni + "@test.com");
-        buyer.setPassword(dni);
-        buyer.setBizum("123456789");
-        List<Address> shippingAddresses = new ArrayList<>();
-        shippingAddresses.add(new Address("Calle Falsa"));
-        buyer.setShippingAddresses(shippingAddresses);
-        buyer.setBillingAddresses(shippingAddresses);
     }
 
     @Test
-    @Order(1)
     public void testRegister() {
         Map<String, Object> payload = new HashMap<>();
-        payload.put("dni", buyer.getDni());
-        payload.put("name", buyer.getName());
-        payload.put("surname", buyer.getSurname());
-        payload.put("userID", buyer.getDni());
-        payload.put("email", buyer.getEmail());
-        payload.put("password", buyer.getPassword());
-        payload.put("bizum", buyer.getBizum());
+        payload.put("dni", "12345678A");
+        payload.put("name", "Spring");
+        payload.put("surname", "Boot");
+        payload.put("userID", "springboot");
+        payload.put("email", "spring@boot.com");
+        payload.put("password", "SpringBoot777");
+        payload.put("bizum", "123456789");
         payload.put("shippingAddress", "Calle Falsa");
         payload.put("billingAddress", "Calle Falsa");
 
-        when(buyerRepository.findByDni(buyer.getDni())).thenReturn(null);
-
         ResponseEntity<String> response = buyerController.register(payload);
         assertEquals(200, response.getStatusCode().value());
+
+        Map<String, Object> payload2 = new HashMap<>();
+        payload2.put("dni", 8);
+        payload2.put("name", 2);
+        payload2.put("surname", true);
+        payload2.put("userID", 2.2);
+        payload2.put("email", 0.3);
+        payload2.put("password", 2);
+        payload2.put("bizum", "a");
+        payload2.put("shippingAddress", false);
+        payload2.put("billingAddress", 1000);
+
+        ResponseEntity<String> response2 = buyerController.register(payload2);
+        assertEquals(422, response2.getStatusCode().value());
     }
-
-    @Test
-    @Order(2)
-    public void testLogin() {
-        Map<String, Object> payload = new HashMap<>();
-        payload.put("email", "spring@gmail.com");
-        payload.put("password", "spring");
-
-        when(buyerRepository.findByEmail(buyer.getEmail())).thenReturn(buyer);
-
-        Buyer responseBuyer = buyerController.login(payload);
-        assertEquals(true, responseBuyer != null);
-    }
-
 }

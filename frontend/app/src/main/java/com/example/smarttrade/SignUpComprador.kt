@@ -26,6 +26,7 @@ import com.example.smarttrade.logic.Identification
 import com.example.smarttrade.models.CreditCard
 import java.time.LocalDate
 import java.util.Calendar
+import com.example.smarttrade.utils.CheckValuesUtils
 
 class SignUpComprador : AppCompatActivity() {
 
@@ -159,8 +160,7 @@ class SignUpComprador : AppCompatActivity() {
                 isRPassword = true
             }
 
-            val patternPassword = "^(?=.{4,})(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]+\$".toRegex()
-            if( !patternPassword.containsMatchIn(firstPassword) || !patternPassword.containsMatchIn(secondPassword)){
+            if(!CheckValuesUtils.checkIfValidPassword(firstPassword) || !CheckValuesUtils.checkIfValidPassword(secondPassword)) {
                 popUpOrNot = true
                 popUpText += "- La contraseña debe contener mínimo un número, una letra mayúscula, y una letra minúscula. Además no debe contener caracteres especiales, solo letras (mayúsculas y minúsculas), números y tener una logitud mínima de 4 caracteres.\n"
                 isPassword = true
@@ -205,25 +205,24 @@ class SignUpComprador : AppCompatActivity() {
             val currIdField = findViewById<EditText>(R.id.editTextID).text
             val currId = currIdField.toString()
             val patternOnlyLetters = "^[a-zA-Z]*$".toRegex()
-            if(!patternOnlyLetters.containsMatchIn(currName)){
+            if(!CheckValuesUtils.checkIfValidName(currName)) {
                 popUpOrNot = true
                 popUpText += "- En el campo del Nombre solo deben hacer letras\n"
                 isName = true
             }
-            if (!patternOnlyLetters.containsMatchIn(currSurname)){
+            if(!CheckValuesUtils.checkIfValidName(currSurname)) {
                 popUpOrNot = true
                 popUpText += "- En el campo del Apellidos solo deben haber letras.\n"
                 isSurname = true
             }
-            if(!patternOnlyLetters.containsMatchIn(currId)){
+            if(!CheckValuesUtils.checkIfValidName(currId)) {
                 popUpOrNot = true
                 popUpText += "- En el campo del ID de Usuario solo deben haber letras.\n"
                 isID = true
             }
 
-            val patternDNI = "[0-9]{8}[a-zA-Z]".toRegex()
             var currDNI = findViewById<EditText>(R.id.editTextDNI).text.toString()
-            if(!patternDNI.containsMatchIn(currDNI)){
+            if(!CheckValuesUtils.checkIfValidDNI(currDNI)) {
                 popUpOrNot = true
                 popUpText += "- Inserte un DNI válido, con 8 números y una letra al final.\n"
                 isDNI = true
@@ -233,9 +232,8 @@ class SignUpComprador : AppCompatActivity() {
                 currDNI = "$numbers$letter" // Combine numbers and uppercase letter
             }
 
-            val patternCorreo = "^[a-zA-Z0-9.!#\$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?\$".toRegex()
             val currCorreo = findViewById<EditText>(R.id.editTextEmail).text.toString()
-            if(!patternCorreo.containsMatchIn(currCorreo)){
+            if(!CheckValuesUtils.checkIfValidEmail(currCorreo)) {
                 popUpOrNot = true
                 popUpText += "- Proporcione una dirección de correo válida siguiendo el formato standard.\n"
                 isEmail = true
@@ -243,7 +241,7 @@ class SignUpComprador : AppCompatActivity() {
 
             if(currentTypeOfPayment == R.layout.paypal_option) {
                 val currPayPalCorreo = findViewById<EditText>(R.id.editTextEmailPayPal).text.toString()
-                if(!patternCorreo.containsMatchIn(currPayPalCorreo)){
+                if(!CheckValuesUtils.checkIfValidEmail(currPayPalCorreo)) {
                     popUpOrNot = true
                     popUpText += "- Proporcione una dirección de correo de la cuenta de PayPal válida siguiendo el formato standard.\n"
                     isPayPal = true
@@ -361,6 +359,7 @@ class SignUpComprador : AppCompatActivity() {
         }
 
     }
+
 
     private fun showCustomDialogBox(popUpText: String) {
         val dialog = Dialog(this)
@@ -500,6 +499,9 @@ class SignUpComprador : AppCompatActivity() {
         private lateinit var actContextBuyer: SignUpComprador
         fun getContext(): Context {
             return actContextBuyer
+        }
+        fun setContext(context: SignUpComprador){
+            actContextBuyer = context
         }
         fun loadBuyer(){
             val IntentS = Intent(actContextBuyer,BuyerMainScreen::class.java)
